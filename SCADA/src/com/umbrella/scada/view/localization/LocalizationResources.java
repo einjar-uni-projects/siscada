@@ -27,10 +27,6 @@ public class LocalizationResources {
 		return null;
 	}
 	
-	public static void main(String [] args){
-		System.out.println(new LocalizationResources().getLocal("caca", SPANISHLOCALE));
-	}
-	
 	public static LocalizationResources getInstance(){
 		if(_instance == null)
 			_instance = new LocalizationResources();
