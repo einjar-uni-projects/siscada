@@ -30,15 +30,18 @@ public class ObserverProvider implements Observer {
 
 	@Override
 	public void notifyObserver(TransferBuffer buffer) {
-		// TODO Auto-generated method stub
+		for (Updatable updatable : _updatableList) {
+			updatable.update(buffer);
+		}
 		
 	}
 
 	@Override
 	public boolean registerUpdatable(Updatable updatable) {
 		boolean ret = false;
-		if(_updatableList.contains(updatable))
-		// TODO Auto-generated method stub
+		if(!_updatableList.contains(updatable)){
+			ret = _updatableList.add(updatable);			
+		}
 		return ret;
 	}
 
