@@ -1,6 +1,6 @@
-package observer;
+package com.umbrella.scada.observer;
 
-import view.Updatable;
+import com.umbrella.scada.view.Updatable;
 
 public interface Observer {
 	
@@ -12,7 +12,7 @@ public interface Observer {
 	public boolean registerUpdatable(Updatable updatable);
 	
 	/**
-	 * 
+	 * Notifica a los observadores de los cambios realizados a través de un buffer de transeferncia
 	 * @param buffer
 	 */
 	public void notifyObserver(TransferBuffer buffer);
