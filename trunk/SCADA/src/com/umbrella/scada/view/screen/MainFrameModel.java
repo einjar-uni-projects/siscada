@@ -1,6 +1,10 @@
 package com.umbrella.scada.view.screen;
 
+import java.awt.Image;
+
 import javax.swing.Action;
+
+import sun.awt.image.ToolkitImage;
 
 import com.umbrella.scada.observer.ObserverProvider;
 import com.umbrella.scada.observer.TransferBuffer;
@@ -12,15 +16,9 @@ public class MainFrameModel implements Updatable{
 	//Variables generales
 	private LanguageIDs _selectedLanguage;
 	private UpdatableInterface _mainFrame;
+	private Image _backImage;
 	
 	//ACTIONS
-	
-	//INFO AUTOMATAS
-	private int _slaveAuto1_speed1;
-	private int _slaveAuto1_delay1;
-	private int _slaveAuto1_delay2;
-	private int _slaveAuto2_speed2;
-	
 	
 	
 
@@ -28,7 +26,7 @@ public class MainFrameModel implements Updatable{
 	// (con mismo modificador de acceso que la definicion de la clase) 
 	private MainFrameModel() {
 		_selectedLanguage = LanguageIDs.SPANISHLOCALE;
-		
+		_backImage = _mainFrame.getToolkit().getImage("resource/backImage.png");
 	}
 
 	/**
@@ -84,6 +82,10 @@ public class MainFrameModel implements Updatable{
 			}
 		}
 		_mainFrame.updateData();
+	}
+
+	public Image get_backImage() {
+		return _backImage;
 	}
 	
 	
