@@ -4,27 +4,31 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LocalizationResources {
-	private ResourceBundle _spanishResource;
-	private ResourceBundle _englishResource;
 	
 	private static LocalizationResources _instance;
 	
-	public static final String SPANISHLOCALE = "SP";
-	public static final String ENGLISHLOCALE = "EN";
+	public enum LanguageIDs {
+		SPANISHLOCALE(new Locale("es", "ES")), // Espaï¿½ol - Espaï¿½a
+		ENGLISHLOCALE(new Locale("en", "GB"));
+		
+		private ResourceBundle _resource;
+		
+		public ResourceBundle get_resource() {
+			return _resource;
+		}
+
+		private LanguageIDs(Locale locale) {
+			_resource = ResourceBundle.getBundle("com.umbrella.scada.view.localization.Resource", locale);
+		}
+		
+	}
 
 	protected LocalizationResources(){
-		Locale spanishLocale = new Locale("es", "ES"); // Espa–ol - Espa–a
-		Locale englishLocale = new Locale("en", "GB"); // InglŽs - GB
-		_spanishResource = ResourceBundle.getBundle("com.umbrella.scada.view.localization.Resource", spanishLocale);
-		_englishResource = ResourceBundle.getBundle("com.umbrella.scada.view.localization.Resource", englishLocale);
+		
 	}
 	
-	public String getLocal(LocalizatorIDs id, String locale){
-		if(locale.compareTo(SPANISHLOCALE) == 0)
-			return _spanishResource.getString(id.name());
-		if(locale.compareTo(ENGLISHLOCALE) == 0)
-			return _englishResource.getString(id.name());
-		return null;
+	public String getLocal(LocalizatorIDs id, LanguageIDs locale){
+		return locale.get_resource().getString(id.name());
 	}
 	
 	public static LocalizationResources getInstance(){
