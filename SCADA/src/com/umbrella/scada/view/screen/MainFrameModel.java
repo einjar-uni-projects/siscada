@@ -7,6 +7,7 @@ import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
 public class MainFrameModel {
 	//Variables generales
 	private LanguageIDs _selectedLanguage;
+	private UpdatableInterface _mainFrame;
 	
 	//ACTIONS
 	
@@ -25,8 +26,13 @@ public class MainFrameModel {
 	 * realiza la creación del mismo.
 	 * @return la instancia única de MainFrameModel
 	 */
-	static MainFrameModel getInstance() {
+	public static MainFrameModel getInstance() {
 		return SingletonHolder.instance;
+	}
+	
+	public void initialize(){
+		if(_mainFrame == null)
+			_mainFrame = new MainFrame();
 	}
 
 	private static class SingletonHolder {
@@ -39,6 +45,8 @@ public class MainFrameModel {
 
 	public void set_selectedLanguage(LanguageIDs language) {
 		_selectedLanguage = language;
+		_mainFrame.updateLanguage();
+		
 	}
 	
 	

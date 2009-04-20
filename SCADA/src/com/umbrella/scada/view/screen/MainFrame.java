@@ -240,7 +240,7 @@ public class MainFrame implements UpdatableInterface{
 			_spanishLanguage.setText("Spanish");
 			_spanishLanguage.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					_model.set_selectedLanguage(LanguageIDs.SPANISHLOCALE));
+					_model.set_selectedLanguage(LanguageIDs.SPANISHLOCALE);
 				}
 			});
 		}
@@ -256,10 +256,9 @@ public class MainFrame implements UpdatableInterface{
 		if (_englishLanguage == null) {
 			_englishLanguage = new JMenuItem();
 			_englishLanguage.setText("English");
-			_englishLanguage.setAction(_model.get_changeLanguage(LanguageIDs.ENGLISHLOCALE));
 			_englishLanguage.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					_model.set_selectedLanguage(LanguageIDs.ENGLISHLOCALE));
+					_model.set_selectedLanguage(LanguageIDs.ENGLISHLOCALE);
 				}
 			});
 		}
