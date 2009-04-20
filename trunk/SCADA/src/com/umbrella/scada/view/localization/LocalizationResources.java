@@ -19,11 +19,11 @@ public class LocalizationResources {
 		_englishResource = ResourceBundle.getBundle("com.umbrella.scada.view.localization.Resource", englishLocale);
 	}
 	
-	public String getLocal(String id, String locale){
+	public String getLocal(LocalizatorIDs id, String locale){
 		if(locale.compareTo(SPANISHLOCALE) == 0)
-			return _spanishResource.getString(id);
+			return _spanishResource.getString(id.name());
 		if(locale.compareTo(ENGLISHLOCALE) == 0)
-			return _englishResource.getString(id);
+			return _englishResource.getString(id.name());
 		return null;
 	}
 	
