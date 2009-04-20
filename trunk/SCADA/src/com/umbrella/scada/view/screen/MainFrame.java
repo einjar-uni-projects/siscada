@@ -10,6 +10,8 @@ import javax.swing.JMenu;
 
 import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
+import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
+
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.FlowLayout;
@@ -39,6 +41,7 @@ public class MainFrame {
 	
 	public MainFrame(){
 		getJFrame();
+		update();
 		jFrame.setVisible(true);
 	}
 	
@@ -110,7 +113,7 @@ public class MainFrame {
 		if (_fileMenu == null) {
 			_fileMenu = new JMenu();
 			_fileMenu.setName("FileMenu");
-			_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _model.get_selectedLanguage()));
+			_fileMenu.setText("File");
 		}
 		return _fileMenu;
 	}
@@ -124,7 +127,7 @@ public class MainFrame {
 		if (_menuOptions == null) {
 			_menuOptions = new JMenu();
 			_menuOptions.setName("OptiosMenu");
-			_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
+			_menuOptions.setText("Options");
 			_menuOptions.add(get_language());
 		}
 		return _menuOptions;
@@ -168,7 +171,7 @@ public class MainFrame {
 	private JButton get_initButton() {
 		if (_initButton == null) {
 			_initButton = new JButton();
-			_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
+			_initButton.setText("Init");
 		}
 		return _initButton;
 	}
@@ -181,7 +184,7 @@ public class MainFrame {
 	private JButton get_pauseButton() {
 		if (_pauseButton == null) {
 			_pauseButton = new JButton();
-			_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_PAUSE, _model.get_selectedLanguage()));
+			_pauseButton.setText("Pause");
 		}
 		return _pauseButton;
 	}
@@ -194,7 +197,7 @@ public class MainFrame {
 	private JButton get_stopButton() {
 		if (_stopButton == null) {
 			_stopButton = new JButton();
-			_stopButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_STOP, _model.get_selectedLanguage()));
+			_stopButton.setText("Stop");
 		}
 		return _stopButton;
 	}
@@ -219,7 +222,7 @@ public class MainFrame {
 	private JMenu get_language() {
 		if (_language == null) {
 			_language = new JMenu();
-			_language.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_LANGUAGE, _model.get_selectedLanguage()));
+			_language.setText("Language");
 			_language.add(get_spanishLanguage());
 			_language.add(get_englishLanguage());
 		}
@@ -234,7 +237,12 @@ public class MainFrame {
 	private JMenuItem get_spanishLanguage() {
 		if (_spanishLanguage == null) {
 			_spanishLanguage = new JMenuItem();
-			_spanishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_ES_LANGUAGE, _model.get_selectedLanguage()));
+			_spanishLanguage.setText("Spanish");
+			_spanishLanguage.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					_model.set_selectedLanguage(LanguageIDs.SPANISHLOCALE));
+				}
+			});
 		}
 		return _spanishLanguage;
 	}
@@ -247,9 +255,26 @@ public class MainFrame {
 	private JMenuItem get_englishLanguage() {
 		if (_englishLanguage == null) {
 			_englishLanguage = new JMenuItem();
-			_englishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_EN_LANGUAGE, _model.get_selectedLanguage()));
+			_englishLanguage.setText("English");
+			_englishLanguage.setAction(_model.get_changeLanguage(LanguageIDs.ENGLISHLOCALE));
+			_englishLanguage.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					_model.set_selectedLanguage(LanguageIDs.ENGLISHLOCALE));
+				}
+			});
 		}
 		return _englishLanguage;
+	}
+	
+	public void update(){
+		_englishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_EN_LANGUAGE, _model.get_selectedLanguage()));
+		_spanishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_ES_LANGUAGE, _model.get_selectedLanguage()));
+		_language.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_LANGUAGE, _model.get_selectedLanguage()));
+		_stopButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_STOP, _model.get_selectedLanguage()));
+		_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_PAUSE, _model.get_selectedLanguage()));
+		_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
+		_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
+		_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _model.get_selectedLanguage()));
 	}
 
 }

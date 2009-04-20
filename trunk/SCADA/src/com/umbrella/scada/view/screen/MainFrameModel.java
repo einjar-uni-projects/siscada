@@ -10,8 +10,8 @@ public class MainFrameModel {
 	private LanguageIDs _selectedLanguage;
 	
 	//ACTIONS
-	private final Action _changeLanguage = new ChangeLanguageAction();
-	
+	private final Action _changeSpLanguage = new ChangeLanguageAction(LanguageIDs.SPANISHLOCALE);
+	private final Action _changeEnLanguage = new ChangeLanguageAction(LanguageIDs.ENGLISHLOCALE);
 	
 
 	// El constructor privado no permite que se genere un constructor por defecto
@@ -37,14 +37,14 @@ public class MainFrameModel {
 		return _selectedLanguage;
 	}
 	
-	public Action get_changeLanguage() {
-		return _changeLanguage;
+	public Action get_changeLanguage(LanguageIDs languageIDs) {
+		switch (languageIDs) {
+		case SPANISHLOCALE:
+			return _changeSpLanguage;
+		case ENGLISHLOCALE:
+			return _changeEnLanguage;
+		}
+		return null;
 	}
-	
-	
-	
-	
-	
-	
 
 }
