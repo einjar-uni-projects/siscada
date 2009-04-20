@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
@@ -209,7 +211,7 @@ public class MainFrame implements UpdatableInterface{
 	 */
 	private JPanel get_mainPanel() {
 		if (_mainPanel == null) {
-			_mainPanel = new MainPanel();
+			_mainPanel = new MainPanel(_model);
 		}
 		return _mainPanel;
 	}
@@ -279,8 +281,9 @@ public class MainFrame implements UpdatableInterface{
 	public void updateData(){
 		
 	}
-	public void repaint(){
-		
+	
+	public Toolkit getToolkit(){
+		return jFrame.getToolkit();
 	}
 
 }
