@@ -18,7 +18,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
-public class MainFrame {
+public class MainFrame implements UpdatableInterface{
 
 	private JFrame jFrame = null;  //  @jve:decl-index=0:visual-constraint="194,58"
 	private JPanel jContentPane = null;
@@ -41,7 +41,7 @@ public class MainFrame {
 	
 	public MainFrame(){
 		getJFrame();
-		update();
+		updateLanguage();
 		jFrame.setVisible(true);
 	}
 	
@@ -266,7 +266,7 @@ public class MainFrame {
 		return _englishLanguage;
 	}
 	
-	public void update(){
+	public void updateLanguage(){
 		_englishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_EN_LANGUAGE, _model.get_selectedLanguage()));
 		_spanishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_ES_LANGUAGE, _model.get_selectedLanguage()));
 		_language.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_LANGUAGE, _model.get_selectedLanguage()));
@@ -275,6 +275,13 @@ public class MainFrame {
 		_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
 		_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
 		_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _model.get_selectedLanguage()));
+	}
+	
+	public void updateData(){
+		
+	}
+	public void repaint(){
+		
 	}
 
 }
