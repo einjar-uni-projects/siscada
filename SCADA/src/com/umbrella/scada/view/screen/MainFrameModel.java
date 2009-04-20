@@ -3,15 +3,15 @@ package com.umbrella.scada.view.screen;
 import javax.swing.Action;
 
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
-import com.umbrella.scada.view.screen.actions.ChangeLanguageAction;
 
 public class MainFrameModel {
 	//Variables generales
 	private LanguageIDs _selectedLanguage;
 	
 	//ACTIONS
-	private final Action _changeSpLanguage = new ChangeLanguageAction(LanguageIDs.SPANISHLOCALE);
-	private final Action _changeEnLanguage = new ChangeLanguageAction(LanguageIDs.ENGLISHLOCALE);
+	
+	//
+	
 	
 
 	// El constructor privado no permite que se genere un constructor por defecto
@@ -36,15 +36,15 @@ public class MainFrameModel {
 	public LanguageIDs get_selectedLanguage() {
 		return _selectedLanguage;
 	}
-	
-	public Action get_changeLanguage(LanguageIDs languageIDs) {
-		switch (languageIDs) {
-		case SPANISHLOCALE:
-			return _changeSpLanguage;
-		case ENGLISHLOCALE:
-			return _changeEnLanguage;
-		}
-		return null;
+
+	public void set_selectedLanguage(LanguageIDs language) {
+		_selectedLanguage = language;
 	}
+	
+	
+	
+	
+	
+	
 
 }
