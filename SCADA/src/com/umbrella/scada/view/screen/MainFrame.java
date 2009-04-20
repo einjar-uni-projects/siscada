@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 
 public class MainFrame {
 
@@ -21,17 +22,21 @@ public class MainFrame {
 	private JPanel jContentPane = null;
 	private JPanel _rightPanel = null;
 	private JMenuBar _menuBar = null;
-	private JMenu _fileMenu = null;
-	
-	private LocalizationResources _languageResources = LocalizationResources.getInstance();
-	private String _selectedLanguage = LocalizationResources.SPANISHLOCALE;
+	private JMenu _fileMenu = null;	
 	private JMenu _menuOptions = null;
 	private JPanel _footerPanel = null;
 	private JLabel _footerInfo = null;
 	private JButton _initButton = null;
 	private JButton _pauseButton = null;
 	private JButton _stopButton = null;
-
+	private JPanel _mainPanel = null;
+	private JMenu _language = null;
+	
+	private MainFrameModel _model = MainFrameModel.getInstance();
+	private LocalizationResources _languageResources = LocalizationResources.getInstance();
+	private JMenuItem _spanishLanguage = null;
+	private JMenuItem _englishLanguage = null;
+	
 	public MainFrame(){
 		getJFrame();
 		jFrame.setVisible(true);
@@ -46,6 +51,7 @@ public class MainFrame {
 		if (jFrame == null) {
 			jFrame = new JFrame();
 			jFrame.setSize(new Dimension(639, 284));
+			jFrame.setTitle("SCADA penes fritos");
 			jFrame.setJMenuBar(get_menuBar());
 			jFrame.setContentPane(getJContentPane());
 		}
@@ -63,6 +69,7 @@ public class MainFrame {
 			jContentPane.setLayout(new BorderLayout());
 			jContentPane.add(get_rightPanel(), BorderLayout.EAST);
 			jContentPane.add(get_footerPanel(), BorderLayout.SOUTH);
+			jContentPane.add(get_mainPanel(), BorderLayout.CENTER);
 		}
 		return jContentPane;
 	}
@@ -103,7 +110,7 @@ public class MainFrame {
 		if (_fileMenu == null) {
 			_fileMenu = new JMenu();
 			_fileMenu.setName("FileMenu");
-			_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _selectedLanguage));
+			_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _model.get_selectedLanguage()));
 		}
 		return _fileMenu;
 	}
@@ -117,7 +124,8 @@ public class MainFrame {
 		if (_menuOptions == null) {
 			_menuOptions = new JMenu();
 			_menuOptions.setName("OptiosMenu");
-			_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _selectedLanguage));
+			_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
+			_menuOptions.add(get_language());
 		}
 		return _menuOptions;
 	}
@@ -160,6 +168,7 @@ public class MainFrame {
 	private JButton get_initButton() {
 		if (_initButton == null) {
 			_initButton = new JButton();
+			_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
 		}
 		return _initButton;
 	}
@@ -172,6 +181,7 @@ public class MainFrame {
 	private JButton get_pauseButton() {
 		if (_pauseButton == null) {
 			_pauseButton = new JButton();
+			_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_PAUSE, _model.get_selectedLanguage()));
 		}
 		return _pauseButton;
 	}
@@ -184,8 +194,62 @@ public class MainFrame {
 	private JButton get_stopButton() {
 		if (_stopButton == null) {
 			_stopButton = new JButton();
+			_stopButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_STOP, _model.get_selectedLanguage()));
 		}
 		return _stopButton;
+	}
+
+	/**
+	 * This method initializes _mainPanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel get_mainPanel() {
+		if (_mainPanel == null) {
+			_mainPanel = new MainPanel();
+		}
+		return _mainPanel;
+	}
+
+	/**
+	 * This method initializes _language	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenu get_language() {
+		if (_language == null) {
+			_language = new JMenu();
+			_language.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_LANGUAGE, _model.get_selectedLanguage()));
+			_language.add(get_spanishLanguage());
+			_language.add(get_englishLanguage());
+		}
+		return _language;
+	}
+
+	/**
+	 * This method initializes _spanishLanguage	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem get_spanishLanguage() {
+		if (_spanishLanguage == null) {
+			_spanishLanguage = new JMenuItem();
+			_spanishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_ES_LANGUAGE, _model.get_selectedLanguage()));
+		}
+		return _spanishLanguage;
+	}
+
+	/**
+	 * This method initializes _englishLanguage	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem get_englishLanguage() {
+		if (_englishLanguage == null) {
+			_englishLanguage = new JMenuItem();
+			_englishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_EN_LANGUAGE, _model.get_selectedLanguage()));
+		}
+		return _englishLanguage;
 	}
 
 }
