@@ -15,6 +15,13 @@ public class MainFrameModel implements Updatable{
 	
 	//ACTIONS
 	
+	//INFO AUTOMATAS
+	private int _slaveAuto1_speed1;
+	private int _slaveAuto1_delay1;
+	private int _slaveAuto1_delay2;
+	private int _slaveAuto2_speed2;
+	
+	
 	
 
 	// El constructor privado no permite que se genere un constructor por defecto
