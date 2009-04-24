@@ -8,6 +8,8 @@ public class Contexto {
 
 	private Estado estado;
 	
+	boolean apagado=false;
+	
 	/*
 	 * Fin de la cinta indica si la cinta esta libre o vacia
 	 * True = libre / false = ocupada
@@ -20,6 +22,7 @@ public class Contexto {
 	private boolean [] dispositivosInternos= new boolean[16];
 	
 	private static Contexto INSTANCE = null;
+	
 	
 	// Private constructor suppresses 
     private Contexto() {
@@ -55,6 +58,6 @@ public class Contexto {
  
  	public void request()
  	{
- 		estado.transitar();
+ 		estado=estado.transitar();
  	}
 }
