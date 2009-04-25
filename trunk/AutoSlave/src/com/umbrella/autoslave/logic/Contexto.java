@@ -21,6 +21,12 @@ public class Contexto {
 	 */
 	private boolean [] dispositivosInternos= new boolean[16];
 	
+	/*
+	 * El tiempo de reloj realmente me lo tiene q dar el usuario, se tiene q cargar y estaria muy bien leerlo
+	 * de algun sitio para todos los automatas
+	 */
+	private int _tiempoReloj=100;
+	
 	private static Contexto INSTANCE = null;
 	
 	
@@ -32,14 +38,15 @@ public class Contexto {
     	}
     }
  
-    // creador sincronizado para protegerse de posibles problemas  multi-hilo
-    // otra prueba para evitar instanciaci—n mœltiple 
+    /*
+     *  creador sincronizado para protegerse de posibles problemas  multi-hilo
+     *  otra prueba para evitar instanciaci—n mœltiple
+     */ 
     private synchronized static void createInstance() {
         if (INSTANCE == null) { 
             INSTANCE = new Contexto();
         }
     }
- 
     
     public static Contexto getInstance() {
         if (INSTANCE == null) createInstance();
@@ -59,5 +66,9 @@ public class Contexto {
  	public void request()
  	{
  		estado=estado.transitar();
+ 	}
+ 	
+ 	public long getTiempoInterno(){
+ 		return _tiempoReloj;
  	}
 }
