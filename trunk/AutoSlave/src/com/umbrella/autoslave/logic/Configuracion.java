@@ -22,7 +22,7 @@ public class Configuracion {
 	/*
 	 * indica el tamanyo de los pasteles
 	 */
-	private double size=0.20;
+	private double sizePastel=0.20;
 	
 	/*
 	 * Tama–o de la cinta
@@ -52,7 +52,7 @@ public class Configuracion {
 	/*
 	 * puntos de control de la cinta, se entiende como las posiciones en las que pueden estar los pasteles en la cinta
 	 */
-	private int pointsControl=(int)(sizeCinta/size);
+	private int pointsControl=(int)(sizeCinta/sizePastel);
 	
 	/*
 	 * Es algo unico, no puede crearse dos veces	
@@ -107,8 +107,8 @@ public class Configuracion {
 		return pointsControl;
 	}
 
-	public double getSize() {
-		return size;
+	public double getSizePastel() {
+		return sizePastel;
 	}
 
 	public double getSizeCinta() {
