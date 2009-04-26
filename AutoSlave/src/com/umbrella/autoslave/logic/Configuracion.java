@@ -22,7 +22,7 @@ public class Configuracion {
 	/*
 	 * indica el tamanyo de los pasteles
 	 */
-	private double sizePastel=0.20;
+	private double errorSensor=0.20;
 	
 	/*
 	 * Tama–o de la cinta
@@ -52,7 +52,7 @@ public class Configuracion {
 	/*
 	 * puntos de control de la cinta, se entiende como las posiciones en las que pueden estar los pasteles en la cinta
 	 */
-	private int pointsControl=(int)(sizeCinta/sizePastel);
+	//private int pointsControl=(int)(sizeCinta/sizePastel);
 	
 	/*
 	 * Es algo unico, no puede crearse dos veces	
@@ -60,29 +60,31 @@ public class Configuracion {
 	private static Configuracion INSTANCE = null;
 	
 	/*
-	 * posicion donde se encuentra el sensor y el dispensador de chocolate
+	 * posicion donde se encuentra el sensor y el dispensador de chocolate, medido en CM
 	 */
-	private int posChoc=(int)(pointsControl/3);
+	//private int posChoc=(int)(pointsControl/3);
+	private double posChoc=(sizeCinta/3)*100;
 	
 	/*
-	 * posicion donde se encuentra el sensor y el dispensador de caramelo
+	 * posicion donde se encuentra el sensor y el dispensador de caramelo, medido en CM
 	 */
-	private int posCaram=(int)(pointsControl*2/3);
+	private double posCaram=(sizeCinta*2/3)*100;
 	
 	/*
-	 * posicion donde se encuentra el dispensador de bizcochos
+	 * posicion donde se encuentra el dispensador de bizcochos, medido en CM
 	 */
 	private int posBizc=0;
 	
 	/*
-	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja
+	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
 	 */
-	private int posFin=pointsControl-1;
+	//private int posFin=pointsControl-1;
+	private double posFin=(sizeCinta*100)-errorSensor;
 	
 	/*
-	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos
+	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
 	 */
-	private int espEntreBizc=0;
+	private double espEntreBizc=0.05;
 	
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
@@ -103,12 +105,10 @@ public class Configuracion {
 		return _tiempoReloj;
 	}
 
-	public int getPointsControl() {
-		return pointsControl;
-	}
+	
 
-	public double getSizePastel() {
-		return sizePastel;
+	public double getErrorSensor() {
+		return errorSensor;
 	}
 
 	public double getSizeCinta() {
@@ -131,23 +131,23 @@ public class Configuracion {
 		return valvCaram;
 	}
 
-	public int getPosChoc() {
+	public double getPosChoc() {
 		return posChoc;
 	}
 
-	public int getPosCaram() {
+	public double getPosCaram() {
 		return posCaram;
 	}
 
-	public int getPosBizc() {
+	public double getPosBizc() {
 		return posBizc;
 	}
 
-	public int getPosFin() {
+	public double getPosFin() {
 		return posFin;
 	}
 
-	public int getEspEntreBizc() {
+	public double getEspEntreBizc() {
 		return espEntreBizc;
 	}
 	

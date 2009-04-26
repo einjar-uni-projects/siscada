@@ -13,6 +13,16 @@ public class MoverCinta extends Thread implements Estado{
 	private Contexto contexto=Contexto.getInstance();
 	private Configuracion configuracion=Configuracion.getInstance();
 
+	
+	/*
+	 * lo q desplaza la cinta en un click
+	 */
+	double velCintaCMporNanoseg=(configuracion.getVelCinta()*100)/(60*1000);
+	/*
+	 * espacio que recorre la cinta en un click, medido en CM 
+	 */
+	double espacioEnClick=velCintaCMporNanoseg*configuracion.get_tiempoReloj();
+	
 	/*
 	 * indica el numero de saltos q dio la cinta desde q empezo a moverse 
 	 */
@@ -22,38 +32,38 @@ public class MoverCinta extends Thread implements Estado{
 		// TODO Auto-generated constructor stub
 	}
 
+	/*
+	 */
 	@Override
 	public void run(){
+		/*
+		 * si se ejecuta la cinta 1 vez la cinta se desplaza minimo una cantidad X, suponemos q eso es siempre superior a un click
+		 */
 		_estadoHilo=EstateThreads.EJECUTANDO;
-		
-		/*
-		 * lo q desplaza la cinta en un click
-		 */
-		double velCintaCMporNanoseg=(configuracion.getVelCinta()*100)/(60*1000);
-		double sizeSectorCintaCM=configuracion.getSizePastel()*100;
-		/*
-		 * tiempo en NanoSegundos necesarios para avanzar una posicion la cinta 
-		 */
-		double tiempoNecesario=sizeSectorCintaCM/velCintaCMporNanoseg;
-		
+
 		/*
 		 * nos dice si algun sensor se va a encender
 		 * se da el valor False xq al menos tiene q dar el salto una vez
 		 */
-		boolean sensoresEncendidos=false;
-		
-		while(!sensoresEncendidos){
-			try {
-				sleep((int)tiempoNecesario);
-				// dormimos este tiempo porq no puede ocurrir nada en ese periodo
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		for(int i=0;i<contexto.get_pasteles().size();i++){
+			if((contexto.get_pasteles().get(i).get_posicion()+espacioEnClick)<=(configuracion.getSizeCinta()*100))
+				contexto.get_pasteles().get(i).incrementarPosicion(espacioEnClick);
+			else{
+				//el pastel SE HA CAIDO DE LA CINTA
+				contexto.get_pasteles().get(i).set_posicion((configuracion.getSizeCinta()*100));
 			}
-			contexto.avanzarCinta();
-			saltosCinta++;
-			sensoresEncendidos=seEnciendeSensor(saltosCinta);
 		}
+
+		try {
+			//espera al prox ciclo de reloj
+			wait();
+			// dormimos este tiempo porq no puede ocurrir nada en ese periodo
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		set_estadoHilo(EstateThreads.ESPERANDO);
 	}
 	
@@ -91,25 +101,26 @@ public class MoverCinta extends Thread implements Estado{
 		
 	}	
 	
+	/*
+	 * modifica el estado interno
+	 */
+	private synchronized void setEstadoInterno(){
+		/*
+		 * 0- sensor dispensadora Bizcocho
+		 * 1- sensor dispensadora Chocolate
+		 * 2- sensor dispensadroa caramelo
+		 * 3- sensor fin cinta
+		 * 4- dispensadora bizcochos activa
+		 * 5- dispensadora chocolate activa
+		 * 6- dispensadora caramelo activa
+		 */
+	}
+	
 	public synchronized EstateThreads get_estadoHilo() {
 		return _estadoHilo;
 	}
 	
 	private synchronized void set_estadoHilo(EstateThreads estate) {
 		this._estadoHilo=estate;
-	}
-	
-	private synchronized boolean seEnciendeSensor(int espacio){
-		boolean salida=false;
-		
-		if(contexto.getPosicionCinta(configuracion.getPosCaram())) salida=true;
-		if(contexto.getPosicionCinta(configuracion.getPosChoc())) salida=true;
-		if(contexto.getPosicionCinta(configuracion.getPosFin())) salida=true;
-		if(!contexto.getPosicionCinta(configuracion.getPosBizc()) && espacio>=configuracion.getEspEntreBizc()) salida=true;
-		return salida;
-	}
-	
-	public synchronized int getSaltosCinta(){
-		return saltosCinta;
 	}
 }

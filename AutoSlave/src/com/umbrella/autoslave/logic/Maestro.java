@@ -86,8 +86,14 @@ public class Maestro {
  							_moverCinta.run();
  						}else{
  							if(puedoDispensadoraBizcocho()) _dispensadora.run();
- 							if(puedoDispensadoraChocolate()) _maqChocolate.run();
- 							if(puedoDispensadoraCaramelo()) _maqCaramelo.run();
+ 							if(puedoDispensadoraChocolate()){
+ 								_maqChocolate.run();
+ 								contexto.get_pasteles().get(contexto.activaSensorChocolate()).set_chocolate();
+ 							}
+ 							if(puedoDispensadoraCaramelo()){
+ 								_maqCaramelo.run();
+ 								contexto.get_pasteles().get(contexto.activaSensorCaramelo()).set_caramelo();
+ 							}
  							if(puedoFinCinta()) _salPastel.run();
  						}
 
@@ -130,33 +136,25 @@ public class Maestro {
 	private synchronized static boolean seEnciendeSensor(int espacio){
 		boolean salida=false;
 		
-		if(contexto.getPosicionCinta(configuracion.getPosCaram())) salida=true;
-		if(contexto.getPosicionCinta(configuracion.getPosChoc())) salida=true;
-		if(contexto.getPosicionCinta(configuracion.getPosFin())) salida=true;
-		if(!contexto.getPosicionCinta(configuracion.getPosBizc()) && _moverCinta.getSaltosCinta()>=configuracion.getEspEntreBizc()) salida=true;
+		if(contexto.activaSensorCaramelo()>=0) salida=true;
+		if(contexto.activaSensorChocolate()>=0) salida=true;
+		if(contexto.activaSensorFinal()>=0) salida=true;
+		if(contexto.activaSensorBizcocho()>=0) salida=true;
 		return salida;
 	}
 	
-	private synchronized static boolean sensorDispensadoraBizcocho(){
-		boolean salida=false;
-		if(!contexto.getPosicionCinta(configuracion.getPosBizc()) && _moverCinta.getSaltosCinta()>=configuracion.getEspEntreBizc()) salida=true;
-		return salida;
+	private synchronized static int sensorDispensadoraBizcocho(){
+		return contexto.activaSensorBizcocho();
 	}
 	
-	private synchronized static boolean sensorDispensadoraChocolate(){
-		boolean salida=false;	
-		if(contexto.getPosicionCinta(configuracion.getPosChoc())) salida=true;
-		return salida;
+	private synchronized static int sensorDispensadoraChocolate(){
+		return contexto.activaSensorChocolate();
 	}
-	private synchronized static boolean sensorDispensadoraCaramelo(){
-		boolean salida=false;
-		if(contexto.getPosicionCinta(configuracion.getPosCaram())) salida=true;
-		return salida;
+	private synchronized static int sensorDispensadoraCaramelo(){
+		return contexto.activaSensorCaramelo();
 	}
-	private synchronized static boolean sensorFinCinta(){
-		boolean salida=false;
-		if(contexto.getPosicionCinta(configuracion.getPosFin())) salida=true;
-		return salida;
+	private synchronized static int sensorFinCinta(){
+		return contexto.activaSensorFinal();
 	}
 	
 	private synchronized static boolean ejecutandoDispensadoraBizcocho(){
@@ -184,23 +182,23 @@ public class Maestro {
 	
 	private synchronized static boolean puedoDispensadoraBizcocho(){
 		boolean salida=true;
-		if(!ejecutandoDispensadoraBizcocho() && sensorDispensadoraBizcocho()) salida=true;
+		if(!ejecutandoDispensadoraBizcocho() && sensorDispensadoraBizcocho()>=0) salida=true;
 		return salida;
 	}
 	
 	private synchronized static boolean puedoDispensadoraChocolate(){
 		boolean salida=false;	
-		if(!ejecutandoDispensadoraChocolate() && sensorDispensadoraChocolate()) salida=true;
+		if(!ejecutandoDispensadoraChocolate() && sensorDispensadoraChocolate()>=0) salida=true;
 		return salida;
 	}
 	private synchronized static boolean puedoDispensadoraCaramelo(){
 		boolean salida=false;
-		if(!ejecutandoDispensadoraCaramelo() && sensorDispensadoraCaramelo()) salida=true;
+		if(!ejecutandoDispensadoraCaramelo() && sensorDispensadoraCaramelo()>=0) salida=true;
 		return salida;
 	}
 	private synchronized static boolean puedoFinCinta(){
 		boolean salida=false;
-		if(!ejecutandoFinCinta() && sensorFinCinta()) salida=true;
+		if(!ejecutandoFinCinta() && sensorFinCinta()>=0) salida=true;
 		return salida;
 	}
 }
