@@ -1,12 +1,19 @@
 package com.umbrella.autoslave.logic;
 
+/*
+ * Author: pablo José Izquierdo Escudero
+ * Fecha: 19/04/2009
+ * 
+ * Objetivo: contiene la informacion del estado del sistema, es toda informacion dinamica y que cambia o puede cambiar en tiempo de ejecucion
+ */
+
 import com.umbrella.autoslave.executor.Estado;
-
-
 
 public class Contexto {
 
 	private Estado estado;
+	
+	private Configuracion conf= Configuracion.getInstance();
 	
 	boolean apagado=false;
 	
@@ -21,14 +28,15 @@ public class Contexto {
 	 */
 	private boolean [] dispositivosInternos= new boolean[16];
 	
+		
+	
 	/*
-	 * El tiempo de reloj realmente me lo tiene q dar el usuario, se tiene q cargar y estaria muy bien leerlo
-	 * de algun sitio para todos los automatas
+	 * posiciones de la cinta validas, un 0 indican q la posicion esta libre y un 1 indica que el pastel ocupa la
+	 * posicion marcada
 	 */
-	private int _tiempoReloj=100;
+	private boolean[] cinta=new boolean[conf.getPointsControl()];
 	
 	private static Contexto INSTANCE = null;
-	
 	
 	// Private constructor suppresses 
     private Contexto() {
@@ -53,22 +61,39 @@ public class Contexto {
         return INSTANCE;
     }
 	
- 	public void setState( Estado state )
- 	{
+ 	public void setState( Estado state ){
  		this.estado = state;
  	}
  
- 	public Estado getState()
- 	{
+ 	public Estado getState(){
  		return estado;
  	}
  
- 	public void request()
- 	{
+ 	public void request(){
  		estado=estado.transitar();
  	}
  	
  	public long getTiempoInterno(){
- 		return _tiempoReloj;
+ 		return conf.get_tiempoReloj();
  	}
+ 	
+ 	/*
+ 	 * avanza la posicion calculada de los pasteles en la cinta
+ 	 * AUNQUE LOS SENSORES SE ACTIVAN CON EL CLICK DE RELOJ LA CINTA TIENE UN MOVIMIENTO CONSTANTE DIFERENCIADO DE ESTOS CLICKs
+ 	 */
+ 	public synchronized void avanzarCinta(){
+ 		for(int i=1;i<cinta.length;i++) cinta[i]=cinta[i-1];
+ 		cinta[0]=false;
+ 	}
+ 	
+ 	public synchronized void nuevoPastelCinta(){
+ 		cinta[0]=true;
+ 	}
+ 	
+ 	public synchronized boolean getPosicionCinta(int pos){
+ 		boolean hayAlgo=false;
+ 		if(pos>=0 && pos < cinta.length) hayAlgo=cinta[pos];
+ 		return hayAlgo;
+ 	}
+ 	
 }
