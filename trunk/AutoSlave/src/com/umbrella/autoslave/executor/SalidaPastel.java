@@ -22,7 +22,7 @@ public class SalidaPastel extends Thread implements Estado{
 	public void run(){
 		set_estadoHilo(EstateThreads.EJECUTANDO);
 		
-		boolean finCintaLibre=contexto.getPosicionCinta(configuracion.getPosFin());
+		boolean finCintaLibre=finCintaLibre();
 		while (!finCintaLibre){
 			//se espera al siguiente click de la cinta
 			try {
@@ -32,10 +32,9 @@ public class SalidaPastel extends Thread implements Estado{
 				e.printStackTrace();
 			}
 			//comprobar el estado de la cinta
-			finCintaLibre=contexto.getPosicionCinta(configuracion.getPosFin());
+			finCintaLibre=finCintaLibre();
 		}
 		contexto.decrementarNumPasteles();
-		contexto.setPosicionCinta(configuracion.getPosFin(), false);
 		//se ha recogido el bizcocho del fin de la lista
 		set_estadoHilo(EstateThreads.ACABADO);
 	}
@@ -71,5 +70,13 @@ public class SalidaPastel extends Thread implements Estado{
 	
 	private synchronized void set_estadoHilo(EstateThreads estate) {
 		this._estadoHilo=estate;
+	}
+	
+	private synchronized boolean finCintaLibre(){
+		boolean libre=true;
+		for(int i=0;i<contexto.get_pasteles().size();i++){
+			if(contexto.get_pasteles().get(i).get_posicion()>=(configuracion.getPosFin()-configuracion.getErrorSensor())) libre=false;
+		}
+		return libre;
 	}
 }

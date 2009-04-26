@@ -7,6 +7,8 @@ package com.umbrella.autoslave.logic;
  * Objetivo: contiene la informacion del estado del sistema, es toda informacion dinamica y que cambia o puede cambiar en tiempo de ejecucion
  */
 
+import java.util.LinkedList;
+
 import com.umbrella.autoslave.executor.Estado;
 
 public class Contexto {
@@ -14,6 +16,8 @@ public class Contexto {
 	private Estado estado;
 	
 	private Configuracion conf= Configuracion.getInstance();
+	
+	private LinkedList<Pastel> _pasteles;
 	
 	boolean apagado=false;
 	
@@ -27,14 +31,18 @@ public class Contexto {
 	 * indica los sensores que estan activos, o los dispositivos activados 
 	 */
 	private boolean [] dispositivosInternos= new boolean[16];
-	
-		
-	
 	/*
-	 * posiciones de la cinta validas, un 0 indican q la posicion esta libre y un 1 indica que el pastel ocupa la
-	 * posicion marcada
+	 * 0- sensor dispensadora Bizcocho
+	 * 1- sensor dispensadora Chocolate
+	 * 2- sensor dispensadroa caramelo
+	 * 3- sensor fin cinta
+	 * 4- dispensadora bizcochos activa
+	 * 5- dispensadora chocolate activa
+	 * 6- dispensadora caramelo activa
 	 */
-	private boolean[] cinta=new boolean[conf.getPointsControl()];
+		
+
+	Configuracion configuracion=Configuracion.getInstance();
 	
 	private static Contexto INSTANCE = null;
 	
@@ -50,6 +58,7 @@ public class Contexto {
     	for(int i=0;i<dispositivosInternos.length;i++){
     		dispositivosInternos[i]=false;
     	}
+    	_pasteles=new LinkedList<Pastel>();
     }
  
     /*
@@ -83,29 +92,6 @@ public class Contexto {
  	public long getTiempoInterno(){
  		return conf.get_tiempoReloj();
  	}
- 	
- 	/*
- 	 * avanza la posicion calculada de los pasteles en la cinta
- 	 * AUNQUE LOS SENSORES SE ACTIVAN CON EL CLICK DE RELOJ LA CINTA TIENE UN MOVIMIENTO CONSTANTE DIFERENCIADO DE ESTOS CLICKs
- 	 */
- 	public synchronized void avanzarCinta(){
- 		for(int i=1;i<cinta.length;i++) cinta[i]=cinta[i-1];
- 		cinta[0]=false;
- 	}
- 	
- 	public synchronized void nuevoPastelCinta(){
- 		cinta[0]=true;
- 	}
- 	
- 	public synchronized boolean getPosicionCinta(int pos){
- 		boolean hayAlgo=false;
- 		if(pos>=0 && pos < cinta.length) hayAlgo=cinta[pos];
- 		return hayAlgo;
- 	}
- 	
- 	public synchronized void setPosicionCinta(int pos, boolean valor){
- 		if(pos>=0 && pos < cinta.length) cinta[pos]=valor;
- 	}
 
 	private synchronized int getNumPasteles() {
 		return numPasteles;
@@ -122,5 +108,88 @@ public class Contexto {
 	public synchronized void incrementarNumPasteles() {
 		this.numPasteles++;
 	}
- 	
+	
+	public synchronized void setDispositivosInternos(int pos, boolean valor){
+		dispositivosInternos[pos]=valor;
+	}
+	public synchronized boolean getDispositivosInternos(int pos){
+		return dispositivosInternos[pos];
+	}
+
+	public synchronized LinkedList<Pastel> get_pasteles() {
+		return _pasteles;
+	}
+	
+	/*
+	 * devuelve la posicion del pastel q activa el sensor
+	 */
+	public synchronized int activaSensorBizcocho(){
+		int sal=-1;
+		
+		/*
+		 * posicion donde esta el dispensador de bizcochos
+		 */
+		double posBizc=configuracion.getPosBizc();
+		
+		for(int i=0;i<_pasteles.size();i++){
+			if(_pasteles.get(i).get_posicion()<(posBizc+configuracion.getErrorSensor()) || 
+					_pasteles.get(i).get_posicion()>(posBizc-configuracion.getErrorSensor()) ) 
+				if((_pasteles.get(i).get_posicion() - posBizc)>=configuracion.getEspEntreBizc()  )sal=i;
+		}
+		return sal;
+	}
+	
+	/*
+	 * devuelve la posicion del pastel q activa el sensor
+	 */
+	public synchronized int activaSensorCaramelo(){
+		int sal=-1;
+		
+		/*
+		 * posicion donde esta el dispensador de bizcochos
+		 */
+		double posCaramelo=configuracion.getPosCaram();
+		
+		for(int i=0;i<_pasteles.size();i++){
+			if(_pasteles.get(i).get_posicion()<(posCaramelo+configuracion.getErrorSensor()) || 
+					_pasteles.get(i).get_posicion()>(posCaramelo-configuracion.getErrorSensor()) ) sal=i;
+		}
+		return sal;
+	}
+	
+	/*
+	 * devuelve la posicion del pastel q activa el sensor
+	 */
+	public synchronized int activaSensorChocolate(){
+		int sal=-1;
+		
+		/*
+		 * posicion donde esta el dispensador de bizcochos
+		 */
+		double posChocolate=configuracion.getPosChoc();
+		
+		for(int i=0;i<_pasteles.size();i++){
+			if(_pasteles.get(i).get_posicion()<(posChocolate+configuracion.getErrorSensor()) || 
+					_pasteles.get(i).get_posicion()>(posChocolate-configuracion.getErrorSensor()) ) sal=i;
+		}
+		return sal;
+	}
+	
+	/*
+	 * devuelve la posicion del pastel q activa el sensor
+	 */
+	public synchronized int activaSensorFinal(){
+		int sal=-1;
+		
+		/*
+		 * posicion donde esta el dispensador de bizcochos
+		 */
+		double posFinal=configuracion.getPosFin();
+		
+		for(int i=0;i<_pasteles.size();i++){
+			if(_pasteles.get(i).get_posicion()<(posFinal+configuracion.getErrorSensor()) || 
+					_pasteles.get(i).get_posicion()>(posFinal-configuracion.getErrorSensor()) ) sal=i;
+		}
+		return sal;
+	}
 }
