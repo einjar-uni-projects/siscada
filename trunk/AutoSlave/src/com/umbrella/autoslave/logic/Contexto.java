@@ -42,7 +42,7 @@ public class Contexto {
     private Contexto() {
     	
     	for(int i=0;i<dispositivosInternos.length;i++){
-    		
+    		dispositivosInternos[i]=false;
     	}
     }
  
@@ -94,6 +94,10 @@ public class Contexto {
  		boolean hayAlgo=false;
  		if(pos>=0 && pos < cinta.length) hayAlgo=cinta[pos];
  		return hayAlgo;
+ 	}
+ 	
+ 	public synchronized void setPosicionCinta(int pos, boolean valor){
+ 		if(pos>=0 && pos < cinta.length) cinta[pos]=valor;
  	}
  	
 }
