@@ -2,36 +2,78 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autoslave.logic.EstateThreads;
 
-public class DispensadoraActivada implements Estado{
+public class DispensadoraActivada extends Thread implements Estado{
 
 	/*
 	 * util para el espacio entre pasteles
 	 */
 	private int _contEspacio=0;
 	
-	/*
-	 * indica el estado anterior del que proviene
-	 */
-	private boolean _estAnterior=false;
 	
-	private int _pastelesRestantes;
 	/*
-	 * 
+	 * pasteles que quedan en el deposito
 	 */
+	private int _pastelesRestantes;
+	
 	private Configuracion configuracion=Configuracion.getInstance();
 	private Contexto contexto=Contexto.getInstance();
 	
 	private static Estado INSTANCE = null;
 
+	private EstateThreads _estadoHilo;
 	/*
 	 * 
 	 */
 	private DispensadoraActivada() {
 		_pastelesRestantes=configuracion.getCapacidadPasteles();
+		set_estadoHilo(EstateThreads.CREADO);
 	}
 
-	public Estado transitar() {
+	@Override
+	public void run(){
+		set_estadoHilo(EstateThreads.EJECUTANDO);
+		
+		while(_estadoHilo.equals(EstateThreads.EJECUTANDO)){
+			/*
+			 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
+			 * el œltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
+			 */
+			try {
+				// se queda esperando a la se–al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			/*
+			 * SE SUPONE Q ESTE IF ES INNECESARIO
+			 * si en la posicion donde esta la dispensadora no hay bizcoho
+			 * &&
+			 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
+			 */
+			if(!contexto.getPosicionCinta(configuracion.getPosBizc()) && get_contEspacio()>=configuracion.getEspEntreBizc()){
+				/*
+				 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
+				 * se pone la posicion de la cinta inicial como ocupada
+				 */
+				reset_contEspacio();
+				_pastelesRestantes--;
+				contexto.setPosicionCinta(configuracion.getPosBizc(), true);
+				contexto.incrementarNumPasteles();
+				set_estadoHilo(EstateThreads.ACABADO);
+			}else{
+				// aqui no tendria q entrar nunca
+				System.err.println("Error en la ejecucion del hilo de DsipensadoraActivada");
+			}
+		}
+	}
+	
+	/*
+	 *  - METODO OBSELETO -
+	 */
+	public void transitar() {
 		/*
 		 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
 		 * el œltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
@@ -43,13 +85,12 @@ public class DispensadoraActivada implements Estado{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!_estAnterior && _contEspacio>=configuracion.getEspEntreBizc()){
+		if(_contEspacio>=configuracion.getEspEntreBizc()){
 			/*
 			 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
 			 * se pone la posicion de la cinta inicial como ocupada
 			 */
 			_contEspacio=0;
-			_estAnterior=true;
 			_pastelesRestantes--;
 			contexto.setPosicionCinta(configuracion.getPosBizc(), true);
 		}
@@ -57,8 +98,9 @@ public class DispensadoraActivada implements Estado{
 		/*
 		 * 
 		 */
-		return MoverCinta.getInstance();
+		//return MoverCinta.getInstance();
 	}
+	
 	private synchronized static void createInstance() {
 		if (INSTANCE == null) { 
 			INSTANCE = new DispensadoraActivada();
@@ -84,7 +126,19 @@ public class DispensadoraActivada implements Estado{
 		_contEspacio++;
 	}
 	
-	public synchronized void modEstAnterior(){
-		_estAnterior=false;;
+	private synchronized void reset_contEspacio(){
+		_contEspacio=0;
 	}
+	private synchronized int get_contEspacio(){
+		return _contEspacio;
+	}
+
+	public synchronized EstateThreads get_estadoHilo() {
+		return _estadoHilo;
+	}
+	
+	private synchronized void set_estadoHilo(EstateThreads estate) {
+		this._estadoHilo=estate;
+	}
+	
 }

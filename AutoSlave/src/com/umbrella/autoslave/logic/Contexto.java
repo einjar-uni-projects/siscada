@@ -38,6 +38,12 @@ public class Contexto {
 	
 	private static Contexto INSTANCE = null;
 	
+	
+	/*
+	 * numero de pasteles en la cinta, no sirve para nada tecnicamente solo da informacion
+	 */
+	private int numPasteles;
+	
 	// Private constructor suppresses 
     private Contexto() {
     	
@@ -70,7 +76,8 @@ public class Contexto {
  	}
  
  	public void request(){
- 		estado=estado.transitar();
+ 		estado.transitar();
+ 		//estado=estado.transitar();
  	}
  	
  	public long getTiempoInterno(){
@@ -99,5 +106,21 @@ public class Contexto {
  	public synchronized void setPosicionCinta(int pos, boolean valor){
  		if(pos>=0 && pos < cinta.length) cinta[pos]=valor;
  	}
+
+	private synchronized int getNumPasteles() {
+		return numPasteles;
+	}
+
+	private synchronized void setNumPasteles(int numPasteles) {
+		this.numPasteles=numPasteles;
+	}
+	
+	public synchronized void decrementarNumPasteles() {
+		this.numPasteles--;
+	}
+ 	
+	public synchronized void incrementarNumPasteles() {
+		this.numPasteles++;
+	}
  	
 }

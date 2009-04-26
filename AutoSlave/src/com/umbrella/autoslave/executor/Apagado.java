@@ -1,6 +1,10 @@
 package com.umbrella.autoslave.executor;
 
-
+/*
+ * esta clase por si sola no sirve para nada, para lo q esta es para reflejar que la maquina viene de apagado a encendido
+ * 
+ * es el mejor lugar para cargar los datos de arranque 
+ */
 
 public class Apagado implements Estado{
 
@@ -11,12 +15,13 @@ public class Apagado implements Estado{
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * @see com.umbrella.autoslave.executor.Estado#transitar()
 	 * Encendida la maquina se pasa al estado, activar dispensadora
 	 */
-	public Estado transitar() {
-		return DispensadoraActivada.getInstance();
+	public void transitar() {
+		/*
+		 * codigo de carga de los datos de configuracion 
+		 */
+		//return DispensadoraActivada.getInstance();
 	}
 	
 	private synchronized static void createInstance() {
