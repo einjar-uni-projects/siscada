@@ -10,8 +10,13 @@ public class Apagado implements Estado{
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.umbrella.autoslave.executor.Estado#transitar()
+	 * Encendida la maquina se pasa al estado, activar dispensadora
+	 */
 	public Estado transitar() {
-		return null;
+		return DispensadoraActivada.getInstance();
 	}
 	
 	private synchronized static void createInstance() {

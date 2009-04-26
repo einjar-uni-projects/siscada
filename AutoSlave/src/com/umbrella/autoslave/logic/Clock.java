@@ -28,6 +28,7 @@ public class Clock extends Thread{
 			long time=contexto.getTiempoInterno();
 			wait(time);
 			_clock++;
+			notifyAll();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
