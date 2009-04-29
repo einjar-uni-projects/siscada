@@ -6,5 +6,4 @@ public interface UpdatableInterface {
 
 	public void updateLanguage();
 	public void updateData();
-	public Toolkit getToolkit();
 }

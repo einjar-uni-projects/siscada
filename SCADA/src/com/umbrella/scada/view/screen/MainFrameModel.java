@@ -1,6 +1,7 @@
 package com.umbrella.scada.view.screen;
 
 import java.awt.Image;
+import java.awt.MediaTracker;
 
 import javax.swing.Action;
 
@@ -16,7 +17,6 @@ public class MainFrameModel implements Updatable{
 	//Variables generales
 	private LanguageIDs _selectedLanguage;
 	private UpdatableInterface _mainFrame;
-	private Image _backImage;
 	
 	//ACTIONS
 	
@@ -26,7 +26,6 @@ public class MainFrameModel implements Updatable{
 	// (con mismo modificador de acceso que la definicion de la clase) 
 	private MainFrameModel() {
 		_selectedLanguage = LanguageIDs.SPANISHLOCALE;
-		_backImage = _mainFrame.getToolkit().getImage("resource/backImage.png");
 	}
 
 	/**
@@ -40,7 +39,7 @@ public class MainFrameModel implements Updatable{
 	
 	public void initialize(){
 		if(_mainFrame == null){
-			_mainFrame = new MainFrame();
+			_mainFrame = MainFrame.getInstance();
 			ObserverProvider.getInstance().registerUpdatable(this);
 		}
 	}
@@ -83,15 +82,5 @@ public class MainFrameModel implements Updatable{
 		}
 		_mainFrame.updateData();
 	}
-
-	public Image get_backImage() {
-		return _backImage;
-	}
-	
-	
-	
-	
-	
-	
 
 }
