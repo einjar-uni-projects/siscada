@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Toolkit;
 
 import javax.swing.JMenuBar;
@@ -36,17 +38,26 @@ public class MainFrame implements UpdatableInterface{
 	private JPanel _mainPanel = null;
 	private JMenu _language = null;
 	
+	private static MainFrame _instance;
 	private MainFrameModel _model = MainFrameModel.getInstance();
 	private LocalizationResources _languageResources = LocalizationResources.getInstance();
 	private JMenuItem _spanishLanguage = null;
 	private JMenuItem _englishLanguage = null;
 	
-	public MainFrame(){
+	private Image _backImage;
+	
+	private MainFrame(){
 		getJFrame();
 		updateLanguage();
 		jFrame.setVisible(true);
 	}
 	
+	public static MainFrame getInstance(){
+		if(_instance == null)
+			_instance = new MainFrame();
+		return _instance;
+	}
+
 	/**
 	 * This method initializes jFrame	
 	 * 	
@@ -280,10 +291,6 @@ public class MainFrame implements UpdatableInterface{
 	
 	public void updateData(){
 		
-	}
-	
-	public Toolkit getToolkit(){
-		return jFrame.getToolkit();
 	}
 
 }
