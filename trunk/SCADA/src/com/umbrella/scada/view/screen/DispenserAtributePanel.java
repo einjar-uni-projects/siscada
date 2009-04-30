@@ -15,14 +15,17 @@ public class DispenserAtributePanel extends AtributePanel {
 		super();
 		add(_availableCakes);
 		add(_speed);
+		add(_speedInput);
 		initialize();
 	}
 
 	@Override
 	protected void initialize() {
-		_state.setText("Cinta transportadora pasteles");
-		_availableCakes.setText("Estado: encendida");
-		_speed.setText("Velocidad: 30 m/min");
+		_state.setText("Estado");
+		_stateInput.setText("Encendido");
+		_availableCakes.setText("Pasteles restantes");
+		_speed.setText("Velocidad:");
+		_speedInput.setText("30 m/min");
 	}
 	
 }
