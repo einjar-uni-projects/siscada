@@ -25,6 +25,9 @@ public class MainPanel extends JPanel{
 		Image alt = createImage(_wallpaperWidth, _wallpaperHeight);
 		Graphics altGr = alt.getGraphics();
 		altGr.drawImage(_loader.get_backImage(), 0, 0, _wallpaperWidth, _wallpaperHeight, null);
+		altGr.drawImage(_loader.get_cinta1(), 50, 200, null);
+		altGr.drawImage(_loader.get_cinta1(), 50, 450, null);
+		altGr.drawImage(_loader.get_cinta1(), 450, 325, null);
 		altGr.drawImage(_loader.get_expendedora(), 100, 100, null);
 		altGr.drawImage(_loader.get_masa(), 100, 120, null);
 		
