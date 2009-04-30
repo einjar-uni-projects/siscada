@@ -1,12 +1,5 @@
 package com.umbrella.scada.view.screen;
 
-import java.awt.Image;
-import java.awt.MediaTracker;
-
-import javax.swing.Action;
-
-import sun.awt.image.ToolkitImage;
-
 import com.umbrella.scada.observer.ObserverProvider;
 import com.umbrella.scada.observer.TransferBuffer;
 import com.umbrella.scada.observer.TransferBufferKeys;
