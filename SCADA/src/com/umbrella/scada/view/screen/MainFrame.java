@@ -97,8 +97,9 @@ public class MainFrame implements UpdatableInterface{
 	 */
 	private JPanel get_rightPanel() {
 		if (_rightPanel == null) {
-			_rightPanel = new JPanel();
-			_rightPanel.setLayout(new GridBagLayout());
+			_rightPanel = new DispenserAtributePanel();
+			_rightPanel.setLayout(new FlowLayout());
+			_rightPanel.setPreferredSize(new Dimension(200, 600));
 		}
 		return _rightPanel;
 	}

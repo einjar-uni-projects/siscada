@@ -7,36 +7,49 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 
 public class ImageLoader {
-
-	private static ImageLoader _instance = null;
 	
 	private Image _backImage;
-	private Image _redSquare;
-	private Image _yellowSquare;
-	private Image _greenSquare;
-	private Image _redCircle;
-	private Image _yellowCircle;
-	private Image _greenCircle;
+	private Image _expendedora;
+	private Image _expendedoraChoc;
+	private Image _expendedoraCaram;
+	private Image _estados;
+	private Image _estadosRojo;
+	private Image _estadosAnarillo;
+	private Image _estadosVerde;
+	private Image _masa;
+	private Image _masaChoc;
+	private Image _cinta;
+	
+	private int _auxNumIncremental;
 	
 	public ImageLoader(JPanel panel){
 		MediaTracker tracker = new MediaTracker(panel);
 		Toolkit toolkit = panel.getToolkit();
 		
 		_backImage = toolkit.getImage("resources/backImage.png");
-		_redSquare = toolkit.getImage("resources/redSquare.png");
-		_yellowSquare = toolkit.getImage("resources/yellowSquare.png");
-		_greenSquare = toolkit.getImage("resources/greenSquare.png");
-		_redCircle = toolkit.getImage("resources/redCircle.png");
-		_yellowCircle = toolkit.getImage("resources/yellowCircle.png");
-		_greenCircle = toolkit.getImage("resources/greenCircle.png");
 		
-		tracker.addImage(_backImage, 1);
-		tracker.addImage(_redSquare, 2);
-		tracker.addImage(_yellowSquare, 3);
-		tracker.addImage(_greenSquare, 4);
-		tracker.addImage(_redCircle, 5);
-		tracker.addImage(_yellowCircle, 6);
-		tracker.addImage(_greenCircle, 7);
+		_expendedora = toolkit.getImage("resources/expendedora.png");
+		_expendedoraChoc = toolkit.getImage("resources/expendedoraChoc.png");
+		_expendedoraCaram = toolkit.getImage("resources/expendedoraCaram.png");
+		_estados = toolkit.getImage("resources/estados.png");
+		_estadosRojo = toolkit.getImage("resources/estadosRojo.png");
+		_estadosAnarillo = toolkit.getImage("resources/estadosAmarillo.png");
+		_estadosVerde = toolkit.getImage("resources/estadosVerde.png");
+		_masa = toolkit.getImage("resources/masa.png");
+		_masaChoc = toolkit.getImage("resources/masaChoc.png");
+		_cinta = toolkit.getImage("resources/cinta.png");
+		
+		tracker.addImage(_backImage, getNextNumIncr());
+		tracker.addImage(_expendedora, getNextNumIncr());
+		tracker.addImage(_expendedoraChoc, getNextNumIncr());
+		tracker.addImage(_expendedoraCaram, getNextNumIncr());
+		tracker.addImage(_estados, getNextNumIncr());
+		tracker.addImage(_estadosRojo, getNextNumIncr());
+		tracker.addImage(_estadosAnarillo, getNextNumIncr());
+		tracker.addImage(_estadosVerde, getNextNumIncr());
+		tracker.addImage(_masa, getNextNumIncr());
+		tracker.addImage(_masaChoc, getNextNumIncr());
+		tracker.addImage(_cinta, getNextNumIncr());
 		
 		try {
 			tracker.waitForAll();
@@ -47,33 +60,49 @@ public class ImageLoader {
 			e.printStackTrace();
 		}
 	}
+	
+	private int getNextNumIncr(){
+		return ++_auxNumIncremental;
+	}
 
 	public Image get_backImage() {
 		return _backImage;
 	}
 
-	public Image get_redSquare() {
-		return _redSquare;
+	public Image get_expendedora() {
+		return _expendedora;
 	}
 
-	public Image get_yellowSquare() {
-		return _yellowSquare;
+	public Image get_estados() {
+		return _estados;
 	}
 
-	public Image get_greenSquare() {
-		return _greenSquare;
+	public Image get_estadosRojo() {
+		return _estadosRojo;
 	}
 
-	public Image get_redCircle() {
-		return _redCircle;
+	public Image get_estadosAnarillo() {
+		return _estadosAnarillo;
 	}
 
-	public Image get_yellowCircle() {
-		return _yellowCircle;
+	public Image get_estadosVerde() {
+		return _estadosVerde;
 	}
 
-	public Image get_greenCircle() {
-		return _greenCircle;
+	public Image get_masa() {
+		return _masa;
+	}
+
+	public Image get_masaChoc() {
+		return _masaChoc;
+	}
+
+	public Image get_expendedoraChoc() {
+		return _expendedoraChoc;
+	}
+
+	public Image get_expendedoraCaram() {
+		return _expendedoraCaram;
 	}
 	
 }
