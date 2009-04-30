@@ -18,7 +18,9 @@ public class ImageLoader {
 	private Image _estadosVerde;
 	private Image _masa;
 	private Image _masaChoc;
-	private Image _cinta;
+	private Image _masaCaram;
+	private Image _cinta1;
+	private Image _cinta2;
 	
 	private int _auxNumIncremental;
 	
@@ -29,15 +31,17 @@ public class ImageLoader {
 		_backImage = toolkit.getImage("resources/backImage.png");
 		
 		_expendedora = toolkit.getImage("resources/expendedora.png");
-		_expendedoraChoc = toolkit.getImage("resources/expendedoraChoc.png");
-		_expendedoraCaram = toolkit.getImage("resources/expendedoraCaram.png");
+		_expendedoraChoc = toolkit.getImage("resources/expendedoraChocolate.png");
+		_expendedoraCaram = toolkit.getImage("resources/expendedoraCaramelo.png");
 		_estados = toolkit.getImage("resources/estados.png");
 		_estadosRojo = toolkit.getImage("resources/estadosRojo.png");
 		_estadosAnarillo = toolkit.getImage("resources/estadosAmarillo.png");
 		_estadosVerde = toolkit.getImage("resources/estadosVerde.png");
 		_masa = toolkit.getImage("resources/masa.png");
-		_masaChoc = toolkit.getImage("resources/masaChoc.png");
-		_cinta = toolkit.getImage("resources/cinta.png");
+		_masaChoc = toolkit.getImage("resources/masaChocolate.png");
+		_masaCaram = toolkit.getImage("resources/masaCaramelo.png");
+		_cinta1 = toolkit.getImage("resources/cinta1.png");
+		_cinta2 = toolkit.getImage("resources/cinta2.png");
 		
 		tracker.addImage(_backImage, getNextNumIncr());
 		tracker.addImage(_expendedora, getNextNumIncr());
@@ -49,7 +53,9 @@ public class ImageLoader {
 		tracker.addImage(_estadosVerde, getNextNumIncr());
 		tracker.addImage(_masa, getNextNumIncr());
 		tracker.addImage(_masaChoc, getNextNumIncr());
-		tracker.addImage(_cinta, getNextNumIncr());
+		tracker.addImage(_masaCaram, getNextNumIncr());
+		tracker.addImage(_cinta1, getNextNumIncr());
+		tracker.addImage(_cinta2, getNextNumIncr());
 		
 		try {
 			tracker.waitForAll();
@@ -103,6 +109,18 @@ public class ImageLoader {
 
 	public Image get_expendedoraCaram() {
 		return _expendedoraCaram;
+	}
+
+	public Image get_cinta1() {
+		return _cinta1;
+	}
+
+	public Image get_cinta2() {
+		return _cinta2;
+	}
+
+	public Image get_masaCaram() {
+		return _masaCaram;
 	}
 	
 }
