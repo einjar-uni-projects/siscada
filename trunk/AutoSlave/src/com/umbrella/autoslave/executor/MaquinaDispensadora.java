@@ -1,37 +1,37 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.EstateThreads;
 
-public class MaquinaChocolate extends Thread implements Estado{
+public class MaquinaDispensadora extends Thread{
+	private double _tiempoEjecucion;
+	private double _posicion;
+	
+	
 
-	private static Estado INSTANCE = null;
-
-	/*
-	 * clicks de reloj pasados desde q se inicia la ejecucion
-	 */
-	private int _clickPasados=0;
 	/*
 	 * indica el estado interno del hilo
 	 */
 	private EstateThreads _estadoHilo;
-
 	
-	private Configuracion configuracion=Configuracion.getInstance();
-	
-	private MaquinaChocolate() {
-		// TODO Auto-generated constructor stub
+	public MaquinaDispensadora(double tiempoEjecucion, double posicion) {
+		this._tiempoEjecucion=tiempoEjecucion;
+		this._posicion=posicion;
 		set_estadoHilo(EstateThreads.CREADO);
 	}
 
 	@Override
 	public void run(){
 		set_estadoHilo(EstateThreads.EJECUTANDO);
-		_clickPasados=0;
-		while(_clickPasados<configuracion.getValvChoc()){
-			set_estadoHilo(EstateThreads.ESPERANDO);
-			_clickPasados++;
-			// espero a que el reloj envie la se–al de Click
+		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
+		while(((System.currentTimeMillis()-tiempoActual)*1000)<this._tiempoEjecucion){
+			/*
+			 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
+			 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
+			 *  
+			 *  da informacion false entre el verdadero tiempo de ejecucion de la maquina dispensadora 
+			 *  y el click en el que se ejecuta pero nos da = porq solo nos interesa en el refresco
+			 *  de la aplicaccion.
+			 */
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -43,20 +43,6 @@ public class MaquinaChocolate extends Thread implements Estado{
 		set_estadoHilo(EstateThreads.ACABADO);
 	}
 	
-	public void transitar() {
-		//return null;
-	}
-	private synchronized static void createInstance() {
-		if (INSTANCE == null) { 
-			INSTANCE = new MaquinaChocolate();
-		}
-	}
-
-	public static Estado getInstance() {
-		if (INSTANCE == null) createInstance();
-		return INSTANCE;
-	}
-
 	public void enviaMensaje() {
 		// TODO Auto-generated method stub
 		
