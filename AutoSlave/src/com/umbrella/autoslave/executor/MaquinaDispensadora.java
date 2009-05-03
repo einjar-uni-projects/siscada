@@ -1,11 +1,15 @@
 package com.umbrella.autoslave.executor;
 
+import com.umbrella.autoslave.logic.Contexto;
 import com.umbrella.autoslave.logic.EstateThreads;
 
 public class MaquinaDispensadora extends Thread{
 	private double _tiempoEjecucion;
 	private double _posicion;
-	
+	/*
+	 * posicion del estado interno asociada
+	 */
+	private int _posicionAsociada;
 	
 
 	/*
@@ -13,15 +17,19 @@ public class MaquinaDispensadora extends Thread{
 	 */
 	private EstateThreads _estadoHilo;
 	
-	public MaquinaDispensadora(double tiempoEjecucion, double posicion) {
+	private Contexto contexto=Contexto.getInstance();
+	
+	public MaquinaDispensadora(double tiempoEjecucion, double posicion, int posAsociada) {
 		this._tiempoEjecucion=tiempoEjecucion;
 		this._posicion=posicion;
 		set_estadoHilo(EstateThreads.CREADO);
+		set_posicionAsociada(posAsociada);
 	}
 
 	@Override
 	public void run(){
 		set_estadoHilo(EstateThreads.EJECUTANDO);
+		contexto.setDispositivosInternos(get_posicionAsociada(), true);
 		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
 		while(((System.currentTimeMillis()-tiempoActual)*1000)<this._tiempoEjecucion){
 			/*
@@ -39,6 +47,7 @@ public class MaquinaDispensadora extends Thread{
 				e.printStackTrace();
 			}
 		}
+		contexto.setDispositivosInternos(get_posicionAsociada(), false);
 		//se ha echado el caramelo en el bizcocho
 		set_estadoHilo(EstateThreads.ACABADO);
 	}
@@ -60,4 +69,17 @@ public class MaquinaDispensadora extends Thread{
 	private synchronized void set_estadoHilo(EstateThreads estate) {
 		this._estadoHilo=estate;
 	}
+
+	public synchronized double get_posicion() {
+		return _posicion;
+	}
+
+	private synchronized int get_posicionAsociada() {
+		return _posicionAsociada;
+	}
+
+	private synchronized void set_posicionAsociada(int asociada) {
+		_posicionAsociada = asociada;
+	}
+	
 }

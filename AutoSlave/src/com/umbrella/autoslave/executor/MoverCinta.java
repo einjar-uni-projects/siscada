@@ -10,26 +10,27 @@ public class MoverCinta extends Thread implements Estado{
 	
 	private EstateThreads _estadoHilo;
 	
+	private int _posicionAsociada;
+	
 	private Contexto contexto=Contexto.getInstance();
 	private Configuracion configuracion=Configuracion.getInstance();
-
-	
 	/*
 	 * lo q desplaza la cinta en un click
 	 */
-	double velCintaCMporNanoseg=(configuracion.getVelCinta()*100)/(60*1000);
+	private double velCintaCMporNanoseg;
 	/*
 	 * espacio que recorre la cinta en un click, medido en CM 
 	 */
-	double espacioEnClick=velCintaCMporNanoseg*configuracion.get_tiempoReloj();
+	private double espacioEnClick;
 	
-	/*
-	 * indica el numero de saltos q dio la cinta desde q empezo a moverse 
-	 */
-	private int saltosCinta=0;
-	
-	private MoverCinta() {
+	private double velCinta;
+
+	private MoverCinta(double velocidad, int posAsociada) {
 		// TODO Auto-generated constructor stub
+		setVelCinta(velocidad);
+		setVelCintaCMporNanoseg((getVelCinta()*100)/(60*1000));
+		setEspacioEnClick(getVelCintaCMporNanoseg()*configuracion.get_tiempoReloj());
+		set_posicionAsociada(posAsociada);
 	}
 
 	/*
@@ -45,13 +46,23 @@ public class MoverCinta extends Thread implements Estado{
 		 * nos dice si algun sensor se va a encender
 		 * se da el valor False xq al menos tiene q dar el salto una vez
 		 */
-
-		for(int i=0;i<contexto.get_pasteles().size();i++){
-			if((contexto.get_pasteles().get(i).get_posicion()+espacioEnClick)<=(configuracion.getSizeCinta()*100))
-				contexto.get_pasteles().get(i).incrementarPosicion(espacioEnClick);
-			else{
-				//el pastel SE HA CAIDO DE LA CINTA
-				contexto.get_pasteles().get(i).set_posicion((configuracion.getSizeCinta()*100));
+		if(contexto.getTipo().equalsIgnoreCase("blister")){
+			for(int i=0;i<contexto.get_listaBlister().size();i++){
+				if((contexto.get_listaBlister().get(i).get_posicion()+espacioEnClick)<=(configuracion.getSizeCinta()*100))
+					contexto.get_listaBlister().get(i).incrementarPosicion(espacioEnClick);
+				else{
+					//el pastel SE HA CAIDO DE LA CINTA
+					contexto.get_listaBlister().get(i).set_posicion((configuracion.getSizeCinta()*100));
+				}
+			}
+		}else{
+			for(int i=0;i<contexto.get_listaPasteles().size();i++){
+				if((contexto.get_listaPasteles().get(i).get_posicion()+espacioEnClick)<=(configuracion.getSizeCinta()*100))
+					contexto.get_listaPasteles().get(i).incrementarPosicion(espacioEnClick);
+				else{
+					//el pastel SE HA CAIDO DE LA CINTA
+					contexto.get_listaPasteles().get(i).set_posicion((configuracion.getSizeCinta()*100));
+				}
 			}
 		}
 
@@ -80,14 +91,18 @@ public class MoverCinta extends Thread implements Estado{
 		 */
 		//return null;
 	}
-	private synchronized static void createInstance() {
+	private synchronized static void createInstance(double velocidad, int posAsociada) {
 		if (INSTANCE == null) { 
-			INSTANCE = new MoverCinta();
+			INSTANCE = new MoverCinta(velocidad, posAsociada);
 		}
 	}
 
+	public static Estado getInstance(double velocidad, int posAsociada) {
+		if (INSTANCE == null) createInstance(velocidad, posAsociada);
+		return INSTANCE;
+	}
+	
 	public static Estado getInstance() {
-		if (INSTANCE == null) createInstance();
 		return INSTANCE;
 	}
 
@@ -122,5 +137,37 @@ public class MoverCinta extends Thread implements Estado{
 	
 	private synchronized void set_estadoHilo(EstateThreads estate) {
 		this._estadoHilo=estate;
+	}
+
+	private synchronized double getVelCintaCMporNanoseg() {
+		return velCintaCMporNanoseg;
+	}
+
+	private synchronized void setVelCintaCMporNanoseg(double velCintaCMporNanoseg) {
+		this.velCintaCMporNanoseg = velCintaCMporNanoseg;
+	}
+
+	private synchronized double getVelCinta() {
+		return velCinta;
+	}
+
+	private synchronized void setVelCinta(double velCinta) {
+		this.velCinta = velCinta;
+	}
+
+	private synchronized double getEspacioEnClick() {
+		return espacioEnClick;
+	}
+
+	private synchronized void setEspacioEnClick(double espacioEnClick) {
+		this.espacioEnClick = espacioEnClick;
+	}
+	
+	private synchronized int get_posicionAsociada() {
+		return _posicionAsociada;
+	}
+
+	private synchronized void set_posicionAsociada(int asociada) {
+		_posicionAsociada = asociada;
 	}
 }

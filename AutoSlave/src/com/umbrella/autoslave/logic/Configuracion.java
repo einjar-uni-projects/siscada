@@ -91,6 +91,13 @@ public class Configuracion {
 	 */
 	private double espEntreBizc=0.05;
 	
+	private int posicionAsociadaSensorFin=0;
+	private int posicionAsociadaSensorCaramelo=1;
+	private int posicionAsociadaSensorChocolate=2;
+	private int posicionAsociadaCaramelo=3;
+	private int posicionAsociadaChocolate=4;
+	private int posicionAsociadaDispensadora=5;
+	private int posicionAsociadaCinta=6;
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
      *  otra prueba para evitar instanciaci—n mœltiple
@@ -158,5 +165,35 @@ public class Configuracion {
 		return espEntreBizc;
 	}
 	
-	
+	public int getPosicionAsociada(NombreMaquinas nombre){
+		int sal=-1;
+		switch (nombre.getDescriptor()) {
+		case 0:
+			sal=posicionAsociadaSensorFin;
+			break;
+		case 1:
+			sal=posicionAsociadaSensorCaramelo;
+			break;
+		case 2:
+			sal=posicionAsociadaSensorChocolate;
+			break;
+		case 3:
+			sal=posicionAsociadaCaramelo;
+			break;
+		case 4:
+			sal=posicionAsociadaChocolate;
+			break;
+		case 5:
+			sal=posicionAsociadaDispensadora;
+			break;
+		case 6:
+			sal=posicionAsociadaCinta;
+			break;
+		default:
+			sal=-1;
+			break;
+		}
+		return sal;
+		
+	}
 }
