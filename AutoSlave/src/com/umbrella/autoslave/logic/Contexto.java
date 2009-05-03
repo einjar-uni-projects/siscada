@@ -9,6 +9,8 @@ package com.umbrella.autoslave.logic;
 
 import java.util.LinkedList;
 
+import com.umbrella.autoslave.Utils.Blister;
+import com.umbrella.autoslave.Utils.Pastel;
 import com.umbrella.autoslave.executor.Estado;
 
 public class Contexto {
@@ -90,10 +92,12 @@ public class Contexto {
  		return estado;
  	}
  
+ 	/*
  	public void request(){
  		estado.transitar();
  		//estado=estado.transitar();
  	}
+ 	*/
  	
  	public long getTiempoInterno(){
  		return conf.get_tiempoReloj();

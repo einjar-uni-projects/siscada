@@ -1,4 +1,4 @@
-package com.umbrella.autoslave.logic;
+package com.umbrella.autoslave.Utils;
 
 
 
@@ -16,7 +16,13 @@ public enum NombreMaquinas {
 	FIN_3("fin_3","fin de la cinta 3", 10),
 	INICIO("inicio","inicio de la cinta 3", 11),
 	CONTROL_CALIDAD("control_calidad","maquina de control de calidad", 12),
-	SELLADO("sellado","sellado del blister y los pasteles", 13);
+	SELLADO("sellado","sellado del blister y los pasteles", 13), 
+	SENSOR_CHOCOLATE("sesor_chocolate","sensor asociado a la maquina de chocolate", 14), 
+	SENSOR_CARAMELO("sesor_caramelo","sensor asociado a la maquina de caramelo", 15),
+	SENSOR_TROEULADORA("sesor_troqueladora","sensor asociado a la maquina troqueladora", 16),
+	SENSOR_CORTADORA("sesor_cortadora","sensor asociado a la maquina coratadora", 17),
+	SENSOR_SELLADORA("sesor_selladora","sensor asociado a la maquina selladora", 18),
+	SENSOR_CALIDAD("sesor_calidad","sensor asociado a la maquina de control de calidad", 19);
 	
 	private final String name;
 	private final String descripcion;

@@ -1,7 +1,7 @@
 package com.umbrella.autoslave.executor;
 
+import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.logic.Contexto;
-import com.umbrella.autoslave.logic.EstateThreads;
 
 public class MaquinaDispensadora extends Thread{
 	private double _tiempoEjecucion;
