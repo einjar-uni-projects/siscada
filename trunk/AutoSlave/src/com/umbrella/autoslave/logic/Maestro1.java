@@ -34,7 +34,6 @@ public class Maestro1 {
 		try	{
 			
 			Estado estado= Apagado.getInstance();
- 			Contexto contexto = Contexto.getInstance();
  			contexto.setState( estado );
  			
  			/*
@@ -60,7 +59,7 @@ public class Maestro1 {
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
- 			boolean sensorActivo=false;
+ 			
  			while(!FIN){
  				/*
  				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
@@ -86,7 +85,7 @@ public class Maestro1 {
  						 * 		moverCinta, salidaPastel
  						 */
  						
- 						if(!sensorActivo && !hayHiloBloqueante()){
+ 						if(!seEnciendeSensor() && !hayHiloBloqueante()){
  							_moverCinta.run();
  						}else{
  							if(puedoUsar(NombreMaquinas.DISPENSADORA)) _dispensadora.run();
@@ -136,13 +135,14 @@ public class Maestro1 {
 		return hay;
 	}
 	
-	private synchronized static boolean seEnciendeSensor(int espacio){
+	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
 		if(contexto.activaSensor(_caramelo.get_posicion())>=0) salida=true;
 		if(contexto.activaSensor(_chocolate.get_posicion())>=0) salida=true;
 		if(contexto.activaSensor(_salPastel.get_posicion())>=0) salida=true;
-		if(contexto.activaSensor(_dispensadora.get_posicion())>=0) salida=true;
+		// la dispensadora no tiene sensor asociado
+		// if(contexto.activaSensor(_dispensadora.get_posicion())>=0) salida=true;
 		return salida;
 	}
 	
