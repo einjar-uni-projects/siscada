@@ -1,4 +1,6 @@
-package com.umbrella.autoslave.logic;
+package com.umbrella.autoslave.Utils;
+
+import com.umbrella.autoslave.logic.Configuracion;
 
 public class Pastel {
 

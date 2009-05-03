@@ -1,8 +1,8 @@
 package com.umbrella.autoslave.executor;
 
+import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.Contexto;
-import com.umbrella.autoslave.logic.EstateThreads;
 
 public class SalidaCinta extends Thread implements Estado{
 
@@ -26,6 +26,7 @@ public class SalidaCinta extends Thread implements Estado{
 	@Override
 	public void run(){
 		set_estadoHilo(EstateThreads.EJECUTANDO);
+		contexto.setDispositivosInternos(get_posicionAsociada(), true);
 		
 		boolean finCintaLibre=finCintaLibre();
 		while (!finCintaLibre){
@@ -41,12 +42,11 @@ public class SalidaCinta extends Thread implements Estado{
 		}
 		contexto.decrementarNumPasteles();
 		//se ha recogido el bizcocho del fin de la lista
+		contexto.setDispositivosInternos(get_posicionAsociada(), false);
 		set_estadoHilo(EstateThreads.ACABADO);
 	}
 	
-	public void transitar() {
-		// return null;
-	}
+	
 	private synchronized static void createInstance(double posicion, int posAsociada) {
 		if (INSTANCE == null) { 
 			INSTANCE = new SalidaCinta(posicion, posAsociada);

@@ -8,6 +8,7 @@ package com.umbrella.autoslave.logic;
  * 			el automata y reiniciando los valores
  */
 
+import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Estado;
 
 public class Configuracion {
@@ -25,14 +26,16 @@ public class Configuracion {
 	private double errorSensor=0.20;
 	
 	/*
-	 * indica el tama–o del bizcocho, en metros
+	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
 	 */
 	private double sizeBizcocho=0.10;
-	
+	private double sizeBlister=sizeBizcocho*2+0.10;
 	/*
 	 * Tama–o de la cinta
 	 */
-	private double sizeCinta=10;
+	private double sizeCintaAut1=10;
+	private double sizeCintaAut2=10;
+	private double sizeCintaAut3=10;
 	
 	/*
 	 * Capacidad del deposito de pasteles
@@ -42,17 +45,39 @@ public class Configuracion {
 	/*
 	 * Velocidad de la cinta, medida en m/min
 	 */
-	private double velCinta=20;
+	private double velCintaAut1=20;
+	private double velCintaAut2=20;
+	private double velCintaAut3=10;
 	
 	/*
-	 * Tiempo de activacion de la valvula de chocolate
+	 * Tiempo de activacion de la valvula de chocolate, en segundos
 	 */
 	private int valvChoc=3;
 	
 	/*
-	 * Tiempo de activacion de la valvula de chocolate
+	 * Tiempo de activacion de la valvula de chocolate, en segundos
 	 */
 	private int valvCaram=2;
+	
+	/*
+	 * Tiempo de activacion de la selladora, en segundos
+	 */
+	private int selladora=5;
+	
+	/*
+	 * Tiempo que tarda el robot 1 en recoger y colocar un bliser, en segundos
+	 */
+	private int moverBlister=5;
+	
+	/*
+	 * Tiempo que tarda el robot 1 en recoger y colocar un pastel, en segundos
+	 */
+	private int moverPastel=5;
+	
+	/*
+	 * Tiempo que tarda el robot 2 en recoger almacenar un bliser, en segundos
+	 */
+	private int almacenarBlister=5;
 	
 	/*
 	 * puntos de control de la cinta, se entiende como las posiciones en las que pueden estar los pasteles en la cinta
@@ -68,12 +93,12 @@ public class Configuracion {
 	 * posicion donde se encuentra el sensor y el dispensador de chocolate, medido en CM
 	 */
 	//private int posChoc=(int)(pointsControl/3);
-	private double posChoc=(sizeCinta/3)*100;
+	private double posChoc=(sizeCintaAut1/3);
 	
 	/*
 	 * posicion donde se encuentra el sensor y el dispensador de caramelo, medido en CM
 	 */
-	private double posCaram=(sizeCinta*2/3)*100;
+	private double posCaram=(sizeCintaAut1*2/3);
 	
 	/*
 	 * posicion donde se encuentra el dispensador de bizcochos, medido en CM
@@ -84,20 +109,39 @@ public class Configuracion {
 	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
 	 */
 	//private int posFin=pointsControl-1;
-	private double posFin=(sizeCinta*100)-(errorSensor*100);
+	private double posFin=sizeCintaAut1-errorSensor/2;
 	
 	/*
 	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
 	 */
-	private double espEntreBizc=0.05;
+	private double espEntreBizc=0.20;
 	
-	private int posicionAsociadaSensorFin=0;
+	/*
+	 * posiciones asociadas al estado interno
+	 */
+	private int posicionAsociadaSensorFinAut1=0;
 	private int posicionAsociadaSensorCaramelo=1;
 	private int posicionAsociadaSensorChocolate=2;
 	private int posicionAsociadaCaramelo=3;
 	private int posicionAsociadaChocolate=4;
 	private int posicionAsociadaDispensadora=5;
-	private int posicionAsociadaCinta=6;
+	private int posicionAsociadaCintaAut1=6;
+	
+	private int posicionAsociadaSensorFinAut2=0;
+	private int posicionAsociadaSensorTroqueladora=1;
+	private int posicionAsociadaSensorCortadora=2;
+	private int posicionAsociadaTroqueladora=3;
+	private int posicionAsociadaCortadora=4;
+	private int posicionAsociadaCintaAut2=5;
+	
+	private int posicionAsociadaSensorFinAut3=0;
+	private int posicionAsociadaSensorSelladora=1;
+	private int posicionAsociadaSensorCalidad=2;
+	private int posicionAsociadaSensorInicioCinta=3;
+	private int posicionAsociadaSelladora=4;
+	private int posicionAsociadaCalidad=5;
+	private int posicionAsociadaCintaAut3=6;
+	
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
      *  otra prueba para evitar instanciaci—n mœltiple
@@ -126,7 +170,7 @@ public class Configuracion {
 	}
 
 	public double getSizeCinta() {
-		return sizeCinta;
+		return sizeCintaAut1;
 	}
 
 	public int getCapacidadPasteles() {
@@ -134,7 +178,7 @@ public class Configuracion {
 	}
 
 	public double getVelCinta() {
-		return velCinta;
+		return velCintaAut1;
 	}
 
 	public int getValvChoc() {
@@ -167,32 +211,49 @@ public class Configuracion {
 	
 	public int getPosicionAsociada(NombreMaquinas nombre){
 		int sal=-1;
-		switch (nombre.getDescriptor()) {
-		case 0:
-			sal=posicionAsociadaSensorFin;
-			break;
-		case 1:
+		if(nombre.equals(NombreMaquinas.FIN_1))
+			sal=posicionAsociadaSensorFinAut1;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CARAMELO))
 			sal=posicionAsociadaSensorCaramelo;
-			break;
-		case 2:
+		else if(nombre.equals(NombreMaquinas.SENSOR_CHOCOLATE))
 			sal=posicionAsociadaSensorChocolate;
-			break;
-		case 3:
+		else if(nombre.equals(NombreMaquinas.CARAMELO))
 			sal=posicionAsociadaCaramelo;
-			break;
-		case 4:
+		else if(nombre.equals(NombreMaquinas.CHOCOLATE))
 			sal=posicionAsociadaChocolate;
-			break;
-		case 5:
+		else if(nombre.equals(NombreMaquinas.DISPENSADORA))
 			sal=posicionAsociadaDispensadora;
-			break;
-		case 6:
-			sal=posicionAsociadaCinta;
-			break;
-		default:
-			sal=-1;
-			break;
-		}
+		else if(nombre.equals(NombreMaquinas.CINTA_1))
+			sal=posicionAsociadaCintaAut1;
+		
+		if(nombre.equals(NombreMaquinas.FIN_2))
+			sal=posicionAsociadaSensorFinAut2;
+		else if(nombre.equals(NombreMaquinas.SENSOR_TROEULADORA))
+			sal=posicionAsociadaSensorTroqueladora;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CORTADORA))
+			sal=posicionAsociadaSensorCortadora;
+		else if(nombre.equals(NombreMaquinas.TROQUELADORA))
+			sal=posicionAsociadaTroqueladora;
+		else if(nombre.equals(NombreMaquinas.CORTADORA))
+			sal=posicionAsociadaCortadora;
+		else if(nombre.equals(NombreMaquinas.CINTA_2))
+			sal=posicionAsociadaCintaAut2;
+		
+		if(nombre.equals(NombreMaquinas.FIN_3))
+			sal=posicionAsociadaSensorFinAut3;
+		else if(nombre.equals(NombreMaquinas.SENSOR_SELLADORA))
+			sal=posicionAsociadaSensorSelladora;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD))
+			sal=posicionAsociadaSensorCalidad;
+		else if(nombre.equals(NombreMaquinas.INICIO))
+			sal=posicionAsociadaSensorInicioCinta;
+		else if(nombre.equals(NombreMaquinas.SELLADO))
+			sal=posicionAsociadaSelladora;
+		else if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
+			sal=posicionAsociadaCalidad;
+		else if(nombre.equals(NombreMaquinas.CINTA_3))
+			sal=posicionAsociadaCintaAut3;
+		
 		return sal;
 		
 	}
