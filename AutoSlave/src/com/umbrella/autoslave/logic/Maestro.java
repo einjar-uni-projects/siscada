@@ -3,8 +3,7 @@ package com.umbrella.autoslave.logic;
 import com.umbrella.autoslave.executor.Apagado;
 import com.umbrella.autoslave.executor.DispensadoraActivada;
 import com.umbrella.autoslave.executor.Estado;
-import com.umbrella.autoslave.executor.MaquinaCaramelo;
-import com.umbrella.autoslave.executor.MaquinaChocolate;
+import com.umbrella.autoslave.executor.MaquinaDispensadora;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaPastel;
 
@@ -18,9 +17,9 @@ public class Maestro {
 	
 	private static MoverCinta _moverCinta;
 	private static DispensadoraActivada _dispensadora;
-	private static MaquinaCaramelo _maqCaramelo;
-	private static MaquinaChocolate _maqChocolate;
 	private static SalidaPastel _salPastel;
+	private static MaquinaDispensadora _chocolate;
+	private static MaquinaDispensadora _caramelo;
 	
 	/*
 	 * apagado deja el automata apagado pero esto lo deja en standby
@@ -50,9 +49,9 @@ public class Maestro {
  			 */
  			_moverCinta=(MoverCinta)MoverCinta.getInstance();
  			_dispensadora=(DispensadoraActivada)DispensadoraActivada.getInstance();
- 			_maqCaramelo=(MaquinaCaramelo)MaquinaCaramelo.getInstance();
- 			_maqChocolate=(MaquinaChocolate)MaquinaChocolate.getInstance();
  			_salPastel=(SalidaPastel)SalidaPastel.getInstance();
+ 			_caramelo=new MaquinaDispensadora(configuracion.getValvCaram(), configuracion.getPosCaram());
+ 			_chocolate=new MaquinaDispensadora(configuracion.getValvChoc(), configuracion.getPosChoc());
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
@@ -87,11 +86,11 @@ public class Maestro {
  						}else{
  							if(puedoDispensadoraBizcocho()) _dispensadora.run();
  							if(puedoDispensadoraChocolate()){
- 								_maqChocolate.run();
+ 								_chocolate.run();
  								contexto.get_pasteles().get(contexto.activaSensorChocolate()).set_chocolate();
  							}
  							if(puedoDispensadoraCaramelo()){
- 								_maqCaramelo.run();
+ 								_caramelo.run();
  								contexto.get_pasteles().get(contexto.activaSensorCaramelo()).set_caramelo();
  							}
  							if(puedoFinCinta()) _salPastel.run();
@@ -111,8 +110,8 @@ public class Maestro {
  			 */
  			_moverCinta=null;
  			_dispensadora=null;
- 			_maqCaramelo=null;
- 			_maqChocolate=null;
+ 			_caramelo.run();
+ 			_chocolate.run();
  			_salPastel=null;
  			
  		}catch( Exception e ){
@@ -127,8 +126,8 @@ public class Maestro {
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
 		if(_dispensadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_maqCaramelo.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_maqChocolate.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		else if(_caramelo.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		else if(_chocolate.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
 		else if(_salPastel.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
 		return hay;
 	}
@@ -165,12 +164,12 @@ public class Maestro {
 	
 	private synchronized static boolean ejecutandoDispensadoraChocolate(){
 		boolean salida=false;	
-		if(_maqChocolate.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+		if(_chocolate.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	private synchronized static boolean ejecutandoDispensadoraCaramelo(){
 		boolean salida=false;
-		if(_maqCaramelo.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+		if(_caramelo.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	private synchronized static boolean ejecutandoFinCinta(){
