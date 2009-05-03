@@ -4,7 +4,7 @@ import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.Contexto;
 import com.umbrella.autoslave.logic.EstateThreads;
 
-public class SalidaPastel extends Thread implements Estado{
+public class SalidaCinta extends Thread implements Estado{
 
 	private static Estado INSTANCE = null;
 
@@ -13,7 +13,7 @@ public class SalidaPastel extends Thread implements Estado{
 	private Contexto contexto=Contexto.getInstance();
 	private Configuracion configuracion=Configuracion.getInstance();
 	
-	private SalidaPastel() {
+	private SalidaCinta() {
 		// TODO Auto-generated constructor stub
 		set_estadoHilo(EstateThreads.CREADO);
 	}
@@ -44,7 +44,7 @@ public class SalidaPastel extends Thread implements Estado{
 	}
 	private synchronized static void createInstance() {
 		if (INSTANCE == null) { 
-			INSTANCE = new SalidaPastel();
+			INSTANCE = new SalidaCinta();
 		}
 	}
 
