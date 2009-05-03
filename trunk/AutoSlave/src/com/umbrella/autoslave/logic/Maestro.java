@@ -5,7 +5,8 @@ import com.umbrella.autoslave.executor.DispensadoraActivada;
 import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaDispensadora;
 import com.umbrella.autoslave.executor.MoverCinta;
-import com.umbrella.autoslave.executor.SalidaPastel;
+import com.umbrella.autoslave.executor.SalidaCinta;
+
 
 /*
  * El objetivo de esta clase es llevar el peso de la ejecucion, aqui se crean los hilos q luego se ejecutaran en 
@@ -17,7 +18,7 @@ public class Maestro {
 	
 	private static MoverCinta _moverCinta;
 	private static DispensadoraActivada _dispensadora;
-	private static SalidaPastel _salPastel;
+	private static SalidaCinta _salPastel;
 	private static MaquinaDispensadora _chocolate;
 	private static MaquinaDispensadora _caramelo;
 	
@@ -49,7 +50,7 @@ public class Maestro {
  			 */
  			_moverCinta=(MoverCinta)MoverCinta.getInstance();
  			_dispensadora=(DispensadoraActivada)DispensadoraActivada.getInstance();
- 			_salPastel=(SalidaPastel)SalidaPastel.getInstance();
+ 			_salPastel=(SalidaCinta)SalidaCinta.getInstance();
  			_caramelo=new MaquinaDispensadora(configuracion.getValvCaram(), configuracion.getPosCaram());
  			_chocolate=new MaquinaDispensadora(configuracion.getValvChoc(), configuracion.getPosChoc());
  			
