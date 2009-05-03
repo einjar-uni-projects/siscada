@@ -20,9 +20,14 @@ public class Configuracion {
 	private int _tiempoReloj=200;
 	
 	/*
-	 * indica el tamanyo de los pasteles
+	 * indica el error del sensor, en metros
 	 */
 	private double errorSensor=0.20;
+	
+	/*
+	 * indica el tama–o del bizcocho, en metros
+	 */
+	private double sizeBizcocho=0.10;
 	
 	/*
 	 * Tama–o de la cinta
@@ -47,7 +52,7 @@ public class Configuracion {
 	/*
 	 * Tiempo de activacion de la valvula de chocolate
 	 */
-	private int valvCaram=3;
+	private int valvCaram=2;
 	
 	/*
 	 * puntos de control de la cinta, se entiende como las posiciones en las que pueden estar los pasteles en la cinta
@@ -79,7 +84,7 @@ public class Configuracion {
 	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
 	 */
 	//private int posFin=pointsControl-1;
-	private double posFin=(sizeCinta*100)-errorSensor;
+	private double posFin=(sizeCinta*100)-(errorSensor*100);
 	
 	/*
 	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
@@ -105,7 +110,9 @@ public class Configuracion {
 		return _tiempoReloj;
 	}
 
-	
+	public synchronized double getSizeBizcocho() {
+		return sizeBizcocho;
+	}
 
 	public double getErrorSensor() {
 		return errorSensor;
@@ -150,5 +157,6 @@ public class Configuracion {
 	public double getEspEntreBizc() {
 		return espEntreBizc;
 	}
+	
 	
 }
