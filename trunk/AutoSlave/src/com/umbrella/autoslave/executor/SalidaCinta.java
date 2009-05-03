@@ -6,6 +6,9 @@ import com.umbrella.autoslave.logic.EstateThreads;
 
 public class SalidaCinta extends Thread implements Estado{
 
+	private double _posicion;
+	private int _posicionAsociada;
+	
 	private static Estado INSTANCE = null;
 
 	private EstateThreads _estadoHilo;
@@ -13,9 +16,11 @@ public class SalidaCinta extends Thread implements Estado{
 	private Contexto contexto=Contexto.getInstance();
 	private Configuracion configuracion=Configuracion.getInstance();
 	
-	private SalidaCinta() {
+	private SalidaCinta(double posicion, int posAsociada) {
 		// TODO Auto-generated constructor stub
 		set_estadoHilo(EstateThreads.CREADO);
+		this._posicion=posicion;
+		set_posicionAsociada(posAsociada);
 	}
 
 	@Override
@@ -42,17 +47,21 @@ public class SalidaCinta extends Thread implements Estado{
 	public void transitar() {
 		// return null;
 	}
-	private synchronized static void createInstance() {
+	private synchronized static void createInstance(double posicion, int posAsociada) {
 		if (INSTANCE == null) { 
-			INSTANCE = new SalidaCinta();
+			INSTANCE = new SalidaCinta(posicion, posAsociada);
 		}
 	}
 
-	public static Estado getInstance() {
-		if (INSTANCE == null) createInstance();
+	public static Estado getInstance(double posicion, int posAsociada) {
+		if (INSTANCE == null) createInstance(posicion, posAsociada);
 		return INSTANCE;
 	}
 
+	public static Estado getInstance() {
+		return INSTANCE;
+	}
+	
 	public void enviaMensaje() {
 		// TODO Auto-generated method stub
 		
@@ -74,9 +83,21 @@ public class SalidaCinta extends Thread implements Estado{
 	
 	private synchronized boolean finCintaLibre(){
 		boolean libre=true;
-		for(int i=0;i<contexto.get_pasteles().size();i++){
-			if(contexto.get_pasteles().get(i).get_posicion()>=(configuracion.getPosFin()-configuracion.getErrorSensor())) libre=false;
+		for(int i=0;i<contexto.get_listaPasteles().size();i++){
+			if(contexto.get_listaPasteles().get(i).get_posicion()>=(configuracion.getPosFin()-configuracion.getErrorSensor())) libre=false;
 		}
 		return libre;
+	}
+	
+	public synchronized double get_posicion() {
+		return _posicion;
+	}
+	
+	private synchronized int get_posicionAsociada() {
+		return _posicionAsociada;
+	}
+
+	private synchronized void set_posicionAsociada(int asociada) {
+		_posicionAsociada = asociada;
 	}
 }

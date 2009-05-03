@@ -17,7 +17,13 @@ public class Contexto {
 	
 	private Configuracion conf= Configuracion.getInstance();
 	
-	private LinkedList<Pastel> _pasteles;
+	/*
+	 * tipo=pastel o blister
+	 */
+	private String tipo;
+	
+	private LinkedList<Pastel> _listaPasteles;
+	private LinkedList<Blister> _listaBlister;
 	
 	boolean apagado=false;
 	
@@ -28,19 +34,9 @@ public class Contexto {
 	private boolean finCinta;
 	
 	/*
-	 * indica los sensores que estan activos, o los dispositivos activados 
+	 * indica los sensores que estan activos, o los dispositivos activados, es el estado interno del automata 
 	 */
 	private boolean [] dispositivosInternos= new boolean[16];
-	/*
-	 * 0- sensor dispensadora Bizcocho
-	 * 1- sensor dispensadora Chocolate
-	 * 2- sensor dispensadroa caramelo
-	 * 3- sensor fin cinta
-	 * 4- dispensadora bizcochos activa
-	 * 5- dispensadora chocolate activa
-	 * 6- dispensadora caramelo activa
-	 */
-		
 
 	Configuracion configuracion=Configuracion.getInstance();
 	
@@ -53,29 +49,39 @@ public class Contexto {
 	private int numPasteles;
 	
 	// Private constructor suppresses 
-    private Contexto() {
+    private Contexto(String tipo) {
     	
     	for(int i=0;i<dispositivosInternos.length;i++){
     		dispositivosInternos[i]=false;
     	}
-    	_pasteles=new LinkedList<Pastel>();
+    	this.tipo=tipo;
+    	if(tipo.equalsIgnoreCase("pastel"))
+    		_listaPasteles=new LinkedList<Pastel>();
+    	else if(tipo.equalsIgnoreCase("blister"))
+    		_listaBlister=new LinkedList<Blister>();
+    	else
+    		System.err.println("ese valor no es valido, solo se admite 'pastel' o 'blister'.");
     }
  
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
      *  otra prueba para evitar instanciaci—n mœltiple
      */ 
-    private synchronized static void createInstance() {
+    private synchronized static void createInstance(String tipo) {
         if (INSTANCE == null) { 
-            INSTANCE = new Contexto();
+            INSTANCE = new Contexto(tipo);
         }
     }
     
-    public static Contexto getInstance() {
-        if (INSTANCE == null) createInstance();
+    public static Contexto getInstance(String tipo) {
+        if (INSTANCE == null) createInstance(tipo);
         return INSTANCE;
     }
-	
+    
+    public static Contexto getInstance() {
+        return INSTANCE;
+    }
+    
  	public void setState( Estado state ){
  		this.estado = state;
  	}
@@ -116,80 +122,35 @@ public class Contexto {
 		return dispositivosInternos[pos];
 	}
 
-	public synchronized LinkedList<Pastel> get_pasteles() {
-		return _pasteles;
-	}
-	
 	/*
-	 * devuelve la posicion del pastel q activa el sensor
+	 * devuelve el numero de pastel q activa el sensor q tiene la posicion pasada,
+	 *  -1 si no hay coincidencia
 	 */
-	public synchronized int activaSensorBizcocho(){
-		int sal=-1;
-		
-		/*
-		 * posicion donde esta el dispensador de bizcochos
-		 */
-		double posBizc=configuracion.getPosBizc();
-		
-		for(int i=0;i<_pasteles.size();i++){
-			if(_pasteles.get(i).get_posicion()<(posBizc+configuracion.getErrorSensor()) || 
-					_pasteles.get(i).get_posicion()>(posBizc-configuracion.getErrorSensor()) ) 
-				if((_pasteles.get(i).get_posicion() - posBizc)>=configuracion.getEspEntreBizc()  )sal=i;
+	public synchronized int activaSensor(double posicion){
+		//false = pasteles, true = blister
+		int sal=-1;	
+		if(tipo.equalsIgnoreCase("blister")){
+			for(int i=0;i<_listaBlister.size();i++){
+				if(_listaBlister.get(i).get_posicion()<(posicion+configuracion.getErrorSensor()) || 
+					_listaBlister.get(i).get_posicion()>(posicion-configuracion.getErrorSensor()) ) sal=i;
+			}
+		}else{
+			for(int i=0;i<_listaPasteles.size();i++){
+				if(_listaPasteles.get(i).get_posicion()<(posicion+configuracion.getErrorSensor()) || 
+					_listaPasteles.get(i).get_posicion()>(posicion-configuracion.getErrorSensor()) ) sal=i;
+			}
 		}
 		return sal;
 	}
-	
-	/*
-	 * devuelve la posicion del pastel q activa el sensor
-	 */
-	public synchronized int activaSensorCaramelo(){
-		int sal=-1;
-		
-		/*
-		 * posicion donde esta el dispensador de bizcochos
-		 */
-		double posCaramelo=configuracion.getPosCaram();
-		
-		for(int i=0;i<_pasteles.size();i++){
-			if(_pasteles.get(i).get_posicion()<(posCaramelo+configuracion.getErrorSensor()) || 
-					_pasteles.get(i).get_posicion()>(posCaramelo-configuracion.getErrorSensor()) ) sal=i;
-		}
-		return sal;
+	public synchronized String getTipo() {
+		return tipo;
 	}
-	
-	/*
-	 * devuelve la posicion del pastel q activa el sensor
-	 */
-	public synchronized int activaSensorChocolate(){
-		int sal=-1;
-		
-		/*
-		 * posicion donde esta el dispensador de bizcochos
-		 */
-		double posChocolate=configuracion.getPosChoc();
-		
-		for(int i=0;i<_pasteles.size();i++){
-			if(_pasteles.get(i).get_posicion()<(posChocolate+configuracion.getErrorSensor()) || 
-					_pasteles.get(i).get_posicion()>(posChocolate-configuracion.getErrorSensor()) ) sal=i;
-		}
-		return sal;
+
+	public synchronized LinkedList<Pastel> get_listaPasteles() {
+		return _listaPasteles;
 	}
-	
-	/*
-	 * devuelve la posicion del pastel q activa el sensor
-	 */
-	public synchronized int activaSensorFinal(){
-		int sal=-1;
-		
-		/*
-		 * posicion donde esta el dispensador de bizcochos
-		 */
-		double posFinal=configuracion.getPosFin();
-		
-		for(int i=0;i<_pasteles.size();i++){
-			if(_pasteles.get(i).get_posicion()<(posFinal+configuracion.getErrorSensor()) || 
-					_pasteles.get(i).get_posicion()>(posFinal-configuracion.getErrorSensor()) ) sal=i;
-		}
-		return sal;
+
+	public synchronized LinkedList<Blister> get_listaBlister() {
+		return _listaBlister;
 	}
 }

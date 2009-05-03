@@ -18,19 +18,27 @@ public class DispensadoraActivada extends Thread implements Estado{
 	
 	private static Estado INSTANCE = null;
 
+	private double _posicion;
+	private int _posicionAsociada;
 	private EstateThreads _estadoHilo;
 	/*
 	 * 
 	 */
-	private DispensadoraActivada() {
+	private DispensadoraActivada(double posicion, int posAsociada) {
 		_pastelesRestantes=configuracion.getCapacidadPasteles();
 		set_estadoHilo(EstateThreads.CREADO);
+		this._posicion=posicion;
+		set_posicionAsociada(posAsociada);
 	}
 
+	public synchronized double get_posicion() {
+		return _posicion;
+	}
+	
 	@Override
 	public void run(){
 		set_estadoHilo(EstateThreads.EJECUTANDO);
-		
+		contexto.setDispositivosInternos(get_posicionAsociada(), true);
 		while(_estadoHilo.equals(EstateThreads.EJECUTANDO)){
 			/*
 			 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
@@ -49,20 +57,21 @@ public class DispensadoraActivada extends Thread implements Estado{
 			 * &&
 			 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
 			 */
-			if(contexto.activaSensorBizcocho()>=0 && get_contEspacio()>=configuracion.getEspEntreBizc()){
+			if(contexto.activaSensor(this._posicion)<0 && get_contEspacio()>=configuracion.getEspEntreBizc()){
 				/*
 				 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
 				 * se pone la posicion de la cinta inicial como ocupada
 				 */
 				_pastelesRestantes--;
 				contexto.incrementarNumPasteles();
-				contexto.get_pasteles().add(new Pastel());
+				contexto.get_listaPasteles().add(new Pastel());
 				set_estadoHilo(EstateThreads.ACABADO);
 			}else{
 				// aqui no tendria q entrar nunca
 				System.err.println("Error en la ejecucion del hilo de DsipensadoraActivada");
 			}
 		}
+		contexto.setDispositivosInternos(get_posicionAsociada(), false);
 	}
 	
 	/*
@@ -72,17 +81,21 @@ public class DispensadoraActivada extends Thread implements Estado{
 	
 	}
 	
-	private synchronized static void createInstance() {
+	private synchronized static void createInstance(double posicion, int posAsociada) {
 		if (INSTANCE == null) { 
-			INSTANCE = new DispensadoraActivada();
+			INSTANCE = new DispensadoraActivada(posicion, posAsociada);
 		}
 	}
 
-	public static Estado getInstance() {
-		if (INSTANCE == null) createInstance();
+	public static Estado getInstance(double posicion, int posAsociada) {
+		if (INSTANCE == null) createInstance(posicion, posAsociada);
 		return INSTANCE;
 	}
 
+	public static Estado getInstance() {
+		return INSTANCE;
+	}
+	
 	public void enviaMensaje() {
 		// TODO Auto-generated method stub
 		
@@ -105,10 +118,18 @@ public class DispensadoraActivada extends Thread implements Estado{
 	 */
 	private synchronized double get_contEspacio(){
 		double min=(configuracion.getSizeCinta()+1)*100;
-		for(int i=0;i<contexto.get_pasteles().size();i++){
-			double num=contexto.get_pasteles().get(i).get_posicion();
+		for(int i=0;i<contexto.get_listaPasteles().size();i++){
+			double num=contexto.get_listaPasteles().get(i).get_posicion();
 			if(num<min) min=num;
 		}
 		return min;
+	}
+
+	private synchronized int get_posicionAsociada() {
+		return _posicionAsociada;
+	}
+
+	private synchronized void set_posicionAsociada(int asociada) {
+		_posicionAsociada = asociada;
 	}
 }
