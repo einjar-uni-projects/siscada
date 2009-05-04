@@ -3,7 +3,10 @@ package com.umbrella.autoslave.executor;
 import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.logic.Contexto;
 
-public class MaquinaDispensadora extends Thread{
+/*
+ * Maquinas que tardan un tiempo '_tiempoEjecucoin' en ejecutarse
+ */
+public class MaquinaTiempos extends Thread{
 	private double _tiempoEjecucion;
 	private double _posicion;
 	/*
@@ -19,7 +22,7 @@ public class MaquinaDispensadora extends Thread{
 	
 	private Contexto contexto=Contexto.getInstance();
 	
-	public MaquinaDispensadora(double tiempoEjecucion, double posicion, int posAsociada) {
+	public MaquinaTiempos(double tiempoEjecucion, double posicion, int posAsociada) {
 		this._tiempoEjecucion=tiempoEjecucion;
 		this._posicion=posicion;
 		set_estadoHilo(EstateThreads.CREADO);
