@@ -80,11 +80,6 @@ public class Configuracion {
 	private int almacenarBlister=5;
 	
 	/*
-	 * puntos de control de la cinta, se entiende como las posiciones en las que pueden estar los pasteles en la cinta
-	 */
-	//private int pointsControl=(int)(sizeCinta/sizePastel);
-	
-	/*
 	 * Es algo unico, no puede crearse dos veces	
 	 */
 	private static Configuracion INSTANCE = null;
@@ -92,7 +87,6 @@ public class Configuracion {
 	/*
 	 * posicion donde se encuentra el sensor y el dispensador de chocolate, medido en CM
 	 */
-	//private int posChoc=(int)(pointsControl/3);
 	private double posChoc=(sizeCintaAut1/3);
 	
 	/*
@@ -105,16 +99,26 @@ public class Configuracion {
 	 */
 	private int posBizc=0;
 	
+	private double posCortadora=sizeBlister;
+	private double posTroqueladora=sizeCintaAut2*2/3;
+	
+	private double posInicioAut3=sizeBlister/2;
+	private double posCalidad=sizeCintaAut3*1/3;
+	private double posSelladora=sizeCintaAut3*2/3;
+	
 	/*
 	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
 	 */
 	//private int posFin=pointsControl-1;
-	private double posFin=sizeCintaAut1-errorSensor/2;
+	private double posFinAut1=sizeCintaAut1-errorSensor/2;
+	private double posFinAut2=sizeCintaAut2-errorSensor/2;
+	private double posFinAut3=sizeCintaAut3-errorSensor/2;
 	
 	/*
 	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
 	 */
-	private double espEntreBizc=0.20;
+	private double espEntreBizc=sizeBizcocho+0.2;
+	private double espEntreBlister=sizeBlister+0.2;
 	
 	/*
 	 * posiciones asociadas al estado interno
@@ -201,14 +205,86 @@ public class Configuracion {
 		return posBizc;
 	}
 
-	public double getPosFin() {
-		return posFin;
-	}
-
 	public double getEspEntreBizc() {
 		return espEntreBizc;
 	}
 	
+	public double getSizeBlister() {
+		return sizeBlister;
+	}
+
+	public synchronized double getSizeCintaAut1() {
+		return sizeCintaAut1;
+	}
+
+	public synchronized double getSizeCintaAut2() {
+		return sizeCintaAut2;
+	}
+
+	public synchronized double getSizeCintaAut3() {
+		return sizeCintaAut3;
+	}
+
+	public synchronized double getVelCintaAut1() {
+		return velCintaAut1;
+	}
+
+	public synchronized double getVelCintaAut2() {
+		return velCintaAut2;
+	}
+
+	public synchronized double getVelCintaAut3() {
+		return velCintaAut3;
+	}
+
+	public synchronized int getSelladora() {
+		return selladora;
+	}
+
+	public synchronized int getMoverBlister() {
+		return moverBlister;
+	}
+
+	public synchronized int getMoverPastel() {
+		return moverPastel;
+	}
+
+	public double getPosInicioAut3() {
+		return posInicioAut3;
+	}
+
+	public double getPosCalidad() {
+		return posCalidad;
+	}
+
+	public double getPosCortadora() {
+		return posCortadora;
+	}
+
+	public double getPosTroqueladora() {
+		return posTroqueladora;
+	}
+
+	public double getPosSelladora() {
+		return posSelladora;
+	}
+
+	public double getPosFinAut1() {
+		return posFinAut1;
+	}
+
+	public double getPosFinAut2() {
+		return posFinAut2;
+	}
+
+	public double getPosFinAut3() {
+		return posFinAut3;
+	}
+	
+	public double getEspEntreBlister() {
+		return espEntreBlister;
+	}
+
 	public int getPosicionAsociada(NombreMaquinas nombre){
 		int sal=-1;
 		if(nombre.equals(NombreMaquinas.FIN_1))

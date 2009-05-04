@@ -1,5 +1,7 @@
 package com.umbrella.autoslave.Utils;
 
+import com.umbrella.autoslave.logic.Configuracion;
+
 public class Blister {
 	/*
 	 * posicion del pastel medida en CM
@@ -8,7 +10,7 @@ public class Blister {
 	private int _contPasteles;
 	// true en el automata 2, false en el 1
 	private boolean _cinta;
-	
+	Configuracion configuracion=Configuracion.getInstance();
 	
 	public Blister(double posicion){
 		set_posicion(posicion);
@@ -17,7 +19,7 @@ public class Blister {
 	}
 	
 	public Blister(){
-		set_posicion(0);
+		set_posicion(configuracion.getSizeBlister()/2);
 		set_contPasteles(0);
 		set_cinta(true);
 	}

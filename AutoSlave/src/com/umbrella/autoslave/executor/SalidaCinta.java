@@ -8,19 +8,20 @@ public class SalidaCinta extends Thread implements Estado{
 
 	private double _posicion;
 	private int _posicionAsociada;
-	
-	private static Estado INSTANCE = null;
 
 	private EstateThreads _estadoHilo;
 	
 	private Contexto contexto=Contexto.getInstance();
 	private Configuracion configuracion=Configuracion.getInstance();
 	
-	private SalidaCinta(double posicion, int posAsociada) {
+	private String tipo;
+	
+	public SalidaCinta(double posicion, int posAsociada, String tipo) {
 		// TODO Auto-generated constructor stub
 		set_estadoHilo(EstateThreads.CREADO);
 		this._posicion=posicion;
 		set_posicionAsociada(posAsociada);
+		this.tipo=tipo;
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class SalidaCinta extends Thread implements Estado{
 		set_estadoHilo(EstateThreads.EJECUTANDO);
 		contexto.setDispositivosInternos(get_posicionAsociada(), true);
 		
-		boolean finCintaLibre=finCintaLibre();
+		boolean finCintaLibre=finCintaLibre(tipo);
 		while (!finCintaLibre){
 			//se espera al siguiente click de la cinta
 			try {
@@ -38,30 +39,14 @@ public class SalidaCinta extends Thread implements Estado{
 				e.printStackTrace();
 			}
 			//comprobar el estado de la cinta
-			finCintaLibre=finCintaLibre();
+			finCintaLibre=finCintaLibre(tipo);
 		}
 		contexto.decrementarNumPasteles();
 		//se ha recogido el bizcocho del fin de la lista
 		contexto.setDispositivosInternos(get_posicionAsociada(), false);
 		set_estadoHilo(EstateThreads.ACABADO);
 	}
-	
-	
-	private synchronized static void createInstance(double posicion, int posAsociada) {
-		if (INSTANCE == null) { 
-			INSTANCE = new SalidaCinta(posicion, posAsociada);
-		}
-	}
-
-	public static Estado getInstance(double posicion, int posAsociada) {
-		if (INSTANCE == null) createInstance(posicion, posAsociada);
-		return INSTANCE;
-	}
-
-	public static Estado getInstance() {
-		return INSTANCE;
-	}
-	
+		
 	public void enviaMensaje() {
 		// TODO Auto-generated method stub
 		
@@ -81,10 +66,16 @@ public class SalidaCinta extends Thread implements Estado{
 		this._estadoHilo=estate;
 	}
 	
-	private synchronized boolean finCintaLibre(){
+	private synchronized boolean finCintaLibre(String tipo){
 		boolean libre=true;
 		for(int i=0;i<contexto.get_listaPasteles().size();i++){
-			if(contexto.get_listaPasteles().get(i).get_posicion()>=(configuracion.getPosFin()-configuracion.getErrorSensor())) libre=false;
+			if(tipo.equals("pastel")){
+				if(contexto.get_listaPasteles().get(i).get_posicion()>=(get_posicion()-configuracion.getErrorSensor()))
+					libre=false;
+			}else{
+				if(contexto.get_listaBlister().get(i).get_posicion()>=(get_posicion()-configuracion.getErrorSensor()))
+					libre=false;
+			}
 		}
 		return libre;
 	}

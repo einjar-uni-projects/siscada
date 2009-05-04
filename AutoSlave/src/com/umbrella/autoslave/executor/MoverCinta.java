@@ -5,8 +5,6 @@ import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.Contexto;
 
 public class MoverCinta extends Thread implements Estado{
-
-	private static Estado INSTANCE = null;
 	
 	private EstateThreads _estadoHilo;
 	
@@ -25,7 +23,7 @@ public class MoverCinta extends Thread implements Estado{
 	
 	private double velCinta;
 
-	private MoverCinta(double velocidad, int posAsociada) {
+	public MoverCinta(double velocidad, int posAsociada) {
 		// TODO Auto-generated constructor stub
 		setVelCinta(velocidad);
 		setVelCintaPorMiliseg(getVelCinta()/(60*1000));
@@ -78,21 +76,6 @@ public class MoverCinta extends Thread implements Estado{
 		set_estadoHilo(EstateThreads.ESPERANDO);
 	}
 	
-	private synchronized static void createInstance(double velocidad, int posAsociada) {
-		if (INSTANCE == null) { 
-			INSTANCE = new MoverCinta(velocidad, posAsociada);
-		}
-	}
-
-	public static Estado getInstance(double velocidad, int posAsociada) {
-		if (INSTANCE == null) createInstance(velocidad, posAsociada);
-		return INSTANCE;
-	}
-	
-	public static Estado getInstance() {
-		return INSTANCE;
-	}
-
 	public void enviaMensaje() {
 		// TODO Auto-generated method stub
 		

@@ -5,7 +5,7 @@ import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Apagado;
 import com.umbrella.autoslave.executor.DispensadoraActivada;
 import com.umbrella.autoslave.executor.Estado;
-import com.umbrella.autoslave.executor.MaquinaDispensadora;
+import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
 
@@ -20,8 +20,8 @@ public class Maestro1 {
 	private static MoverCinta _moverCinta;
 	private static DispensadoraActivada _dispensadora;
 	private static SalidaCinta _salPastel;
-	private static MaquinaDispensadora _chocolate;
-	private static MaquinaDispensadora _caramelo;
+	private static MaquinaTiempos _chocolate;
+	private static MaquinaTiempos _caramelo;
 	
 	/*
 	 * apagado deja el automata apagado pero esto lo deja en standby
@@ -48,15 +48,15 @@ public class Maestro1 {
  			/*
  			 * se crean los hilos de ejecucion
  			 */
- 			_moverCinta=(MoverCinta)MoverCinta.getInstance(configuracion.getVelCinta(),
+ 			_moverCinta=new MoverCinta(configuracion.getVelCinta(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_1));
  			_dispensadora=(DispensadoraActivada)DispensadoraActivada.getInstance(configuracion.getPosBizc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.DISPENSADORA));
- 			_salPastel=(SalidaCinta)SalidaCinta.getInstance(configuracion.getPosFin(),
- 					configuracion.getPosicionAsociada(NombreMaquinas.FIN_1));
- 			_caramelo=new MaquinaDispensadora(configuracion.getValvCaram(), configuracion.getPosCaram(),
+ 			_salPastel=new SalidaCinta(configuracion.getPosFinAut1(),
+ 					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "pastel");
+ 			_caramelo=new MaquinaTiempos(configuracion.getValvCaram(), configuracion.getPosCaram(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
- 			_chocolate=new MaquinaDispensadora(configuracion.getValvChoc(), configuracion.getPosChoc(),
+ 			_chocolate=new MaquinaTiempos(configuracion.getValvChoc(), configuracion.getPosChoc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
  			
  			long cicloAct=_clock.getClock();
@@ -120,8 +120,8 @@ public class Maestro1 {
  			 */
  			_moverCinta=null;
  			_dispensadora=null;
- 			_caramelo.run();
- 			_chocolate.run();
+ 			_caramelo=null;
+ 			_chocolate=null;
  			_salPastel=null;
  			
  		}catch( Exception e ){
@@ -182,7 +182,8 @@ public class Maestro1 {
 			if(!ejecutandoAlgo(NombreMaquinas.DISPENSADORA) && contexto.activaSensor(_dispensadora.get_posicion())>=0) salida=true;
 		*/
 		if(tipo.equals(NombreMaquinas.CHOCOLATE))
-			if(!ejecutandoAlgo(NombreMaquinas.CHOCOLATE) && contexto.activaSensor(_chocolate.get_posicion())>=0) salida=true;
+			if(!ejecutandoAlgo(NombreMaquinas.CHOCOLATE) && 
+					contexto.activaSensor(_chocolate.get_posicion())>=0 ) salida=true;
 		if(tipo.equals(NombreMaquinas.CARAMELO))
 			if(!ejecutandoAlgo(NombreMaquinas.CARAMELO) && contexto.activaSensor(_caramelo.get_posicion())>=0) salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_1))
