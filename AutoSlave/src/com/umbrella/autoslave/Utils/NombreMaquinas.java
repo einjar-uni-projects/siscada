@@ -19,7 +19,7 @@ public enum NombreMaquinas {
 	SELLADO("sellado","sellado del blister y los pasteles", 13), 
 	SENSOR_CHOCOLATE("sesor_chocolate","sensor asociado a la maquina de chocolate", 14), 
 	SENSOR_CARAMELO("sesor_caramelo","sensor asociado a la maquina de caramelo", 15),
-	SENSOR_TROEULADORA("sesor_troqueladora","sensor asociado a la maquina troqueladora", 16),
+	SENSOR_TROQUELADORA("sesor_troqueladora","sensor asociado a la maquina troqueladora", 16),
 	SENSOR_CORTADORA("sesor_cortadora","sensor asociado a la maquina coratadora", 17),
 	SENSOR_SELLADORA("sesor_selladora","sensor asociado a la maquina selladora", 18),
 	SENSOR_CALIDAD("sesor_calidad","sensor asociado a la maquina de control de calidad", 19);

@@ -97,9 +97,9 @@ public class Configuracion {
 	/*
 	 * posicion donde se encuentra el dispensador de bizcochos, medido en CM
 	 */
-	private int posBizc=0;
+	private double posBizc=sizeBizcocho/2;
 	
-	private double posCortadora=sizeBlister;
+	private double posCortadora=sizeBlister/2;
 	private double posTroqueladora=sizeCintaAut2*2/3;
 	
 	private double posInicioAut3=sizeBlister/2;
@@ -110,9 +110,9 @@ public class Configuracion {
 	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
 	 */
 	//private int posFin=pointsControl-1;
-	private double posFinAut1=sizeCintaAut1-errorSensor/2;
-	private double posFinAut2=sizeCintaAut2-errorSensor/2;
-	private double posFinAut3=sizeCintaAut3-errorSensor/2;
+	private double posFinAut1=sizeCintaAut1-sizeBizcocho/2;
+	private double posFinAut2=sizeCintaAut2-sizeBlister/2;
+	private double posFinAut3=sizeCintaAut3-sizeBlister/2;
 	
 	/*
 	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
@@ -285,6 +285,7 @@ public class Configuracion {
 		return espEntreBlister;
 	}
 
+	
 	public int getPosicionAsociada(NombreMaquinas nombre){
 		int sal=-1;
 		if(nombre.equals(NombreMaquinas.FIN_1))
@@ -304,7 +305,7 @@ public class Configuracion {
 		
 		if(nombre.equals(NombreMaquinas.FIN_2))
 			sal=posicionAsociadaSensorFinAut2;
-		else if(nombre.equals(NombreMaquinas.SENSOR_TROEULADORA))
+		else if(nombre.equals(NombreMaquinas.SENSOR_TROQUELADORA))
 			sal=posicionAsociadaSensorTroqueladora;
 		else if(nombre.equals(NombreMaquinas.SENSOR_CORTADORA))
 			sal=posicionAsociadaSensorCortadora;
