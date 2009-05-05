@@ -38,7 +38,7 @@ public class ImageLoader {
 		_estadosAnarillo = toolkit.getImage("resources/estadosAmarillo.png");
 		_estadosVerde = toolkit.getImage("resources/estadosVerde.png");
 		_masa = toolkit.getImage("resources/masa.png");
-		_masaChoc = toolkit.getImage("resources/masaChocolate.png");
+		_masaChoc = toolkit.getImage("resources/masaChoc.png");
 		_masaCaram = toolkit.getImage("resources/masaCaramelo.png");
 		_cinta1 = toolkit.getImage("resources/cinta1.png");
 		_cinta2 = toolkit.getImage("resources/cinta2.png");

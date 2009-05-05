@@ -1,6 +1,5 @@
 package com.umbrella.scada.view.screen;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -8,15 +7,12 @@ import javax.swing.JPanel;
 
 public class MainPanel extends JPanel{
 
-	private Image _backImage;
-	private MainFrameModel _model;
 	private ImageLoader _loader;
 	
 	private int _wallpaperWidth = 800;
 	private int _wallpaperHeight = 600;
 	
-	public MainPanel(MainFrameModel model){
-		_model = model;
+	public MainPanel(){
 		_loader = new ImageLoader(this);
 	}
 	
