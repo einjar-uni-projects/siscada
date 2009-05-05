@@ -15,13 +15,13 @@ import com.umbrella.autoslave.executor.SalidaCinta;
  * El objetivo de esta clase es llevar el peso de la ejecucion, aqui se crean los hilos q luego se ejecutaran en 
  * paralelo entre ellos
  */
-public class Maestro2 {
+public class Maestro3 {
 	
 	private static Clock _clock;
 	private static MoverCinta _moverCinta;
 	private static SalidaCinta _salBlister;
-	private static MaquinaInstantanea _cortadora;
-	private static MaquinaInstantanea _troqueladora;
+	private static MaquinaInstantanea _calidad;
+	private static MaquinaTiempos _selladora;
 	
 	private static boolean[] estadoAnterior=new boolean[16];
 	/*
@@ -52,14 +52,14 @@ public class Maestro2 {
  			/*
  			 * se crean los hilos de ejecucion
  			 */
- 			_moverCinta=new MoverCinta(configuracion.getVelCintaAut2(),
- 					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_2));
- 			_salBlister=new SalidaCinta(configuracion.getPosFinAut2(),
- 					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "blister");
- 			_cortadora=new MaquinaInstantanea(configuracion.getPosCortadora(),
- 					configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA));
- 			_troqueladora=new MaquinaInstantanea(configuracion.getPosTroqueladora(),
- 					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
+ 			_moverCinta=new MoverCinta(configuracion.getVelCintaAut3(),
+ 					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_3));
+ 			_salBlister=new SalidaCinta(configuracion.getPosFinAut3(),
+ 					configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), "blister");
+ 			_calidad=new MaquinaInstantanea(configuracion.getPosCalidad(),
+ 					configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD));
+ 			_selladora=new MaquinaTiempos(configuracion.getSelladora(), configuracion.getPosSelladora(),
+ 					configuracion.getPosicionAsociada(NombreMaquinas.SELLADO));
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
@@ -88,15 +88,14 @@ public class Maestro2 {
  								_moverCinta.run();
  							}else{
  								seEnciendeSensor();
-
- 								if(puedoUsar(NombreMaquinas.CORTADORA) ){
- 									_cortadora.run();
+ 								if(puedoUsar(NombreMaquinas.CONTROL_CALIDAD) ){
+ 									_calidad.run();
  								}
- 								if(puedoUsar(NombreMaquinas.TROQUELADORA) ){
- 									_troqueladora.run();
+ 								if(puedoUsar(NombreMaquinas.SELLADO)){
+ 									_selladora.run();
  								}
  							}
-
+ 							
  						}
  						/*
  						 * Aqui hay q repasar todos los sensores
@@ -116,9 +115,9 @@ public class Maestro2 {
  			 * se matan los hilos
  			 */
  			_moverCinta=null;
- 			_troqueladora=null;
+ 			_selladora=null;
  			_salBlister=null;
- 			_cortadora=null;
+ 			_calidad=null;
  			
  		}catch( Exception e ){
  			e.printStackTrace();
@@ -131,30 +130,29 @@ public class Maestro2 {
 	 */
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_cortadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_troqueladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		if(_calidad.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		else if(_selladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
 		else if(_salBlister.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
 		return hay;
 	}
 	
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
-		
-		/*
-		if(contexto.activaSensor(_cortadora.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA)]){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), true);
-			salida=true;
-		}
-		if(contexto.activaSensor(_troqueladora.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA)]){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), true);
+		/*//no se tienen en cuenta los sensores asociados a maquinas instantaneas
+		if(contexto.activaSensor(_calidad.get_posicion())>=0 && 
+				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD)]){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD), true);
 			salida=true;
 		}
 		*/
+		if(contexto.activaSensor(_selladora.get_posicion())>=0 && 
+				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA)]){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), true);
+			salida=true;
+		}
 		if(contexto.activaSensor(_salBlister.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_2)]){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), true);
+				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_3)]){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), true);
 			salida=true;
 		}
 		// la dispensadora no tiene sensor asociado
@@ -164,32 +162,32 @@ public class Maestro2 {
 	
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
-		if(nombre.equals(NombreMaquinas.TROQUELADORA))
-			if(_troqueladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.CORTADORA))
-			if(_cortadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.FIN_2))
+		if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
+			if(_calidad.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+		if(nombre.equals(NombreMaquinas.SELLADO))
+			if(_selladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+		if(nombre.equals(NombreMaquinas.FIN_3))
 			if(_salBlister.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	
 	private synchronized static boolean puedoUsar(NombreMaquinas tipo){
 		boolean salida=false;
-		if(tipo.equals(NombreMaquinas.CORTADORA))
-			if(!ejecutandoAlgo(NombreMaquinas.CORTADORA) && 
-					contexto.activaSensor(_cortadora.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA)])
+		if(tipo.equals(NombreMaquinas.CONTROL_CALIDAD))
+			if(!ejecutandoAlgo(NombreMaquinas.CONTROL_CALIDAD) && 
+					contexto.activaSensor(_calidad.get_posicion())>=0 &&
+						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD)])
 				salida=true;
 		
-		if(tipo.equals(NombreMaquinas.TROQUELADORA))
-			if(!ejecutandoAlgo(NombreMaquinas.TROQUELADORA) && 
-					contexto.activaSensor(_troqueladora.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA)])
+		if(tipo.equals(NombreMaquinas.SELLADO))
+			if(!ejecutandoAlgo(NombreMaquinas.SELLADO) && 
+					contexto.activaSensor(_selladora.get_posicion())>=0 &&
+						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SELLADO)])
 				salida=true;
-		if(tipo.equals(NombreMaquinas.FIN_2))
-			if(!ejecutandoAlgo(NombreMaquinas.FIN_2) && 
+		if(tipo.equals(NombreMaquinas.FIN_3))
+			if(!ejecutandoAlgo(NombreMaquinas.FIN_3) && 
 					contexto.activaSensor(_salBlister.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_2)]) 
+						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_3)]) 
 				salida=true;
 		return salida;
 	}
@@ -197,16 +195,16 @@ public class Maestro2 {
 	
 	private synchronized static void apagarSensores(){
 		int num=-1;
-		num=contexto.activaSensor(_cortadora.get_posicion());
+		num=contexto.activaSensor(_calidad.get_posicion());
 		if(num>=0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD), false);
 		num=-1;
-		num=contexto.activaSensor(_troqueladora.get_posicion());
+		num=contexto.activaSensor(_selladora.get_posicion());
 		if(num>=0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), false);
 		num=-1;
-		num=contexto.activaSensor(_salBlister.get_posicion());
+			num=contexto.activaSensor(_salBlister.get_posicion());
 		if(num>=0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
 	}
 }

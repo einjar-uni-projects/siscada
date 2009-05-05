@@ -32,6 +32,8 @@ public class Maestro1 {
 	private static Contexto contexto=Contexto.getInstance("pastel");
 	private static Configuracion configuracion=Configuracion.getInstance();
 
+	private static boolean[] estadoAnterior=new boolean[16];
+	
 	public static void main(String[] args) {
 		try	{
 			
@@ -62,13 +64,15 @@ public class Maestro1 {
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
  			
- 			if(cicloAct<_clock.getClock()){
- 				cicloAct=_clock.getClock();
+ 			for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=false;
+
+ 			while(!FIN){
  				/*
  				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
  				 */
- 				while(!FIN){
- 					
+ 				if(cicloAct<_clock.getClock()){
+ 					cicloAct=_clock.getClock();
+
 
  					/*
  					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
@@ -90,8 +94,6 @@ public class Maestro1 {
  						
  						if(!seEnciendeSensor() && !hayHiloBloqueante()){
  							_moverCinta.run();
- 							//si muevo la cinta apago todos los sensores
- 							
  						}else{
  							if(puedoUsar(NombreMaquinas.CHOCOLATE)){
  								_chocolate.run();
@@ -113,6 +115,8 @@ public class Maestro1 {
  					/*
  					 * se intenta leer si nos llega un mensaje q nos saque de la ejecucion
  					 */
+ 					
+ 					for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=contexto.getDispositivosInternos(i);
  				}
  			}
  			/*
@@ -145,15 +149,18 @@ public class Maestro1 {
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
-		if(contexto.activaSensor(_caramelo.get_posicion())>=0){
+		if(contexto.activaSensor(_caramelo.get_posicion())>=0 && 
+				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO)]){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), true);
 			salida=true;
 		}
-		if(contexto.activaSensor(_chocolate.get_posicion())>=0){
+		if(contexto.activaSensor(_chocolate.get_posicion())>=0 && 
+				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE)]){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), true);
 			salida=true;
 		}
-		if(contexto.activaSensor(_salPastel.get_posicion())>=0){
+		if(contexto.activaSensor(_salPastel.get_posicion())>=0 && 
+				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_1)]){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), true);
 			salida=true;
 		}
@@ -183,16 +190,30 @@ public class Maestro1 {
 		*/
 		if(tipo.equals(NombreMaquinas.CHOCOLATE))
 			if(!ejecutandoAlgo(NombreMaquinas.CHOCOLATE) && 
-					contexto.activaSensor(_chocolate.get_posicion())>=0 ) salida=true;
+					contexto.activaSensor(_chocolate.get_posicion())>=0 &&
+					!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE)]) salida=true;
 		if(tipo.equals(NombreMaquinas.CARAMELO))
-			if(!ejecutandoAlgo(NombreMaquinas.CARAMELO) && contexto.activaSensor(_caramelo.get_posicion())>=0) salida=true;
+			if(!ejecutandoAlgo(NombreMaquinas.CARAMELO) && 
+					contexto.activaSensor(_caramelo.get_posicion())>=0 &&
+					!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO)]) salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_1))
-			if(!ejecutandoAlgo(NombreMaquinas.FIN_1) && contexto.activaSensor(_salPastel.get_posicion())>=0) salida=true;
+			if(!ejecutandoAlgo(NombreMaquinas.FIN_1) && 
+					contexto.activaSensor(_salPastel.get_posicion())>=0 &&
+					!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_1)]) salida=true;
 		return salida;
 	}
 	private synchronized static void apagarSensores(){
-		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), false);
-		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), false);
-		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+		int num=-1;
+		num=contexto.activaSensor(_caramelo.get_posicion());
+		if(num>=0)
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), false);
+		num=-1;
+		num=contexto.activaSensor(_chocolate.get_posicion());
+		if(num>=0)
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), false);
+		num=-1;
+		num=contexto.activaSensor(_salPastel.get_posicion());
+		if(num>=0)
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
 	}
 }
