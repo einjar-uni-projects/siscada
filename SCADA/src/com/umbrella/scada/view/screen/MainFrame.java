@@ -66,7 +66,7 @@ public class MainFrame implements UpdatableInterface{
 	private JFrame getJFrame() {
 		if (jFrame == null) {
 			jFrame = new JFrame();
-			jFrame.setSize(new Dimension(639, 284));
+			jFrame.setSize(new Dimension(939, 684));
 			jFrame.setTitle("SCADA penes fritos");
 			jFrame.setJMenuBar(get_menuBar());
 			jFrame.setContentPane(getJContentPane());
@@ -223,7 +223,7 @@ public class MainFrame implements UpdatableInterface{
 	 */
 	private JPanel get_mainPanel() {
 		if (_mainPanel == null) {
-			_mainPanel = new MainPanel(_model);
+			_mainPanel = new MainPanel();
 		}
 		return _mainPanel;
 	}
