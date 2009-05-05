@@ -1,6 +1,5 @@
 package com.umbrella.scada.view.screen;
 
-import java.awt.Label;
 import java.awt.TextField;
 
 import javax.swing.JLabel;
