@@ -1,7 +1,6 @@
 package com.umbrella.scada.view.screen;
 
 import java.awt.Graphics;
-import java.awt.Image;
 
 public class PaintElementCinta extends PaintElement {
 

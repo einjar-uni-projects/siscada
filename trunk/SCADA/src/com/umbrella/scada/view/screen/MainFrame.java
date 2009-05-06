@@ -1,26 +1,21 @@
 package com.umbrella.scada.view.screen;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 
-import javax.swing.JMenuBar;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
-
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
 
 public class MainFrame implements UpdatableInterface{
 
