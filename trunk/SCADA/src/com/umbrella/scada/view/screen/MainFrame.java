@@ -68,6 +68,7 @@ public class MainFrame implements UpdatableInterface{
 			jFrame = new JFrame();
 			jFrame.setSize(new Dimension(939, 684));
 			jFrame.setTitle("SCADA penes fritos");
+			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setJMenuBar(get_menuBar());
 			jFrame.setContentPane(getJContentPane());
 		}
