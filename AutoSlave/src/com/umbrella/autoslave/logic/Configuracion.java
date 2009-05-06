@@ -99,8 +99,9 @@ public class Configuracion {
 	 */
 	private double posBizc=sizeBizcocho/2;
 	
-	private double posCortadora=sizeBlister/2;
-	private double posTroqueladora=sizeCintaAut2*2/3;
+	private double posTroqueladora=sizeCintaAut2*1/3;
+	private double posCortadora=posTroqueladora+sizeBlister;
+	
 	
 	private double posInicioAut3=sizeBlister/2;
 	private double posCalidad=sizeCintaAut3*1/3;
