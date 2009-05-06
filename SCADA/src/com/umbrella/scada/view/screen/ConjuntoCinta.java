@@ -1,7 +1,10 @@
 package com.umbrella.scada.view.screen;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
+
+import com.umbrella.scada.Launch;
 
 public abstract class ConjuntoCinta {
 
@@ -19,8 +22,13 @@ public abstract class ConjuntoCinta {
 	}
 	
 	public void paint(Graphics g){
+		if(Launch.debug){
+			g.setColor(Color.BLACK);
+			g.drawRect(_posX, _posY, _maxX, _maxY);
+		}
 		for (PaintElement elem : _paintElements) {
-			elem.paint(g);
+			if(elem != null)
+				elem.paint(g);
 		}
 	}
 	
