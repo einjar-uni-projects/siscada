@@ -8,6 +8,7 @@ import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
 
 
 /*
@@ -22,6 +23,7 @@ public class Maestro1 {
 	private static SalidaCinta _salPastel;
 	private static MaquinaTiempos _chocolate;
 	private static MaquinaTiempos _caramelo;
+	private static MailBox buzon;
 	
 	/*
 	 * apagado deja el automata apagado pero esto lo deja en standby
@@ -60,6 +62,7 @@ public class Maestro1 {
  					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
  			_chocolate=new MaquinaTiempos(configuracion.getValvChoc(), configuracion.getPosChoc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
+ 			//_buzon=new MailBox(<IP del servidor>,<puerto>,<>);
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
