@@ -14,12 +14,16 @@ public class MainPanel extends JPanel{
 	private int _wallpaperHeight = 600;
 	
 	
-	private ConjuntoCinta[] _conjuntosCinta = new ConjuntoCinta[1];
+	private ConjuntoCinta[] _conjuntosCinta = new ConjuntoCinta[3];
 	
 	public MainPanel(){
 		_loader = new ImageLoader(this);
 		_conjuntosCinta[0] = new ConjuntoCintaPasteles(_loader, 100,100,100,100);
 		_conjuntosCinta[0].cintaOn(true);
+		_conjuntosCinta[1] = new ConjuntoCintaPasteles(_loader, 100,400,100,100);
+		_conjuntosCinta[1].cintaOn(true);
+		_conjuntosCinta[2] = new ConjuntoCintaPasteles(_loader, 500,250,100,100);
+		_conjuntosCinta[2].cintaOn(true);
 	}
 	
 	@Override
@@ -30,6 +34,8 @@ public class MainPanel extends JPanel{
 		altGr.fillRect(0, 0, _wallpaperWidth, _wallpaperHeight);
 		//_conjuntosCinta[0]._loader = _loader; TODO LOL
 		_conjuntosCinta[0].paint(altGr);
+		_conjuntosCinta[1].paint(altGr);
+		_conjuntosCinta[2].paint(altGr);
 		
 		/*altGr.drawImage(_loader.get_backImage(), 0, 0, _wallpaperWidth, _wallpaperHeight, null);
 		altGr.drawImage(_loader.get_cinta1(), 50, 200, null);
