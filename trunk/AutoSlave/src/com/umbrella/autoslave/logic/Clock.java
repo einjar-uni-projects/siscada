@@ -4,6 +4,8 @@ public class Clock extends Thread{
 	
 	private long _clock=0;
 	Contexto contexto=Contexto.getInstance();
+	Configuracion configuracion=Configuracion.getInstance();
+	long time=configuracion.get_tiempoReloj();
 	
 	private static Clock INSTANCE = null;
 	
@@ -25,7 +27,6 @@ public class Clock extends Thread{
 	public void run(){
 		// Aquí el código pesado que tarda mucho
 		try {
-			long time=contexto.getTiempoInterno();
 			wait(time);
 			_clock++;
 			notifyAll();

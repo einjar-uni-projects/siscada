@@ -17,7 +17,8 @@ public class Contexto {
 
 	private Estado estado;
 	
-	private Configuracion conf= Configuracion.getInstance();
+	//private Configuracion conf= Configuracion.getInstance();
+	
 	
 	/*
 	 * tipo=pastel o blister
@@ -99,9 +100,29 @@ public class Contexto {
  	}
  	*/
  	
- 	public long getTiempoInterno(){
- 		return conf.get_tiempoReloj();
- 	}
+ 	/*
+	 * apagado deja el automata apagado pero esto lo deja en standby
+	 * FIN acaba la ejecucion completamente
+	 */
+	private boolean FIN=false;
+
+	private boolean[] estadoAnterior=new boolean[16];
+	
+	public synchronized boolean[] getEstadoAnterior() {
+		return estadoAnterior;
+	}
+	
+	public boolean getEstadoAnterior (int pos){
+		return estadoAnterior[pos];
+	}
+	
+	public synchronized void setEstadoAnterior(int pos, boolean valor) {
+		estadoAnterior[pos] = valor;
+	}
+	
+	public synchronized boolean isFIN() {
+		return FIN;
+	}
 
 	private synchronized int getNumPasteles() {
 		return numPasteles;

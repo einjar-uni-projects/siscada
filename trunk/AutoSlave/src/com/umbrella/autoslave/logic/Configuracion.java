@@ -75,6 +75,11 @@ public class Configuracion {
 	private int almacenarBlister=5;
 	
 	/*
+	 * Interferencia de los robots en el movimiento de la cinta
+	 */
+	private int interferencia=2;
+	
+	/*
 	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
 	 */
 	private double sizeBizcocho=0.10;
@@ -336,4 +341,10 @@ public class Configuracion {
 		return sal;
 		
 	}
+
+	public synchronized int getInterferencia() {
+		return interferencia;
+	}
+	
+	
 }
