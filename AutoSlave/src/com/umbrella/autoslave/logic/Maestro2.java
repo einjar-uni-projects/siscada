@@ -23,19 +23,15 @@ public class Maestro2 {
 	private static MaquinaInstantanea _cortadora;
 	private static MaquinaInstantanea _troqueladora;
 	
-	private static boolean[] estadoAnterior=new boolean[16];
-	/*
-	 * apagado deja el automata apagado pero esto lo deja en standby
-	 * FIN acaba la ejecucion completamente
-	 */
-	private static boolean FIN=false;
+	
+	
 	
 	private static Contexto contexto=Contexto.getInstance("blister");
 	private static Configuracion configuracion=Configuracion.getInstance();
 
 	public static void main(String[] args) {
 		
-		for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=false;
+		for(int i=0;i<16;i++) contexto.setEstadoAnterior(i,false);
 		
 		try	{
 			
@@ -69,7 +65,7 @@ public class Maestro2 {
  				/*
  				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
  				 */
- 				while(!FIN){
+ 				while(!contexto.isFIN()){
  					
 
  					/*
@@ -102,7 +98,7 @@ public class Maestro2 {
  						 * Aqui hay q repasar todos los sensores
  						 */
  						/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
- 						for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=contexto.getDispositivosInternos(i);
+ 						for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
  					}else{
  						primeraVez=true;
  					}
@@ -153,7 +149,7 @@ public class Maestro2 {
 		}
 		*/
 		if(contexto.activaSensor(_salBlister.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_2)]){
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), true);
 			salida=true;
 		}
@@ -178,18 +174,18 @@ public class Maestro2 {
 		if(tipo.equals(NombreMaquinas.CORTADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.CORTADORA) && 
 					contexto.activaSensor(_cortadora.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA)])
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA)))
 				salida=true;
 		
 		if(tipo.equals(NombreMaquinas.TROQUELADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.TROQUELADORA) && 
 					contexto.activaSensor(_troqueladora.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA)])
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA)))
 				salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_2))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_2) && 
 					contexto.activaSensor(_salBlister.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_2)]) 
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))) 
 				salida=true;
 		return salida;
 	}

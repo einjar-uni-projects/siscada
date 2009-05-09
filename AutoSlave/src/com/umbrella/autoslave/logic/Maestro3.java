@@ -23,19 +23,13 @@ public class Maestro3 {
 	private static MaquinaInstantanea _calidad;
 	private static MaquinaTiempos _selladora;
 	
-	private static boolean[] estadoAnterior=new boolean[16];
-	/*
-	 * apagado deja el automata apagado pero esto lo deja en standby
-	 * FIN acaba la ejecucion completamente
-	 */
-	private static boolean FIN=false;
 	
 	private static Contexto contexto=Contexto.getInstance("blister");
 	private static Configuracion configuracion=Configuracion.getInstance();
 
 	public static void main(String[] args) {
 		
-		for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=false;
+		for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,false);
 		
 		try	{
 			
@@ -69,7 +63,7 @@ public class Maestro3 {
  				/*
  				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
  				 */
- 				while(!FIN){
+ 				while(!contexto.isFIN()){
  					
 
  					/*
@@ -101,7 +95,7 @@ public class Maestro3 {
  						 * Aqui hay q repasar todos los sensores
  						 */
  						/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
- 						for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=contexto.getDispositivosInternos(i);
+ 						for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
  					}else{
  						primeraVez=true;
  					}
@@ -146,12 +140,12 @@ public class Maestro3 {
 		}
 		*/
 		if(contexto.activaSensor(_selladora.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA)]){
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), true);
 			salida=true;
 		}
 		if(contexto.activaSensor(_salBlister.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_3)]){
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), true);
 			salida=true;
 		}
@@ -176,18 +170,18 @@ public class Maestro3 {
 		if(tipo.equals(NombreMaquinas.CONTROL_CALIDAD))
 			if(!ejecutandoAlgo(NombreMaquinas.CONTROL_CALIDAD) && 
 					contexto.activaSensor(_calidad.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD)])
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD)))
 				salida=true;
 		
 		if(tipo.equals(NombreMaquinas.SELLADO))
 			if(!ejecutandoAlgo(NombreMaquinas.SELLADO) && 
 					contexto.activaSensor(_selladora.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SELLADO)])
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SELLADO)))
 				salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_3))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_3) && 
 					contexto.activaSensor(_salBlister.get_posicion())>=0 &&
-						!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_3)]) 
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3))) 
 				salida=true;
 		return salida;
 	}

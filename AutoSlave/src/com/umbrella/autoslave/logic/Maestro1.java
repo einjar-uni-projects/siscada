@@ -25,16 +25,8 @@ public class Maestro1 {
 	private static MaquinaTiempos _caramelo;
 	private static MailBox buzon;
 	
-	/*
-	 * apagado deja el automata apagado pero esto lo deja en standby
-	 * FIN acaba la ejecucion completamente
-	 */
-	private static boolean FIN=false;
-	
 	private static Contexto contexto=Contexto.getInstance("pastel");
 	private static Configuracion configuracion=Configuracion.getInstance();
-
-	private static boolean[] estadoAnterior=new boolean[16];
 	
 	public static void main(String[] args) {
 		try	{
@@ -67,9 +59,9 @@ public class Maestro1 {
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
  			
- 			for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=false;
+ 			for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, false);
 
- 			while(!FIN){
+ 			while(!contexto.isFIN()){
  				/*
  				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
  				 */
@@ -119,7 +111,7 @@ public class Maestro1 {
  					 * se intenta leer si nos llega un mensaje q nos saque de la ejecucion
  					 */
  					
- 					for(int i=0;i<estadoAnterior.length;i++) estadoAnterior[i]=contexto.getDispositivosInternos(i);
+ 					for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
  				}
  			}
  			/*
@@ -153,17 +145,17 @@ public class Maestro1 {
 		boolean salida=false;
 		
 		if(contexto.activaSensor(_caramelo.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO)]){
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), true);
 			salida=true;
 		}
 		if(contexto.activaSensor(_chocolate.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE)]){
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), true);
 			salida=true;
 		}
 		if(contexto.activaSensor(_salPastel.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_1)]){
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), true);
 			salida=true;
 		}
@@ -194,15 +186,15 @@ public class Maestro1 {
 		if(tipo.equals(NombreMaquinas.CHOCOLATE))
 			if(!ejecutandoAlgo(NombreMaquinas.CHOCOLATE) && 
 					contexto.activaSensor(_chocolate.get_posicion())>=0 &&
-					!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE)]) salida=true;
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE))) salida=true;
 		if(tipo.equals(NombreMaquinas.CARAMELO))
 			if(!ejecutandoAlgo(NombreMaquinas.CARAMELO) && 
 					contexto.activaSensor(_caramelo.get_posicion())>=0 &&
-					!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO)]) salida=true;
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO))) salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_1))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_1) && 
 					contexto.activaSensor(_salPastel.get_posicion())>=0 &&
-					!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.FIN_1)]) salida=true;
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))) salida=true;
 		return salida;
 	}
 	private synchronized static void apagarSensores(){
