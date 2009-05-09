@@ -26,11 +26,6 @@ public class Configuracion {
 	private double errorSensor=0.20;
 	
 	/*
-	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
-	 */
-	private double sizeBizcocho=0.10;
-	private double sizeBlister=sizeBizcocho*2+0.10;
-	/*
 	 * Tama–o de la cinta
 	 */
 	private double sizeCintaAut1=10;
@@ -78,6 +73,12 @@ public class Configuracion {
 	 * Tiempo que tarda el robot 2 en recoger almacenar un bliser, en segundos
 	 */
 	private int almacenarBlister=5;
+	
+	/*
+	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
+	 */
+	private double sizeBizcocho=0.10;
+	private double sizeBlister=sizeBizcocho*2+0.10;
 	
 	/*
 	 * Es algo unico, no puede crearse dos veces	
