@@ -1,5 +1,6 @@
 package com.umbrella.autoslave.logic;
 
+import com.umbrella.autoslave.Utils.Blister;
 import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Apagado;
@@ -23,15 +24,12 @@ public class Maestro2 {
 	private static MaquinaInstantanea _cortadora;
 	private static MaquinaInstantanea _troqueladora;
 	
-	
-	
-	
 	private static Contexto contexto=Contexto.getInstance("blister");
 	private static Configuracion configuracion=Configuracion.getInstance();
 
 	public static void main(String[] args) {
 		
-		for(int i=0;i<16;i++) contexto.setEstadoAnterior(i,false);
+		for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,false);
 		
 		try	{
 			
@@ -80,7 +78,8 @@ public class Maestro2 {
  							((Apagado) estado).transitar();
  							primeraVez=false;
  						}else{
- 							if(!seEnciendeSensor() && !hayHiloBloqueante()){
+ 							hayEspacio();
+ 							if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
  								_moverCinta.run();
  							}else{
  								seEnciendeSensor();
@@ -92,7 +91,6 @@ public class Maestro2 {
  									_troqueladora.run();
  								}
  							}
-
  						}
  						/*
  						 * Aqui hay q repasar todos los sensores
@@ -136,18 +134,6 @@ public class Maestro2 {
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
-		/*
-		if(contexto.activaSensor(_cortadora.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA)]){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), true);
-			salida=true;
-		}
-		if(contexto.activaSensor(_troqueladora.get_posicion())>=0 && 
-				!estadoAnterior[configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA)]){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), true);
-			salida=true;
-		}
-		*/
 		if(contexto.activaSensor(_salBlister.get_posicion())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), true);
@@ -204,5 +190,20 @@ public class Maestro2 {
 		num=contexto.activaSensor(_salBlister.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+	}
+	
+	private synchronized static void hayEspacio(){
+		/*
+		 * comprueba q la posicion del ultimo blister en la cinta es mayor q el tama–o de blister mas 1/2 del blister
+		 * (el 1/2) es porque cogemos la posicion intermedia del blister
+		 */
+		double min=configuracion.getSizeCinta()+20;
+		for(int i=0;i<contexto.get_listaBlister().size();i++){
+			if(contexto.get_listaBlister().get(i).get_posicion()<min){
+				min=contexto.get_listaBlister().get(i).get_posicion();
+			}
+		}
+		if(min>(configuracion.getSizeBlister() + configuracion.getSizeBlister()/2)) 
+			contexto.get_listaBlister().add(new Blister());
 	}
 }

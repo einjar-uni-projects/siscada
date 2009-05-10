@@ -87,7 +87,7 @@ public class Maestro1 {
  						 * 		moverCinta, salidaPastel
  						 */
  						
- 						if(!seEnciendeSensor() && !hayHiloBloqueante()){
+ 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
  							_moverCinta.run();
  						}else{
  							if(puedoUsar(NombreMaquinas.CHOCOLATE)){

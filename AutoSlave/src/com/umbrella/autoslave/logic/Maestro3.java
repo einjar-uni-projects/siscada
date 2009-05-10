@@ -78,7 +78,7 @@ public class Maestro3 {
  							((Apagado) estado).transitar();
  							primeraVez=false;
  						}else{
- 							if(!seEnciendeSensor() && !hayHiloBloqueante()){
+ 							if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
  								_moverCinta.run();
  							}else{
  								seEnciendeSensor();
