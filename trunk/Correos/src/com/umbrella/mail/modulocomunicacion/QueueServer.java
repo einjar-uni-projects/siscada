@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion;
+package com.umbrella.mail.modulocomunicacion;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.RemoteException;

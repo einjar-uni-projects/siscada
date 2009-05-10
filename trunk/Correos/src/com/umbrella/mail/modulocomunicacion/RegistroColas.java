@@ -1,4 +1,4 @@
-package com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion;
+package com.umbrella.mail.modulocomunicacion;
 
 class RegistroColas 
 {

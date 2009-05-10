@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion;
+package com.umbrella.mail.message;
 import java.io.Serializable;
 
 /**

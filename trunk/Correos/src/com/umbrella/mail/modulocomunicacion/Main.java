@@ -8,12 +8,15 @@
  */
 
 
-package com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion;
+package com.umbrella.mail.modulocomunicacion;
 
 import java.io.IOException;
 import java.rmi.*;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
+
+import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.MessagePrueba1;
 
 
 /**
@@ -50,9 +53,9 @@ public class Main {
 			MessageInterface messagePrueba = new MessagePrueba1();
 
 			/* Le damos el valor que queramos a los atributos. Importante hacer el casting.*/
-			((MessagePrueba1)messagePrueba).varInteger = 23;
-			((MessagePrueba1)messagePrueba).varString = "Mensaje de prueba";
-			((MessagePrueba1)messagePrueba).varBoolean = true;		
+			((MessagePrueba1)messagePrueba).setVarInteger(23);
+			((MessagePrueba1)messagePrueba).setVarString("Mensaje de prueba");
+			((MessagePrueba1)messagePrueba).setVarBoolean(true);		
 
 			/* El metodo enviar devuelve true si se ha enviado correctamente, es decir, si ha
 			 * habido conexión correcta con el registro de colas y false en caso contrario*/
