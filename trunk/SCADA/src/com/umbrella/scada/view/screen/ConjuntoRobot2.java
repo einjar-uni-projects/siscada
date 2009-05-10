@@ -6,9 +6,9 @@ public class ConjuntoRobot2 extends ConjuntoCinta {
 
 	private PaintElementRobot _robot; 
 	
-	public ConjuntoRobot2(ImageLoader loader, int posX, int posY, int maxX, int maxY) {
-		super(loader, posX, posY, maxX, maxY);
-		_robot = new PaintElementRobot(loader,posX,posY,maxX,maxY);
+	public ConjuntoRobot2(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX, posY, maxX, maxY, model);
+		_robot = new PaintElementRobot(loader,posX,posY,maxX,maxY, model);
 		_paintElements.add(_robot);
 	}
 

@@ -10,8 +10,8 @@ public class PaintElementTarta extends PaintElement {
 	int position = 0;
 	int pos = 0;
 	
-	protected PaintElementTarta(ImageLoader loader, int posX, int posY,	int maxX, int maxY) {
-		super(loader, posX+30, posY, maxY, maxY);	
+	protected PaintElementTarta(ImageLoader loader, int posX, int posY,	int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX+30, posY, maxY, maxY, model);	
 	}
 	
 	@Override

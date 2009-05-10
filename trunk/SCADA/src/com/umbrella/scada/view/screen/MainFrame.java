@@ -219,7 +219,7 @@ public class MainFrame implements UpdatableInterface{
 	 */
 	private JPanel get_mainPanel() {
 		if (_mainPanel == null) {
-			_mainPanel = new MainPanel();
+			_mainPanel = new MainPanel(_model);
 		}
 		return _mainPanel;
 	}

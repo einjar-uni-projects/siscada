@@ -6,8 +6,8 @@ public class PaintElementExpendedoraChocolate extends PaintElement {
 
 	//TODO necesario? boolean paso = false;
 	
-	protected PaintElementExpendedoraChocolate(ImageLoader loader, int posX, int posY,	int maxX, int maxY) {
-		super(loader, posX, posY, maxX, maxY);
+	protected PaintElementExpendedoraChocolate(ImageLoader loader, int posX, int posY,	int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX, posY, maxX, maxY, model);
 	}
 	
 	@Override

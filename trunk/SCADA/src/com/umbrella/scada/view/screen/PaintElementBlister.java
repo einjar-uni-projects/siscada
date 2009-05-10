@@ -9,8 +9,8 @@ public class PaintElementBlister extends PaintElement {
 	int position = 0;
 	int pos = 0;
 
-	protected PaintElementBlister(ImageLoader loader, int posX, int posY,	int maxX, int maxY) {
-		super(loader, posX, posY, maxX, maxY);
+	protected PaintElementBlister(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX, posY, maxX, maxY, model);
 	}
 
 	@Override

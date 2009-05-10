@@ -11,6 +11,18 @@ public class MainFrameModel implements Updatable{
 	private LanguageIDs _selectedLanguage;
 	private UpdatableInterface _mainFrame;
 	
+	//ESTADOS
+	
+	private boolean _cintaPasteles;
+	private boolean _cintaBlister;
+	private boolean _cintaMontaje;
+	private int _brazoMontaje;
+	private boolean _brazoDesechar;
+	private int [] _pasteles = new int[7];
+	private int [] _blisters = new int[5];
+	private int [] _paquetes = new int[4];
+	
+	
 	//ACTIONS
 	
 	
@@ -74,6 +86,38 @@ public class MainFrameModel implements Updatable{
 			}
 		}
 		_mainFrame.updateData();
+	}
+
+	public boolean is_cintaPasteles() {
+		return _cintaPasteles;
+	}
+
+	public boolean is_cintaBlister() {
+		return _cintaBlister;
+	}
+
+	public boolean is_cintaMontaje() {
+		return _cintaMontaje;
+	}
+
+	public int get_brazoMontaje() {
+		return _brazoMontaje;
+	}
+
+	public boolean is_brazoDesechar() {
+		return _brazoDesechar;
+	}
+
+	public int[] get_pasteles() {
+		return _pasteles;
+	}
+
+	public int[] get_blisters() {
+		return _blisters;
+	}
+
+	public int[] get_paquetes() {
+		return _paquetes;
 	}
 
 }
