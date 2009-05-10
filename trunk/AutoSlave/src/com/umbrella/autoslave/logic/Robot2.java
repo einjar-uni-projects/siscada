@@ -13,7 +13,7 @@ import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
 public class Robot2 {
 
 	private static Configuracion _configuracion= Configuracion.getInstance();
-	private static ContextoRobot _contexto= new ContextoRobot();
+	private static ContextoRobot _contexto= ContextoRobot.getInstance();
 	
 	private static Clock _clock;
 	private static MailBox buzon;

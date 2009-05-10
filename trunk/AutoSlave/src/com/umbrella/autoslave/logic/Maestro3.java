@@ -1,5 +1,6 @@
 package com.umbrella.autoslave.logic;
 
+import com.umbrella.autoslave.Utils.Blister;
 import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Apagado;
@@ -58,6 +59,8 @@ public class Maestro3 {
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
  			
+ 			Blister blisterAuxiliar=new Blister();
+
  			if(cicloAct<_clock.getClock()){
  				cicloAct=_clock.getClock();
  				/*
@@ -78,6 +81,13 @@ public class Maestro3 {
  							((Apagado) estado).transitar();
  							primeraVez=false;
  						}else{
+ 							/*
+ 							 * si recibo el mensaje de blister listo y tengo espacio suficiente
+ 							 */
+ 							if(contexto.isBlisterListoInicioCinta3() && tengoEspacio()){
+ 								contexto.get_listaBlister().add(blisterAuxiliar.enCinta3());
+ 								//envio el mensaje de blister colocado, mesa libre
+ 							}
  							if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
  								_moverCinta.run();
  							}else{
@@ -139,12 +149,12 @@ public class Maestro3 {
 			salida=true;
 		}
 		*/
-		if(contexto.activaSensor(_selladora.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _selladora.get_posicion())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), true);
 			salida=true;
 		}
-		if(contexto.activaSensor(_salBlister.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), true);
 			salida=true;
@@ -169,18 +179,18 @@ public class Maestro3 {
 		boolean salida=false;
 		if(tipo.equals(NombreMaquinas.CONTROL_CALIDAD))
 			if(!ejecutandoAlgo(NombreMaquinas.CONTROL_CALIDAD) && 
-					contexto.activaSensor(_calidad.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _calidad.get_posicion())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD)))
 				salida=true;
 		
 		if(tipo.equals(NombreMaquinas.SELLADO))
 			if(!ejecutandoAlgo(NombreMaquinas.SELLADO) && 
-					contexto.activaSensor(_selladora.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _selladora.get_posicion())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SELLADO)))
 				salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_3))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_3) && 
-					contexto.activaSensor(_salBlister.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3))) 
 				salida=true;
 		return salida;
@@ -189,16 +199,25 @@ public class Maestro3 {
 	
 	private synchronized static void apagarSensores(){
 		int num=-1;
-		num=contexto.activaSensor(_calidad.get_posicion());
+		num=contexto.activaSensor(configuracion, _calidad.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD), false);
 		num=-1;
-		num=contexto.activaSensor(_selladora.get_posicion());
+		num=contexto.activaSensor(configuracion, _selladora.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), false);
 		num=-1;
-			num=contexto.activaSensor(_salBlister.get_posicion());
+			num=contexto.activaSensor(configuracion, _salBlister.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
+	}
+	private synchronized static boolean tengoEspacio(){
+		boolean sal=false;
+		double min=configuracion.getSizeCintaAut3()+50;
+		for(int i=0;i<contexto.get_listaBlister().size();i++){
+			if(contexto.get_listaBlister().get(i).get_posicion()<min) min=contexto.get_listaBlister().get(i).get_posicion();
+		}
+		if(min>configuracion.getSizeBlister()) sal=true;
+		return sal;
 	}
 }

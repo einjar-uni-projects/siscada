@@ -8,6 +8,7 @@ package com.umbrella.autoslave.logic;
  * 			el automata y reiniciando los valores
  */
 
+import com.sun.tools.javac.tree.Tree.Synchronized;
 import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Estado;
 
@@ -153,7 +154,45 @@ public class Configuracion {
 	private int posicionAsociadaCalidad=5;
 	private int posicionAsociadaCintaAut3=6;
 	
-    /*
+    
+	public Configuracion(ConfiguracionMaestro conf){
+		this._tiempoReloj=conf.get_tiempoReloj();
+		this.almacenarBlister=conf.getAlmacenarBlister();
+		this.capacidadPasteles=conf.getCapacidadPasteles();
+		this.errorSensor=conf.getErrorSensor();
+		this.espEntreBizc=conf.getEspEntreBizc();
+		this.espEntreBlister=conf.getEspEntreBlister();
+		this.interferencia=conf.getInterferencia();
+		this.moverBlister=conf.getMoverBlister();
+		this.moverPastel=conf.getMoverPastel();
+		this.posBizc=conf.getPosBizc();
+		this.posCalidad=conf.getPosCalidad();
+		this.posCaram=conf.getPosCaram();
+		this.posChoc=conf.getPosChoc();
+		this.posCortadora=conf.getPosCortadora();
+		this.posFinAut1=conf.getPosFinAut1();
+		this.posFinAut2=conf.getPosFinAut2();
+		this.posFinAut3=conf.getPosFinAut3();
+		this.posInicioAut3=conf.getPosInicioAut3();
+		this.posSelladora=conf.getPosSelladora();
+		this.posTroqueladora=conf.getPosTroqueladora();
+		this.selladora=conf.getSelladora();
+		this.sizeBizcocho=conf.getSizeBizcocho();
+		this.sizeBlister=conf.getSizeBlister();
+		this.sizeCintaAut1=conf.getSizeCintaAut1();
+		this.sizeCintaAut2=conf.getSizeCintaAut2();
+		this.sizeCintaAut3=conf.getSizeCintaAut3();
+		this.valvCaram=conf.getValvCaram();
+		this.valvChoc=conf.getValvChoc();
+		this.velCintaAut1=conf.getVelCintaAut1();
+		this.velCintaAut2=conf.getVelCintaAut2();
+		this.velCintaAut3=conf.getVelCintaAut3();
+	}
+	
+	private Configuracion(){
+		
+	}
+	/*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
      *  otra prueba para evitar instanciaci—n mœltiple
      */ 
@@ -345,6 +384,4 @@ public class Configuracion {
 	public synchronized int getInterferencia() {
 		return interferencia;
 	}
-	
-	
 }

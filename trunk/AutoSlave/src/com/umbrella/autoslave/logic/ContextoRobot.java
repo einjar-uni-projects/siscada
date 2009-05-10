@@ -14,6 +14,16 @@ public class ContextoRobot {
 	private static boolean pastel=false;
 	private static boolean valido=false;
 	
+	private static ContextoRobot Instancia = null;
+	
+	private ContextoRobot(){
+		
+	}
+	
+	public static synchronized ContextoRobot getInstance() {
+		if(Instancia==null) Instancia=new ContextoRobot();
+		return Instancia;
+	}
 	
 	public static synchronized boolean isFIN() {
 		return FIN;
