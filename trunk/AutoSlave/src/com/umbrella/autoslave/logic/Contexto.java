@@ -41,6 +41,8 @@ public class Contexto {
 	 */
 	private boolean [] dispositivosInternos= new boolean[16];
 
+	private boolean interferencia=false;
+	
 	Configuracion configuracion=Configuracion.getInstance();
 	
 	private static Contexto INSTANCE = null;
@@ -177,5 +179,13 @@ public class Contexto {
 
 	public synchronized LinkedList<Blister> get_listaBlister() {
 		return _listaBlister;
+	}
+
+	public synchronized boolean isInterferencia() {
+		return interferencia;
+	}
+
+	public synchronized void setInterferencia(boolean interferencia) {
+		this.interferencia = interferencia;
 	}
 }
