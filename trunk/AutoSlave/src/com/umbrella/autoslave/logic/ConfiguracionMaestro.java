@@ -8,8 +8,8 @@ package com.umbrella.autoslave.logic;
  * 			el automata y reiniciando los valores
  */
 
-import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Estado;
+import com.umbrella.autoslave.utils2.NombreMaquinas;
 
 /*
  * Importante!!!

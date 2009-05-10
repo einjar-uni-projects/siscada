@@ -4,14 +4,14 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import com.umbrella.autoslave.Utils.EstateThreads;
-import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Apagado;
 import com.umbrella.autoslave.executor.DispensadoraActivada;
 import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.autoslave.utils2.EstateThreads;
+import com.umbrella.autoslave.utils2.NombreMaquinas;
 import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
 
 

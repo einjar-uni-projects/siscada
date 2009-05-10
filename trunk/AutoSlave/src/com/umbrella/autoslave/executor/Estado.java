@@ -1,6 +1,6 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.Utils.EstateThreads;
+import com.umbrella.autoslave.utils2.EstateThreads;
 
 /*
  * obliga a los estado a implementar ciertos metodos, esta clase hay q ajustarla al paquete de comunicacion

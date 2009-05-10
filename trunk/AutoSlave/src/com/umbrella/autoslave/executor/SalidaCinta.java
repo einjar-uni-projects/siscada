@@ -1,8 +1,8 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autoslave.utils2.EstateThreads;
 
 public class SalidaCinta extends Thread implements Estado{
 
