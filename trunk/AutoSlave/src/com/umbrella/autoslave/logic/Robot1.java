@@ -1,6 +1,9 @@
 package com.umbrella.autoslave.logic;
 
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -16,7 +19,10 @@ public class Robot1 {
 	private static ContextoRobot _contexto= ContextoRobot.getInstance();
 	
 	private static Clock _clock;
-	private static MailBox buzon;
+	private static MailBox _buzon;
+	
+	private static String host = "localhost";
+	private static int puerto = 9003;
 	
 	/**
 	 * @param args
@@ -26,7 +32,18 @@ public class Robot1 {
 		
 		_clock=new Clock();
 		_clock.start();
-		//_buzon=new MailBox(<IP del servidor>,<puerto>,<>);
+		try {
+			_buzon=new MailBox(host,puerto,"EntradaRobot1","SalidaRobot1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();

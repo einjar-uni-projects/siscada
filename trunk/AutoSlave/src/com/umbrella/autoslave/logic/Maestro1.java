@@ -1,5 +1,9 @@
 package com.umbrella.autoslave.logic;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Apagado;
@@ -27,6 +31,10 @@ public class Maestro1 {
 	
 	private static Contexto contexto=Contexto.getInstance("pastel");
 	private static Configuracion configuracion=Configuracion.getInstance();
+	private static MailBox _buzon;
+	
+	private static String host = "localhost";
+	private static int puerto = 9003;
 	
 	public static void main(String[] args) {
 		try	{
@@ -54,7 +62,18 @@ public class Maestro1 {
  					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
  			_chocolate=new MaquinaTiempos(configuracion.getValvChoc(), configuracion.getPosChoc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
- 			//_buzon=new MailBox(<IP del servidor>,<puerto>,<>);
+ 			try {
+ 				_buzon=new MailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
+ 			} catch (RemoteException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			} catch (MalformedURLException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			} catch (NotBoundException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;

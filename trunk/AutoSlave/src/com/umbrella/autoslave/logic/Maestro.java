@@ -1,5 +1,9 @@
 package com.umbrella.autoslave.logic;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
 
 /*
@@ -34,6 +38,9 @@ public class Maestro {
 	private static Clock _clock;
 	private static long click;
 	private static long clickAnterior;
+	
+	private static String host = "localhost";
+	private static int puerto = 9003;
 	
 	public static void main(String [] args){
 		
@@ -108,6 +115,35 @@ public class Maestro {
 				 * si el contexto del aut 1 me dice q quedan pocos pasteles envio el mensaje a SCADA de pocos pasteles
 				 */
 				
+				/*
+				 * si recibo el mensaje de rellenar dispensador lo hago 
+				 */
+				
+				/*
+				 * si recibo el mensaje de modificar un campo lo hago, velocidad, tama–o, tiempos
+				 */
+				
+				/*
+				 * si el estado interno del aut3 me dice q hay blister listo lo cogo
+				 * el contexto me dice si el ultimo blister paso el control
+				 * al enviarle el mensaje de ir a por el blister tb se le envia esa informacion 
+				 */
+				
+				/*
+				 * si recibo el mensaje del robot 2 de interferencia se lo reenvio al aut3
+				 */
+				
+				/*
+				 * si recibo el mensaje de blister recogido del robot2 se lo comnunico al aut3
+				 */
+				
+				/*
+				 * si recibo el mensaje del robot 2 de fin de interferencia se lo reenvio al aut3
+				 */
+				
+				/*
+				 * si recibo el mensaje de blister situado del robot 2 se lo comunico al SCADA y cambio mi valor interno
+				 */
 				
 			}// fin de: if(clickAnterior<click), es decir lo q esta dentro es lo que se hace en cada click
 		}// fin del while(!fin)
@@ -134,7 +170,22 @@ public class Maestro {
 		/*
 		 * se inicilaizan los buzones
 		 */
-		
+		try {
+				_correoAut1=new MailBox(host,puerto,"SalidaMaestro1","EntradaMaestro1");
+				_correoAut2=new MailBox(host,puerto,"SalidaMaestro2","EntradaMaestro2");
+				_correoAut3=new MailBox(host,puerto,"SalidaMaestro3","EntradaMaestro3");
+				_correoRobot1=new MailBox(host,puerto,"SalidaRobot1","EntradaRobot1");
+				_correoRobot2=new MailBox(host,puerto,"SalidaRobot2","EntradaRobot2");
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		_clock=Clock.getInstance();
 		

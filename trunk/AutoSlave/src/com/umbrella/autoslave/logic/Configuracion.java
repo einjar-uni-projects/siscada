@@ -8,7 +8,8 @@ package com.umbrella.autoslave.logic;
  * 			el automata y reiniciando los valores
  */
 
-import com.sun.tools.javac.tree.Tree.Synchronized;
+
+//import com.sun.tools.javac.tree.Tree.Synchronized;
 import com.umbrella.autoslave.Utils.NombreMaquinas;
 import com.umbrella.autoslave.executor.Estado;
 
