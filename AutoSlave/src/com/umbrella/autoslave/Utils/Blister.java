@@ -8,8 +8,18 @@ public class Blister {
 	 */
 	private double _posicion;
 	private int _contPasteles;
-	// true en el automata 2, false en el 1
+	// true en el automata 2, false en el 3
 	private boolean _cinta;
+	
+	/*
+	 * posicion 0.- paso el control
+	 * posicion 1.- la pocision 1 es valida
+	 * posicion 2.- la pocision 2 es valida
+	 * posicion 3.- la pocision 3 es valida
+	 * posicion 4.- la pocision 4 es valida
+	 */
+	private boolean[] calidad={false,false,false,false,false};
+	
 	Configuracion configuracion=Configuracion.getInstance();
 	
 	public Blister(double posicion){
@@ -22,6 +32,13 @@ public class Blister {
 		set_posicion(configuracion.getSizeBlister()/2);
 		set_contPasteles(0);
 		set_cinta(true);
+	}
+	public Blister enCinta3(){
+		Blister aux=new Blister();
+		aux.set_posicion(configuracion.getSizeBlister()/2);
+		aux.set_contPasteles(4);
+		aux.set_cinta(false);
+		return aux;
 	}
 	public Blister(double _posicion, int pasteles, boolean cinta) {
 		set_posicion(_posicion);
@@ -51,4 +68,14 @@ public class Blister {
 	private synchronized void set_cinta(boolean cinta) {
 		this._cinta = cinta;
 	}
+
+	public synchronized boolean[] getCalidad() {
+		return calidad;
+	}
+
+	public synchronized void setCalidad(int pos, boolean valor) {
+		this.calidad[pos] = valor;
+	}
+	
+	
 }

@@ -41,9 +41,21 @@ public class Contexto {
 	 */
 	private boolean [] dispositivosInternos= new boolean[16];
 
+	/*
+	 * apagado deja el automata apagado pero esto lo deja en standby
+	 * FIN acaba la ejecucion completamente
+	 */
+	private boolean FIN=false;
+
+	private boolean[] estadoAnterior=new boolean[16];
+	
+	
 	private boolean interferencia=false;
 	
-	Configuracion configuracion=Configuracion.getInstance();
+	//Configuracion configuracion=Configuracion.getInstance();
+	
+	private int pastelesRestantes;
+	private boolean blisterListoInicioCinta3=false;
 	
 	private static Contexto INSTANCE = null;
 	
@@ -94,21 +106,6 @@ public class Contexto {
  	public Estado getState(){
  		return estado;
  	}
- 
- 	/*
- 	public void request(){
- 		estado.transitar();
- 		//estado=estado.transitar();
- 	}
- 	*/
- 	
- 	/*
-	 * apagado deja el automata apagado pero esto lo deja en standby
-	 * FIN acaba la ejecucion completamente
-	 */
-	private boolean FIN=false;
-
-	private boolean[] estadoAnterior=new boolean[16];
 	
 	public synchronized boolean[] getEstadoAnterior() {
 		return estadoAnterior;
@@ -145,6 +142,9 @@ public class Contexto {
 	public synchronized void setDispositivosInternos(int pos, boolean valor){
 		dispositivosInternos[pos]=valor;
 	}
+	public synchronized boolean[] getDispositivosInternos(){
+		return dispositivosInternos;
+	}
 	public synchronized boolean getDispositivosInternos(int pos){
 		return dispositivosInternos[pos];
 	}
@@ -153,7 +153,7 @@ public class Contexto {
 	 * devuelve el numero de pastel q activa el sensor q tiene la posicion pasada,
 	 *  -1 si no hay coincidencia
 	 */
-	public synchronized int activaSensor(double posicion){
+	public synchronized int activaSensor(Configuracion configuracion, double posicion){
 		//false = pasteles, true = blister
 		int sal=-1;	
 		if(tipo.equalsIgnoreCase("blister")){
@@ -188,4 +188,23 @@ public class Contexto {
 	public synchronized void setInterferencia(boolean interferencia) {
 		this.interferencia = interferencia;
 	}
+
+	public synchronized int getPastelesRestantes() {
+		return pastelesRestantes;
+	}
+
+	public synchronized void setPastelesRestantes(int pastelesRestantes) {
+		this.pastelesRestantes = pastelesRestantes;
+	}
+
+	public synchronized boolean isBlisterListoInicioCinta3() {
+		return blisterListoInicioCinta3;
+	}
+
+	public synchronized void setBlisterListoInicioCinta3(
+			boolean blisterListoInicioCinta3) {
+		this.blisterListoInicioCinta3 = blisterListoInicioCinta3;
+	}
+	
+	
 }

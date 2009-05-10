@@ -29,6 +29,7 @@ public class DispensadoraActivada extends Thread implements Estado{
 		set_estadoHilo(EstateThreads.CREADO);
 		this._posicion=posicion;
 		set_posicionAsociada(posAsociada);
+		contexto.setPastelesRestantes(_pastelesRestantes);
 	}
 
 	public synchronized double get_posicion() {
@@ -80,6 +81,7 @@ public class DispensadoraActivada extends Thread implements Estado{
 				}
 			} 
 		}
+		contexto.setPastelesRestantes(_pastelesRestantes);
 		set_estadoHilo(EstateThreads.ACABADO);
 	}
 	
@@ -145,5 +147,9 @@ public class DispensadoraActivada extends Thread implements Estado{
 	public synchronized void llenarDeposito(int valor){
 		if(valor+_pastelesRestantes>50) _pastelesRestantes=50;
 		else _pastelesRestantes+=valor;		
+	}
+	
+	public synchronized int get_PastelesRestantes(){
+		return _pastelesRestantes;
 	}
 }

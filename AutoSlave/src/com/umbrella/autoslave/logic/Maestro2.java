@@ -134,7 +134,7 @@ public class Maestro2 {
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
-		if(contexto.activaSensor(_salBlister.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), true);
 			salida=true;
@@ -159,18 +159,18 @@ public class Maestro2 {
 		boolean salida=false;
 		if(tipo.equals(NombreMaquinas.CORTADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.CORTADORA) && 
-					contexto.activaSensor(_cortadora.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _cortadora.get_posicion())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA)))
 				salida=true;
 		
 		if(tipo.equals(NombreMaquinas.TROQUELADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.TROQUELADORA) && 
-					contexto.activaSensor(_troqueladora.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _troqueladora.get_posicion())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA)))
 				salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_2))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_2) && 
-					contexto.activaSensor(_salBlister.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))) 
 				salida=true;
 		return salida;
@@ -179,15 +179,15 @@ public class Maestro2 {
 	
 	private synchronized static void apagarSensores(){
 		int num=-1;
-		num=contexto.activaSensor(_cortadora.get_posicion());
+		num=contexto.activaSensor(configuracion, _cortadora.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), false);
 		num=-1;
-		num=contexto.activaSensor(_troqueladora.get_posicion());
+		num=contexto.activaSensor(configuracion, _troqueladora.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), false);
 		num=-1;
-		num=contexto.activaSensor(_salBlister.get_posicion());
+		num=contexto.activaSensor(configuracion, _salBlister.get_posicion());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
 	}
