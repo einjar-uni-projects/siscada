@@ -109,6 +109,13 @@ public class MainFrameModel implements Updatable{
 	}
 
 	public int[] get_pasteles() {
+		_pasteles[0] = 3;
+		_pasteles[1] = 3;
+		_pasteles[2] = 3;
+		_pasteles[3] = 3;
+		_pasteles[4] = 3;
+		_pasteles[5] = 3;
+		_pasteles[6] = 3;
 		return _pasteles;
 	}
 
