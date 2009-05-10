@@ -1,9 +1,9 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.Utils.EstateThreads;
-import com.umbrella.autoslave.Utils.Pastel;
 import com.umbrella.autoslave.logic.Configuracion;
 import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autoslave.utils2.EstateThreads;
+import com.umbrella.autoslave.utils2.Pastel;
 
 public class DispensadoraActivada extends Thread implements Estado{
 

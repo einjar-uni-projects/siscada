@@ -9,9 +9,9 @@ package com.umbrella.autoslave.logic;
 
 import java.util.LinkedList;
 
-import com.umbrella.autoslave.Utils.Blister;
-import com.umbrella.autoslave.Utils.Pastel;
 import com.umbrella.autoslave.executor.Estado;
+import com.umbrella.autoslave.utils2.Blister;
+import com.umbrella.autoslave.utils2.Pastel;
 
 public class Contexto {
 
