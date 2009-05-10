@@ -6,8 +6,8 @@ public class PaintElementRobot extends PaintElement {
 	
 	int _state = 0;
 	
-	protected PaintElementRobot(ImageLoader loader, int posX, int posY,	int maxX, int maxY) {
-		super(loader, posX, posY, maxX, maxY);
+	protected PaintElementRobot(ImageLoader loader, int posX, int posY,	int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX, posY, maxX, maxY, model);
 	}
 
 	@Override

@@ -5,8 +5,8 @@ import java.awt.Graphics;
 public class PaintElementBlisterIni extends PaintElement {
 
 	
-	protected PaintElementBlisterIni(ImageLoader loader, int posX, int posY,	int maxX, int maxY) {
-		super(loader, posX, posY, maxX, maxY);
+	protected PaintElementBlisterIni(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX, posY, maxX, maxY, model);
 	}
 
 	@Override

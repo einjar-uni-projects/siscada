@@ -13,25 +13,29 @@ public class MainPanel extends JPanel{
 	private int _wallpaperWidth = 800;
 	private int _wallpaperHeight = 600;
 	
+	private long _time1;
+	private long _time2;
+	
 	
 	private ConjuntoCinta[] _conjuntosCinta = new ConjuntoCinta[5];
 	
-	public MainPanel(){
+	public MainPanel(MainFrameModel model){
 		_loader = new ImageLoader(this);
-		_conjuntosCinta[0] = new ConjuntoCintaPasteles(_loader, 10,20,400,200);
+		_conjuntosCinta[0] = new ConjuntoCintaPasteles(_loader, 10,20,400,200, model);
 		_conjuntosCinta[0].cintaOn(true);
-		_conjuntosCinta[1] = new ConjuntoCintaBlister(_loader, 10,375,400,200);
+		_conjuntosCinta[1] = new ConjuntoCintaBlister(_loader, 10,375,400,200, model);
 		_conjuntosCinta[1].cintaOn(true);
-		_conjuntosCinta[2] = new ConjuntoCintaControl(_loader, 440,200,350,150);
+		_conjuntosCinta[2] = new ConjuntoCintaControl(_loader, 440,200,350,150, model);
 		_conjuntosCinta[2].cintaOn(true);
-		_conjuntosCinta[3] = new ConjuntoRobot1(_loader, 250,225,200,150);
+		_conjuntosCinta[3] = new ConjuntoRobot1(_loader, 250,225,200,150, model);
 		_conjuntosCinta[3].cintaOn(true);
-		_conjuntosCinta[4] = new ConjuntoRobot2(_loader, 560,275,200,150);
+		_conjuntosCinta[4] = new ConjuntoRobot2(_loader, 560,275,200,150, model);
 		_conjuntosCinta[4].cintaOn(true);
 	}
 	
 	@Override
 	public void paint(Graphics g) {
+		_time1 = System.currentTimeMillis();
 		Image alt = createImage(_wallpaperWidth, _wallpaperHeight);
 		Graphics altGr = alt.getGraphics();
 		altGr.setColor(Color.WHITE);
@@ -48,6 +52,16 @@ public class MainPanel extends JPanel{
 		altGr.drawImage(_loader.get_expendedora(), 100, 100, null);
 		altGr.drawImage(_loader.get_masa(), 100, 120, null);*/
 		
+		_time2 = System.currentTimeMillis();
+		
+		long sleep = 200-(_time2-_time1);
+		if(sleep > 0)
+			try {
+				Thread.sleep(sleep);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		g.drawImage(alt, 0, 0, getWidth(), getHeight(), null);
 		repaint();
 	}

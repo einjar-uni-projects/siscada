@@ -9,13 +9,13 @@ public class ConjuntoCintaPasteles extends ConjuntoCinta {
 	private PaintElementExpendedoraCaramelo _expendedora_caramelo;
 	private PaintElementTarta _tarta;
 	
-	public ConjuntoCintaPasteles(ImageLoader loader, int posX, int posY, int maxX, int maxY) {
-		super(loader, posX, posY, maxX, maxY);
-		_cinta = new PaintElementCinta(loader,posX,posY+maxY-50,maxX,50);
-		_expendedora_masa = new PaintElementExpendedoraMasa(loader, posX, posY, 100, 100);
-		_expendedora_chocolate= new PaintElementExpendedoraChocolate(loader, posX+105, posY, 100, 100);
-		_expendedora_caramelo= new PaintElementExpendedoraCaramelo(loader, posX+210, posY, 100, 100);
-		_tarta = new PaintElementTarta(loader,posX,posY+maxY-60,40,40);
+	public ConjuntoCintaPasteles(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
+		super(loader, posX, posY, maxX, maxY, model);
+		_cinta = new PaintElementCinta(loader,posX,posY+maxY-50,maxX,50, model);
+		_expendedora_masa = new PaintElementExpendedoraMasa(loader, posX, posY, 100, 100, model);
+		_expendedora_chocolate= new PaintElementExpendedoraChocolate(loader, posX+105, posY, 100, 100, model);
+		_expendedora_caramelo= new PaintElementExpendedoraCaramelo(loader, posX+210, posY, 100, 100, model);
+		_tarta = new PaintElementTarta(loader,posX,posY+maxY-60,40,40, model);
 		_paintElements.add(_cinta);
 		_paintElements.add(_expendedora_masa);
 		_paintElements.add(_expendedora_chocolate);
