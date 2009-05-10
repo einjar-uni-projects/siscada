@@ -7,7 +7,10 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion;
+package com.umbrella.mail.modulocomunicacion;
+
+import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.MessagePrueba1;
 
 /**
  *
@@ -34,7 +37,7 @@ public class Main2 {
 			message = buzon.receive();
 			
 			/* Para acceder a los atributos, importante hacer el casting.*/
-			System.out.println("Recibido: " + ((MessagePrueba1)message).varString);
+			System.out.println("Recibido: " + ((MessagePrueba1)message).getVarString());
 
 		}catch (Exception e){
 			System.out.println("Error al recibir. Conexion con el registro de colas perdida");
