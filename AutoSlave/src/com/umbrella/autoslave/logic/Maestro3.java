@@ -1,5 +1,9 @@
 package com.umbrella.autoslave.logic;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import com.umbrella.autoslave.Utils.Blister;
 import com.umbrella.autoslave.Utils.EstateThreads;
 import com.umbrella.autoslave.Utils.NombreMaquinas;
@@ -10,6 +14,7 @@ import com.umbrella.autoslave.executor.MaquinaInstantanea;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
 
 
 /*
@@ -23,11 +28,14 @@ public class Maestro3 {
 	private static SalidaCinta _salBlister;
 	private static MaquinaInstantanea _calidad;
 	private static MaquinaTiempos _selladora;
-	
+	private static MailBox _buzon;
 	
 	private static Contexto contexto=Contexto.getInstance("blister");
 	private static Configuracion configuracion=Configuracion.getInstance();
-
+	
+	private static String host = "localhost";
+	private static int puerto = 9003;
+	
 	public static void main(String[] args) {
 		
 		for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,false);
@@ -55,6 +63,19 @@ public class Maestro3 {
  					configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD));
  			_selladora=new MaquinaTiempos(configuracion.getSelladora(), configuracion.getPosSelladora(),
  					configuracion.getPosicionAsociada(NombreMaquinas.SELLADO));
+ 			
+ 			try {
+ 				_buzon=new MailBox(host,puerto,"EntradaMaestro3","SalidaMaestro3");
+ 			} catch (RemoteException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			} catch (MalformedURLException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			} catch (NotBoundException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
