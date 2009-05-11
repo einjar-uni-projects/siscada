@@ -34,7 +34,7 @@ public class Main2 {
 		try{
 			/* La funcion receive es persistente hasta que hay algo en la cola que leer.
 			 * Si falla la conexion con el registro de colas, daria una excepcion*/
-			message = buzon.receive();
+			message = buzon.receiveBlocking();
 			
 			/* Para acceder a los atributos, importante hacer el casting.*/
 			System.out.println("Recibido: " + ((MessagePrueba1)message).getVarString());
