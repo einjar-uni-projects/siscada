@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.umbrella.autoslave.utils2.EstateRobots;
-import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
+import com.umbrella.mail.modulocomunicacion.MailBox;
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel

@@ -24,12 +24,10 @@ public enum Ontologia {
 	PRODUCTORECOGIDO("ProductoRecogido",4),
 	FINCINTALIBRE("FinCintaLibre",3),
 	PRODUCTOCOLOCADO("ProductoColocado",3),
-	RELLENARMAQUINA("RellanarMaquina",3);
+	RELLENARMAQUINA("RellanarMaquina",3),
+	MODIFICARCAMPO("ModificarCampo",4),
+	MOVERDESDEMESA("MoverDesdeMesa",2);
 	
-	
-	
-	
-	 
 	
 	private String nombre;
 	private int numParametros;

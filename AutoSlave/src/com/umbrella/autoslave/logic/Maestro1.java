@@ -12,7 +12,7 @@ import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
-import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
+import com.umbrella.mail.modulocomunicacion.MailBox;
 
 
 /*

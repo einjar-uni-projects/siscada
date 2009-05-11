@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
+import com.umbrella.mail.modulocomunicacion.MailBox;
 
 /*
  * esta clase gestiona los automatas
@@ -241,7 +241,7 @@ public class Maestro {
 		return sal;
 	}
 	
-	private static int cambiarTama–oCinta(int cinta, double valor){
+	private static int cambiarTamanyoCinta(int cinta, double valor){
 		int sal=-1;
 		switch (cinta) {
 		case 0:
