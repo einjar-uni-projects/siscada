@@ -10,8 +10,11 @@ import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.autoslave.message.ActualizarContexto;
+import com.umbrella.autoslave.message.FinCintaLibre;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.autoslave.utils2.Ontologia;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 
@@ -62,6 +65,9 @@ public class Maestro1 {
  					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
  			_chocolate=new MaquinaTiempos(configuracion.getValvChoc(), configuracion.getPosChoc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
+
+ 			FinCintaLibre _finCintaLibre=null;
+ 			
  			try {
  				_buzon=new MailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
  			} catch (RemoteException e) {
@@ -86,11 +92,19 @@ public class Maestro1 {
  				 */
  				if(cicloAct<_clock.getClock()){
  					cicloAct=_clock.getClock();
-
-
  					/*
  					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
  					 */
+ 					Object aux=null;
+ 					do{
+ 						aux=_buzon.receive();
+ 						if(aux instanceof FinCintaLibre){
+ 							_finCintaLibre = (FinCintaLibre)aux;
+ 						}
+ 						
+ 						
+ 						
+ 					}while(aux!=null);
  					if(!contexto.apagado){
  						/*
  						 * se arranca el automata cambiando el estado, 
@@ -133,6 +147,13 @@ public class Maestro1 {
  					
  					for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
  				}
+ 				// envia el mensaje de contexto
+ 				ActualizarContexto actContexto=new ActualizarContexto();
+ 				actContexto.setClick(cicloAct);
+ 				actContexto.setContexto(contexto);
+ 				actContexto.setIdentificador(Ontologia.ACTUALIZARCONTEXTO.getNombre());
+ 				actContexto.setMaquina(1);
+ 				_buzon.send(actContexto);
  			}
  			/*
  			 * se matan los hilos
