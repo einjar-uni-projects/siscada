@@ -10,10 +10,12 @@ package com.umbrella.autoslave.logic;
 
 
 //import com.sun.tools.javac.tree.Tree.Synchronized;
+import java.io.Serializable;
+
 import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
 
-public class Configuracion {
+public class Configuracion implements Serializable {
 
 	
 	/*

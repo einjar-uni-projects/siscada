@@ -1,6 +1,8 @@
 package com.umbrella.autoslave.utils2;
 
-public enum EstateRobots {
+import java.io.Serializable;
+
+public enum EstateRobots implements Serializable{
 	REPOSO("Reposo","Esperando ordenes, sobre una posicion que no provoca interferencias", 0),
 	CAMINOPOSICION_1("caminoposicion1","se desplaza a la posicion 1",1),
 	SOBREPOSICION_1("sobreposicion1","Se encuentra sobre la posicion 1", 2),

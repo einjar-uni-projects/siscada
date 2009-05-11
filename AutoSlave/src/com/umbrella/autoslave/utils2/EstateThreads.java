@@ -1,8 +1,10 @@
 package com.umbrella.autoslave.utils2;
 
+import java.io.Serializable;
 
 
-public enum EstateThreads {
+
+public enum EstateThreads implements Serializable{
 	CREADO("creado","hilo creado pero sin ejecutarse"),
 	ESPERANDO("esperando","hilo en ejecucion que esta esperando por una viariable, similar al bloqueado"),
 	EJECUTANDO("ejecutando","hilo ejecutando"),

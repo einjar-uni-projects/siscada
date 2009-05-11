@@ -1,8 +1,10 @@
 package com.umbrella.autoslave.utils2;
 
+import java.io.Serializable;
+
 import com.umbrella.autoslave.logic.Configuracion;
 
-public class Blister {
+public class Blister implements Serializable{
 	/*
 	 * posicion del pastel medida en CM
 	 */
