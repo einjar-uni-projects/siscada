@@ -2,150 +2,21 @@ package com.umbrella.scada.model;
 
 import com.umbrella.scada.observer.Observable;
 import com.umbrella.scada.observer.ObservableProvider;
+import com.umbrella.scada.observer.TransferBufferKeys;
 
 public class Model {
-	private final Observable _observable;
-	
-	/*
-	 * El tiempo de reloj realmente me lo tiene q dar el usuario, se tiene q cargar y estaria muy bien leerlo
-	 * de algun sitio para todos los automatas
-	 */
-	private int _tiempoReloj=200;
-	
-	/*
-	 * indica el error del sensor, en metros
-	 */
-	private double errorSensor=0.20;
-	
-	/*
-	 * Tama�o de la cinta
-	 */
-	private double sizeCintaAut1=10;
-	private double sizeCintaAut2=10;
-	private double sizeCintaAut3=10;
-	
-	/*
-	 * Capacidad del deposito de pasteles
-	 */
-	private int capacidadPasteles=50;
-	
-	/*
-	 * Velocidad de la cinta, medida en m/min
-	 */
-	private double velCintaAut1=20;
-	private double velCintaAut2=20;
-	private double velCintaAut3=10;
-	
-	/*
-	 * Tiempo de activacion de la valvula de chocolate, en segundos
-	 */
-	private int valvChoc=3;
-	
-	/*
-	 * Tiempo de activacion de la valvula de chocolate, en segundos
-	 */
-	private int valvCaram=2;
-	
-	/*
-	 * Tiempo de activacion de la selladora, en segundos
-	 */
-	private int selladora=5;
-	
-	/*
-	 * Tiempo que tarda el robot 1 en recoger y colocar un bliser, en segundos
-	 */
-	private int moverBlister=5;
-	
-	/*
-	 * Tiempo que tarda el robot 1 en recoger y colocar un pastel, en segundos
-	 */
-	private int moverPastel=5;
-	
-	/*
-	 * Tiempo que tarda el robot 2 en recoger almacenar un bliser, en segundos
-	 */
-	private int almacenarBlister=5;
-	
-	/*
-	 * Interferencia de los robots en el movimiento de la cinta
-	 */
-	private int interferencia=2;
-	
-	/*
-	 * indica el tama�o del bizcocho y blister, en metros, solo se refiere a la longitud
-	 */
-	private double sizeBizcocho=0.10;
-	private double sizeBlister=sizeBizcocho*2+0.10;
-	
-	/*
-	 * posicion donde se encuentra el sensor y el dispensador de chocolate, medido en CM
-	 */
-	private double posChoc=(sizeCintaAut1/3);
-	
-	/*
-	 * posicion donde se encuentra el sensor y el dispensador de caramelo, medido en CM
-	 */
-	private double posCaram=(sizeCintaAut1*2/3);
-	
-	/*
-	 * posicion donde se encuentra el dispensador de bizcochos, medido en CM
-	 */
-	private double posBizc=sizeBizcocho/2;
-	
-	private double posTroqueladora=sizeCintaAut2*1/3;
-	private double posCortadora=posTroqueladora+sizeBlister;
-	
-	
-	private double posInicioAut3=sizeBlister/2;
-	private double posCalidad=sizeCintaAut3*1/3;
-	private double posSelladora=sizeCintaAut3*2/3;
-	
-	/*
-	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
-	 */
-	//private int posFin=pointsControl-1;
-	private double posFinAut1=sizeCintaAut1-sizeBizcocho/2;
-	private double posFinAut2=sizeCintaAut2-sizeBlister/2;
-	private double posFinAut3=sizeCintaAut3-sizeBlister/2;
-	
-	/*
-	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
-	 */
-	private double espEntreBizc=sizeBizcocho+0.2;
-	private double espEntreBlister=sizeBlister+0.2;
-	
-	/*
-	 * posiciones asociadas al estado interno
-	 */
-	private int posicionAsociadaSensorFinAut1=0;
-	private int posicionAsociadaSensorCaramelo=1;
-	private int posicionAsociadaSensorChocolate=2;
-	private int posicionAsociadaCaramelo=3;
-	private int posicionAsociadaChocolate=4;
-	private int posicionAsociadaDispensadora=5;
-	private int posicionAsociadaCintaAut1=6;
-	
-	private int posicionAsociadaSensorFinAut2=0;
-	private int posicionAsociadaSensorTroqueladora=1;
-	private int posicionAsociadaSensorCortadora=2;
-	private int posicionAsociadaTroqueladora=3;
-	private int posicionAsociadaCortadora=4;
-	private int posicionAsociadaCintaAut2=5;
-	
-	private int posicionAsociadaSensorFinAut3=0;
-	private int posicionAsociadaSensorSelladora=1;
-	private int posicionAsociadaSensorCalidad=2;
-	private int posicionAsociadaSensorInicioCinta=3;
-	private int posicionAsociadaSelladora=4;
-	private int posicionAsociadaCalidad=5;
-	private int posicionAsociadaCintaAut3=6;
-	
-	// El constructor privado no permite que se genere un constructor por defecto
-	// (con mismo modificador de acceso que la definicion de la clase) 
-	private Model() {
-		_observable = ObservableProvider.getInstance();
+	private static class SingletonHolder {
+		private static Model instance = new Model();
 	}
-
+	
+	//Los atributos llevan el siguiente nombrado:
+	// _gen para atributos generales
+	// _au1 para el automata 1
+	// _au2 para el automata 2
+	// _au3 para el automata 3
+	// _rb1 para el robot 1
+	// _rb2 para el robot 2
+	
 	/**
 	 * Obtiene la instancia única del objeto, la primera invocación
 	 * realiza la creación del mismo.
@@ -154,8 +25,183 @@ public class Model {
 	public static Model getInstance() {
 		return SingletonHolder.instance;
 	}
+	private final Observable _observable;
+	/*Atributos generales*/
+	private final ModelElementAtribute<Integer> _genClockTime = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_CLOCK_TIME,new Integer(200));
+	private final ModelElementAtribute<Double> _genSensorError = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_SENSOR_ERROR,new Double(0.20));
+	private final ModelElementAtribute<Integer> _genRobotInterference = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_ROBOT_INTERFERENCE, new Integer(2));
+	private final ModelElementAtribute<Double> _genCakeSize = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_CAKE_SIZE, new Double(0.1));
+	private final ModelElementAtribute<Double> _genBlisterSize = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_BLISTER_SIZE, new Double(_genCakeSize.get_value().doubleValue()*2+0.1));
 
-	private static class SingletonHolder {
-		private static Model instance = new Model();
+	/*Atributos del automata 1*/
+	private final ModelElementAtribute<Double> _au1ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE,new Double(10));
+	private final ModelElementAtribute<Double> _au1ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SPEED,new Double(20));
+	private final ModelElementAtribute<Integer> _au1CakeDepot = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CAKE_DEPOT, new Integer(50));
+	private final ModelElementAtribute<Integer> _au1ChocolateValveDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CHOCOLATE_VALVE_DELAY, new Integer(3));
+	private final ModelElementAtribute<Integer> _au1CaramelValveDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CARAMEL_VALVE_DELAY, new Integer(2));
+
+	/*Atributos del automata 2*/
+	private final ModelElementAtribute<Double> _au2ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU2_CONVEYOR_BELT_SIZE,new Double(10));
+	private final ModelElementAtribute<Double> _au2ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU2_CONVEYOR_BELT_SPEED,new Double(20));
+	private final ModelElementAtribute<Integer> _au2VacuumSealingMachine = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_VACUUM_SEALING_MACHINE, new Integer(5));
+
+	/*Atributos del automata 3*/
+	private final ModelElementAtribute<Double> _au3ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU3_CONVEYOR_BELT_SIZE,new Double(10));
+	private final ModelElementAtribute<Double> _au3ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED,new Double(10));
+
+	/*Atributos del robot1*/
+	private final ModelElementAtribute<Integer> _rb1BlisterDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB1_BLISTER_DELAY, new Integer(5));
+	private final ModelElementAtribute<Integer> _rb1CakeDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB1_CAKE_DELAY, new Integer(5));
+
+	/*Atributos del robot2*/
+	private final ModelElementAtribute<Integer> _rb2BlisterDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB2_BLISTER_DELAY, new Integer(5));
+	
+	private boolean _modelChanges;
+	
+	// El constructor privado no permite que se genere un constructor por defecto
+	// (con mismo modificador de acceso que la definicion de la clase) 
+	private Model() {
+		_observable = ObservableProvider.getInstance();
+		updateAll();
+		notifyChanges();
+	}
+	
+	private void updateAll() {
+		_observable.addChange(_au1CakeDepot.get_tbk(), _au1CakeDepot.get_value());
+		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
+		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
+		_observable.addChange(_au1ConveyorBeltSize.get_tbk(), _au1ConveyorBeltSize.get_value());
+		_observable.addChange(_au1ConveyorBeltSpeed.get_tbk(), _au1ConveyorBeltSpeed.get_value());
+		_observable.addChange(_au2ConveyorBeltSize.get_tbk(), _au2ConveyorBeltSize.get_value());
+		_observable.addChange(_au2ConveyorBeltSpeed.get_tbk(), _au2ConveyorBeltSpeed.get_value());
+		_observable.addChange(_au2VacuumSealingMachine.get_tbk(), _au2VacuumSealingMachine.get_value());
+		_observable.addChange(_au3ConveyorBeltSize.get_tbk(), _au3ConveyorBeltSize.get_value());
+		_observable.addChange(_au3ConveyorBeltSpeed.get_tbk(), _au3ConveyorBeltSpeed.get_value());
+		_observable.addChange(_genBlisterSize.get_tbk(), _genBlisterSize.get_value());
+		_observable.addChange(_genCakeSize.get_tbk(), _genCakeSize.get_value());
+		_observable.addChange(_genClockTime.get_tbk(), _genClockTime.get_value());
+		_observable.addChange(_genRobotInterference.get_tbk(), _genRobotInterference.get_value());
+		_observable.addChange(_genSensorError.get_tbk(), _genSensorError.get_value());
+		_observable.addChange(_rb1BlisterDelay.get_tbk(), _rb1BlisterDelay.get_value());
+		_observable.addChange(_rb1CakeDelay.get_tbk(), _rb1CakeDelay.get_value());
+		_observable.addChange(_rb2BlisterDelay.get_tbk(), _rb2BlisterDelay.get_value());
+		_modelChanges = true;
+	}
+
+	public void notifyChanges(){
+		if(_modelChanges){
+			_observable.notifyChanges();
+			_modelChanges = false;
+		}
+	}
+	
+	
+	public void set_au1CakeDepot(int cakeDepot) {
+		_au1CakeDepot.set_value(cakeDepot);
+		_observable.addChange(_au1CakeDepot.get_tbk(), _au1CakeDepot.get_value());
+		_modelChanges = true;
+	}
+
+	public void set_au1CaramelValveDelay(int caramelValveDelay) {
+		_au1CaramelValveDelay.set_value(caramelValveDelay);
+		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
+		_modelChanges = true;
+	}
+
+	public void set_au1ChocolateValveDelay(int chocolateValveDelay) {
+		_au1ChocolateValveDelay.set_value(chocolateValveDelay);
+		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au1ConveyorBeltSize(double conveyorBeltSize) {
+		_au1ConveyorBeltSize.set_value(conveyorBeltSize);
+		_observable.addChange(_au1ConveyorBeltSize.get_tbk(), _au1ConveyorBeltSize.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au1ConveyorBeltSpeed(double conveyorBeltSpeed) {
+		_au1ConveyorBeltSpeed.set_value(conveyorBeltSpeed);
+		_observable.addChange(_au1ConveyorBeltSpeed.get_tbk(), _au1ConveyorBeltSpeed.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2ConveyorBeltSize(double conveyorBeltSize) {
+		_au2ConveyorBeltSize.set_value(conveyorBeltSize);
+		_observable.addChange(_au2ConveyorBeltSize.get_tbk(), _au2ConveyorBeltSize.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2ConveyorBeltSpeed(double conveyorBeltSpeed) {
+		_au2ConveyorBeltSpeed.set_value(conveyorBeltSpeed);
+		_observable.addChange(_au2ConveyorBeltSpeed.get_tbk(), _au2ConveyorBeltSpeed.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2VacuumSealingMachine(int vacuumSealingMachine) {
+		_au2VacuumSealingMachine.set_value(vacuumSealingMachine);
+		_observable.addChange(_au2VacuumSealingMachine.get_tbk(), _au2VacuumSealingMachine.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3ConveyorBeltSize(double conveyorBeltSize) {
+		_au3ConveyorBeltSize.set_value(conveyorBeltSize);
+		_observable.addChange(_au3ConveyorBeltSize.get_tbk(), _au3ConveyorBeltSize.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3ConveyorBeltSpeed(double conveyorBeltSpeed) {
+		_au3ConveyorBeltSpeed.set_value(conveyorBeltSpeed);
+		_observable.addChange(_au3ConveyorBeltSpeed.get_tbk(), _au3ConveyorBeltSpeed.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_genBlisterSize(double blisterSize) {
+		_genBlisterSize.set_value(blisterSize);
+		_observable.addChange(_genBlisterSize.get_tbk(), _genBlisterSize.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_genCakeSize(double cakeSize) {
+		_genCakeSize.set_value(cakeSize);
+		_observable.addChange(_genCakeSize.get_tbk(), _genCakeSize.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_genClockTime(int clockTime) {
+		_genClockTime.set_value(clockTime);
+		_observable.addChange(_genClockTime.get_tbk(), _genClockTime.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_genRobotInterference(
+			int robotInterference) {
+		_genRobotInterference.set_value(robotInterference);
+		_observable.addChange(_genRobotInterference.get_tbk(), _genRobotInterference.get_value());
+		_modelChanges = true;
+	}
+
+	public void set_genSensorError(double sensorError) {
+		_genSensorError.set_value(sensorError);
+		_observable.addChange(_genSensorError.get_tbk(), _genSensorError.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_rb1BlisterDelay(int blisterDelay) {
+		_rb1BlisterDelay.set_value(blisterDelay);
+		_observable.addChange(_rb1BlisterDelay.get_tbk(), _rb1BlisterDelay.get_value());
+		_modelChanges = true;
+	}
+
+	public void set_rb1CakeDelay(int cakeDelay) {
+		_rb1CakeDelay.set_value(cakeDelay);
+		_observable.addChange(_rb1CakeDelay.get_tbk(), _rb1CakeDelay.get_value());
+		_modelChanges = true;
+	}
+
+	public void set_rb2BlisterDelay(int blisterDelay) {
+		_rb2BlisterDelay.set_value(blisterDelay);
+		_observable.addChange(_rb2BlisterDelay.get_tbk(), _rb2BlisterDelay.get_value());
+		_modelChanges = true;
 	}
 }
