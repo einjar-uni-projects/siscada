@@ -59,7 +59,7 @@ public class MailBox {
      * Se queda esperando hasta que haya un mensaje en la cola.
      * @return the head of this queue, or null if this queue is empty.
      */
-    public MessageInterface receive() throws Exception{
+    public MessageInterface receiveBlocking() throws Exception{
         MessageInterface returnMessage;
         do{		
             returnMessage =  _inputQueue.unqueueMessage();      
@@ -67,4 +67,14 @@ public class MailBox {
         return returnMessage;
     }
     
+    /**
+     * Metodo no bloqueante que desencola un mensaje de la cola de entrada
+     * Si no hay un mensaje en la cola de entrada la salida ser‡ null
+     * @return the head of this queue, or null if this queue is empty.
+     */
+    public MessageInterface receive() throws Exception{
+        MessageInterface returnMessage=null;
+        returnMessage =  _inputQueue.unqueueMessage();      
+        return returnMessage;
+    }
 }
