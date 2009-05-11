@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.umbrella.autoslave.utils2.EstateRobots;
-import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
+import com.umbrella.mail.modulocomunicacion.MailBox;
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel
@@ -57,6 +57,7 @@ public class Robot1 {
 					/*
 					 * si recibe un mensaje de recoger blister pues pasa al estado: CAMINOPOSICION_2 y coge el tiempo
 					 * si recibe un mensaje de recoger pastel pues pasa al estado: CAMINOPOSICION_1 y coge el tiempo
+					 * si recibe un mensaje de moverblistercompleto pues pasa al estado: DESPLAZARBLISTERCOMPLETO y coge el tiempo
 					 */
 				 	_contexto.setTiempo(System.currentTimeMillis());
 				 	_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
@@ -133,6 +134,13 @@ public class Robot1 {
 						}
 					}
 					
+				}else if(_contexto.getEstadoInterno().equals(EstateRobots.DESPLAZARBLISTERCOMPLETO)){
+					if( _contexto.getDiffTiempo() > _configuracion.getMoverBlister()){
+						/*
+						 * envia el mensaje de blister completo colocado en la cinta 3
+						 */
+						_contexto.setEstadoInterno(EstateRobots.REPOSO);
+					}
 				}
 			}
 			

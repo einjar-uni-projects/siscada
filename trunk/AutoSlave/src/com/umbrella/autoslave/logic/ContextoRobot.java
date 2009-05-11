@@ -1,7 +1,6 @@
 package com.umbrella.autoslave.logic;
 
 import com.umbrella.autoslave.utils2.EstateRobots;
-import com.umbrella.mail.Users.pablo.Downloads.modulocomunicacion.MailBox;
 
 public class ContextoRobot {
 	
