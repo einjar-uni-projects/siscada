@@ -10,8 +10,8 @@ public class ConjuntoCintaBlister extends ConjuntoCinta {
 	public ConjuntoCintaBlister(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
 		super(loader, posX, posY, maxX, maxY, model);
 		_cinta = new PaintElementCinta(loader,posX,posY+maxY-100,maxX,100, model);
-		_blister_ini = new  PaintElementBlisterIni(loader, -30, posY+maxY-127, 100, 100, model);
-		_blister = new  PaintElementBlister(loader, -30, posY+maxY-127, 100, 100, model);
+		_blister_ini = new  PaintElementBlisterIni(loader, -30, posY+maxY-110, 100, 70, model);
+		_blister = new  PaintElementBlister(loader, -30, posY+maxY-110, 100, 70, model);
 		_paintElements.add(_cinta);
 		_paintElements.add(_blister_ini);
 		_paintElements.add(_blister);

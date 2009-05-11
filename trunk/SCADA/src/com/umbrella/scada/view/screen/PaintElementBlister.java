@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -15,7 +16,37 @@ public class PaintElementBlister extends PaintElement {
 
 	@Override
 	public void paint(Graphics g) {
-		switch (position) {
+		int [] blisters = _model.get_blisters();
+		g.setColor(Color.BLACK);
+		char[] numBlisters;
+		
+		if(blisters[0] > 0){
+			g.drawImage(_loader.get_blisterBruto(), _posX, _posY, _maxX, _maxY, null);
+			numBlisters = (""+blisters[0]).toCharArray();
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+15, _posY+32);
+		}
+		if(blisters[1] > 0){
+			g.drawImage(_loader.get_blisterEstampado(), _posX+75, _posY, _maxX, _maxY, null);
+			numBlisters = (""+blisters[1]).toCharArray();
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+80, _posY+32);
+		}
+		if(blisters[2] > 0){
+			g.drawImage(_loader.get_blisterEstampado(), _posX+152, _posY, _maxX, _maxY, null);
+			numBlisters = (""+blisters[0]).toCharArray();
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+167, _posY+32);
+		}
+		if(blisters[3] > 0){
+			g.drawImage(_loader.get_blisterCortado(), _posX+250, _posY, _maxX, _maxY, null);
+			numBlisters = (""+blisters[3]).toCharArray();
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+265, _posY+32);
+		}
+		if(blisters[4] > 0){
+			g.drawImage(_loader.get_blisterCortado(), _posX+320, _posY, _maxX, _maxY, null);
+			numBlisters = (""+blisters[4]).toCharArray();
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+335, _posY+32);
+		}
+		
+		/*switch (position) {
 		case 0:
 			g.drawImage(getBlisterImage(), _posX, _posY, _maxX, _maxY, null);
 			break;
@@ -35,10 +66,10 @@ public class PaintElementBlister extends PaintElement {
 			g.drawImage(getBlisterImage(), _posX, _posY, _maxX, _maxY, null);
 			break;
 		}
-		prueba();
+		prueba();*/
 	}
 
-	private void prueba() {
+	/*private void prueba() {
 		pos++;
 		if(pos%100 == 0)
 			position++;
@@ -70,6 +101,6 @@ public class PaintElementBlister extends PaintElement {
 			break;
 		}
 		return ret;
-	}
+	}*/
 
 }
