@@ -62,7 +62,7 @@ public class MainFrame implements UpdatableInterface{
 		if (jFrame == null) {
 			jFrame = new JFrame();
 			jFrame.setSize(new Dimension(939, 684));
-			jFrame.setTitle("SCADA Interfáz de usuario");
+			jFrame.setTitle("SCADA Interfaz de usuario");
 			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setJMenuBar(get_menuBar());
 			jFrame.setContentPane(getJContentPane());
