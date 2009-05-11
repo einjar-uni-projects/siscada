@@ -7,13 +7,14 @@ package com.umbrella.autoslave.logic;
  * Objetivo: contiene la informacion del estado del sistema, es toda informacion dinamica y que cambia o puede cambiar en tiempo de ejecucion
  */
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.utils2.Blister;
 import com.umbrella.autoslave.utils2.Pastel;
 
-public class Contexto {
+public class Contexto implements Serializable{
 
 	private Estado estado;
 	

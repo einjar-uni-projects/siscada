@@ -1,8 +1,10 @@
 package com.umbrella.autoslave.utils2;
 
+import java.io.Serializable;
 
 
-public enum NombreMaquinas {
+
+public enum NombreMaquinas implements Serializable {
 	CINTA_1("cinta_1","cinta del automata 1", 0),
 	CINTA_2("cinta_2","cinta del automata 2", 1),
 	CINTA_3("cinta_3","cinta del automata 3", 2),

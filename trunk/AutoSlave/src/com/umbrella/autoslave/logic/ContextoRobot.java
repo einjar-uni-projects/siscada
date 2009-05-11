@@ -1,8 +1,10 @@
 package com.umbrella.autoslave.logic;
 
+import java.io.Serializable;
+
 import com.umbrella.autoslave.utils2.EstateRobots;
 
-public class ContextoRobot {
+public class ContextoRobot implements Serializable {
 	
 	private static boolean FIN=false;
 	

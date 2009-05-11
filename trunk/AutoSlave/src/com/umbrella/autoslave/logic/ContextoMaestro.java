@@ -1,6 +1,8 @@
 package com.umbrella.autoslave.logic;
 
-public class ContextoMaestro {
+import java.io.Serializable;
+
+public class ContextoMaestro implements Serializable{
 
 	/*
 	 * tiene informacion de los automatas q estan ejecutandose

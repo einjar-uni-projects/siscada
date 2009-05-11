@@ -8,6 +8,8 @@ package com.umbrella.autoslave.logic;
  * 			el automata y reiniciando los valores
  */
 
+import java.io.Serializable;
+
 import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
 
@@ -16,7 +18,7 @@ import com.umbrella.autoslave.utils2.NombreMaquinas;
  * 
  * a esta clase solo tiene acceso el AUTOMATA MAESTRO que podra cambiar cualquier cosa
  */
-public class ConfiguracionMaestro {
+public class ConfiguracionMaestro implements Serializable {
 
 	
 	/*

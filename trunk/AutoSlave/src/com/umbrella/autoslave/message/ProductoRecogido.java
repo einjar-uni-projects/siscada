@@ -8,6 +8,7 @@ public class ProductoRecogido implements MessageInterface{
 	private long click;
 	private String tipo;//blister, pastel, blister Completo
 	private int robot;
+	
 	public String getIdentificador() {
 		return identificador;
 	}
