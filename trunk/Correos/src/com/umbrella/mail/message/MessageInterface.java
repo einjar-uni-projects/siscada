@@ -15,4 +15,5 @@ import java.io.Serializable;
  * @author l012g412
  */
 public interface MessageInterface extends Serializable{
+	
 }
