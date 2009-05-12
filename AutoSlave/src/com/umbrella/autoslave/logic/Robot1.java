@@ -7,7 +7,26 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.umbrella.autoslave.message.ActualizarConfiguracion;
+import com.umbrella.autoslave.message.ActualizarContexto;
+import com.umbrella.autoslave.message.ActualizarContextoRobot;
+import com.umbrella.autoslave.message.Arrancar;
+import com.umbrella.autoslave.message.AvisarUnFallo;
+import com.umbrella.autoslave.message.BlisterCompleto;
+import com.umbrella.autoslave.message.BlisterListo;
+import com.umbrella.autoslave.message.FinCintaLibre;
+import com.umbrella.autoslave.message.FinInterferencia;
+import com.umbrella.autoslave.message.Interferencia;
+import com.umbrella.autoslave.message.Parada;
+import com.umbrella.autoslave.message.ParadaEmergencia;
+import com.umbrella.autoslave.message.ParadaFallo;
+import com.umbrella.autoslave.message.PastelListo;
+import com.umbrella.autoslave.message.ProductoRecogido;
+import com.umbrella.autoslave.message.RellanarMaquina;
+import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.EstateRobots;
+import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.autoslave.utils2.Ontologia;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 /*
@@ -44,6 +63,20 @@ public class Robot1 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		ActualizarContextoRobot _actualizarContextoRobot=null;
+		Arrancar _arrancar=null;
+		FinInterferencia _finInterferencia=null;
+		Interferencia _interferencia=null;
+		Parada _parada = null;
+		ParadaEmergencia _paradaEmergencia=null;
+		PastelListo _pastelListo=null;
+		BlisterListo _blisterListo=null;
+		BlisterCompleto _blisterCompleto=null;
+		ProductoRecogido _productoRecogido=null;
+		Reset _reset=null;
+		ActualizarConfiguracion _actualizarConfiguracion=null;
+		ParadaFallo _paradaFallo=null;
 			
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();
@@ -52,100 +85,187 @@ public class Robot1 {
 			if(cicloAct<_clock.getClock()){
 				cicloAct=_clock.getClock();
 				
-				_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
-				if(_contexto.getEstadoInterno().equals(EstateRobots.REPOSO)){
-					/*
-					 * si recibe un mensaje de recoger blister pues pasa al estado: CAMINOPOSICION_2 y coge el tiempo
-					 * si recibe un mensaje de recoger pastel pues pasa al estado: CAMINOPOSICION_1 y coge el tiempo
-					 * si recibe un mensaje de moverblistercompleto pues pasa al estado: DESPLAZARBLISTERCOMPLETO y coge el tiempo
-					 */
-				 	_contexto.setTiempo(System.currentTimeMillis());
-				 	_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_1)){
-					// controlar interferencias, mejor lo hace el maestro
-					if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() -_configuracion.getInterferencia()/2)*1000)){
-						_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
-						/*
-						 * envia el mensaje de interferencia sobre la cinta 1
-						 */
-					}
-					
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_1)){
-					//cogo el pastel
-					if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverPastel()*1000)){
-						_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
-						_contexto.setPastel(true);
-						/*
-						 * Envia el mensaje de pastel recogido
-						 */
-					}
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
-					// controlar interferencias, mejor lo hace el maestro
-					if(  _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
-						_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
-						/*
-						 * envia el mensaje de interferencia sobre la cinta 1
-						 */
-					}
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
-					//cogo el blister
-					/*
-					 * envia el mensaje de blister recogido
-					 */
-					_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
-					_contexto.setPastel(false);
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
-					// controlar interferencias, mejor lo hace el maestro
-					if(_contexto.isPastel()){
-						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() +_configuracion.getInterferencia()/2)*1000)){
-							/*
-							 * envia el mensaje de FIN interferencia sobre la cinta 1
-							 */
-						}
-						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel()*2 - _configuracion.getInterferencia()/2)*1000)){
-							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
-						}
-					}else{
-						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000)){
-							/*
-							 * envia el mensaje de FIN interferencia sobre la cinta 2
-							 */
-							
-						}
-						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister()*2 - _configuracion.getInterferencia()/2)*1000)){
-							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
-						}
-					}
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_3)){
-					//dejo el pastel o blister
-					if(_contexto.isPastel()){
-						if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2)){
-							/*
-							 * envia el mensaje de pastel colocado
-							 */
-							_contexto.setEstadoInterno(EstateRobots.REPOSO);
-						}
-					}else{
-						if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
-							/*
-							 * envia el mensaje de pastel colocado
-							 */
-							_contexto.setEstadoInterno(EstateRobots.REPOSO);
-						}
-					}
-					
-				}else if(_contexto.getEstadoInterno().equals(EstateRobots.DESPLAZARBLISTERCOMPLETO)){
-					if( _contexto.getDiffTiempo() > _configuracion.getMoverBlister()){
-						/*
-						 * envia el mensaje de blister completo colocado en la cinta 3
-						 */
-						_contexto.setEstadoInterno(EstateRobots.REPOSO);
-					}
-				}
-			}
-			
-		}
+				Object aux=null;
 
+				do{
+					try {
+						aux=_buzon.receive();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if(aux instanceof ActualizarContexto){
+						_actualizarContextoRobot=(ActualizarContextoRobot)aux;
+						_contexto=_actualizarContextoRobot.getContextoRobot();
+					}else if(aux instanceof ActualizarConfiguracion){
+						_actualizarConfiguracion=(ActualizarConfiguracion)aux;
+						_configuracion=_actualizarConfiguracion.getConfiguracion();
+					}else if(aux instanceof Arrancar){
+						_arrancar=(Arrancar)aux;
+						_contexto=_contexto.reset();
+						_contexto.setApagado(false);
+					}else if(aux instanceof Parada){
+						_parada=(Parada)aux;
+						_contexto.setParadaCorrecta(true);
+					}else if(aux instanceof ParadaEmergencia){
+						_paradaEmergencia=(ParadaEmergencia)aux;
+						_contexto.setApagado(true);
+					}else if(aux instanceof PastelListo){						
+						_pastelListo=(PastelListo)aux;
+						_contexto.setPastelListo(true);
+					}else if(aux instanceof Reset){
+						_reset=(Reset)aux;
+						if(_contexto.isApagado() || _contexto.isFallo()){
+							_contexto=_contexto.reset();
+						}
+					}else if(aux instanceof ParadaFallo){
+						_paradaFallo=(ParadaFallo)aux;
+						_contexto.setFallo(true);
+					}else if(aux instanceof BlisterCompleto){
+						_blisterCompleto=(BlisterCompleto)aux;
+						_contexto.setBlisterCompletoListo(true);
+					}
+
+				}while(aux!=null);
+
+				if(_contexto.isParadaCorrecta()){
+					//se para directamente porque no se controla
+					_contexto.setApagado(true);
+				}
+
+				if(!_contexto.isFallo()){
+					if(!_contexto.isApagado()){
+
+
+						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
+						if(_contexto.getEstadoInterno().equals(EstateRobots.REPOSO)){
+							/*
+							 * si recibe un mensaje de recoger blister pues pasa al estado: CAMINOPOSICION_2 y coge el tiempo
+							 * si recibe un mensaje de recoger pastel pues pasa al estado: CAMINOPOSICION_1 y coge el tiempo
+							 * si recibe un mensaje de moverblistercompleto pues pasa al estado: DESPLAZARBLISTERCOMPLETO y coge el tiempo
+							 */
+							if(_contexto.isBlisterListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_2);
+							if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_1);
+							if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.DESPLAZARBLISTERCOMPLETO);
+							
+							_contexto.setTiempo(System.currentTimeMillis());
+							_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
+							
+							
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_1)){
+							// controlar interferencias, mejor lo hace el maestro
+							if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() -_configuracion.getInterferencia()/2)*1000)){
+								_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
+								/*
+								 * envia el mensaje de interferencia sobre la cinta 1
+								 */
+								_interferencia=new Interferencia();
+								_interferencia.setClick(cicloAct);
+								_interferencia.setRobot(1);
+								_interferencia.setCinta(NombreMaquinas.CINTA_1.getDescriptor());
+								_buzon.send(_interferencia);
+							}
+
+							
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_1)){
+							//cogo el pastel
+							if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverPastel()*1000)){
+								_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
+								_contexto.setPastel(true);
+								/*
+								 * Envia el mensaje de pastel recogido
+								 */
+							}
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
+							// controlar interferencias, mejor lo hace el maestro
+							if(  _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
+								_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
+								/*
+								 * envia el mensaje de interferencia sobre la cinta 1
+								 */
+							}
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
+							//cogo el blister
+							/*
+							 * envia el mensaje de blister recogido
+							 */
+							_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
+							_contexto.setPastel(false);
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
+							// controlar interferencias, mejor lo hace el maestro
+							if(_contexto.isPastel()){
+								if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() +_configuracion.getInterferencia()/2)*1000)){
+									/*
+									 * envia el mensaje de FIN interferencia sobre la cinta 1
+									 */
+								}
+								if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel()*2 - _configuracion.getInterferencia()/2)*1000)){
+									_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
+								}
+							}else{
+								if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000)){
+									/*
+									 * envia el mensaje de FIN interferencia sobre la cinta 2
+									 */
+
+								}
+								if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister()*2 - _configuracion.getInterferencia()/2)*1000)){
+									_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
+								}
+							}
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_3)){
+							//dejo el pastel o blister
+							if(_contexto.isPastel()){
+								if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2)){
+									/*
+									 * envia el mensaje de pastel colocado
+									 */
+									_contexto.setEstadoInterno(EstateRobots.REPOSO);
+								}
+							}else{
+								if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
+									/*
+									 * envia el mensaje de pastel colocado
+									 */
+									_contexto.setEstadoInterno(EstateRobots.REPOSO);
+								}
+							}
+
+						}else if(_contexto.getEstadoInterno().equals(EstateRobots.DESPLAZARBLISTERCOMPLETO)){
+							if( _contexto.getDiffTiempo() > _configuracion.getMoverBlister()){
+								/*
+								 * envia el mensaje de blister completo colocado en la cinta 3
+								 */
+								_contexto.setEstadoInterno(EstateRobots.REPOSO);
+							}
+						}
+					}
+
+				}
+				
+				_blisterListo=null;
+				_arrancar=null;
+				_finInterferencia=null;
+				_interferencia=null;
+				_parada = null;
+				_paradaEmergencia=null;
+				_pastelListo=null;
+				_productoRecogido=null;
+				_reset=null;
+				_actualizarConfiguracion=null;
+				_paradaFallo=null;
+				_blisterCompleto=null;
+
+				// envia el mensaje de contexto
+				ActualizarContextoRobot actContexto=new ActualizarContextoRobot();
+				actContexto.setClick(cicloAct);
+				actContexto.setContextoRobot(_contexto);
+				actContexto.setIdentificador(Ontologia.ACTUALIZARCONTEXTOROBOT.getNombre());
+				actContexto.setMaquina(1);
+				_buzon.send(actContexto);
+				
+			}
+		}
 	}
 
 }

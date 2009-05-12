@@ -115,19 +115,10 @@ public class Maestro1 {
  			for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, false);
 
  			while(!contexto.isFIN()){
- 				
- 				if(contexto.isParadaCorrecta()){
- 					if(contexto.get_listaPasteles().size()==0) contexto.setApagado(true);
- 				}
- 				/*
- 				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
- 				 */
+
  				if(cicloAct<_clock.getClock()){
  					cicloAct=_clock.getClock();
- 					/*
- 					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
- 					 */
-
+ 					
  					Object aux=null;
 
  					do{
@@ -186,7 +177,10 @@ public class Maestro1 {
 
  					}while(aux!=null);
 
-
+ 					if(contexto.isParadaCorrecta()){
+						if(contexto.get_listaPasteles().size()==0) contexto.setApagado(true);
+					}
+ 					
  					if(!contexto.isFallo()){
  						if(!contexto.isApagado()){
  							/*
