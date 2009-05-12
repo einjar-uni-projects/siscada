@@ -1,5 +1,7 @@
 package com.umbrella.scada.view.screen;
 
+import com.umbrella.scada.view.localization.LocalizatorIDs;
+
 public class VoidAttributePanel extends AttributePanel {
 
 	public VoidAttributePanel() {
@@ -7,7 +9,11 @@ public class VoidAttributePanel extends AttributePanel {
 	}
 	@Override
 	protected void initialize() {
-		_title.setText("Seleccione un elemento para configurar");
+		updateLanguage();
+	}
+	@Override
+	public void updateLanguage() {
+		_title.setText(_languageResources.getLocal(LocalizatorIDs.VOID_CONVEYOR_BELT, _model.get_selectedLanguage()));
 	}
 
 }
