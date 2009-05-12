@@ -10,8 +10,20 @@ import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.autoslave.message.ActualizarConfiguracion;
 import com.umbrella.autoslave.message.ActualizarContexto;
+import com.umbrella.autoslave.message.Arrancar;
+import com.umbrella.autoslave.message.AvisarUnFallo;
 import com.umbrella.autoslave.message.FinCintaLibre;
+import com.umbrella.autoslave.message.FinInterferencia;
+import com.umbrella.autoslave.message.Interferencia;
+import com.umbrella.autoslave.message.Parada;
+import com.umbrella.autoslave.message.ParadaEmergencia;
+import com.umbrella.autoslave.message.ParadaFallo;
+import com.umbrella.autoslave.message.PastelListo;
+import com.umbrella.autoslave.message.ProductoRecogido;
+import com.umbrella.autoslave.message.RellanarMaquina;
+import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
 import com.umbrella.autoslave.utils2.Ontologia;
@@ -66,7 +78,23 @@ public class Maestro1 {
  			_chocolate=new MaquinaTiempos(configuracion.getValvChoc(), configuracion.getPosChoc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
 
+ 			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+ 			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+
  			FinCintaLibre _finCintaLibre=null;
+ 			ActualizarContexto _actualizarContexto=null;
+ 			Arrancar _arrancar=null;
+ 			FinInterferencia _finInterferencia=null;
+ 			Interferencia _interferencia=null;
+ 			Parada _parada = null;
+ 			ParadaEmergencia _paradaEmergencia=null;
+ 			PastelListo _pastelListo=null;
+ 			ProductoRecogido _productoRecogido=null;
+ 			RellanarMaquina _rellanarMaquina=null;
+ 			Reset _reset=null;
+ 			ActualizarConfiguracion _actualizarConfiguracion=null;
+ 			ParadaFallo _paradaFallo=null;
+ 			AvisarUnFallo _avisarUnFallo=null; 
  			
  			try {
  				_buzon=new MailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
@@ -87,6 +115,10 @@ public class Maestro1 {
  			for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, false);
 
  			while(!contexto.isFIN()){
+ 				
+ 				if(contexto.isParadaCorrecta()){
+ 					if(contexto.get_listaPasteles().size()==0) contexto.setApagado(true);
+ 				}
  				/*
  				 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
  				 */
@@ -95,66 +127,158 @@ public class Maestro1 {
  					/*
  					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
  					 */
+
  					Object aux=null;
+
  					do{
  						aux=_buzon.receive();
  						if(aux instanceof FinCintaLibre){
  							_finCintaLibre = (FinCintaLibre)aux;
+ 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+ 						}else if(aux instanceof ActualizarContexto){
+ 							_actualizarContexto=(ActualizarContexto)aux;
+ 							contexto=_actualizarContexto.getContexto();
+ 						}else if(aux instanceof ActualizarConfiguracion){
+ 							_actualizarConfiguracion=(ActualizarConfiguracion)aux;
+ 							configuracion=_actualizarConfiguracion.getConfiguracion();
+ 						}else if(aux instanceof Arrancar){
+ 							_arrancar=(Arrancar)aux;
+ 							contexto=Contexto.reset("pastel");
+ 							contexto.setApagado(false);
+ 						}else if(aux instanceof FinInterferencia){
+ 							_finInterferencia=(FinInterferencia)aux;
+ 							contexto.setInterferencia(false);
+ 						}else if(aux instanceof Interferencia){
+ 							_interferencia=(Interferencia)aux;
+ 							contexto.setInterferencia(true);
+ 						}else if(aux instanceof Parada){
+ 							_parada=(Parada)aux;
+ 							contexto.setParadaCorrecta(true);
+ 						}else if(aux instanceof ParadaEmergencia){
+ 							_paradaEmergencia=(ParadaEmergencia)aux;
+ 							contexto.setApagado(true);
+ 						}else if(aux instanceof PastelListo){
+ 							//este mensaje lo envio yo, no me llega a mi
+ 							_pastelListo=(PastelListo)aux;
+ 						}else if(aux instanceof ProductoRecogido){
+ 							_productoRecogido=(ProductoRecogido)aux;
+ 							// es lo mismo q FinCintaLibre
+ 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+ 						}else if(aux instanceof RellanarMaquina){
+ 							_rellanarMaquina=(RellanarMaquina)aux;
+ 							if(_rellanarMaquina.getMaquina().compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
+ 								_dispensadora.llenarDeposito(_rellanarMaquina.getCantidad());
+ 							if(_rellanarMaquina.getMaquina().compareTo(NombreMaquinas.CARAMELO.getName())==0)
+ 								contexto.rellenarCaramelo(_rellanarMaquina.getCantidad(),configuracion.getCapacidadCaramelo());
+ 							if(_rellanarMaquina.getMaquina().compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
+ 								contexto.rellenarCaramelo(_rellanarMaquina.getCantidad(),configuracion.getCapacidadChocolate());	
+ 						}else if(aux instanceof Reset){
+ 							_reset=(Reset)aux;
+ 							if(contexto.isApagado() || contexto.isFallo()){
+ 								contexto=Contexto.reset("pastel");
+ 								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+ 								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+ 							}
+ 						}else if(aux instanceof ParadaFallo){
+ 							_paradaFallo=(ParadaFallo)aux;
+ 							contexto.setFallo(true);
  						}
- 						
- 						
- 						
+
  					}while(aux!=null);
- 					if(!contexto.apagado){
- 						/*
- 						 * se arranca el automata cambiando el estado, 
- 						 * lo unico q hace es cargar los valores iniciales 
- 						 */
- 						if(primeraVez){
- 							((Apagado) estado).transitar();
- 							primeraVez=false;
- 						}
 
- 						/*
- 						 * se coordina y ejecutan los hilos de: movercinta, DispensadoraAutomatica, MaquinaCaramelo, MaquinaChocolate, 
- 						 * 		moverCinta, salidaPastel
- 						 */
- 						
- 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
- 							_moverCinta.run();
- 						}else{
- 							if(puedoUsar(NombreMaquinas.CHOCOLATE)){
- 								_chocolate.run();
- 								contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.get_posicion())).set_chocolate();
- 							}
- 							if(puedoUsar(NombreMaquinas.CARAMELO)){
- 								_caramelo.run();
- 								contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.get_posicion())).set_caramelo();
- 							}
- 							if(puedoUsar(NombreMaquinas.FIN_1)) _salPastel.run();
- 						}
- 						//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
- 						// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
- 						_dispensadora.run();
- 						
- 					}else{
- 						primeraVez=true;
- 					}
 
- 					/*
- 					 * se intenta leer si nos llega un mensaje q nos saque de la ejecucion
- 					 */
- 					
- 					for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
- 				}
- 				// envia el mensaje de contexto
- 				ActualizarContexto actContexto=new ActualizarContexto();
- 				actContexto.setClick(cicloAct);
- 				actContexto.setContexto(contexto);
- 				actContexto.setIdentificador(Ontologia.ACTUALIZARCONTEXTO.getNombre());
- 				actContexto.setMaquina(1);
- 				_buzon.send(actContexto);
- 			}
+ 					if(!contexto.isFallo()){
+ 						if(!contexto.isApagado()){
+ 							/*
+ 							 * se arranca el automata cambiando el estado, 
+ 							 * lo unico q hace es cargar los valores iniciales 
+ 							 */
+ 							if(primeraVez){
+ 								((Apagado) estado).transitar();
+ 								primeraVez=false;
+ 							}
+
+ 							/*
+ 							 * se coordina y ejecutan los hilos de: movercinta, DispensadoraAutomatica, MaquinaCaramelo, MaquinaChocolate, 
+ 							 * 		moverCinta, salidaPastel
+ 							 */
+
+ 							if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
+ 								_moverCinta.run();
+ 							}else{
+ 								if(puedoUsar(NombreMaquinas.CHOCOLATE)){
+ 									if(contexto.getCapacidadChocolate()>0){
+ 										_chocolate.run();
+ 										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.get_posicion())).set_chocolate();
+ 										contexto.decrementarChocolate();
+ 									}else{
+ 										_avisarUnFallo=new AvisarUnFallo();
+ 										_avisarUnFallo.setClick(cicloAct);
+ 										_avisarUnFallo.setMotivo(NombreMaquinas.CHOCOLATE.getName() + "- CAPACIDAD");
+ 										_buzon.send(_avisarUnFallo);
+ 										contexto.setFallo(true);
+ 									}
+ 								}
+ 								if(puedoUsar(NombreMaquinas.CARAMELO)){
+ 									if(contexto.getCapacidadCaramelo()>0){
+ 										_caramelo.run();
+ 										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.get_posicion())).set_caramelo();
+ 										contexto.decrementarCaramelo();
+ 									}else{
+ 										_avisarUnFallo=new AvisarUnFallo();
+ 										_avisarUnFallo.setClick(cicloAct);
+ 										_avisarUnFallo.setMotivo(NombreMaquinas.CARAMELO.getName() + "- CAPACIDAD");
+ 										_buzon.send(_avisarUnFallo);
+ 										contexto.setFallo(true);
+ 									}
+ 								}
+ 								if(puedoUsar(NombreMaquinas.FIN_1)) _salPastel.run();
+ 							}
+ 							//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
+ 							// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
+ 							if(!contexto.isParadaCorrecta())
+ 								_dispensadora.run();
+ 							if(_dispensadora.get_PastelesRestantes()==0){
+ 								_avisarUnFallo=new AvisarUnFallo();
+								_avisarUnFallo.setClick(cicloAct);
+								_avisarUnFallo.setMotivo(NombreMaquinas.DISPENSADORA.getName() + "- CAPACIDAD");
+								_buzon.send(_avisarUnFallo);
+								contexto.setFallo(true);
+ 							}
+
+ 						}else{ //el else de:  if(!contexto.apagado){
+ 							primeraVez=true;
+ 						}
+ 						for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
+
+ 					} // fin del if(!contexto.isfallo)
+
+ 					_finCintaLibre=null;
+ 		 			_actualizarContexto=null;
+ 		 			_arrancar=null;
+ 		 			_finInterferencia=null;
+ 		 			_interferencia=null;
+ 		 			_parada = null;
+ 		 			_paradaEmergencia=null;
+ 		 			_pastelListo=null;
+ 		 			_productoRecogido=null;
+ 		 			_rellanarMaquina=null;
+ 		 			_reset=null;
+ 		 			_actualizarConfiguracion=null;
+ 		 			_paradaFallo=null;
+ 		 			_avisarUnFallo=null;
+ 				
+
+ 		 			// envia el mensaje de contexto
+ 		 			ActualizarContexto actContexto=new ActualizarContexto();
+ 		 			actContexto.setClick(cicloAct);
+ 		 			actContexto.setContexto(contexto);
+ 		 			actContexto.setIdentificador(Ontologia.ACTUALIZARCONTEXTO.getNombre());
+ 		 			actContexto.setMaquina(1);
+ 		 			_buzon.send(actContexto);
+
+ 				}//fin del if de cada ciclo de reloj
+ 			}// fin del while(!esFin)
  			/*
  			 * se matan los hilos
  			 */

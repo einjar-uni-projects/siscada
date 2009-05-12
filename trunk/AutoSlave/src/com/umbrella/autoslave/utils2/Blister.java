@@ -11,7 +11,10 @@ public class Blister implements Serializable{
 	private double _posicion;
 	private int _contPasteles;
 	// true en el automata 2, false en el 3
-	private boolean _cinta;
+	private boolean _cinta=false;
+	private boolean _cortado=false;
+	private boolean _troquelado=false;
+	private boolean _sellado=false;
 	
 	/*
 	 * posicion 0.- paso el control
@@ -78,6 +81,32 @@ public class Blister implements Serializable{
 	public synchronized void setCalidad(int pos, boolean valor) {
 		this.calidad[pos] = valor;
 	}
-	
-	
+
+	public synchronized boolean is_cortado() {
+		return _cortado;
+	}
+
+	public synchronized void set_cortado(boolean _cortado) {
+		this._cortado = _cortado;
+	}
+
+	public synchronized boolean is_troquelado() {
+		return _troquelado;
+	}
+
+	public synchronized void set_troquelado(boolean _troquelado) {
+		this._troquelado = _troquelado;
+	}
+
+	public synchronized boolean is_sellado() {
+		return _sellado;
+	}
+
+	public synchronized void set_sellado(boolean _sellado) {
+		this._sellado = _sellado;
+	}
+
+	public synchronized boolean is_cinta() {
+		return _cinta;
+	}
 }

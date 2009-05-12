@@ -146,7 +146,8 @@ public class DispensadoraActivada extends Thread implements Estado{
 	
 	public synchronized void llenarDeposito(int valor){
 		if(valor+_pastelesRestantes>50) _pastelesRestantes=50;
-		else _pastelesRestantes+=valor;		
+		else _pastelesRestantes+=valor;	
+		contexto.setPastelesRestantes(_pastelesRestantes);
 	}
 	
 	public synchronized int get_PastelesRestantes(){

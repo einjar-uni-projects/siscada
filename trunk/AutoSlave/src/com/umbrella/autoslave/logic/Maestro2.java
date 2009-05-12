@@ -91,7 +91,7 @@ public class Maestro2 {
  					/*
  					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
  					 */
- 					if(!contexto.apagado){
+ 					if(!contexto.isApagado()){
  						/*
  						 * se arranca el automata cambiando el estado, 
  						 * lo unico q hace es cargar los valores iniciales 
@@ -108,9 +108,11 @@ public class Maestro2 {
 
  								if(puedoUsar(NombreMaquinas.CORTADORA) ){
  									_cortadora.run();
+ 									contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.get_posicion())).set_cortado(true);
  								}
  								if(puedoUsar(NombreMaquinas.TROQUELADORA) ){
  									_troqueladora.run();
+ 									contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.get_posicion())).set_troquelado(true);
  								}
  							}
  						}
@@ -181,15 +183,19 @@ public class Maestro2 {
 		boolean salida=false;
 		if(tipo.equals(NombreMaquinas.CORTADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.CORTADORA) && 
-					contexto.activaSensor(configuracion, _cortadora.get_posicion())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA)))
-				salida=true;
+					contexto.activaSensor(configuracion, _cortadora.get_posicion())>=0){
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.get_posicion())).is_cortado())
+					salida=true;
+			}
+				
 		
 		if(tipo.equals(NombreMaquinas.TROQUELADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.TROQUELADORA) && 
-					contexto.activaSensor(configuracion, _troqueladora.get_posicion())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA)))
-				salida=true;
+					contexto.activaSensor(configuracion, _troqueladora.get_posicion())>=0){
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.get_posicion())).is_troquelado())
+					salida=true;
+			}
+				
 		if(tipo.equals(NombreMaquinas.FIN_2))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_2) && 
 					contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 &&

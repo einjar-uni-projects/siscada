@@ -3,6 +3,7 @@ package com.umbrella.autoslave.message;
 import com.umbrella.autoslave.utils2.Blister;
 
 public class ProductoRecogido implements MessageInterface{
+	//lo envia el robot cuando recoge el producto
 	
 	private String identificador;
 	private long click;
