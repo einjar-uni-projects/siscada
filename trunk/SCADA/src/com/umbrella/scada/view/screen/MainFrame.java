@@ -15,6 +15,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.umbrella.scada.controller.ActionFactory;
+import com.umbrella.scada.controller.ActionFactoryProvider;
+import com.umbrella.scada.controller.ActionKey;
 import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
@@ -41,6 +44,7 @@ public class MainFrame implements UpdatableInterface{
 	private JMenuItem _spanishLanguage = null;
 	private JMenuItem _englishLanguage = null;
 	private CardLayout _rightLayout;  //  @jve:decl-index=0:
+	ActionFactory _actionFactory = ActionFactoryProvider.getInstance();  //  @jve:decl-index=0:
 	
 	private MainFrame(){
 		getJFrame();
@@ -189,8 +193,8 @@ public class MainFrame implements UpdatableInterface{
 			_initButton.setText("Init");
 			_initButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-
 					_mainPanel.startAutRob();
+					_actionFactory.executeAction(ActionKey.START, null);
 				}
 			});
 		}
@@ -227,6 +231,7 @@ public class MainFrame implements UpdatableInterface{
 			_stopButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					_mainPanel.stopAutRob();
+					_actionFactory.executeAction(ActionKey.STOP, null);
 				}
 			});
 		}
