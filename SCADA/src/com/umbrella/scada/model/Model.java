@@ -35,6 +35,8 @@ public class Model {
 	private final ModelElementAtribute<Integer> _genRobotInterference = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_ROBOT_INTERFERENCE, new Integer(2));
 	private final ModelElementAtribute<Double> _genCakeSize = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_CAKE_SIZE, new Double(0.1));
 	private final ModelElementAtribute<Double> _genBlisterSize = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_BLISTER_SIZE, new Double(_genCakeSize.get_value().doubleValue()*2+0.1));
+	private final ModelElementAtribute<String> _genIP = new ModelElementAtribute<String>(TransferBufferKeys.GEN_IP, new String("localhost"));
+	private final ModelElementAtribute<Integer> _genPort = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_PORT, new Integer(9003));
 
 	/*Atributos del automata 1*/
 	private final ModelElementAtribute<Double> _au1ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE,new Double(10));
@@ -108,6 +110,8 @@ public class Model {
 		_observable.addChange(_genClockTime.get_tbk(), _genClockTime.get_value());
 		_observable.addChange(_genRobotInterference.get_tbk(), _genRobotInterference.get_value());
 		_observable.addChange(_genSensorError.get_tbk(), _genSensorError.get_value());
+		_observable.addChange(_genIP.get_tbk(), _genIP.get_value());
+		_observable.addChange(_genPort.get_tbk(), _genPort.get_value());
 		
 		_observable.addChange(_rb1BlisterDelay.get_tbk(), _rb1BlisterDelay.get_value());
 		_observable.addChange(_rb1CakeDelay.get_tbk(), _rb1CakeDelay.get_value());
@@ -121,6 +125,26 @@ public class Model {
 			_observable.notifyChanges();
 			_modelChanges = false;
 		}
+	}
+	
+	public String get_genIP(){
+		return _genIP.get_value();
+	}
+	
+	public void set_genIP(String ip){
+		_genIP.set_value(ip);
+		_observable.addChange(_genIP.get_tbk(), _genIP.get_value());
+		_modelChanges = true;
+	}
+	
+	public int get_genPort(){
+		return _genPort.get_value();
+	}
+	
+	public void set_genPort(int port){
+		_genPort.set_value(port);
+		_observable.addChange(_genPort.get_tbk(), _genPort.get_value());
+		_modelChanges = true;
 	}
 	
 	public void set_au1CakesPos1(int cakes){
