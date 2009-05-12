@@ -28,7 +28,7 @@ public class MainFrame implements UpdatableInterface{
 	private JPanel jContentPane = null;
 	private JPanel _rightPanel = null;
 	private JMenuBar _menuBar = null;
-	private JMenu _fileMenu = null;	
+	private JMenu _scadaMenu = null;	
 	private JMenu _menuOptions = null;
 	private JPanel _footerPanel = null;
 	private JLabel _footerInfo = null;
@@ -38,7 +38,7 @@ public class MainFrame implements UpdatableInterface{
 	private MainPanel _mainPanel = null;
 	private JMenu _language = null;
 	
-	private static MainFrame _instance;
+	private static MainFrame _instance;  //  @jve:decl-index=0:
 	private MainFrameModel _model = MainFrameModel.getInstance();
 	private LocalizationResources _languageResources = LocalizationResources.getInstance();  //  @jve:decl-index=0:
 	private JMenuItem _spanishLanguage = null;
@@ -46,6 +46,8 @@ public class MainFrame implements UpdatableInterface{
 	private CardLayout _rightLayout;  //  @jve:decl-index=0:
 	private AttributePanel[] _attributePanels;
 	ActionFactory _actionFactory = ActionFactoryProvider.getInstance();  //  @jve:decl-index=0:
+	private JMenuItem _menuReports = null;
+	private JMenuItem _menuExit = null;
 	
 	private MainFrame(){
 		getJFrame();
@@ -137,12 +139,14 @@ public class MainFrame implements UpdatableInterface{
 	 * @return javax.swing.JMenu	
 	 */
 	private JMenu get_fileMenu() {
-		if (_fileMenu == null) {
-			_fileMenu = new JMenu();
-			_fileMenu.setName("FileMenu");
-			_fileMenu.setText("File");
+		if (_scadaMenu == null) {
+			_scadaMenu = new JMenu();
+			_scadaMenu.setName("ScadaMenu");
+			_scadaMenu.setText("SCADA");
+			_scadaMenu.add(get_menuReports());
+			_scadaMenu.add(get_menuExit());
 		}
-		return _fileMenu;
+		return _scadaMenu;
 	}
 
 	/**
@@ -317,7 +321,9 @@ public class MainFrame implements UpdatableInterface{
 		_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_PAUSE, _model.get_selectedLanguage()));
 		_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
 		_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
-		_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _model.get_selectedLanguage()));
+		_scadaMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_SCADA, _model.get_selectedLanguage()));
+		_menuReports.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_REPORTS, _model.get_selectedLanguage()));
+		_menuExit.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_EXIT, _model.get_selectedLanguage()));
 		for(AttributePanel panel : _attributePanels){
 			panel.updateLanguage();
 		}
@@ -329,6 +335,37 @@ public class MainFrame implements UpdatableInterface{
 	
 	void changeRightCard(String card){
 		_rightLayout.show(_rightPanel, card);
+	}
+
+	/**
+	 * This method initializes _menuInforms	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem get_menuReports() {
+		if (_menuReports == null) {
+			_menuReports = new JMenuItem();
+			_menuReports.setText("View Report");
+		}
+		return _menuReports;
+	}
+
+	/**
+	 * This method initializes _menuExit	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem get_menuExit() {
+		if (_menuExit == null) {
+			_menuExit = new JMenuItem();
+			_menuExit.setText("Exit");
+			_menuExit.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					jFrame.dispose();
+				}
+			});
+		}
+		return _menuExit;
 	}
 
 }
