@@ -183,6 +183,11 @@ public class MainFrame implements UpdatableInterface{
 		if (_initButton == null) {
 			_initButton = new JButton();
 			_initButton.setText("Init");
+			_initButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+				}
+			});
 		}
 		return _initButton;
 	}
@@ -196,6 +201,11 @@ public class MainFrame implements UpdatableInterface{
 		if (_pauseButton == null) {
 			_pauseButton = new JButton();
 			_pauseButton.setText("Pause");
+			_pauseButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+				}
+			});
 		}
 		return _pauseButton;
 	}
@@ -209,6 +219,11 @@ public class MainFrame implements UpdatableInterface{
 		if (_stopButton == null) {
 			_stopButton = new JButton();
 			_stopButton.setText("Stop");
+			_stopButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+				}
+			});
 		}
 		return _stopButton;
 	}
