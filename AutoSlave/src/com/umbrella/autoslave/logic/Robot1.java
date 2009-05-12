@@ -21,6 +21,7 @@ import com.umbrella.autoslave.message.Parada;
 import com.umbrella.autoslave.message.ParadaEmergencia;
 import com.umbrella.autoslave.message.ParadaFallo;
 import com.umbrella.autoslave.message.PastelListo;
+import com.umbrella.autoslave.message.ProductoColocado;
 import com.umbrella.autoslave.message.ProductoRecogido;
 import com.umbrella.autoslave.message.RellanarMaquina;
 import com.umbrella.autoslave.message.Reset;
@@ -77,6 +78,7 @@ public class Robot1 {
 		Reset _reset=null;
 		ActualizarConfiguracion _actualizarConfiguracion=null;
 		ParadaFallo _paradaFallo=null;
+		ProductoColocado _productoColocado=null;
 			
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();
@@ -180,23 +182,40 @@ public class Robot1 {
 								_productoRecogido.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
 								_productoRecogido.setTipo("pastel");
 								_buzon.send(_productoRecogido);
-								 
+								 _contexto.setPastelListo(false);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
 							// controlar interferencias, mejor lo hace el maestro
 							if(  _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
 								_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
 								/*
-								 * envia el mensaje de interferencia sobre la cinta 1
+								 * envia el mensaje de interferencia sobre la cinta 2
 								 */
+								_interferencia=new Interferencia();
+								_interferencia.setClick(cicloAct);
+								_interferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+								_interferencia.setCinta(NombreMaquinas.CINTA_2.getDescriptor());
+								_buzon.send(_interferencia);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
 							//cogo el blister
 							/*
 							 * envia el mensaje de blister recogido
 							 */
-							_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
-							_contexto.setPastel(false);
+							//cogo el pastel
+							if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*1000)){
+								_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
+								_contexto.setPastel(false);
+								/*
+								 * Envia el mensaje de blister recogido
+								 */
+								_productoRecogido=new ProductoRecogido();
+								_productoRecogido.setClick(cicloAct);
+								_productoRecogido.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+								_productoRecogido.setTipo("blister");
+								_buzon.send(_productoRecogido);
+								 _contexto.setBlisterListo(false);
+							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
 							// controlar interferencias, mejor lo hace el maestro
 							if(_contexto.isPastel()){
@@ -204,8 +223,13 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de FIN interferencia sobre la cinta 1
 									 */
+									_finInterferencia=new FinInterferencia();
+									_finInterferencia.setClick(cicloAct);
+									_finInterferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+									_finInterferencia.setCinta(NombreMaquinas.CINTA_1.getDescriptor());
+									_buzon.send(_finInterferencia);
 								}
-								if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel()*2 - _configuracion.getInterferencia()/2)*1000)){
+								if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2*1000)){
 									_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
 								}
 							}else{
@@ -213,9 +237,14 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de FIN interferencia sobre la cinta 2
 									 */
+									_finInterferencia=new FinInterferencia();
+									_finInterferencia.setClick(cicloAct);
+									_finInterferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+									_finInterferencia.setCinta(NombreMaquinas.CINTA_2.getDescriptor());
+									_buzon.send(_finInterferencia);
 
 								}
-								if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister()*2 - _configuracion.getInterferencia()/2)*1000)){
+								if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
 									_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
 								}
 							}
@@ -226,6 +255,11 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de pastel colocado
 									 */
+									_productoColocado=new ProductoColocado();
+									_productoColocado.setClick(cicloAct);
+									_productoColocado.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+									_productoColocado.setProducto("pastel");
+									_buzon.send(_productoColocado);
 									_contexto.setEstadoInterno(EstateRobots.REPOSO);
 								}
 							}else{
@@ -233,6 +267,11 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de pastel colocado
 									 */
+									_productoColocado=new ProductoColocado();
+									_productoColocado.setClick(cicloAct);
+									_productoColocado.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+									_productoColocado.setProducto("blister");
+									_buzon.send(_productoColocado);
 									_contexto.setEstadoInterno(EstateRobots.REPOSO);
 								}
 							}
@@ -261,6 +300,7 @@ public class Robot1 {
 				_actualizarConfiguracion=null;
 				_paradaFallo=null;
 				_blisterCompleto=null;
+				_productoColocado=null;
 
 				// envia el mensaje de contexto
 				ActualizarContextoRobot actContexto=new ActualizarContextoRobot();
