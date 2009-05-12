@@ -310,5 +310,9 @@ public class MainFrame implements UpdatableInterface{
 	public void updateData(){
 		
 	}
+	
+	void changeRightCard(String card){
+		_rightLayout.show(_rightPanel, card);
+	}
 
 }
