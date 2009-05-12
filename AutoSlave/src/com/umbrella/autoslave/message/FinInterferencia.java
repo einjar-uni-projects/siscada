@@ -1,5 +1,7 @@
 package com.umbrella.autoslave.message;
 
+import com.umbrella.mail.message.MessageInterface;
+
 public class FinInterferencia implements MessageInterface{
 
 	private String identificador;
