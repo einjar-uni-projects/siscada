@@ -72,20 +72,73 @@ public class MainFrameModel implements Updatable{
 		for (int i = 0; i < tbk.length; i++) {
 			//Se obtiene el valor de la clave
 			value = buffer.getElement(tbk[i]);
-			if(value != null){
-				
-			//Hay que incluir un case para cada clave
-			switch (tbk[i]) {
-				case NULL:
-					
-					break;
-	
-				default:
-					break;
-				}
-			}
+			if(value != null)
+				updateValue(tbk[i], tbk[i].get_class(), value);
 		}
 		_mainFrame.updateData();
+	}
+	
+	private synchronized void updateValue(TransferBufferKeys key, Class object_class, Object o) {
+		switch (key) {
+		case AU1_CAKE_DEPOT:
+			
+			break;
+		case AU1_CARAMEL_VALVE_DELAY:
+
+			break;
+		case AU1_CHOCOLATE_VALVE_DELAY:
+
+			break;
+		case AU1_CONVEYOR_BELT_SIZE:
+
+			break;
+		case AU1_CONVEYOR_BELT_SPEED:
+
+			break;
+		case AU2_CONVEYOR_BELT_SIZE:
+
+			break;
+		case AU2_CONVEYOR_BELT_SPEED:
+
+			break;
+		case AU2_VACUUM_SEALING_MACHINE:
+
+			break;
+		case AU3_CONVEYOR_BELT_SIZE:
+
+			break;
+		case AU3_CONVEYOR_BELT_SPEED:
+
+			break;
+		case GEN_BLISTER_SIZE:
+
+			break;
+		case GEN_CAKE_SIZE:
+
+			break;
+		case GEN_CLOCK_TIME:
+
+			break;
+		case GEN_ROBOT_INTERFERENCE:
+
+			break;
+		case GEN_SENSOR_ERROR:
+
+			break;
+		case RB1_BLISTER_DELAY:
+
+			break;
+		case RB1_CAKE_DELAY:
+
+			break;
+		case RB2_BLISTER_DELAY:
+
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 	public boolean is_cintaPasteles() {
