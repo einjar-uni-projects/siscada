@@ -281,6 +281,11 @@ public class Robot1 {
 								/*
 								 * envia el mensaje de blister completo colocado en la cinta 3
 								 */
+								_productoColocado=new ProductoColocado();
+								_productoColocado.setClick(cicloAct);
+								_productoColocado.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+								_productoColocado.setProducto("blisterCompleto");
+								_buzon.send(_productoColocado);
 								_contexto.setEstadoInterno(EstateRobots.REPOSO);
 							}
 						}
