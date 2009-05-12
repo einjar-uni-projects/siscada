@@ -1,7 +1,9 @@
 package com.umbrella.scada.view.screen;
 
+import com.umbrella.scada.view.screen.MainFrameModel.ElementsGroupModelEnum;
 
-public class ConjuntoCintaPasteles extends ConjuntoCinta {
+
+public class ConjuntoCintaPasteles extends ElementsGroup {
 
 	private PaintElementCinta _cinta;
 	private PaintElementExpendedoraMasa _expendedora_masa;
@@ -10,7 +12,7 @@ public class ConjuntoCintaPasteles extends ConjuntoCinta {
 	private PaintElementTarta _tarta;
 	
 	public ConjuntoCintaPasteles(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
-		super(loader, posX, posY, maxX, maxY, model);
+		super(loader, posX, posY, maxX, maxY, model, ElementsGroupModelEnum.CINTA1);
 		_cinta = new PaintElementCinta(loader,posX,posY+maxY-50,maxX,50, model);
 		_expendedora_masa = new PaintElementExpendedoraMasa(loader, posX, posY, 100, 100, model);
 		_expendedora_chocolate= new PaintElementExpendedoraChocolate(loader, posX+105, posY, 100, 100, model);
