@@ -32,11 +32,35 @@ public class MainPanel extends JPanel{
 		_conjuntosCinta[4] = new ConjuntoRobot2(_loader, 560,275,200,150, model);
 		_conjuntosCinta[4].cintaOn(true);
 		setMouseListener();
+		runThread();
+	}
+
+	private void runThread() {
+		new Thread(new RepaintThr(), "ThreadRepaint").start();
+	}
+	
+	private class RepaintThr implements Runnable{
+		public void run() {
+			while(true){
+				_time1 = System.currentTimeMillis();
+				repaint();
+				_time2 = System.currentTimeMillis();
+				
+				long sleep = 200-(_time2-_time1);
+				if(sleep > 0)
+					try {
+						Thread.sleep(sleep);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		}
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		_time1 = System.currentTimeMillis();
+		
 		Image alt = createImage(_wallpaperWidth, _wallpaperHeight);
 		Graphics altGr = alt.getGraphics();
 		altGr.setColor(Color.WHITE);
@@ -53,18 +77,8 @@ public class MainPanel extends JPanel{
 		altGr.drawImage(_loader.get_expendedora(), 100, 100, null);
 		altGr.drawImage(_loader.get_masa(), 100, 120, null);*/
 		
-		_time2 = System.currentTimeMillis();
-		
-		long sleep = 200-(_time2-_time1);
-		if(sleep > 0)
-			try {
-				Thread.sleep(sleep);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		g.drawImage(alt, 0, 0, getWidth(), getHeight(), null);
-		repaint();
+		
 	}
 
 	public void startAutRob() {
