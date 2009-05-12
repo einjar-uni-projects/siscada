@@ -17,7 +17,7 @@ public class MainPanel extends JPanel{
 	private long _time2;
 	
 	
-	private ConjuntoCinta[] _conjuntosCinta = new ConjuntoCinta[5];
+	private ElementsGroup[] _conjuntosCinta = new ElementsGroup[5];
 	
 	public MainPanel(MainFrameModel model){
 		_loader = new ImageLoader(this);

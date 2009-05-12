@@ -34,6 +34,7 @@ public class ObservableProvider implements Observable {
 	@Override
 	public boolean notifyChanges() {
 		boolean ret = false;
+		
 		if (_buffer.size() > 0) {
 			_observer.notifyObserver(_buffer);
 			_buffer = new TransferBuffer();
