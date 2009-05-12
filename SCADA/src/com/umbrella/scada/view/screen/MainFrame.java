@@ -104,14 +104,20 @@ public class MainFrame implements UpdatableInterface{
 			_rightPanel = new JPanel();
 			_rightLayout = new CardLayout();	
 			_rightPanel.setLayout(_rightLayout);
-			_attributePanels = new AttributePanel[3];
+			_attributePanels = new AttributePanel[6];
 			_attributePanels[0] = new VoidAttributePanel();
 			_attributePanels[1] = new CakeConveyorBeltAttributePanel();
 			_attributePanels[2] = new BlisterConveyorBeltAttributePanel();
+			_attributePanels[3] = new PackageConveyorBeltAttributePanel();
+			_attributePanels[4] = new Robot1AttrbutePanel();
+			_attributePanels[5] = new Robot2AttributePanel();
 			
 			_rightPanel.add(_attributePanels[0], "1");
 			_rightPanel.add(_attributePanels[1], "2");
 			_rightPanel.add(_attributePanels[2], "3");
+			_rightPanel.add(_attributePanels[3], "4");
+			_rightPanel.add(_attributePanels[4], "5");
+			_rightPanel.add(_attributePanels[5], "6");
 			
 			_rightLayout.show(_rightPanel, "1");
 			_rightPanel.setPreferredSize(new Dimension(200, 600));
