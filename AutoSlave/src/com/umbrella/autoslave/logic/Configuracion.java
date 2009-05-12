@@ -40,6 +40,9 @@ public class Configuracion implements Serializable {
 	 * Capacidad del deposito de pasteles
 	 */
 	private int capacidadPasteles=50;
+	private int capacidadCaramelo=50;
+	private int capacidadChocolate=50;
+	
 	
 	/*
 	 * Velocidad de la cinta, medida en m/min
@@ -125,6 +128,9 @@ public class Configuracion implements Serializable {
 	private double posFinAut2=sizeCintaAut2-sizeBlister/2;
 	private double posFinAut3=sizeCintaAut3-sizeBlister/2;
 	
+	
+	private double porcentajeFallos=0.05;
+	
 	/*
 	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
 	 */
@@ -156,12 +162,19 @@ public class Configuracion implements Serializable {
 	private int posicionAsociadaSelladora=4;
 	private int posicionAsociadaCalidad=5;
 	private int posicionAsociadaCintaAut3=6;
+	private int posicionAsociadaCalidadSensor1=7;
+	private int posicionAsociadaCalidadSensor2=8;
+	private int posicionAsociadaCalidadSensor3=9;
+	private int posicionAsociadaCalidadSensor4=10;
+	
 	
     
 	public Configuracion(ConfiguracionMaestro conf){
 		this._tiempoReloj=conf.get_tiempoReloj();
 		this.almacenarBlister=conf.getAlmacenarBlister();
 		this.capacidadPasteles=conf.getCapacidadPasteles();
+		this.capacidadCaramelo=conf.getCapacidadCaramelo();
+		this.capacidadChocolate=conf.getCapacidadChocolate();
 		this.errorSensor=conf.getErrorSensor();
 		this.espEntreBizc=conf.getEspEntreBizc();
 		this.espEntreBlister=conf.getEspEntreBlister();
@@ -190,6 +203,7 @@ public class Configuracion implements Serializable {
 		this.velCintaAut1=conf.getVelCintaAut1();
 		this.velCintaAut2=conf.getVelCintaAut2();
 		this.velCintaAut3=conf.getVelCintaAut3();
+		this.porcentajeFallos=conf.getPorcentajeFallos();
 	}
 	
 	private Configuracion(){
@@ -228,6 +242,19 @@ public class Configuracion implements Serializable {
 
 	public int getCapacidadPasteles() {
 		return capacidadPasteles;
+	}
+	
+	public int getCapacidadCaramelo() {
+		return capacidadCaramelo;
+	}
+	
+	public int getCapacidadChocolate() {
+		return capacidadChocolate;
+	}
+	
+	
+	public synchronized void rellenarChocolate(int cantidad){
+		
 	}
 
 	public double getVelCinta() {
@@ -379,6 +406,14 @@ public class Configuracion implements Serializable {
 			sal=posicionAsociadaCalidad;
 		else if(nombre.equals(NombreMaquinas.CINTA_3))
 			sal=posicionAsociadaCintaAut3;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_1))
+			sal=posicionAsociadaCalidadSensor1;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_2))
+			sal=posicionAsociadaCalidadSensor2;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_3))
+			sal=posicionAsociadaCalidadSensor3;
+		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_4))
+			sal=posicionAsociadaCalidadSensor4;
 		
 		return sal;
 		
@@ -386,5 +421,9 @@ public class Configuracion implements Serializable {
 
 	public synchronized int getInterferencia() {
 		return interferencia;
+	}
+
+	public synchronized double getPorcentajeFallos() {
+		return porcentajeFallos;
 	}
 }

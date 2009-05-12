@@ -43,6 +43,8 @@ public class ConfiguracionMaestro implements Serializable {
 	 * Capacidad del deposito de pasteles
 	 */
 	private int capacidadPasteles=50;
+	private int capacidadCaramelo=50;
+	private int capacidadChocolate=50;
 	
 	/*
 	 * Velocidad de la cinta, medida en m/min
@@ -134,6 +136,16 @@ public class ConfiguracionMaestro implements Serializable {
 	private double espEntreBizc=sizeBizcocho+0.2;
 	private double espEntreBlister=sizeBlister+0.2;
 	
+	private double porcentajeFallos=0.05;
+	
+	public synchronized double getPorcentajeFallos() {
+		return porcentajeFallos;
+	}
+
+	public synchronized void setPorcentajeFallos(double porcentajeFallos) {
+		this.porcentajeFallos = porcentajeFallos;
+	}
+
 	/*
 	 * posiciones asociadas al estado interno
 	 */
@@ -667,6 +679,24 @@ public class ConfiguracionMaestro implements Serializable {
 	public synchronized void setEspEntreBlister(double espEntreBlister) {
 		this.espEntreBlister = espEntreBlister;
 	}
+
+	public synchronized int getCapacidadCaramelo() {
+		return capacidadCaramelo;
+	}
+
+	public synchronized void setCapacidadCaramelo(int capacidadCaramelo) {
+		this.capacidadCaramelo = capacidadCaramelo;
+	}
+
+	public synchronized int getCapacidadChocolate() {
+		return capacidadChocolate;
+	}
+
+	public synchronized void setCapacidadChocolate(int capacidadChocolate) {
+		this.capacidadChocolate = capacidadChocolate;
+	}
+
+	
 	
 	
 }

@@ -3,6 +3,7 @@ package com.umbrella.autoslave.logic;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Vector;
 
 import com.umbrella.autoslave.executor.Apagado;
 import com.umbrella.autoslave.executor.DispensadoraActivada;
@@ -35,6 +36,8 @@ public class Maestro3 {
 	
 	private static String host = "localhost";
 	private static int puerto = 9003;
+	
+	public static double porcentajeFallos=0.03;
 	
 	public static void main(String[] args) {
 		
@@ -93,7 +96,7 @@ public class Maestro3 {
  					/*
  					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
  					 */
- 					if(!contexto.apagado){
+ 					if(!contexto.isApagado()){
  						/*
  						 * se arranca el automata cambiando el estado, 
  						 * lo unico q hace es cargar los valores iniciales 
@@ -115,6 +118,36 @@ public class Maestro3 {
  								seEnciendeSensor();
  								if(puedoUsar(NombreMaquinas.CONTROL_CALIDAD) ){
  									_calidad.run();
+ 									if(Math.random()<configuracion.getPorcentajeFallos()){
+ 										Vector<Integer> aux=new Vector<Integer>();
+ 										aux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_1));
+ 										aux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_2));
+ 										aux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_3));
+ 										aux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_4));
+ 										int aux2=(int)(Math.random()*4);
+ 										int posAux=aux.get(aux2);
+ 										aux.remove(aux2);
+ 										contexto.setDispositivosInternos(posAux, false);
+ 										if(Math.random()<0.5){
+ 											aux2=(int)(Math.random()*3);
+ 	 										posAux=aux.get(aux2);
+ 	 										aux.remove(aux2);
+ 	 										contexto.setDispositivosInternos(posAux, false);
+ 	 										if(Math.random()<0.25){
+ 	 											aux2=(int)(Math.random()*2);
+ 	 	 										posAux=aux.get(aux2);
+ 	 	 										aux.remove(aux2);
+ 	 	 										contexto.setDispositivosInternos(posAux, false);
+ 	 	 										if(Math.random()<0.125){
+ 	 	 											aux2=(int)(Math.random()*3);
+ 	 	 	 										posAux=aux.get(aux2);
+ 	 	 	 										aux.remove(aux2);
+ 	 	 	 										contexto.setDispositivosInternos(posAux, false);
+ 	 	 										}
+ 	 										}
+ 										}
+ 										for(int i=0;i<aux.size();i++)contexto.setDispositivosInternos(aux.get(i), true);
+ 									}
  								}
  								if(puedoUsar(NombreMaquinas.SELLADO)){
  									_selladora.run();

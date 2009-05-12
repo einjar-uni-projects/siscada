@@ -29,8 +29,8 @@ public class Contexto implements Serializable{
 	private LinkedList<Pastel> _listaPasteles;
 	private LinkedList<Blister> _listaBlister;
 	
-	boolean apagado=false;
-	
+	private boolean apagado=true;
+	private boolean paradaCorrecta=false; //sirve para hacer bien la parada
 	/*
 	 * Fin de la cinta indica si la cinta esta libre o vacia
 	 * True = libre / false = ocupada
@@ -58,8 +58,12 @@ public class Contexto implements Serializable{
 	private int pastelesRestantes;
 	private boolean blisterListoInicioCinta3=false;
 	
+	private int capacidadCaramelo;
+	private int capacidadChocolate;
+	
 	private static Contexto INSTANCE = null;
 	
+	private boolean fallo=false;
 	
 	/*
 	 * numero de pasteles en la cinta, no sirve para nada tecnicamente solo da informacion
@@ -206,6 +210,58 @@ public class Contexto implements Serializable{
 			boolean blisterListoInicioCinta3) {
 		this.blisterListoInicioCinta3 = blisterListoInicioCinta3;
 	}
+
+	public synchronized boolean isFallo() {
+		return fallo;
+	}
+
+	public synchronized void setFallo(boolean fallo) {
+		this.fallo = fallo;
+	}
+
+	public synchronized boolean isApagado() {
+		return apagado;
+	}
+
+	public synchronized void setApagado(boolean apagado) {
+		this.apagado = apagado;
+	}
+	
+	public synchronized static Contexto reset(String tipo) {
+		INSTANCE = new Contexto(tipo);
+		return INSTANCE;
+	}
+
+	public synchronized boolean isParadaCorrecta() {
+		return paradaCorrecta;
+	}
+
+	public synchronized void setParadaCorrecta(boolean paradaCorrecta) {
+		this.paradaCorrecta = paradaCorrecta;
+	}
 	
 	
+	public synchronized int getCapacidadCaramelo() {
+		return capacidadCaramelo;
+	}
+
+	public synchronized int getCapacidadChocolate() {
+		return capacidadChocolate;
+	}
+
+	public synchronized void rellenarCaramelo(int cantidad, int max){
+		capacidadCaramelo+=cantidad;
+		if(capacidadCaramelo>max) capacidadCaramelo=max;
+	}
+	public synchronized void decrementarCaramelo(){
+		capacidadCaramelo--;
+	}
+	public synchronized void rellenarChocolate(int cantidad, int max){
+		capacidadChocolate+=cantidad;
+		if(capacidadChocolate>max) capacidadChocolate=max;
+	}
+	public synchronized void decrementarChocolate(){
+		capacidadChocolate--;
+	}
+
 }
