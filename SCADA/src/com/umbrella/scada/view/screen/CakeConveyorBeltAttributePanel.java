@@ -4,7 +4,7 @@ import java.awt.TextField;
 
 import javax.swing.JLabel;
 
-public class CakeConveyorBeltAttributePanel extends AtributePanel {
+public class CakeConveyorBeltAttributePanel extends AttributePanel {
 
 	private JLabel _availableCakesL = new JLabel();
 	private JLabel _conveyorBeltL = new JLabel();

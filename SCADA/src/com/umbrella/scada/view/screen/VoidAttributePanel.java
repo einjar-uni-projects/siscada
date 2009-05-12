@@ -1,6 +1,6 @@
 package com.umbrella.scada.view.screen;
 
-public class VoidAttributePanel extends AtributePanel {
+public class VoidAttributePanel extends AttributePanel {
 
 	@Override
 	protected void initialize() {
