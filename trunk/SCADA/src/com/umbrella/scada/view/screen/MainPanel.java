@@ -65,4 +65,17 @@ public class MainPanel extends JPanel{
 		g.drawImage(alt, 0, 0, getWidth(), getHeight(), null);
 		repaint();
 	}
+
+	public void startAutRob() {
+		for (int i = 0; i < _conjuntosCinta.length; i++) {
+			_conjuntosCinta[i].start();
+		}
+		
+	}
+	public void stopAutRob() {
+		for (int i = 0; i < _conjuntosCinta.length; i++) {
+			_conjuntosCinta[i].stop();
+		}
+		
+	}
 }

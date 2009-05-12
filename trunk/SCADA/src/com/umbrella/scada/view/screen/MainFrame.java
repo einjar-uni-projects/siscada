@@ -31,7 +31,7 @@ public class MainFrame implements UpdatableInterface{
 	private JButton _initButton = null;
 	private JButton _pauseButton = null;
 	private JButton _stopButton = null;
-	private JPanel _mainPanel = null;
+	private MainPanel _mainPanel = null;
 	private JMenu _language = null;
 	
 	private static MainFrame _instance;
@@ -185,7 +185,8 @@ public class MainFrame implements UpdatableInterface{
 			_initButton.setText("Init");
 			_initButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+
+					_mainPanel.startAutRob();
 				}
 			});
 		}
@@ -203,7 +204,7 @@ public class MainFrame implements UpdatableInterface{
 			_pauseButton.setText("Pause");
 			_pauseButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+
 				}
 			});
 		}
@@ -221,7 +222,7 @@ public class MainFrame implements UpdatableInterface{
 			_stopButton.setText("Stop");
 			_stopButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					_mainPanel.stopAutRob();
 				}
 			});
 		}
