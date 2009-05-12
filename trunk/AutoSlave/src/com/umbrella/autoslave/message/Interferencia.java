@@ -1,8 +1,8 @@
 package com.umbrella.autoslave.message;
 
 import com.umbrella.autoslave.logic.Contexto;
-import com.umbrella.autoslave.utils2.Ontologia;
 import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.Ontologia;
 
 public class Interferencia implements MessageInterface{
 
