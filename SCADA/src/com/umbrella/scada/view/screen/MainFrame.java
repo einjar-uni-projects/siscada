@@ -40,10 +40,11 @@ public class MainFrame implements UpdatableInterface{
 	
 	private static MainFrame _instance;
 	private MainFrameModel _model = MainFrameModel.getInstance();
-	private LocalizationResources _languageResources = LocalizationResources.getInstance();
+	private LocalizationResources _languageResources = LocalizationResources.getInstance();  //  @jve:decl-index=0:
 	private JMenuItem _spanishLanguage = null;
 	private JMenuItem _englishLanguage = null;
 	private CardLayout _rightLayout;  //  @jve:decl-index=0:
+	private AttributePanel[] _attributePanels;
 	ActionFactory _actionFactory = ActionFactoryProvider.getInstance();  //  @jve:decl-index=0:
 	
 	private MainFrame(){
@@ -101,8 +102,15 @@ public class MainFrame implements UpdatableInterface{
 			_rightPanel = new JPanel();
 			_rightLayout = new CardLayout();	
 			_rightPanel.setLayout(_rightLayout);
-			_rightPanel.add(new VoidAttributePanel(), "1");
-			_rightPanel.add(new CakeConveyorBeltAttributePanel(), "2");
+			_attributePanels = new AttributePanel[3];
+			_attributePanels[0] = new VoidAttributePanel();
+			_attributePanels[1] = new CakeConveyorBeltAttributePanel();
+			_attributePanels[2] = new BlisterConveyorBeltAttributePanel();
+			
+			_rightPanel.add(_attributePanels[0], "1");
+			_rightPanel.add(_attributePanels[1], "2");
+			_rightPanel.add(_attributePanels[2], "3");
+			
 			_rightLayout.show(_rightPanel, "1");
 			_rightPanel.setPreferredSize(new Dimension(200, 600));
 		}
@@ -310,6 +318,9 @@ public class MainFrame implements UpdatableInterface{
 		_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
 		_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
 		_fileMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_FILE, _model.get_selectedLanguage()));
+		for(AttributePanel panel : _attributePanels){
+			panel.updateLanguage();
+		}
 	}
 	
 	public void updateData(){
