@@ -31,11 +31,7 @@ public class Contexto implements Serializable{
 	
 	private boolean apagado=true;
 	private boolean paradaCorrecta=false; //sirve para hacer bien la parada
-	/*
-	 * Fin de la cinta indica si la cinta esta libre o vacia
-	 * True = libre / false = ocupada
-	 */
-	private boolean finCinta;
+	
 	
 	/*
 	 * indica los sensores que estan activos, o los dispositivos activados, es el estado interno del automata 
