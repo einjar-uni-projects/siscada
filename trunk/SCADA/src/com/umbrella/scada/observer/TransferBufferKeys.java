@@ -14,7 +14,8 @@ public enum TransferBufferKeys {
 			Integer.class), AU1_CAKES_POS4(Integer.class), AU1_CAKES_POS5(
 			Integer.class), AU1_CAKES_POS6(Integer.class), AU1_CAKES_POS7(
 			Integer.class), AU1_STATE(Boolean.class), AU2_STATE(Boolean.class), AU3_STATE(
-			Boolean.class), RB1_STATE(Boolean.class), RB2_STATE(Boolean.class);
+			Boolean.class), RB1_STATE(Boolean.class), RB2_STATE(Boolean.class), GEN_IP(
+			String.class), GEN_PORT(Integer.class);
 
 	private final Class _class;
 
