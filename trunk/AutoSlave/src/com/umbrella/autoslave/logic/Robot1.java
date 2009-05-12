@@ -161,7 +161,7 @@ public class Robot1 {
 								 */
 								_interferencia=new Interferencia();
 								_interferencia.setClick(cicloAct);
-								_interferencia.setRobot(1);
+								_interferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
 								_interferencia.setCinta(NombreMaquinas.CINTA_1.getDescriptor());
 								_buzon.send(_interferencia);
 							}
@@ -175,6 +175,12 @@ public class Robot1 {
 								/*
 								 * Envia el mensaje de pastel recogido
 								 */
+								_productoRecogido=new ProductoRecogido();
+								_productoRecogido.setClick(cicloAct);
+								_productoRecogido.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
+								_productoRecogido.setTipo("pastel");
+								_buzon.send(_productoRecogido);
+								 
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
 							// controlar interferencias, mejor lo hace el maestro

@@ -28,7 +28,9 @@ public enum NombreMaquinas implements Serializable {
 	SENSOR_CALIDAD_SENSOR_1("sesor_calidad_sensor_1","sensor asociado a la maquina de control de calidad", 20),
 	SENSOR_CALIDAD_SENSOR_2("sesor_calidad_sensor_2","sensor asociado a la maquina de control de calidad", 21),
 	SENSOR_CALIDAD_SENSOR_3("sesor_calidad_sensor_3","sensor asociado a la maquina de control de calidad", 22),
-	SENSOR_CALIDAD_SENSOR_4("sesor_calidad_sensor_4","sensor asociado a la maquina de control de calidad", 23);
+	SENSOR_CALIDAD_SENSOR_4("sesor_calidad_sensor_4","sensor asociado a la maquina de control de calidad", 23),
+	ROBOT_1("robot_1", "numero del robot 1",24),
+	ROBOT_2("robot_2", "numero del robot 2",25);
 	
 	private final String name;
 	private final String descripcion;
