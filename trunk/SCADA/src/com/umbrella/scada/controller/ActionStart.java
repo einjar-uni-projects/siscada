@@ -8,4 +8,10 @@ public class ActionStart implements Action {
 		return null;
 	}
 
+	@Override
+	public boolean insertParam(ActionParams params) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

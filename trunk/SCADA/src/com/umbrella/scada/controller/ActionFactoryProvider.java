@@ -32,6 +32,7 @@ public class ActionFactoryProvider implements ActionFactory {
 		switch (key) {
 		case START:
 			ret = new ActionStart();
+			
 			break;
 		case STOP:
 			ret = new ActionStop();
