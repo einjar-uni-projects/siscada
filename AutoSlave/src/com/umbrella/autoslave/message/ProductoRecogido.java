@@ -1,6 +1,7 @@
 package com.umbrella.autoslave.message;
 
 import com.umbrella.autoslave.utils2.Blister;
+import com.umbrella.mail.message.MessageInterface;
 
 public class ProductoRecogido implements MessageInterface{
 	//lo envia el robot cuando recoge el producto
