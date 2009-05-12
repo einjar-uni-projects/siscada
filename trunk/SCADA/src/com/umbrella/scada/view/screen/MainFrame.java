@@ -1,6 +1,7 @@
 package com.umbrella.scada.view.screen;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -39,8 +40,7 @@ public class MainFrame implements UpdatableInterface{
 	private LocalizationResources _languageResources = LocalizationResources.getInstance();
 	private JMenuItem _spanishLanguage = null;
 	private JMenuItem _englishLanguage = null;
-	
-	private Image _backImage;
+	private CardLayout _rightLayout;  //  @jve:decl-index=0:
 	
 	private MainFrame(){
 		getJFrame();
@@ -95,7 +95,11 @@ public class MainFrame implements UpdatableInterface{
 	private JPanel get_rightPanel() {
 		if (_rightPanel == null) {
 			_rightPanel = new JPanel();
-			_rightPanel.setLayout(new FlowLayout());
+			_rightLayout = new CardLayout();	
+			_rightPanel.setLayout(_rightLayout);
+			_rightPanel.add(new VoidAttributePanel(), "1");
+			_rightPanel.add(new CakeConveyorBeltAttributePanel(), "2");
+			_rightLayout.show(_rightPanel, "1");
 			_rightPanel.setPreferredSize(new Dimension(200, 600));
 		}
 		return _rightPanel;
@@ -234,7 +238,7 @@ public class MainFrame implements UpdatableInterface{
 	 * 	
 	 * @return javax.swing.JPanel	
 	 */
-	private JPanel get_mainPanel() {
+	private MainPanel get_mainPanel() {
 		if (_mainPanel == null) {
 			_mainPanel = new MainPanel(_model);
 		}

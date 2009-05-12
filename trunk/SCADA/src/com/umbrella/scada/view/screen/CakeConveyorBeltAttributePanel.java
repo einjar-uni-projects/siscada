@@ -4,14 +4,14 @@ import java.awt.TextField;
 
 import javax.swing.JLabel;
 
-public class CakeConveyorBeltAtributePanel extends AtributePanel {
+public class CakeConveyorBeltAttributePanel extends AtributePanel {
 
 	private JLabel _availableCakesL = new JLabel();
 	private JLabel _conveyorBeltL = new JLabel();
 	private JLabel _speedL = new JLabel();
 	private TextField _speedInput = new TextField();
 	
-	public CakeConveyorBeltAtributePanel() {
+	public CakeConveyorBeltAttributePanel() {
 		super();
 		add(_conveyorBeltL);
 		add(_availableCakesL);
