@@ -31,8 +31,9 @@ public class MainPanel extends JPanel{
 		_conjuntosCinta[3].cintaOn(true);
 		_conjuntosCinta[4] = new ConjuntoRobot2(_loader, 560,275,200,150, model);
 		_conjuntosCinta[4].cintaOn(true);
+		setMouseListener();
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		_time1 = System.currentTimeMillis();
@@ -77,5 +78,27 @@ public class MainPanel extends JPanel{
 			_conjuntosCinta[i].stop();
 		}
 		
+	}
+	
+	private void setMouseListener() {
+		addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				MainFrame main = MainFrame.getInstance();
+				if(_conjuntosCinta[0].isInto(x, y))
+					main.changeRightCard("2");
+				else if(_conjuntosCinta[1].isInto(x, y))
+					main.changeRightCard("3");
+				else if(_conjuntosCinta[2].isInto(x, y))
+					main.changeRightCard("4");
+				else if(_conjuntosCinta[3].isInto(x, y))
+					main.changeRightCard("5");
+				else if(_conjuntosCinta[4].isInto(x, y))
+					main.changeRightCard("6");
+				else
+					main.changeRightCard("1");
+			}
+		});
 	}
 }

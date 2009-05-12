@@ -64,4 +64,10 @@ public abstract class ElementsGroup {
 	}
 	
 	public abstract void cintaOn(boolean on);
+	
+	public boolean isInto(int posX, int posY){
+		if(posX > _posX && posX < _posX+_maxX && posY > _posY && posY < _posY+_maxY)
+			return true;
+		return false;
+	}
 }
