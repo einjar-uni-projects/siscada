@@ -9,14 +9,6 @@ public class Model {
 		private static Model instance = new Model();
 	}
 	
-	//Los atributos llevan el siguiente nombrado:
-	// _gen para atributos generales
-	// _au1 para el automata 1
-	// _au2 para el automata 2
-	// _au3 para el automata 3
-	// _rb1 para el robot 1
-	// _rb2 para el robot 2
-	
 	/**
 	 * Obtiene la instancia única del objeto, la primera invocación
 	 * realiza la creación del mismo.
@@ -25,7 +17,18 @@ public class Model {
 	public static Model getInstance() {
 		return SingletonHolder.instance;
 	}
+	
 	private final Observable _observable;
+	
+	/*
+	 * Los atributos llevan el siguiente nombrado:
+	 * _gen para atributos generales
+	 * _au1 para el automata 1
+	 * _au2 para el automata 2
+	 * _au3 para el automata 3
+	 * _rb1 para el robot 1
+	 * _rb2 para el robot 2
+	 */
 	/*Atributos generales*/
 	private final ModelElementAtribute<Integer> _genClockTime = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_CLOCK_TIME,new Integer(200));
 	private final ModelElementAtribute<Double> _genSensorError = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_SENSOR_ERROR,new Double(0.20));
