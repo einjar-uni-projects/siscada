@@ -1,7 +1,9 @@
 package com.umbrella.scada.view.localization;
 
 public enum LocalizatorIDs {
-	MENUBAR_FILE,
+	MENUBAR_SCADA,
+	MENUBAR_REPORTS,
+	MENUBAR_EXIT,
 	MENUBAR_OPTIONS,
 	MENUBAR_LANGUAGE,
 	MENUBAR_ES_LANGUAGE,
