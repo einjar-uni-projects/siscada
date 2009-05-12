@@ -4,15 +4,15 @@ import java.awt.TextField;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 public abstract class AtributePanel extends JPanel {
 	
-	protected JLabel _state = new JLabel();
-	protected TextField _stateInput = new TextField();
+	protected JLabel _title = new JLabel();
+	private JLabel _conveyorBelt = new JLabel();
 	
 	protected AtributePanel() {
-		add(_state);
-		add(_stateInput);
+		add(_title);
 	}
 	
 	protected abstract void initialize();
