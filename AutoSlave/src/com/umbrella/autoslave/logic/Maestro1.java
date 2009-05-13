@@ -10,22 +10,10 @@ import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
-import com.umbrella.autoslave.message.ActualizarConfiguracion;
-import com.umbrella.autoslave.message.ActualizarContexto;
-import com.umbrella.autoslave.message.Arrancar;
-import com.umbrella.autoslave.message.AvisarUnFallo;
-import com.umbrella.autoslave.message.FinCintaLibre;
-import com.umbrella.autoslave.message.FinInterferencia;
-import com.umbrella.autoslave.message.Interferencia;
-import com.umbrella.autoslave.message.Parada;
-import com.umbrella.autoslave.message.ParadaEmergencia;
-import com.umbrella.autoslave.message.ParadaFallo;
-import com.umbrella.autoslave.message.PastelListo;
-import com.umbrella.autoslave.message.ProductoRecogido;
-import com.umbrella.autoslave.message.RellanarMaquina;
-import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
@@ -42,7 +30,6 @@ public class Maestro1 {
 	private static SalidaCinta _salPastel;
 	private static MaquinaTiempos _chocolate;
 	private static MaquinaTiempos _caramelo;
-	private static MailBox buzon;
 	
 	private static Contexto contexto=Contexto.getInstance("pastel");
 	private static Configuracion configuracion=Configuracion.getInstance();
@@ -80,21 +67,6 @@ public class Maestro1 {
 
  			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
-
- 			FinCintaLibre _finCintaLibre=null;
- 			ActualizarContexto _actualizarContexto=null;
- 			Arrancar _arrancar=null;
- 			FinInterferencia _finInterferencia=null;
- 			Interferencia _interferencia=null;
- 			Parada _parada = null;
- 			ParadaEmergencia _paradaEmergencia=null;
- 			PastelListo _pastelListo=null;
- 			ProductoRecogido _productoRecogido=null;
- 			RellanarMaquina _rellanarMaquina=null;
- 			Reset _reset=null;
- 			ActualizarConfiguracion _actualizarConfiguracion=null;
- 			ParadaFallo _paradaFallo=null;
- 			AvisarUnFallo _avisarUnFallo=null; 
  			
  			try {
  				_buzon=new MailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
@@ -110,7 +82,6 @@ public class Maestro1 {
  			}
  			
  			long cicloAct=_clock.getClock();
- 			boolean primeraVez=true;
  			
  			for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, false);
 
@@ -119,63 +90,59 @@ public class Maestro1 {
  				if(cicloAct<_clock.getClock()){
  					cicloAct=_clock.getClock();
  					
- 					Object aux=null;
+ 					MessageInterface mensaje=null;
 
  					do{
- 						aux=_buzon.receive();
- 						if(aux instanceof FinCintaLibre){
- 							_finCintaLibre = (FinCintaLibre)aux;
+ 						mensaje=_buzon.receive();
+ 						switch (mensaje.getIdentificador()) {
+						case FINCINTALIBRE:							
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
- 						}else if(aux instanceof ActualizarContexto){
- 							_actualizarContexto=(ActualizarContexto)aux;
- 							contexto=_actualizarContexto.getContexto();
- 						}else if(aux instanceof ActualizarConfiguracion){
- 							_actualizarConfiguracion=(ActualizarConfiguracion)aux;
- 							configuracion=_actualizarConfiguracion.getConfiguracion();
- 						}else if(aux instanceof Arrancar){
- 							_arrancar=(Arrancar)aux;
+ 							break;
+						case ACTUALIZARCONFIGURACION: 						
+ 							configuracion=(Configuracion)mensaje.getObject();
+ 							break;
+						case ARRANCAR:
  							contexto=Contexto.reset("pastel");
  							contexto.setApagado(false);
- 						}else if(aux instanceof FinInterferencia){
- 							_finInterferencia=(FinInterferencia)aux;
+ 							break;
+						case FININTERFERENCIA:
  							contexto.setInterferencia(false);
- 						}else if(aux instanceof Interferencia){
- 							_interferencia=(Interferencia)aux;
+ 							break;
+						case INTERFERENCIA: 				
  							contexto.setInterferencia(true);
- 						}else if(aux instanceof Parada){
- 							_parada=(Parada)aux;
+ 							break;
+						case PARADA:
  							contexto.setParadaCorrecta(true);
- 						}else if(aux instanceof ParadaEmergencia){
- 							_paradaEmergencia=(ParadaEmergencia)aux;
+ 							break;
+						case PARADAEMERGENCIA:
  							contexto.setApagado(true);
- 						}else if(aux instanceof PastelListo){
- 							//este mensaje lo envio yo, no me llega a mi
- 							_pastelListo=(PastelListo)aux;
- 						}else if(aux instanceof ProductoRecogido){
- 							_productoRecogido=(ProductoRecogido)aux;
- 							// es lo mismo q FinCintaLibre
+ 							break;
+ 						case PRODUCTORECOGIDO:
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
- 						}else if(aux instanceof RellanarMaquina){
- 							_rellanarMaquina=(RellanarMaquina)aux;
- 							if(_rellanarMaquina.getMaquina().compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
- 								_dispensadora.llenarDeposito(_rellanarMaquina.getCantidad());
- 							if(_rellanarMaquina.getMaquina().compareTo(NombreMaquinas.CARAMELO.getName())==0)
- 								contexto.rellenarCaramelo(_rellanarMaquina.getCantidad(),configuracion.getCapacidadCaramelo());
- 							if(_rellanarMaquina.getMaquina().compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
- 								contexto.rellenarCaramelo(_rellanarMaquina.getCantidad(),configuracion.getCapacidadChocolate());	
- 						}else if(aux instanceof Reset){
- 							_reset=(Reset)aux;
+ 							break;
+ 						case RELLENARMAQUINA:
+ 							String maquina=mensaje.getParametros().get(0);
+ 							int cantidad=Integer.parseInt(mensaje.getParametros().get(1));
+ 							if(maquina.compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
+ 								_dispensadora.llenarDeposito(cantidad);
+ 							if(maquina.compareTo(NombreMaquinas.CARAMELO.getName())==0)
+ 								contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadCaramelo());
+ 							if(maquina.compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
+ 								contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadChocolate());
+ 							break;
+ 						case RESET:
  							if(contexto.isApagado() || contexto.isFallo()){
  								contexto=Contexto.reset("pastel");
  								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  							}
- 						}else if(aux instanceof ParadaFallo){
- 							_paradaFallo=(ParadaFallo)aux;
+ 							break;
+ 						case PARADAFALLO:
  							contexto.setFallo(true);
+ 							break;
  						}
 
- 					}while(aux!=null);
+ 					}while(mensaje!=null);
 
  					if(contexto.isParadaCorrecta()){
 						if(contexto.get_listaPasteles().size()==0) contexto.setApagado(true);
@@ -183,14 +150,7 @@ public class Maestro1 {
  					
  					if(!contexto.isFallo()){
  						if(!contexto.isApagado()){
- 							/*
- 							 * se arranca el automata cambiando el estado, 
- 							 * lo unico q hace es cargar los valores iniciales 
- 							 */
- 							if(primeraVez){
- 								((Apagado) estado).transitar();
- 								primeraVez=false;
- 							}
+ 							
 
  							/*
  							 * se coordina y ejecutan los hilos de: movercinta, DispensadoraAutomatica, MaquinaCaramelo, MaquinaChocolate, 
@@ -206,10 +166,10 @@ public class Maestro1 {
  										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.get_posicion())).set_chocolate();
  										contexto.decrementarChocolate();
  									}else{
- 										_avisarUnFallo=new AvisarUnFallo();
- 										_avisarUnFallo.setClick(cicloAct);
- 										_avisarUnFallo.setMotivo(NombreMaquinas.CHOCOLATE.getName() + "- CAPACIDAD");
- 										_buzon.send(_avisarUnFallo);
+ 										DefaultMessage mensajeSend= new DefaultMessage();
+ 										mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+ 										mensajeSend.getParametros().add(NombreMaquinas.CHOCOLATE.getName()); 									
+ 										_buzon.send(mensajeSend);
  										contexto.setFallo(true);
  									}
  								}
@@ -219,10 +179,10 @@ public class Maestro1 {
  										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.get_posicion())).set_caramelo();
  										contexto.decrementarCaramelo();
  									}else{
- 										_avisarUnFallo=new AvisarUnFallo();
- 										_avisarUnFallo.setClick(cicloAct);
- 										_avisarUnFallo.setMotivo(NombreMaquinas.CARAMELO.getName() + "- CAPACIDAD");
- 										_buzon.send(_avisarUnFallo);
+ 										DefaultMessage mensajeSend= new DefaultMessage();
+ 										mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+ 										mensajeSend.getParametros().add(NombreMaquinas.CARAMELO.getName()); 									
+ 										_buzon.send(mensajeSend);
  										contexto.setFallo(true);
  									}
  								}
@@ -233,43 +193,26 @@ public class Maestro1 {
  							if(!contexto.isParadaCorrecta())
  								_dispensadora.run();
  							if(_dispensadora.get_PastelesRestantes()==0){
- 								_avisarUnFallo=new AvisarUnFallo();
-								_avisarUnFallo.setClick(cicloAct);
-								_avisarUnFallo.setMotivo(NombreMaquinas.DISPENSADORA.getName() + "- CAPACIDAD");
-								_buzon.send(_avisarUnFallo);
+ 								DefaultMessage mensajeSend= new DefaultMessage();
+								mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+								mensajeSend.getParametros().add(NombreMaquinas.DISPENSADORA.getName()); 									
+								_buzon.send(mensajeSend);
 								contexto.setFallo(true);
  							}
 
- 						}else{ //el else de:  if(!contexto.apagado){
- 							primeraVez=true;
  						}
+ 						
  						for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
-
+ 						
+ 						apagarSensores();
+ 						
  					} // fin del if(!contexto.isfallo)
-
- 					_finCintaLibre=null;
- 		 			_actualizarContexto=null;
- 		 			_arrancar=null;
- 		 			_finInterferencia=null;
- 		 			_interferencia=null;
- 		 			_parada = null;
- 		 			_paradaEmergencia=null;
- 		 			_pastelListo=null;
- 		 			_productoRecogido=null;
- 		 			_rellanarMaquina=null;
- 		 			_reset=null;
- 		 			_actualizarConfiguracion=null;
- 		 			_paradaFallo=null;
- 		 			_avisarUnFallo=null;
- 				
-
+ 					
  		 			// envia el mensaje de contexto
- 		 			ActualizarContexto actContexto=new ActualizarContexto();
- 		 			actContexto.setClick(cicloAct);
- 		 			actContexto.setContexto(contexto);
- 		 			actContexto.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO.getNombre());
- 		 			actContexto.setMaquina(1);
- 		 			_buzon.send(actContexto);
+ 					DefaultMessage mensajeSend=new DefaultMessage();
+ 					mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
+ 					mensajeSend.setObject(contexto);
+ 		 			_buzon.send(mensajeSend);
 
  				}//fin del if de cada ciclo de reloj
  			}// fin del while(!esFin)
@@ -359,15 +302,15 @@ public class Maestro1 {
 	private synchronized static void apagarSensores(){
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _caramelo.get_posicion());
-		if(num>=0)
+		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _chocolate.get_posicion());
-		if(num>=0)
+		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _salPastel.get_posicion());
-		if(num>=0)
+		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
 	}
 }
