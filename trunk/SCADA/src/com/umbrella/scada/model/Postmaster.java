@@ -48,6 +48,27 @@ public class Postmaster extends Thread {
 		while(_no_end){
 			try {
 				MessageInterface msg = _mailBox.receiveBlocking();
+				switch (msg.getMSGCode()) {
+				case AU1ARRANCADO:
+					
+					break;
+				case AU2ARRANCADO:
+									
+									break;
+				case AU3ARRANCADO:
+					
+					break;
+				case RB1ARRANCADO:
+					
+					break;
+				case RB2ARRANCADO:
+					
+					break;
+
+				default:
+					break;
+				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
