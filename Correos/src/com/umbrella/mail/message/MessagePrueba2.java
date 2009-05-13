@@ -20,5 +20,11 @@ public class MessagePrueba2 implements MessageInterface{
     /** Creates a new instance of MessagePrueba2 */
     public MessagePrueba2() {
     }
+
+	@Override
+	public OntologiaMSG getMSGCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }

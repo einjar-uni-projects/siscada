@@ -25,7 +25,12 @@ public enum OntologiaMSG {
 	PRODUCTOCOLOCADO("ProductoColocado",3),
 	RELLENARMAQUINA("RellanarMaquina",3),
 	MODIFICARCAMPO("ModificarCampo",4),
-	MOVERDESDEMESA("MoverDesdeMesa",2);
+	MOVERDESDEMESA("MoverDesdeMesa",2), 
+	AU1ARRANCADO("Automata1Arrancado",0), //TODO Pablo no se para que es el numero
+	AU2ARRANCADO("Automata2Arrancado",0), 
+	AU3ARRANCADO("Automata3Arrancado",0), 
+	RB1ARRANCADO("Robot1Arrancado",0), 
+	RB2ARRANCADO("Robot2Arrancado",0);
 	
 	
 	private final String nombre;

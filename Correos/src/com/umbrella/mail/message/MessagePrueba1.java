@@ -46,5 +46,11 @@ public class MessagePrueba1 implements MessageInterface{
 	public boolean isVarBoolean() {
 		return varBoolean;
 	}
+
+	@Override
+	public OntologiaMSG getMSGCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
