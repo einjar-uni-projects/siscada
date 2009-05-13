@@ -11,7 +11,7 @@ public class ActionParams implements ParamGroup<ActionParamsEnum> {
 	}
 
 	@Override
-	public <T> T getParam(ActionParamsEnum param, Class<T> ret_class) {
+	public Object getParam(ActionParamsEnum param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
