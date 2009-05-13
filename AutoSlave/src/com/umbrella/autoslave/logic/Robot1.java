@@ -22,7 +22,7 @@ import com.umbrella.autoslave.message.ProductoRecogido;
 import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.EstateRobots;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
-import com.umbrella.mail.message.Ontologia;
+import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 /*
@@ -306,7 +306,7 @@ public class Robot1 {
 				ActualizarContextoRobot actContexto=new ActualizarContextoRobot();
 				actContexto.setClick(cicloAct);
 				actContexto.setContextoRobot(_contexto);
-				actContexto.setIdentificador(Ontologia.ACTUALIZARCONTEXTOROBOT.getNombre());
+				actContexto.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT.getNombre());
 				actContexto.setMaquina(1);
 				_buzon.send(actContexto);
 				
