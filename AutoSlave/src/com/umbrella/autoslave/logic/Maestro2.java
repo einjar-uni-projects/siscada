@@ -28,7 +28,7 @@ import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.Blister;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
-import com.umbrella.autoslave.utils2.Ontologia;
+import com.umbrella.mail.message.Ontologia;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 
@@ -322,7 +322,7 @@ public class Maestro2 {
 	
 	private synchronized static void hayEspacio(){
 		/*
-		 * comprueba q la posicion del ultimo blister en la cinta es mayor q el tama–o de blister mas 1/2 del blister
+		 * comprueba q la posicion del ultimo blister en la cinta es mayor q el tamaï¿½o de blister mas 1/2 del blister
 		 * (el 1/2) es porque cogemos la posicion intermedia del blister
 		 */
 		double min=configuracion.getSizeCinta()+20;

@@ -29,7 +29,7 @@ import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.Blister;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
-import com.umbrella.autoslave.utils2.Ontologia;
+import com.umbrella.mail.message.Ontologia;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 
