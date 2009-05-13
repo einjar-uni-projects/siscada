@@ -27,16 +27,20 @@ public class ActionFactoryProvider implements ActionFactory {
 	}
 
 	@Override
-	public Action factoryMethod(ActionKey key, ActionParams param) {
+	public Action factoryMethod(ActionKey key, ActionParams params) {
 		Action ret;
 		switch (key) {
 		case START:
 			ret = new ActStart();
-			
 			break;
 		case STOP:
 			ret = new ActStop();
 			break;
+		case UPDATE_STATE:
+			ret = new ActUpdateState();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+				
 		default:
 			ret = new ActNull();
 			break;
