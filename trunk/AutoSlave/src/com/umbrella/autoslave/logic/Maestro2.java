@@ -5,29 +5,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autoslave.executor.Apagado;
-import com.umbrella.autoslave.executor.DispensadoraActivada;
 import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaInstantanea;
-import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
-import com.umbrella.autoslave.message.ActualizarConfiguracion;
-import com.umbrella.autoslave.message.ActualizarContexto;
-import com.umbrella.autoslave.message.Arrancar;
-import com.umbrella.autoslave.message.AvisarUnFallo;
-import com.umbrella.autoslave.message.FinCintaLibre;
-import com.umbrella.autoslave.message.FinInterferencia;
-import com.umbrella.autoslave.message.Interferencia;
-import com.umbrella.autoslave.message.Parada;
-import com.umbrella.autoslave.message.ParadaEmergencia;
-import com.umbrella.autoslave.message.ParadaFallo;
-import com.umbrella.autoslave.message.PastelListo;
-import com.umbrella.autoslave.message.ProductoRecogido;
-import com.umbrella.autoslave.message.RellanarMaquina;
-import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.Blister;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
@@ -80,21 +66,6 @@ public class Maestro2 {
  					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
  	
  			
- 			FinCintaLibre _finCintaLibre=null;
- 			ActualizarContexto _actualizarContexto=null;
- 			Arrancar _arrancar=null;
- 			FinInterferencia _finInterferencia=null;
- 			Interferencia _interferencia=null;
- 			Parada _parada = null;
- 			ParadaEmergencia _paradaEmergencia=null;
- 			PastelListo _pastelListo=null;
- 			ProductoRecogido _productoRecogido=null;
- 			RellanarMaquina _rellanarMaquina=null;
- 			Reset _reset=null;
- 			ActualizarConfiguracion _actualizarConfiguracion=null;
- 			ParadaFallo _paradaFallo=null;
- 			AvisarUnFallo _avisarUnFallo=null; 
- 			
  			try {
  				_buzon=new MailBox(host,puerto,"EntradaMaestro2","SalidaMaestro2");
  			} catch (RemoteException e) {
@@ -118,53 +89,48 @@ public class Maestro2 {
  					 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
  					 */
  				
- 					Object aux=null;
-
+ 					MessageInterface mensaje=null;
+ 					
  					do{
- 						aux=_buzon.receive();
- 						if(aux instanceof FinCintaLibre){
- 							_finCintaLibre = (FinCintaLibre)aux;
- 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
- 						}else if(aux instanceof ActualizarContexto){
- 							_actualizarContexto=(ActualizarContexto)aux;
- 							contexto=_actualizarContexto.getContexto();
- 						}else if(aux instanceof ActualizarConfiguracion){
- 							_actualizarConfiguracion=(ActualizarConfiguracion)aux;
- 							configuracion=_actualizarConfiguracion.getConfiguracion();
- 						}else if(aux instanceof Arrancar){
- 							_arrancar=(Arrancar)aux;
+ 						mensaje=_buzon.receive();
+ 						switch (mensaje.getIdentificador()) {
+						case FINCINTALIBRE:							
+ 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+ 							break;
+						case ACTUALIZARCONFIGURACION: 						
+ 							configuracion=(Configuracion)mensaje.getObject();
+ 							break;
+						case ARRANCAR:
  							contexto=Contexto.reset("pastel");
  							contexto.setApagado(false);
- 						}else if(aux instanceof FinInterferencia){
- 							_finInterferencia=(FinInterferencia)aux;
+ 							break;
+						case FININTERFERENCIA:
  							contexto.setInterferencia(false);
- 						}else if(aux instanceof Interferencia){
- 							_interferencia=(Interferencia)aux;
+ 							break;
+						case INTERFERENCIA: 				
  							contexto.setInterferencia(true);
- 						}else if(aux instanceof Parada){
- 							_parada=(Parada)aux;
+ 							break;
+						case PARADA:
  							contexto.setParadaCorrecta(true);
- 						}else if(aux instanceof ParadaEmergencia){
- 							_paradaEmergencia=(ParadaEmergencia)aux;
+ 							break;
+						case PARADAEMERGENCIA:
  							contexto.setApagado(true);
- 						}else if(aux instanceof PastelListo){
- 							//este mensaje lo envio yo, no me llega a mi
- 							_pastelListo=(PastelListo)aux;
- 						}else if(aux instanceof ProductoRecogido){
- 							_productoRecogido=(ProductoRecogido)aux;
- 							// es lo mismo q FinCintaLibre
+ 							break;
+ 						case PRODUCTORECOGIDO:
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
- 						}else if(aux instanceof Reset){
- 							_reset=(Reset)aux;
+ 							break;
+ 						case RESET:
  							if(contexto.isApagado() || contexto.isFallo()){
- 								contexto=Contexto.reset("blister");
+ 								contexto=Contexto.reset("pastel");
+ 								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+ 								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  							}
- 						}else if(aux instanceof ParadaFallo){
- 							_paradaFallo=(ParadaFallo)aux;
+ 							break;
+ 						case PARADAFALLO:
  							contexto.setFallo(true);
+ 							break;
  						}
-
- 					}while(aux!=null);
+ 					}while(mensaje!=null);
 
  					if(contexto.isParadaCorrecta()){
 						//se para directamente porque no se controla
@@ -199,36 +165,19 @@ public class Maestro2 {
  							}
  							/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
  							for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
- 						}else{
- 							primeraVez=true;
+ 							apagarSensores();
  						}
 
  					} // fin del if(!contexto.isfallo)
 
- 					_finCintaLibre=null;
- 		 			_actualizarContexto=null;
- 		 			_arrancar=null;
- 		 			_finInterferencia=null;
- 		 			_interferencia=null;
- 		 			_parada = null;
- 		 			_paradaEmergencia=null;
- 		 			_pastelListo=null;
- 		 			_productoRecogido=null;
- 		 			_rellanarMaquina=null;
- 		 			_reset=null;
- 		 			_actualizarConfiguracion=null;
- 		 			_paradaFallo=null;
- 		 			_avisarUnFallo=null;
- 				
 
  		 			// envia el mensaje de contexto
- 		 			ActualizarContexto actContexto=new ActualizarContexto();
- 		 			actContexto.setClick(cicloAct);
- 		 			actContexto.setContexto(contexto);
- 		 			actContexto.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO.getNombre());
- 		 			actContexto.setMaquina(1);
- 		 			_buzon.send(actContexto);
- 				}
+ 					DefaultMessage mensajeSend=new DefaultMessage();
+ 					mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
+ 					mensajeSend.setObject(contexto);
+ 		 			_buzon.send(mensajeSend);
+ 		 			
+ 				}//fin del ciclo de reloj
  			}
  			/*
  			 * se matan los hilos
@@ -306,17 +255,19 @@ public class Maestro2 {
 	
 	
 	private synchronized static void apagarSensores(){
+		//TODO hay q cambiarlo, ahora hay q mirar el blister para ver sus atributos y ver si ha pasado por el sensor
+		
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _cortadora.get_posicion());
-		if(num>=0)
+		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _troqueladora.get_posicion());
-		if(num>=0)
+		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _salBlister.get_posicion());
-		if(num>=0)
+		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
 	}
 	
