@@ -1,5 +1,13 @@
 package com.umbrella.scada.view.localization;
 
+/**
+ * Enumerado que define identificadores de recursos de texto que acepta la clase LocalizationResources.
+ * Para estos identificadores hay definidos los textos tanto en inglés como castellano.
+ * @author Umbrella.Soft
+ * @version 1.0
+ * 
+ */
+
 public enum LocalizatorIDs {
 	MENUBAR_SCADA,
 	MENUBAR_REPORTS,
