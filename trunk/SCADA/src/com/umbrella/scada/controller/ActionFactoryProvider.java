@@ -31,14 +31,14 @@ public class ActionFactoryProvider implements ActionFactory {
 		Action ret;
 		switch (key) {
 		case START:
-			ret = new ActionStart();
+			ret = new ActStart();
 			
 			break;
 		case STOP:
-			ret = new ActionStop();
+			ret = new ActStop();
 			break;
 		default:
-			ret = new ActionNull();
+			ret = new ActNull();
 			break;
 		}
 		return ret;

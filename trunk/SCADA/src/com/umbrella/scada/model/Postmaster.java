@@ -7,6 +7,11 @@ import java.util.LinkedList;
 
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.modulocomunicacion.MailBox;
+import com.umbrella.scada.controller.ActionFactory;
+import com.umbrella.scada.controller.ActionFactoryProvider;
+import com.umbrella.scada.controller.ActionKey;
+import com.umbrella.scada.controller.ActionParams;
+import com.umbrella.scada.controller.ActionParamsEnum;
 
 public class Postmaster extends Thread {
 	
@@ -45,27 +50,54 @@ public class Postmaster extends Thread {
 	
 	@Override
 	public void run() {
+		ActionFactory af = ActionFactoryProvider.getInstance();
+		ActionParams params;
+		ActionParamsEnum ape;
+		
 		while(_no_end){
 			try {
+				params = null;
 				MessageInterface msg = _mailBox.receiveBlocking();
 				switch (msg.getMSGCode()) {
 				case AU1ARRANCADO:
-					
+					params = new ActionParams();
+					ape = ActionParamsEnum.STATE;
+					params.setParam(ape, ape.getEnclosedClass(), true);
+					ape = ActionParamsEnum.MACHINE;
+					params.setParam(ape, ape.getEnclosedClass(), "AU1");
+					af.executeAction(ActionKey.UPDATE_STATE, params);
 					break;
 				case AU2ARRANCADO:
-									
-									break;
+					params = new ActionParams();
+					ape = ActionParamsEnum.STATE;
+					params.setParam(ape, ape.getEnclosedClass(), true);
+					ape = ActionParamsEnum.MACHINE;
+					params.setParam(ape, ape.getEnclosedClass(), "AU2");
+					af.executeAction(ActionKey.UPDATE_STATE, params);				
+					break;
 				case AU3ARRANCADO:
-					
+					params = new ActionParams();
+					ape = ActionParamsEnum.STATE;
+					params.setParam(ape, ape.getEnclosedClass(), true);
+					ape = ActionParamsEnum.MACHINE;
+					params.setParam(ape, ape.getEnclosedClass(), "AU3");
+					af.executeAction(ActionKey.UPDATE_STATE, params);
 					break;
 				case RB1ARRANCADO:
-					
+					params = new ActionParams();
+					ape = ActionParamsEnum.STATE;
+					params.setParam(ape, ape.getEnclosedClass(), true);
+					ape = ActionParamsEnum.MACHINE;
+					params.setParam(ape, ape.getEnclosedClass(), "RB1");
+					af.executeAction(ActionKey.UPDATE_STATE, params);
 					break;
 				case RB2ARRANCADO:
-					
-					break;
-
-				default:
+					params = new ActionParams();
+					ape = ActionParamsEnum.STATE;
+					params.setParam(ape, ape.getEnclosedClass(), true);
+					ape = ActionParamsEnum.MACHINE;
+					params.setParam(ape, ape.getEnclosedClass(), "RB2");
+					af.executeAction(ActionKey.UPDATE_STATE, params);
 					break;
 				}
 				

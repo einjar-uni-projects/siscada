@@ -1,6 +1,6 @@
 package com.umbrella.scada.controller;
 
-public class ActionStop implements Action {
+public class ActStop implements Action {
 
 	@Override
 	public ActionResult execute() {
