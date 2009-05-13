@@ -2,7 +2,7 @@ package com.umbrella.autoslave.message;
 
 import com.umbrella.autoslave.logic.ContextoRobot;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.Ontologia;
+import com.umbrella.mail.message.OntologiaMSG;
 
 public class ActualizarContextoRobot implements MessageInterface{
 

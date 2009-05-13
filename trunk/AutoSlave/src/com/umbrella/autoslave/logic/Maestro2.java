@@ -28,7 +28,7 @@ import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.Blister;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
-import com.umbrella.mail.message.Ontologia;
+import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 
@@ -225,7 +225,7 @@ public class Maestro2 {
  		 			ActualizarContexto actContexto=new ActualizarContexto();
  		 			actContexto.setClick(cicloAct);
  		 			actContexto.setContexto(contexto);
- 		 			actContexto.setIdentificador(Ontologia.ACTUALIZARCONTEXTO.getNombre());
+ 		 			actContexto.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO.getNombre());
  		 			actContexto.setMaquina(1);
  		 			_buzon.send(actContexto);
  				}
