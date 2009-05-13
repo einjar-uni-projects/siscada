@@ -4,17 +4,13 @@ package com.umbrella.autoslave.logic;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.Timestamp;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.umbrella.autoslave.message.ActualizarConfiguracion;
 import com.umbrella.autoslave.message.ActualizarContexto;
 import com.umbrella.autoslave.message.ActualizarContextoRobot;
 import com.umbrella.autoslave.message.Arrancar;
-import com.umbrella.autoslave.message.AvisarUnFallo;
 import com.umbrella.autoslave.message.BlisterCompleto;
 import com.umbrella.autoslave.message.BlisterListo;
-import com.umbrella.autoslave.message.FinCintaLibre;
 import com.umbrella.autoslave.message.FinInterferencia;
 import com.umbrella.autoslave.message.Interferencia;
 import com.umbrella.autoslave.message.Parada;
@@ -23,11 +19,10 @@ import com.umbrella.autoslave.message.ParadaFallo;
 import com.umbrella.autoslave.message.PastelListo;
 import com.umbrella.autoslave.message.ProductoColocado;
 import com.umbrella.autoslave.message.ProductoRecogido;
-import com.umbrella.autoslave.message.RellanarMaquina;
 import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.EstateRobots;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
-import com.umbrella.autoslave.utils2.Ontologia;
+import com.umbrella.mail.message.Ontologia;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
 /*
