@@ -9,6 +9,7 @@
 
 package com.umbrella.mail.message;
 import java.io.Serializable;
+import java.util.Vector;
 
 /**
  *
@@ -16,6 +17,11 @@ import java.io.Serializable;
  */
 public interface MessageInterface extends Serializable{
 	
-	public OntologiaMSG getMSGCode();
+	//public OntologiaMSG getMSGCode();
+	public OntologiaMSG getIdentificador();
+	public Object getObject();
+	public Vector<String> getParametros();
 	
+	public void setIdentificador(OntologiaMSG idetificador);
+	public void setObject(Object objeto);
 }
