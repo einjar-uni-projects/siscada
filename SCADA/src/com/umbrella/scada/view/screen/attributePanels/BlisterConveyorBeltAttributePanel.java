@@ -1,8 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
-import java.awt.TextField;
-
-import javax.swing.JLabel;
+import java.awt.GridLayout;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
@@ -19,18 +17,22 @@ public class BlisterConveyorBeltAttributePanel extends AttributePanel {
 	 */
 	private static final long serialVersionUID = 2201918577598392271L;
 	
-	private JLabel _conveyorBeltL = new JLabel();
+	/*private JLabel _conveyorBeltL = new JLabel();
 	private JLabel _speedL = new JLabel();
-	private TextField _speedInput = new TextField();
+	private TextField _speedInput = new TextField();*/
 	
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
 	 */
 	public BlisterConveyorBeltAttributePanel() {
-		super();
+		/*super();
 		add(_conveyorBeltL);
 		add(_speedL);
-		add(_speedInput);
+		add(_speedInput);*/
+		
+		_subPanels = new AttributePanel[1];
+		_subPanels[0] = new ConveyorBeltAttributePanel();
+		
 		initialize();
 	}
 
@@ -40,6 +42,16 @@ public class BlisterConveyorBeltAttributePanel extends AttributePanel {
 	@Override
 	protected void initialize() {
 		updateLanguage();
+		
+		setLayout(new GridLayout(3,1));
+		
+		add(_title);
+		
+		for (AttributePanel subPanel : _subPanels) {
+			add(subPanel);
+		}
+		
+		add(_acceptButton);
 	}
 
 	/* (non-Javadoc)
@@ -47,16 +59,17 @@ public class BlisterConveyorBeltAttributePanel extends AttributePanel {
 	 */
 	@Override
 	public void updateLanguage() {
-		_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));
+		//_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.BLISTER_CONVEYOR_BELT, _model.get_selectedLanguage()));
-		_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
-		_speedInput.setText("30 m/min");
+		/*_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
+		_speedInput.setText("30 m/min");*/
 	}
 
 	@Override
 	public void refreshData() {
-		// TODO Auto-generated method stub
-		
+		for (AttributePanel subPanel : _subPanels) {
+			subPanel.refreshData();
+		}
 	}
 	
 }

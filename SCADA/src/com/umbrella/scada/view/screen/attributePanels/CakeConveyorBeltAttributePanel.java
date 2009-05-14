@@ -1,12 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.TextField;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
@@ -23,10 +17,10 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 	 */
 	private static final long serialVersionUID = -1607286910321091549L;
 	
-	private JLabel _availableCakesL = new JLabel();
+	/*private JLabel _availableCakesL = new JLabel();
 	private JLabel _conveyorBeltL = new JLabel();
 	private JLabel _speedL = new JLabel();
-	private TextField _speedInput = new TextField();
+	private TextField _speedInput = new TextField();*/
 	
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
@@ -37,6 +31,12 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		add(_availableCakesL);
 		add(_speedL);
 		add(_speedInput);*/
+		_subPanels = new AttributePanel[4];
+		_subPanels[0] = new ConveyorBeltAttributePanel();
+		_subPanels[1] = new CakeDispenserAttributePanel();
+		_subPanels[2] = new ChocolatDispenserAttributePanel();
+		_subPanels[3] = new CaramelDispenserAttributePanel();
+		
 		initialize();
 	}
 
@@ -49,10 +49,13 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 
 		setLayout(new GridLayout(6,1));
 		
-		add(new ConveyorBeltAttributePanel());
-		add(new CakeDispenserAttributePanel());
-		add(new ChocolatDispenserAttributePanel());
-		add(new CaramelDispenserAttributePanel());
+		add(_title);
+		
+		for (AttributePanel subPanel : _subPanels) {
+			add(subPanel);
+		}
+		
+		add(_acceptButton);
 		
 		/*GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
@@ -74,17 +77,19 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 	 */
 	@Override
 	public void updateLanguage() {
-		_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));
+		/*_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));*/
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.CAKE_CONVEYOR_BELT, _model.get_selectedLanguage()));
-		_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
+		/*_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
 		_speedInput.setText("30 m/min");
-		_availableCakesL.setText("fafsf");
+		_availableCakesL.setText("fafsf");*/
+		_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 	}
 
 	@Override
 	public void refreshData() {
-		// TODO Auto-generated method stub
-		
+		for (AttributePanel subPanel : _subPanels) {
+			subPanel.refreshData();
+		}
 	}
 	
 }
