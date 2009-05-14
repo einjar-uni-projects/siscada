@@ -1,6 +1,9 @@
-package com.umbrella.scada.view.screen;
+package com.umbrella.scada.view.screen.paintElements;
 
 import java.awt.Graphics;
+
+import com.umbrella.scada.view.screen.ImageLoader;
+import com.umbrella.scada.view.screen.MainFrameModel;
 
 /**
  * Elemento que representa la máquina expendedora de chocolate

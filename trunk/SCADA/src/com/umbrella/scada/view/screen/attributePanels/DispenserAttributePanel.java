@@ -1,4 +1,4 @@
-package com.umbrella.scada.view.screen;
+package com.umbrella.scada.view.screen.attributePanels;
 
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;

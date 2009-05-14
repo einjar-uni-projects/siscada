@@ -1,11 +1,14 @@
-package com.umbrella.scada.view.screen;
+package com.umbrella.scada.view.screen.elementsGroups;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
 import com.umbrella.scada.Launch;
+import com.umbrella.scada.view.screen.ImageLoader;
+import com.umbrella.scada.view.screen.MainFrameModel;
 import com.umbrella.scada.view.screen.MainFrameModel.ElementsGroupModelEnum;
+import com.umbrella.scada.view.screen.paintElements.PaintElement;
 
 public abstract class ElementsGroup {
 	protected final ElementsGroupModelEnum _identifierClass;

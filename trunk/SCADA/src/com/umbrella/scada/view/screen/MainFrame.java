@@ -19,6 +19,13 @@ import com.umbrella.scada.controller.ActionKey;
 import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
+import com.umbrella.scada.view.screen.attributePanels.AttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.BlisterConveyorBeltAttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.CakeConveyorBeltAttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.PackageConveyorBeltAttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.Robot1AttrbutePanel;
+import com.umbrella.scada.view.screen.attributePanels.Robot2AttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.VoidAttributePanel;
 
 public class MainFrame implements UpdatableInterface{
 
