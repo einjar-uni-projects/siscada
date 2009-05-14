@@ -11,6 +11,11 @@ import com.umbrella.scada.view.localization.LocalizatorIDs;
 public class VoidAttributePanel extends AttributePanel {
 
 	/**
+	 * serial id
+	 */
+	private static final long serialVersionUID = 6370095854785886082L;
+
+	/**
 	 * Llama al constructor padre
 	 */
 	public VoidAttributePanel() {

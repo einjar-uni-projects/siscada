@@ -4,7 +4,6 @@ import java.awt.TextField;
 
 import javax.swing.JLabel;
 
-import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 /**
@@ -15,6 +14,11 @@ import com.umbrella.scada.view.localization.LocalizatorIDs;
  */
 public class BlisterConveyorBeltAttributePanel extends AttributePanel {
 
+	/**
+	 * serial id
+	 */
+	private static final long serialVersionUID = 2201918577598392271L;
+	
 	private JLabel _conveyorBeltL = new JLabel();
 	private JLabel _speedL = new JLabel();
 	private TextField _speedInput = new TextField();
