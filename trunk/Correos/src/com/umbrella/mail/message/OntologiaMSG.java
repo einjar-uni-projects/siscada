@@ -7,12 +7,11 @@ package com.umbrella.mail.message;
  * tiene el nombre de todos los mensajes que se pueden usar
  */
 public enum OntologiaMSG {
-	//ACTUALIZARCONTEXTO("ActualizarContexto",4,new String[]{"identificador", "click", "contexto", "maquina"}),
 	ACTUALIZARCONTEXTO("ActualizarContexto",4),
 	ACTUALIZARCONTEXTOROBOT("ActualizarContextoRobot",4),
 	ACTUALIZARCONFIGURACION("ActualizarConfiguracion",4),
 	AVISARUNFALLO("AvisarUnFallo",4),
-	INTERFERENCIA("Interferencia",4),
+	INTERFERENCIA("Interferencia",4), //primer parametro es el robot que la causa y el 2 parametro es la cinta en la que la causa, se saca del enumerado de Maquinas
 	FININTERFERENCIA("FinInterferencia",4),
 	PASTELLISTO("PastelListo",3),
 	BLISTERLISTO("BlisterListo",4),
@@ -24,7 +23,7 @@ public enum OntologiaMSG {
 	PARADAEMERGENCIA("ParadaEmergencia",2),
 	ARRANCARDESDEEMERGENCIA("ArrancarDesdeEmergencia",4),
 	RESET("Reset",2),
-	PRODUCTORECOGIDO("ProductoRecogido",4),
+	PRODUCTORECOGIDO("ProductoRecogido",4), //primer parametro el robot y segundo parametro el tipo de producto
 	FINCINTALIBRE("FinCintaLibre",3),
 	PRODUCTOCOLOCADO("ProductoColocado",3),
 	RELLENARMAQUINA("RellanarMaquina",3), // en el vector 0 el nombre de la maquina sacado del Numerado y el 2¼ parametro un int contertido a String que es la cantidad
