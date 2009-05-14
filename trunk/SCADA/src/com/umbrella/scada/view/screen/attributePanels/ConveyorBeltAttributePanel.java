@@ -119,8 +119,7 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 
 	@Override
 	public void refreshData() {
-		// TODO Auto-generated method stub
-		
+		// TODO sin hacer
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="0,0"

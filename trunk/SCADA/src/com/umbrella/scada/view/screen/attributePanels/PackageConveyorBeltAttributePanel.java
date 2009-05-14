@@ -1,9 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
 import java.awt.GridLayout;
-import java.awt.TextField;
-
-import javax.swing.JLabel;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
