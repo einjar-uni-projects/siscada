@@ -1,9 +1,10 @@
-package com.umbrella.scada.view.screen;
+package com.umbrella.scada.view.screen.attributePanels;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.umbrella.scada.view.localization.LocalizationResources;
+import com.umbrella.scada.view.screen.MainFrameModel;
 
 /**
  * Esta clase abstracta debe ser extendida por todas aquellas que quieran actuar como elementos de atributos del panel derecho

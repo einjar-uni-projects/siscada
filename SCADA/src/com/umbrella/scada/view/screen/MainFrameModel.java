@@ -8,7 +8,7 @@ import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
 
 public class MainFrameModel implements Updatable {
 
-	enum ElementsGroupModelEnum {
+	public enum ElementsGroupModelEnum {
 		CINTA1, CINTA2, CINTA3, ROBOT1, ROBOT2;
 	}
 
@@ -290,7 +290,7 @@ public class MainFrameModel implements Updatable {
 		return _brazoDesechar;
 	}
 
-	int[] get_pasteles() {
+	public int[] get_pasteles() {
 		int[] ret = new int[_pasteles.length];
 
 		synchronized (_cerrojos[TransferBufferKeys.AU1_CAKES_POS1.ordinal()]) {

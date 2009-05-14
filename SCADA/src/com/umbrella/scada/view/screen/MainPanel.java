@@ -6,6 +6,13 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import com.umbrella.scada.view.screen.elementsGroups.ConjuntoCintaBlister;
+import com.umbrella.scada.view.screen.elementsGroups.ConjuntoCintaControl;
+import com.umbrella.scada.view.screen.elementsGroups.ConjuntoCintaPasteles;
+import com.umbrella.scada.view.screen.elementsGroups.ConjuntoRobot1;
+import com.umbrella.scada.view.screen.elementsGroups.ConjuntoRobot2;
+import com.umbrella.scada.view.screen.elementsGroups.ElementsGroup;
+
 public class MainPanel extends JPanel{
 
 	/**

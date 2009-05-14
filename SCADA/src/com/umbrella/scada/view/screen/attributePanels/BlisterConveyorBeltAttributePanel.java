@@ -1,4 +1,4 @@
-package com.umbrella.scada.view.screen;
+package com.umbrella.scada.view.screen.attributePanels;
 
 import java.awt.TextField;
 
@@ -7,19 +7,18 @@ import javax.swing.JLabel;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 /**
- * Clase que extiende AttributePanel recogiendo los valores para el robot 2 del sistema
+ * Clase que extiende AttributePanel recogiendo los valores para la cinta de blísters
  * @author Umbrella.Soft
  * @version 1.0
  *
  */
-public class Robot2AttributePanel extends AttributePanel {
+public class BlisterConveyorBeltAttributePanel extends AttributePanel {
 
 	/**
 	 * serial id
 	 */
-	private static final long serialVersionUID = 2170708035583306698L;
+	private static final long serialVersionUID = 2201918577598392271L;
 	
-	private JLabel _availableCakesL = new JLabel();
 	private JLabel _conveyorBeltL = new JLabel();
 	private JLabel _speedL = new JLabel();
 	private TextField _speedInput = new TextField();
@@ -27,10 +26,9 @@ public class Robot2AttributePanel extends AttributePanel {
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
 	 */
-	public Robot2AttributePanel() {
+	public BlisterConveyorBeltAttributePanel() {
 		super();
 		add(_conveyorBeltL);
-		add(_availableCakesL);
 		add(_speedL);
 		add(_speedInput);
 		initialize();
@@ -50,7 +48,7 @@ public class Robot2AttributePanel extends AttributePanel {
 	@Override
 	public void updateLanguage() {
 		_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));
-		_title.setText(_languageResources.getLocal(LocalizatorIDs.ROBOT_2_TITLE, _model.get_selectedLanguage()));
+		_title.setText(_languageResources.getLocal(LocalizatorIDs.BLISTER_CONVEYOR_BELT, _model.get_selectedLanguage()));
 		_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
 		_speedInput.setText("30 m/min");
 	}
