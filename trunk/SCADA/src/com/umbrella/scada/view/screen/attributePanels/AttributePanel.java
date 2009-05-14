@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,6 +26,16 @@ public abstract class AttributePanel extends JPanel {
 	protected JLabel _title = new JLabel();
 	
 	/**
+	 * Botón de aceptación de los datos introducidos
+	 */
+	protected JButton _acceptButton = new JButton("Accept");
+	
+	/**
+	 * Matriz que almacena los paneles hijos
+	 */
+	protected AttributePanel [] _subPanels;
+	
+	/**
 	 * instancia almacenada del modelo de la vista
 	 */
 	protected MainFrameModel _model = MainFrameModel.getInstance();
@@ -33,13 +44,6 @@ public abstract class AttributePanel extends JPanel {
 	 * instancia almacenada de la clase encargada de obtener las cadenas de idioma
 	 */
 	protected LocalizationResources _languageResources = LocalizationResources.getInstance();
-	
-	/**
-	 * Constructor que añade el título al panel
-	 */
-	protected AttributePanel() {
-		add(_title);
-	}
 	
 	/**
 	 * Método encargado de inicializar los valones necesarios de los campos

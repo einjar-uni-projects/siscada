@@ -29,5 +29,6 @@ public enum LocalizatorIDs {
 	SPEED,
 	SIZE,
 	M_MIN,
-	AVAILABLE
+	AVAILABLE,
+	ACCEPT
 }
