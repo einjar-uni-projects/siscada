@@ -101,7 +101,7 @@ public class Maestro3 {
 					
 					
 					do{
-						mensaje=_buzon.receive();
+						mensaje =_buzon.receive();
  						switch (mensaje.getIdentificador()) {
 						case FINCINTALIBRE:							
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
