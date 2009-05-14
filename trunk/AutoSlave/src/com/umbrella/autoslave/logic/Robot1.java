@@ -112,7 +112,7 @@ public class Robot1 {
 							 */
 							if(_contexto.isBlisterListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_2);
 							if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_1);
-							if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.DESPLAZARBLISTERCOMPLETO);
+							if(_contexto.isBlisterCompletoListo()) _contexto.setEstadoInterno(EstateRobots.DESPLAZARBLISTERCOMPLETO);
 
 							_contexto.setTiempo(System.currentTimeMillis());
 							_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
