@@ -27,5 +27,7 @@ public enum LocalizatorIDs {
 	ROBOT_1_TITLE,
 	ROBOT_2_TITLE,
 	SPEED,
-	M_MIN
+	SIZE,
+	M_MIN,
+	AVAILABLE
 }

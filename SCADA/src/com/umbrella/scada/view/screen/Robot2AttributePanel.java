@@ -54,5 +54,11 @@ public class Robot2AttributePanel extends AttributePanel {
 		_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
 		_speedInput.setText("30 m/min");
 	}
+
+	@Override
+	public void refreshData() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
