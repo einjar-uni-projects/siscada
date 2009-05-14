@@ -26,14 +26,10 @@ public enum OntologiaMSG {
 	PRODUCTORECOGIDO("ProductoRecogido",4), //primer parametro el robot y segundo parametro el tipo de producto
 	FINCINTALIBRE("FinCintaLibre",3),
 	PRODUCTOCOLOCADO("ProductoColocado",3),
-	RELLENARMAQUINA("RellanarMaquina",3), // en el vector 0 el nombre de la maquina sacado del Numerado y el 2¼ parametro un int contertido a String que es la cantidad
+	RELLENARMAQUINA("RellanarMaquina",3), // en el vector 0 el nombre de la maquina sacado del Numerado y el 2ï¿½ parametro un int contertido a String que es la cantidad
 	MODIFICARCAMPO("ModificarCampo",4),
 	MOVERDESDEMESA("MoverDesdeMesa",2), 
-	AU1ARRANCADO("Automata1Arrancado",0), //TODO Pablo no se para que es el numero
-	AU2ARRANCADO("Automata2Arrancado",0), 
-	AU3ARRANCADO("Automata3Arrancado",0), 
-	RB1ARRANCADO("Robot1Arrancado",0), 
-	RB2ARRANCADO("Robot2Arrancado",0);
+	ESTADO_AUTOMATA("EstadoAutomata",0); //parametro 1 String["AU1", "AU2", "AU3", "RB1", "RB2"], Boolean(true, false)
 	
 	
 	private final String nombre;
