@@ -19,19 +19,19 @@ public class Robot1 {
 
 	private static Configuracion _configuracion= Configuracion.getInstance();
 	private static ContextoRobot _contexto= ContextoRobot.getInstance();
-	
+
 	private static Clock _clock;
 	private static MailBox _buzon;
-	
+
 	private static String host = "localhost";
 	private static int puerto = 9003;
-	
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		_clock=new Clock();
 		_clock.start();
 		try {
@@ -46,50 +46,52 @@ public class Robot1 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();
-		
+
 		while(!_contexto.isFIN()){
 			if(cicloAct<_clock.getClock()){
 				cicloAct=_clock.getClock();
-				
+
 				MessageInterface mensaje=new DefaultMessage();
-
 				do{
-					do{
- 						mensaje=_buzon.receive();
- 						switch (mensaje.getIdentificador()) {
-						case ACTUALIZARCONTEXTO:							
-							_contexto=(ContextoRobot)mensaje.getObject();
- 							break;
-						case ACTUALIZARCONFIGURACION: 						
- 							_configuracion=(Configuracion)mensaje.getObject();
- 							break;
-						case ARRANCAR:
-							_contexto=_contexto.reset();
-							_contexto.setApagado(false);
-							break;
-						case PARADA:
-							_contexto.setParadaCorrecta(true);
-							break;
-						case PARADAEMERGENCIA:
-							_contexto.setApagado(true);
-							break;
-						case PASTELLISTO:
-							_contexto.setPastelListo(true);
-							break;
-						case RESET:
-							_contexto=_contexto.reset();
-							break;
-						case PARADAFALLO:
-							_contexto.setFallo(true);
-							break;
-						case BLISTERCOMPLETO:
-							_contexto.setBlisterCompletoListo(true);
-							break;
+					try {
+						mensaje=_buzon.receive();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-
+					switch (mensaje.getIdentificador()) {
+					case ACTUALIZARCONTEXTO:							
+						_contexto=(ContextoRobot)mensaje.getObject();
+						break;
+					case ACTUALIZARCONFIGURACION: 						
+						_configuracion=(Configuracion)mensaje.getObject();
+						break;
+					case ARRANCAR:
+						_contexto=_contexto.reset();
+						_contexto.setApagado(false);
+						break;
+					case PARADA:
+						_contexto.setParadaCorrecta(true);
+						break;
+					case PARADAEMERGENCIA:
+						_contexto.setApagado(true);
+						break;
+					case PASTELLISTO:
+						_contexto.setPastelListo(true);
+						break;
+					case RESET:
+						_contexto=_contexto.reset();
+						break;
+					case PARADAFALLO:
+						_contexto.setFallo(true);
+						break;
+					case BLISTERCOMPLETO:
+						_contexto.setBlisterCompletoListo(true);
+						break;
+					}
 				}while(mensaje!=null);
 
 				if(_contexto.isParadaCorrecta()){
@@ -111,11 +113,11 @@ public class Robot1 {
 							if(_contexto.isBlisterListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_2);
 							if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_1);
 							if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.DESPLAZARBLISTERCOMPLETO);
-							
+
 							_contexto.setTiempo(System.currentTimeMillis());
 							_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
-							
-							
+
+
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_1)){
 							// controlar interferencias, mejor lo hace el maestro
 							if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() -_configuracion.getInterferencia()/2)*1000)){
@@ -130,7 +132,7 @@ public class Robot1 {
 								_buzon.send(send);
 							}
 
-							
+
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_1)){
 							//cogo el pastel
 							if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverPastel()*1000)){
@@ -144,7 +146,7 @@ public class Robot1 {
 								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
 								send.getParametros().add("pastel");
 								_buzon.send(send);
-								 _contexto.setPastelListo(false);
+								_contexto.setPastelListo(false);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
 							// controlar interferencias, mejor lo hace el maestro
@@ -176,7 +178,7 @@ public class Robot1 {
 								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
 								send.getParametros().add("blister");
 								_buzon.send(send);
-								 _contexto.setPastelListo(false);
+								_contexto.setPastelListo(false);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
 							// controlar interferencias, mejor lo hace el maestro
@@ -250,19 +252,18 @@ public class Robot1 {
 								_contexto.setEstadoInterno(EstateRobots.REPOSO);
 							}
 						}
-					}
+					
+					}//si esta apagadp
+				}// si hay fallo
 
-				}
 
 				// envia el mensaje de contexto
 				DefaultMessage mensajeSend=new DefaultMessage();
 				mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
 				mensajeSend.setObject(_contexto);
 				_buzon.send(mensajeSend);
-				
-				
-			}
-		}
-	}
-
-}
+ 
+			}//si ciclo de reloj
+		}//while
+	}//main
+}//class
