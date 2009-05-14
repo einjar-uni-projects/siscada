@@ -14,6 +14,11 @@ import com.umbrella.scada.view.localization.LocalizatorIDs;
  */
 public class Robot1AttrbutePanel extends AttributePanel {
 
+	/**
+	 * serial id
+	 */
+	private static final long serialVersionUID = 5734383147408252720L;
+	
 	private JLabel _availableCakesL = new JLabel();
 	private JLabel _conveyorBeltL = new JLabel();
 	private JLabel _speedL = new JLabel();

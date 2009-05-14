@@ -96,7 +96,7 @@ public class MainFrameModel implements Updatable {
 		_mainFrame.updateData();
 	}
 
-	private void updateValue(TransferBufferKeys key, Class object_class,
+	private void updateValue(TransferBufferKeys key, Class<?> object_class,
 			Object o) {
 		switch (key) {
 		case AU1_CAKE_DEPOT:

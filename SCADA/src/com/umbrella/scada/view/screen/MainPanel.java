@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 
 public class MainPanel extends JPanel{
 
+	/**
+	 * serial id
+	 */
+	private static final long serialVersionUID = 7811238072037060451L;
+
 	private ImageLoader _loader;
 	
 	private int _wallpaperWidth = 800;

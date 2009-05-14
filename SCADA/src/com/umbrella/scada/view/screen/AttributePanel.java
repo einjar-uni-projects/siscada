@@ -14,6 +14,11 @@ import com.umbrella.scada.view.localization.LocalizationResources;
 public abstract class AttributePanel extends JPanel {
 	
 	/**
+	 * serial id
+	 */
+	private static final long serialVersionUID = -2151268303324866650L;
+
+	/**
 	 * Título de la ventana de atributos
 	 */
 	protected JLabel _title = new JLabel();
