@@ -97,13 +97,17 @@ public class Model {
 		_observable.addChange(_au1CakesPos5.get_tbk(), _au1CakesPos5.get_value());
 		_observable.addChange(_au1CakesPos6.get_tbk(), _au1CakesPos6.get_value());
 		_observable.addChange(_au1CakesPos7.get_tbk(), _au1CakesPos7.get_value());
+		_observable.addChange(_au1State.get_tbk(), _au1State.get_value());
+		
 		
 		_observable.addChange(_au2ConveyorBeltSize.get_tbk(), _au2ConveyorBeltSize.get_value());
 		_observable.addChange(_au2ConveyorBeltSpeed.get_tbk(), _au2ConveyorBeltSpeed.get_value());
 		_observable.addChange(_au2VacuumSealingMachine.get_tbk(), _au2VacuumSealingMachine.get_value());
+		_observable.addChange(_au2State.get_tbk(), _au2State.get_value());
 		
 		_observable.addChange(_au3ConveyorBeltSize.get_tbk(), _au3ConveyorBeltSize.get_value());
 		_observable.addChange(_au3ConveyorBeltSpeed.get_tbk(), _au3ConveyorBeltSpeed.get_value());
+		_observable.addChange(_au3State.get_tbk(), _au3State.get_value());
 		
 		_observable.addChange(_genBlisterSize.get_tbk(), _genBlisterSize.get_value());
 		_observable.addChange(_genCakeSize.get_tbk(), _genCakeSize.get_value());
@@ -115,8 +119,10 @@ public class Model {
 		
 		_observable.addChange(_rb1BlisterDelay.get_tbk(), _rb1BlisterDelay.get_value());
 		_observable.addChange(_rb1CakeDelay.get_tbk(), _rb1CakeDelay.get_value());
+		_observable.addChange(_rb1State.get_tbk(), _rb1State.get_value());
 		
 		_observable.addChange(_rb2BlisterDelay.get_tbk(), _rb2BlisterDelay.get_value());
+		_observable.addChange(_rb2State.get_tbk(), _rb2State.get_value());
 		_modelChanges = true;
 	}
 
@@ -125,10 +131,40 @@ public class Model {
 			_observable.notifyChanges();
 			_modelChanges = false;
 		}
-	}
+	} 
 	
 	public String get_genIP(){
 		return _genIP.get_value();
+	}
+	
+	public void set_au1State(boolean state){
+		_au1State.set_value(state);
+		_observable.addChange(_au1State.get_tbk(), _au1State.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2State(boolean state){
+		_au2State.set_value(state);
+		_observable.addChange(_au2State.get_tbk(), _au2State.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3State(boolean state){
+		_au3State.set_value(state);
+		_observable.addChange(_au3State.get_tbk(), _au3State.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_rb1State(boolean state){
+		_rb1State.set_value(state);
+		_observable.addChange(_rb1State.get_tbk(), _rb1State.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_rb2State(boolean state){
+		_rb2State.set_value(state);
+		_observable.addChange(_rb2State.get_tbk(), _rb2State.get_value());
+		_modelChanges = true;
 	}
 	
 	public void set_genIP(String ip){

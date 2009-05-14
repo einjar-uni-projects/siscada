@@ -58,7 +58,7 @@ public class Postmaster extends Thread {
 			try {
 				params = null;
 				MessageInterface msg = _mailBox.receiveBlocking();
-				switch (msg.getMSGCode()) {
+				switch (msg.getIdentificador()) {
 				case AU1ARRANCADO:
 					params = new ActionParams();
 					ape = ActionParamsEnum.STATE;

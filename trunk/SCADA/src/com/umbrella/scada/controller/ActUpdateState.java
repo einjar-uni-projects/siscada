@@ -13,19 +13,19 @@ public class ActUpdateState implements Action {
 		Model m = Model.getInstance();
 		switch (_machine) {
 		case 0:
-			
+			m.set_au1State(_state);
 			break;
 		case 1:
-			
+			m.set_au2State(_state);
 			break;
 		case 2:
-					
+			m.set_au3State(_state);
 			break;
 		case 3:
-			
+			m.set_rb1State(_state);
 			break;
 		case 4:
-			
+			m.set_rb2State(_state);
 			break;
 
 		default:
