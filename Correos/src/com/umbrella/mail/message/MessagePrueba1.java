@@ -9,6 +9,8 @@
 
 package com.umbrella.mail.message;
 
+import java.util.Vector;
+
 /**
  *
  * @author l012g412
@@ -48,9 +50,33 @@ public class MessagePrueba1 implements MessageInterface{
 	}
 
 	@Override
-	public OntologiaMSG getMSGCode() {
+	public OntologiaMSG getIdentificador() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Object getObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<String> getParametros() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setIdentificador(OntologiaMSG idetificador) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setObject(Object objeto) {
+		// TODO Auto-generated method stub
+		
 	}
     
 }
