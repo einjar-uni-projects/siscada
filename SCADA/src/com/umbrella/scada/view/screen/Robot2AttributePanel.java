@@ -6,6 +6,12 @@ import javax.swing.JLabel;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
+/**
+ * Clase que extiende AttributePanel recogiendo los valores para el robot 2 del sistema
+ * @author Umbrella.Soft
+ * @version 1.0
+ *
+ */
 public class Robot2AttributePanel extends AttributePanel {
 
 	private JLabel _availableCakesL = new JLabel();
@@ -13,6 +19,9 @@ public class Robot2AttributePanel extends AttributePanel {
 	private JLabel _speedL = new JLabel();
 	private TextField _speedInput = new TextField();
 	
+	/**
+	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
+	 */
 	public Robot2AttributePanel() {
 		super();
 		add(_conveyorBeltL);
@@ -22,11 +31,17 @@ public class Robot2AttributePanel extends AttributePanel {
 		initialize();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.umbrella.scada.view.screen.AttributePanel#initialize()
+	 */
 	@Override
 	protected void initialize() {
 		updateLanguage();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.umbrella.scada.view.screen.AttributePanel#updateLanguage()
+	 */
 	@Override
 	public void updateLanguage() {
 		_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));
