@@ -44,11 +44,11 @@ public abstract class ElementsGroup {
 			if(_started){
 				g.drawImage(_loader.get_estadosVerde(), _posX, _maxY+_posY, 52, 19, null);
 			}else{
-				g.drawImage(_loader.get_estadosAnarillo(), _posX, _maxY+_posY, 52, 19, null);
+				g.drawImage(_loader.get_estadosAmarillo(), _posX, _maxY+_posY, 52, 19, null);
 			}
 		}else{
 			if(_started){
-				g.drawImage(_loader.get_estadosAnarillo(), _posX, _maxY+_posY, 52, 19, null);
+				g.drawImage(_loader.get_estadosAmarillo(), _posX, _maxY+_posY, 52, 19, null);
 			}else{
 				g.drawImage(_loader.get_estadosRojo(), _posX, _maxY+_posY, 52, 19, null);
 			}

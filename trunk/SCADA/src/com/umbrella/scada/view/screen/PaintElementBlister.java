@@ -2,15 +2,24 @@ package com.umbrella.scada.view.screen;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 
+/**
+ * Elemento que representa los blísters en la cinta correspondiente
+ * @author Umbrella.Soft
+ * @version 1.0
+ */
 public class PaintElementBlister extends PaintElement {
-	
-	int estado = 0;
-	int position = 0;
-	int pos = 0;
 
-	protected PaintElementBlister(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
+	/**
+	 * Llama al padre con los parámetros
+	 * @param loader cargador de imágenes
+	 * @param posX posición izquierda en el eje x
+	 * @param posY posición superior en el eje y
+	 * @param maxX tamaño en el eje x
+	 * @param maxY tamaño en el eje y
+	 * @param model modelo de la vista
+	 */
+	public PaintElementBlister(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
 		super(loader, posX, posY, maxX, maxY, model);
 	}
 
@@ -45,62 +54,5 @@ public class PaintElementBlister extends PaintElement {
 			numBlisters = (""+blisters[4]).toCharArray();
 			g.drawChars(numBlisters, 0, numBlisters.length, _posX+335, _posY+32);
 		}
-		
-		/*switch (position) {
-		case 0:
-			g.drawImage(getBlisterImage(), _posX, _posY, _maxX, _maxY, null);
-			break;
-		case 1:
-			g.drawImage(getBlisterImage(), _posX+75, _posY, _maxX, _maxY, null);
-			break;
-		case 2:
-			g.drawImage(getBlisterImage(), _posX+152, _posY, _maxX, _maxY, null);
-			break;
-		case 3:
-			g.drawImage(getBlisterImage(), _posX+250, _posY, _maxX, _maxY, null);
-			break;
-		case 4:
-			g.drawImage(getBlisterImage(), _posX+320, _posY, _maxX, _maxY, null);
-			break;
-		default:
-			g.drawImage(getBlisterImage(), _posX, _posY, _maxX, _maxY, null);
-			break;
-		}
-		prueba();*/
 	}
-
-	/*private void prueba() {
-		pos++;
-		if(pos%100 == 0)
-			position++;
-	}
-
-	private Image getBlisterImage() {
-		Image ret = null;
-		switch (estado) {
-		case 0:
-			ret = _loader.get_blisterBruto();
-			break;
-		case 1:
-			ret = _loader.get_blisterEstampado();
-			break;
-		case 2:
-			ret = _loader.get_blisterCortado();
-			break;
-		case 3:
-			ret = _loader.get_blister1Tarta();
-			break;
-		case 4:
-			ret = _loader.get_blister2Tarta();
-			break;
-		case 5:
-			ret = _loader.get_blister3Tarta();
-			break;
-		case 6:
-			ret = _loader.get_blister4Tarta();
-			break;
-		}
-		return ret;
-	}*/
-
 }

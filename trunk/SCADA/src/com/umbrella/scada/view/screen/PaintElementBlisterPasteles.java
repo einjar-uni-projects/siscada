@@ -2,11 +2,24 @@ package com.umbrella.scada.view.screen;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 
+/**
+ * Elemento que representa los paquetes montados de blister y pasteles
+ * @author Umbrella.Soft
+ * @version 1.0
+ */
 public class PaintElementBlisterPasteles extends PaintElement {
 
-	protected PaintElementBlisterPasteles(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
+	/**
+	 * Llama al padre con los parámetros
+	 * @param loader cargador de imágenes
+	 * @param posX posición izquierda en el eje x
+	 * @param posY posición superior en el eje y
+	 * @param maxX tamaño en el eje x
+	 * @param maxY tamaño en el eje y
+	 * @param model modelo de la vista
+	 */
+	public PaintElementBlisterPasteles(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
 		super(loader, posX, posY, maxX, maxY, model);
 	}
 

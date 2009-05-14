@@ -2,16 +2,24 @@ package com.umbrella.scada.view.screen;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 
+/**
+ * Elemento que representa los pasteles en cualquiera de sus formas
+ * @author Umbrella.Soft
+ * @version 1.0
+ */
 public class PaintElementCake extends PaintElement {
-
-	//TODO necesario? boolean paso = false;
-	int estado = 0;
-	//int position = 0;
-	//int pos = 0;
 	
-	protected PaintElementCake(ImageLoader loader, int posX, int posY,	int maxX, int maxY, MainFrameModel model) {
+	/**
+	 * Llama al padre con los parámetros
+	 * @param loader cargador de imágenes
+	 * @param posX posición izquierda en el eje x
+	 * @param posY posición superior en el eje y
+	 * @param maxX tamaño en el eje x
+	 * @param maxY tamaño en el eje y
+	 * @param model modelo de la vista
+	 */
+	public PaintElementCake(ImageLoader loader, int posX, int posY,	int maxX, int maxY, MainFrameModel model) {
 		super(loader, posX+30, posY, maxY, maxY, model);	
 	}
 	
