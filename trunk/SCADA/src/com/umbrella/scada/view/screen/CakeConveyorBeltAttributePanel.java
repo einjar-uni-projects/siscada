@@ -1,7 +1,11 @@
 package com.umbrella.scada.view.screen;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.TextField;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
@@ -28,11 +32,11 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
 	 */
 	public CakeConveyorBeltAttributePanel() {
-		super();
+		/*super();
 		add(_conveyorBeltL);
 		add(_availableCakesL);
 		add(_speedL);
-		add(_speedInput);
+		add(_speedInput);*/
 		initialize();
 	}
 
@@ -42,6 +46,27 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 	@Override
 	protected void initialize() {
 		updateLanguage();
+
+		setLayout(new GridLayout(6,1));
+		
+		add(new ConveyorBeltAttributePanel());
+		add(new CakeDispenserAttributePanel());
+		add(new ChocolatDispenserAttributePanel());
+		add(new CaramelDispenserAttributePanel());
+		
+		/*GridBagLayout gbl = new GridBagLayout();
+		setLayout(gbl);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		add(_title, c);
+		c.gridy = 1;
+		c.gridwidth = 1;
+		add(_conveyorBeltL, c);
+		c.gridx = 1;
+		add(_availableCakesL, c);*/
 	}
 
 	/* (non-Javadoc)
@@ -53,6 +78,13 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.CAKE_CONVEYOR_BELT, _model.get_selectedLanguage()));
 		_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
 		_speedInput.setText("30 m/min");
+		_availableCakesL.setText("fafsf");
+	}
+
+	@Override
+	public void refreshData() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -38,4 +38,9 @@ public class VoidAttributePanel extends AttributePanel {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.VOID_CONVEYOR_BELT, _model.get_selectedLanguage()));
 	}
 
+	@Override
+	public void refreshData() {
+		// No hace nada
+	}
+
 }

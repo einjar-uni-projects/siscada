@@ -49,4 +49,9 @@ public abstract class AttributePanel extends JPanel {
 	 * Método encargado de actualizar el lenguaje al actual de la aplicación, se deberá llamar cuando se produzca un cambio en el lenguaje
 	 */
 	public abstract void updateLanguage();
+	
+	/**
+	 * Actualiza los datos mostrados desde el modelo
+	 */
+	public abstract void refreshData();
 }
