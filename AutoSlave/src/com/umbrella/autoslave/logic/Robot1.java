@@ -5,23 +5,10 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import com.umbrella.autoslave.message.ActualizarConfiguracion;
-import com.umbrella.autoslave.message.ActualizarContexto;
-import com.umbrella.autoslave.message.ActualizarContextoRobot;
-import com.umbrella.autoslave.message.Arrancar;
-import com.umbrella.autoslave.message.BlisterCompleto;
-import com.umbrella.autoslave.message.BlisterListo;
-import com.umbrella.autoslave.message.FinInterferencia;
-import com.umbrella.autoslave.message.Interferencia;
-import com.umbrella.autoslave.message.Parada;
-import com.umbrella.autoslave.message.ParadaEmergencia;
-import com.umbrella.autoslave.message.ParadaFallo;
-import com.umbrella.autoslave.message.PastelListo;
-import com.umbrella.autoslave.message.ProductoColocado;
-import com.umbrella.autoslave.message.ProductoRecogido;
-import com.umbrella.autoslave.message.Reset;
 import com.umbrella.autoslave.utils2.EstateRobots;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.modulocomunicacion.MailBox;
 
@@ -59,21 +46,6 @@ public class Robot1 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		ActualizarContextoRobot _actualizarContextoRobot=null;
-		Arrancar _arrancar=null;
-		FinInterferencia _finInterferencia=null;
-		Interferencia _interferencia=null;
-		Parada _parada = null;
-		ParadaEmergencia _paradaEmergencia=null;
-		PastelListo _pastelListo=null;
-		BlisterListo _blisterListo=null;
-		BlisterCompleto _blisterCompleto=null;
-		ProductoRecogido _productoRecogido=null;
-		Reset _reset=null;
-		ActualizarConfiguracion _actualizarConfiguracion=null;
-		ParadaFallo _paradaFallo=null;
-		ProductoColocado _productoColocado=null;
 			
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();
@@ -82,48 +54,43 @@ public class Robot1 {
 			if(cicloAct<_clock.getClock()){
 				cicloAct=_clock.getClock();
 				
-				Object aux=null;
+				MessageInterface mensaje=new DefaultMessage();
 
 				do{
-					try {
-						aux=_buzon.receive();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if(aux instanceof ActualizarContexto){
-						_actualizarContextoRobot=(ActualizarContextoRobot)aux;
-						_contexto=_actualizarContextoRobot.getContextoRobot();
-					}else if(aux instanceof ActualizarConfiguracion){
-						_actualizarConfiguracion=(ActualizarConfiguracion)aux;
-						_configuracion=_actualizarConfiguracion.getConfiguracion();
-					}else if(aux instanceof Arrancar){
-						_arrancar=(Arrancar)aux;
-						_contexto=_contexto.reset();
-						_contexto.setApagado(false);
-					}else if(aux instanceof Parada){
-						_parada=(Parada)aux;
-						_contexto.setParadaCorrecta(true);
-					}else if(aux instanceof ParadaEmergencia){
-						_paradaEmergencia=(ParadaEmergencia)aux;
-						_contexto.setApagado(true);
-					}else if(aux instanceof PastelListo){						
-						_pastelListo=(PastelListo)aux;
-						_contexto.setPastelListo(true);
-					}else if(aux instanceof Reset){
-						_reset=(Reset)aux;
-						if(_contexto.isApagado() || _contexto.isFallo()){
+					do{
+ 						mensaje=_buzon.receive();
+ 						switch (mensaje.getIdentificador()) {
+						case ACTUALIZARCONTEXTO:							
+							_contexto=(ContextoRobot)mensaje.getObject();
+ 							break;
+						case ACTUALIZARCONFIGURACION: 						
+ 							_configuracion=(Configuracion)mensaje.getObject();
+ 							break;
+						case ARRANCAR:
 							_contexto=_contexto.reset();
-						}
-					}else if(aux instanceof ParadaFallo){
-						_paradaFallo=(ParadaFallo)aux;
-						_contexto.setFallo(true);
-					}else if(aux instanceof BlisterCompleto){
-						_blisterCompleto=(BlisterCompleto)aux;
-						_contexto.setBlisterCompletoListo(true);
+							_contexto.setApagado(false);
+							break;
+						case PARADA:
+							_contexto.setParadaCorrecta(true);
+							break;
+						case PARADAEMERGENCIA:
+							_contexto.setApagado(true);
+							break;
+						case PASTELLISTO:
+							_contexto.setPastelListo(true);
+							break;
+						case RESET:
+							_contexto=_contexto.reset();
+							break;
+						case PARADAFALLO:
+							_contexto.setFallo(true);
+							break;
+						case BLISTERCOMPLETO:
+							_contexto.setBlisterCompletoListo(true);
+							break;
 					}
 
-				}while(aux!=null);
+				}while(mensaje!=null);
 
 				if(_contexto.isParadaCorrecta()){
 					//se para directamente porque no se controla
@@ -156,11 +123,11 @@ public class Robot1 {
 								/*
 								 * envia el mensaje de interferencia sobre la cinta 1
 								 */
-								_interferencia=new Interferencia();
-								_interferencia.setClick(cicloAct);
-								_interferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-								_interferencia.setCinta(NombreMaquinas.CINTA_1.getDescriptor());
-								_buzon.send(_interferencia);
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.INTERFERENCIA);
+								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParametros().add(NombreMaquinas.CINTA_1.getDescripcion());
+								_buzon.send(send);
 							}
 
 							
@@ -172,11 +139,11 @@ public class Robot1 {
 								/*
 								 * Envia el mensaje de pastel recogido
 								 */
-								_productoRecogido=new ProductoRecogido();
-								_productoRecogido.setClick(cicloAct);
-								_productoRecogido.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-								_productoRecogido.setTipo("pastel");
-								_buzon.send(_productoRecogido);
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.PRODUCTORECOGIDO);
+								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParametros().add("pastel");
+								_buzon.send(send);
 								 _contexto.setPastelListo(false);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
@@ -186,11 +153,11 @@ public class Robot1 {
 								/*
 								 * envia el mensaje de interferencia sobre la cinta 2
 								 */
-								_interferencia=new Interferencia();
-								_interferencia.setClick(cicloAct);
-								_interferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-								_interferencia.setCinta(NombreMaquinas.CINTA_2.getDescriptor());
-								_buzon.send(_interferencia);
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.INTERFERENCIA);
+								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParametros().add(NombreMaquinas.CINTA_2.getDescripcion());
+								_buzon.send(send);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
 							//cogo el blister
@@ -204,12 +171,12 @@ public class Robot1 {
 								/*
 								 * Envia el mensaje de blister recogido
 								 */
-								_productoRecogido=new ProductoRecogido();
-								_productoRecogido.setClick(cicloAct);
-								_productoRecogido.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-								_productoRecogido.setTipo("blister");
-								_buzon.send(_productoRecogido);
-								 _contexto.setBlisterListo(false);
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.PRODUCTORECOGIDO);
+								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParametros().add("blister");
+								_buzon.send(send);
+								 _contexto.setPastelListo(false);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
 							// controlar interferencias, mejor lo hace el maestro
@@ -218,11 +185,11 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de FIN interferencia sobre la cinta 1
 									 */
-									_finInterferencia=new FinInterferencia();
-									_finInterferencia.setClick(cicloAct);
-									_finInterferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-									_finInterferencia.setCinta(NombreMaquinas.CINTA_1.getDescriptor());
-									_buzon.send(_finInterferencia);
+									MessageInterface send=new DefaultMessage();
+									send.setIdentificador(OntologiaMSG.FININTERFERENCIA);
+									send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+									send.getParametros().add(NombreMaquinas.CINTA_1.getDescripcion());
+									_buzon.send(send);
 								}
 								if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2*1000)){
 									_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
@@ -232,12 +199,11 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de FIN interferencia sobre la cinta 2
 									 */
-									_finInterferencia=new FinInterferencia();
-									_finInterferencia.setClick(cicloAct);
-									_finInterferencia.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-									_finInterferencia.setCinta(NombreMaquinas.CINTA_2.getDescriptor());
-									_buzon.send(_finInterferencia);
-
+									MessageInterface send=new DefaultMessage();
+									send.setIdentificador(OntologiaMSG.FININTERFERENCIA);
+									send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+									send.getParametros().add(NombreMaquinas.CINTA_2.getDescripcion());
+									_buzon.send(send);
 								}
 								if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
 									_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
@@ -250,11 +216,11 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de pastel colocado
 									 */
-									_productoColocado=new ProductoColocado();
-									_productoColocado.setClick(cicloAct);
-									_productoColocado.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-									_productoColocado.setProducto("pastel");
-									_buzon.send(_productoColocado);
+									MessageInterface send=new DefaultMessage();
+									send.setIdentificador(OntologiaMSG.PRODUCTOCOLOCADO);
+									send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+									send.getParametros().add("pastel");
+									_buzon.send(send);
 									_contexto.setEstadoInterno(EstateRobots.REPOSO);
 								}
 							}else{
@@ -262,11 +228,11 @@ public class Robot1 {
 									/*
 									 * envia el mensaje de pastel colocado
 									 */
-									_productoColocado=new ProductoColocado();
-									_productoColocado.setClick(cicloAct);
-									_productoColocado.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-									_productoColocado.setProducto("blister");
-									_buzon.send(_productoColocado);
+									MessageInterface send=new DefaultMessage();
+									send.setIdentificador(OntologiaMSG.PRODUCTOCOLOCADO);
+									send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+									send.getParametros().add("blister");
+									_buzon.send(send);
 									_contexto.setEstadoInterno(EstateRobots.REPOSO);
 								}
 							}
@@ -276,39 +242,24 @@ public class Robot1 {
 								/*
 								 * envia el mensaje de blister completo colocado en la cinta 3
 								 */
-								_productoColocado=new ProductoColocado();
-								_productoColocado.setClick(cicloAct);
-								_productoColocado.setRobot(NombreMaquinas.ROBOT_1.getDescriptor());
-								_productoColocado.setProducto("blisterCompleto");
-								_buzon.send(_productoColocado);
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.PRODUCTOCOLOCADO);
+								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParametros().add("blisterCompleto");
+								_buzon.send(send);
 								_contexto.setEstadoInterno(EstateRobots.REPOSO);
 							}
 						}
 					}
 
 				}
-				
-				_blisterListo=null;
-				_arrancar=null;
-				_finInterferencia=null;
-				_interferencia=null;
-				_parada = null;
-				_paradaEmergencia=null;
-				_pastelListo=null;
-				_productoRecogido=null;
-				_reset=null;
-				_actualizarConfiguracion=null;
-				_paradaFallo=null;
-				_blisterCompleto=null;
-				_productoColocado=null;
 
 				// envia el mensaje de contexto
-				ActualizarContextoRobot actContexto=new ActualizarContextoRobot();
-				actContexto.setClick(cicloAct);
-				actContexto.setContextoRobot(_contexto);
-				actContexto.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT.getNombre());
-				actContexto.setMaquina(1);
-				_buzon.send(actContexto);
+				DefaultMessage mensajeSend=new DefaultMessage();
+				mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
+				mensajeSend.setObject(_contexto);
+				_buzon.send(mensajeSend);
+				
 				
 			}
 		}
