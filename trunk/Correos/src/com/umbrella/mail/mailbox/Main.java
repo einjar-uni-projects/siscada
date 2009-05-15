@@ -8,7 +8,7 @@
  */
 
 
-package com.umbrella.mail.modulocomunicacion;
+package com.umbrella.mail.mailbox;
 
 import java.io.IOException;
 import java.rmi.*;
@@ -35,7 +35,7 @@ public class Main {
 			
 
 			/* Esta sentencia se tiene que repetir tantas veces como
-			 * nodos nos queramos comunicar. Es decir, cada autómata esclavo tendra
+			 * nodos nos queramos comunicar. Es decir, cada autï¿½mata esclavo tendra
 			 * uno y el automata maestro tendra cinco.
 			 * En ella, el primer parametro es la ip del registro de colas, el segundo
 			 * el puerto del registro de colas, el tercero el nombre de la cola por la que se van
@@ -58,7 +58,7 @@ public class Main {
 			((MessagePrueba1)messagePrueba).setVarBoolean(true);		
 
 			/* El metodo enviar devuelve true si se ha enviado correctamente, es decir, si ha
-			 * habido conexión correcta con el registro de colas y false en caso contrario*/
+			 * habido conexiï¿½n correcta con el registro de colas y false en caso contrario*/
 			boolean dev = buzon.send(messagePrueba);
 
 			if(dev){
