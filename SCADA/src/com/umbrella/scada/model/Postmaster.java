@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.modulocomunicacion.MailBox;
+import com.umbrella.mail.utils.properties.PropertiesFileHandler;
+import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.scada.controller.ActionFactory;
 import com.umbrella.scada.controller.ActionFactoryProvider;
 import com.umbrella.scada.controller.ActionKey;
@@ -22,9 +24,12 @@ public class Postmaster extends Thread {
 	
 	// El constructor privado no permite que se genere un constructor por defecto
 	// (con mismo modificador de acceso que la definicion de la clase) 
-	private Postmaster() throws RemoteException, MalformedURLException, NotBoundException {
-		Model model = Model.getInstance();
-		_mailBox = new MailBox(model.get_genIP(), model.get_genPort(), "reciveBox", "sendBox");
+	private Postmaster() throws RemoteException, MalformedURLException, NotBoundException, PropertyException {
+		PropertiesFile pfmodel = PropertiesFile.getInstance();
+		PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
+		PropertiesFileHandler.getInstance().writeFile();
+	
+		_mailBox = new MailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), "reciveBox", "sendBox");
 		llmi = new LinkedList<MessageInterface>();
 		_no_end = true;
 	}
@@ -33,8 +38,9 @@ public class Postmaster extends Thread {
 	 * Obtiene la instancia única del objeto, la primera invocación
 	 * realiza la creación del mismo.
 	 * @return la instancia única de Postmaster
+	 * @throws PropertyException 
 	 */
-	public static Postmaster getInstance() throws RemoteException, MalformedURLException, NotBoundException {
+	public static Postmaster getInstance() throws RemoteException, MalformedURLException, NotBoundException, PropertyException {
 		Postmaster ret;
 		if(instance == null){
 			return getSyncInstance();
@@ -42,7 +48,7 @@ public class Postmaster extends Thread {
 		return instance;
 	}
 
-	private static synchronized Postmaster getSyncInstance() throws RemoteException, MalformedURLException, NotBoundException{
+	private static synchronized Postmaster getSyncInstance() throws RemoteException, MalformedURLException, NotBoundException, PropertyException{
 		if(instance == null)
 			instance = new Postmaster();
 		return instance;
@@ -59,7 +65,7 @@ public class Postmaster extends Thread {
 				params = null;
 				MessageInterface msg = _mailBox.receiveBlocking();
 				switch (msg.getIdentificador()) {
-				case AU1ARRANCADO:
+				case ESTADO_AUTOMATA: //TODO esto cambia todo
 					params = new ActionParams();
 					ape = ActionParamsEnum.STATE;
 					params.setParam(ape, ape.getEnclosedClass(), true);
@@ -67,7 +73,7 @@ public class Postmaster extends Thread {
 					params.setParam(ape, ape.getEnclosedClass(), "AU1");
 					af.executeAction(ActionKey.UPDATE_STATE, params);
 					break;
-				case AU2ARRANCADO:
+				/*case AU2ARRANCADO:
 					params = new ActionParams();
 					ape = ActionParamsEnum.STATE;
 					params.setParam(ape, ape.getEnclosedClass(), true);
@@ -98,7 +104,7 @@ public class Postmaster extends Thread {
 					ape = ActionParamsEnum.MACHINE;
 					params.setParam(ape, ape.getEnclosedClass(), "RB2");
 					af.executeAction(ActionKey.UPDATE_STATE, params);
-					break;
+					break;*/
 				}
 				
 			} catch (Exception e) {
