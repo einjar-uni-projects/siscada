@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.modulocomunicacion;
+package com.umbrella.mail.mailbox;
 
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MessagePrueba1;
@@ -24,7 +24,7 @@ public class Main2 {
      */
     public static void main(String[] args) throws Exception{
         
-		/* Se crea la conexión con las dos colas. (Explicado en Main.java)
+		/* Se crea la conexiï¿½n con las dos colas. (Explicado en Main.java)
 		 * Lo unico a destacar aqui es que en este caso la cola por la que
 		 * se recibe es Cola2 y la cola por la que se envia es Cola1*/
         MailBox buzon = new MailBox("localhost", 9003, "Cola2", "Cola1");

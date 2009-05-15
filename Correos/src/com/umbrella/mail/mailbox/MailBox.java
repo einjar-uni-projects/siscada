@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.modulocomunicacion;
+package com.umbrella.mail.mailbox;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -69,7 +69,7 @@ public class MailBox {
     
     /**
      * Metodo no bloqueante que desencola un mensaje de la cola de entrada
-     * Si no hay un mensaje en la cola de entrada la salida ser‡ null
+     * Si no hay un mensaje en la cola de entrada la salida serï¿½ null
      * @return the head of this queue, or null if this queue is empty.
      */
     public MessageInterface receive() throws Exception{

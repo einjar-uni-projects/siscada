@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.modulocomunicacion;
+package com.umbrella.mail.mailbox;
 import java.util.*;
 import java.rmi.RemoteException;
 

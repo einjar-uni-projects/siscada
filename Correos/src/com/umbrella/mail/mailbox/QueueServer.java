@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.modulocomunicacion;
+package com.umbrella.mail.mailbox;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.RemoteException;
@@ -24,7 +24,7 @@ public class QueueServer {
     
     static Registry _registry;
         
-    /*
+    /**
      * Metodo que crea un registro RMI en el puerto pasado
      * @param RMIPortNum Puerto donde escuchara el registro RMI
      * @throws RemoteException No se ha iniciado el registro
