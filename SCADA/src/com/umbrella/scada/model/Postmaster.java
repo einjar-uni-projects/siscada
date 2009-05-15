@@ -5,8 +5,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
+import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.modulocomunicacion.MailBox;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.scada.controller.ActionFactory;
@@ -17,7 +17,7 @@ import com.umbrella.scada.controller.ActionParamsEnum;
 
 public class Postmaster extends Thread {
 	
-	private final MailBox _mailBox;
+	private final ClientMailBox _mailBox;
 	private final LinkedList<MessageInterface> llmi;
 	private static Postmaster instance = null;
 	private boolean _no_end;
@@ -29,7 +29,7 @@ public class Postmaster extends Thread {
 		PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 		PropertiesFileHandler.getInstance().writeFile();
 	
-		_mailBox = new MailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), "reciveBox", "sendBox");
+		_mailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), "reciveBox", "sendBox");
 		llmi = new LinkedList<MessageInterface>();
 		_no_end = true;
 	}

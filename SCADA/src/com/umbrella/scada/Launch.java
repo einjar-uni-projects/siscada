@@ -26,5 +26,4 @@ public class Launch {
 			MainFrameModel.getInstance().initialize();
 		}
 	}
-
 }
