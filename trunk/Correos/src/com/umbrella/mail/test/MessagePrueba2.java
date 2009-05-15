@@ -7,9 +7,12 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.message;
+package com.umbrella.mail.test;
 
 import java.util.Vector;
+
+import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.OntologiaMSG;
 
 /**
  *
