@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.umbrella.autoslave.utils2.EstateRobots;
-import com.umbrella.mail.modulocomunicacion.MailBox;
+import com.umbrella.mail.mailbox.ClientMailBox;
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel
@@ -19,7 +19,7 @@ public class Robot2 {
 	private static ContextoRobot _contexto= ContextoRobot.getInstance();
 	
 	private static Clock _clock;
-	private static MailBox _buzon;
+	private static ClientMailBox _buzon;
 
 	private static String host = "localhost";
 	private static int puerto = 9003;
@@ -32,7 +32,7 @@ public class Robot2 {
 		_clock=new Clock();
 		_clock.start();
 		try {
-			_buzon=new MailBox(host,puerto,"EntradaRobot2","SalidaRobot2");
+			_buzon=new ClientMailBox(host,puerto,"EntradaRobot2","SalidaRobot2");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

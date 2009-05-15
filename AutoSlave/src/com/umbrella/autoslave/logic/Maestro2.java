@@ -12,10 +12,10 @@ import com.umbrella.autoslave.executor.SalidaCinta;
 import com.umbrella.autoslave.utils2.Blister;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
-import com.umbrella.mail.modulocomunicacion.MailBox;
 
 
 /*
@@ -32,7 +32,7 @@ public class Maestro2 {
 	
 	private static Contexto contexto=Contexto.getInstance("blister");
 	private static Configuracion configuracion=Configuracion.getInstance();
-	private static MailBox _buzon;
+	private static ClientMailBox _buzon;
 
 	private static String host = "localhost";
 	private static int puerto = 9003;
@@ -67,7 +67,7 @@ public class Maestro2 {
  	
  			
  			try {
- 				_buzon=new MailBox(host,puerto,"EntradaMaestro2","SalidaMaestro2");
+ 				_buzon=new ClientMailBox(host,puerto,"EntradaMaestro2","SalidaMaestro2");
  			} catch (RemoteException e) {
  				// TODO Auto-generated catch block
  				e.printStackTrace();
