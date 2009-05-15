@@ -8,15 +8,15 @@
  */
 
 
-package com.umbrella.mail.mailbox;
+package com.umbrella.mail.test;
 
 import java.io.IOException;
 import java.rmi.*;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 
+import com.umbrella.mail.mailbox.MailBox;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.MessagePrueba1;
 
 
 /**

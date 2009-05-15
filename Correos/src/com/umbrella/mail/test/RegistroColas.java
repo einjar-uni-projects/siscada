@@ -1,4 +1,7 @@
-package com.umbrella.mail.mailbox;
+package com.umbrella.mail.test;
+
+import com.umbrella.mail.mailbox.MessageQueue;
+import com.umbrella.mail.mailbox.QueueServer;
 
 class RegistroColas 
 {

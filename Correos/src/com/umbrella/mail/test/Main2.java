@@ -7,10 +7,10 @@
  * and open the template in the editor.
  */
 
-package com.umbrella.mail.mailbox;
+package com.umbrella.mail.test;
 
+import com.umbrella.mail.mailbox.MailBox;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.MessagePrueba1;
 
 /**
  *
