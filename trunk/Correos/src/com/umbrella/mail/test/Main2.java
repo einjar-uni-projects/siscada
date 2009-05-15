@@ -9,7 +9,7 @@
 
 package com.umbrella.mail.test;
 
-import com.umbrella.mail.mailbox.MailBox;
+import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.MessageInterface;
 
 /**
@@ -27,7 +27,7 @@ public class Main2 {
 		/* Se crea la conexi�n con las dos colas. (Explicado en Main.java)
 		 * Lo unico a destacar aqui es que en este caso la cola por la que
 		 * se recibe es Cola2 y la cola por la que se envia es Cola1*/
-        MailBox buzon = new MailBox("localhost", 9003, "Cola2", "Cola1");
+        ClientMailBox buzon = new ClientMailBox("localhost", 9003, "Cola2", "Cola1");
 
 		MessageInterface message;
         

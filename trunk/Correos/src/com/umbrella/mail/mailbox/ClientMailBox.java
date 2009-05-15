@@ -20,7 +20,7 @@ import com.umbrella.mail.message.MessageInterface;
  *
  * @author l012g412
  */
-public class MailBox {
+public class ClientMailBox {
     
     QueueInterface _inputQueue;
     QueueInterface _outputQueue;
@@ -36,7 +36,7 @@ public class MailBox {
      * @throws MalformedURLException Ip, puerto o referencia no valida
      * @throws NotBoundException No se ha podido obtener la cola del servidor de colas
       */
-    public MailBox(String queueServerIp, int queueServerPort, String inputQueue, String outputQueue) throws RemoteException, MalformedURLException, NotBoundException{      
+    public ClientMailBox(String queueServerIp, int queueServerPort, String inputQueue, String outputQueue) throws RemoteException, MalformedURLException, NotBoundException{      
         _inputQueue = (QueueInterface)Naming.lookup("rmi://"+queueServerIp+":"+queueServerPort+"/"+inputQueue);
         _outputQueue = (QueueInterface)Naming.lookup("rmi://"+queueServerIp+":"+queueServerPort+"/"+outputQueue);
     }
