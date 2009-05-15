@@ -1,5 +1,10 @@
 package com.umbrella.scada.model;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
+import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.scada.observer.Observable;
 import com.umbrella.scada.observer.ObservableProvider;
 import com.umbrella.scada.observer.TransferBufferKeys;
@@ -80,6 +85,21 @@ public class Model {
 	private Model() {
 		System.out.println("Arrancando el Model");
 		_observable = ObservableProvider.getInstance();
+		try {
+			Postmaster.getInstance();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		updateAll();
 		notifyChanges();
 	}
