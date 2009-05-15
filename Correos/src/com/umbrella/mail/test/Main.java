@@ -15,7 +15,7 @@ import java.rmi.*;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 
-import com.umbrella.mail.mailbox.MailBox;
+import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.MessageInterface;
 
 
@@ -41,7 +41,7 @@ public class Main {
 			 * el puerto del registro de colas, el tercero el nombre de la cola por la que se van
 			 * a recibir mensajes y el cuarto el nombre de la cola por la que se va a enviar.
 			 * En este caso, la cola por la que se recibe es Cola1 y por la que se envia Cola2*/
-			MailBox buzon = new MailBox("localhost", 9003, "Cola1", "Cola2");// Solo esta sentencia puede lanzar excepcion
+			ClientMailBox buzon = new ClientMailBox("localhost", 9003, "Cola1", "Cola2");// Solo esta sentencia puede lanzar excepcion
 		
         
 			System.out.println("Envia mensaje");
