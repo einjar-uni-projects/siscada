@@ -2,7 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< .mine
+	<classpathentry combineaccessrules="false" kind="src" path="/Correos"/>
+=======
 	<classpathentry combineaccessrules="false" kind="src" path="/Correos"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
+>>>>>>> .r167
 	<classpathentry kind="output" path="bin"/>
 </classpath>
