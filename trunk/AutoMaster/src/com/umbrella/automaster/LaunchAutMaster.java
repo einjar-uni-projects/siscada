@@ -32,24 +32,29 @@ public class LaunchAutMaster {
 		PropertiesFileHandler.getInstance().writeFile();
 		_clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendSCADAName, ServerMailBox._reciveSCADAName);
 		DefaultMessage dm = new DefaultMessage();
-		System.out.println("Vamos a enviar: "+OntologiaMSG.ACTUALIZARCONFIGURACION);
-		dm.setIdentificador(OntologiaMSG.ACTUALIZARCONFIGURACION);
-		_clientMailBox.send(dm);
-		System.out.println("Vamos a enviar: "+OntologiaMSG.ACTUALIZARCONTEXTO);
-		dm.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
-		_clientMailBox.send(dm);
-		System.out.println("Vamos a enviar: "+OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
-		dm.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
-		_clientMailBox.send(dm);
-		System.out.println("Vamos a enviar: "+OntologiaMSG.ARRANCAR);
-		dm.setIdentificador(OntologiaMSG.ARRANCAR);
-		_clientMailBox.send(dm);
-		System.out.println("Vamos a enviar: "+OntologiaMSG.AVISARUNFALLO);
-		dm.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-		_clientMailBox.send(dm);
-		System.out.println("Vamos a enviar: "+OntologiaMSG.ESTADO_AUTOMATA);
-		dm.setIdentificador(OntologiaMSG.ESTADO_AUTOMATA);
-		_clientMailBox.send(dm);
+		int i= 0;
+		while(true){
+			
+			System.out.println("\n\n"+(i++));
+			System.out.println("Vamos a enviar: "+OntologiaMSG.ACTUALIZARCONFIGURACION);
+			dm.setIdentificador(OntologiaMSG.ACTUALIZARCONFIGURACION);
+			_clientMailBox.send(dm);
+			System.out.println("Vamos a enviar: "+OntologiaMSG.ACTUALIZARCONTEXTO);
+			dm.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
+			_clientMailBox.send(dm);
+			System.out.println("Vamos a enviar: "+OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
+			dm.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
+			_clientMailBox.send(dm);
+			System.out.println("Vamos a enviar: "+OntologiaMSG.ARRANCAR);
+			dm.setIdentificador(OntologiaMSG.ARRANCAR);
+			_clientMailBox.send(dm);
+			System.out.println("Vamos a enviar: "+OntologiaMSG.AVISARUNFALLO);
+			dm.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+			_clientMailBox.send(dm);
+			System.out.println("Vamos a enviar: "+OntologiaMSG.ESTADO_AUTOMATA);
+			dm.setIdentificador(OntologiaMSG.ESTADO_AUTOMATA);
+			_clientMailBox.send(dm);
+		}
 		//new Thread(new MainFrameLaunch(),"MainFrameLaunch").start();
 	}
 	
