@@ -21,6 +21,8 @@ public enum OntologiaMSG {
 	PARADA("Parada",2),
 	PARADAFALLO("ParadaFallo",2),
 	PARADAEMERGENCIA("ParadaEmergencia",2),
+	BLISTERNOVALIDO("BlisterNoValido",0),
+	BLISTERVALIDO("BlisterValido",0),
 	ARRANCARDESDEEMERGENCIA("ArrancarDesdeEmergencia",4),
 	RESET("Reset",2),
 	PRODUCTORECOGIDO("ProductoRecogido",4), //primer parametro el robot y segundo parametro el tipo de producto
