@@ -12,9 +12,7 @@ package com.umbrella.autocommon;
 //import com.sun.tools.javac.tree.Tree.Synchronized;
 import java.io.Serializable;
 
-import com.umbrella.autoslave.executor.Estado;
-import com.umbrella.autoslave.logic.ConfiguracionMaestro;
-import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.utils.NombreMaquinas;
 
 public class Configuracion implements Serializable {
 

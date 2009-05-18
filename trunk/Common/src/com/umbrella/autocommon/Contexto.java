@@ -11,13 +11,13 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autoslave.executor.Estado;
-import com.umbrella.autoslave.utils2.Blister;
-import com.umbrella.autoslave.utils2.Pastel;
+import com.umbrella.utils.Blister;
+import com.umbrella.utils.Pastel;
+
 
 public class Contexto implements Serializable{
 
-	private Estado estado;
+	//private Estado estado;
 	
 	//private Configuracion conf= Configuracion.getInstance();
 	
@@ -100,7 +100,7 @@ public class Contexto implements Serializable{
     public static Contexto getInstance() {
         return INSTANCE;
     }
-    
+    /*
  	public void setState( Estado state ){
  		this.estado = state;
  	}
@@ -108,7 +108,7 @@ public class Contexto implements Serializable{
  	public Estado getState(){
  		return estado;
  	}
-	
+	*/
 	public synchronized boolean[] getEstadoAnterior() {
 		return estadoAnterior;
 	}

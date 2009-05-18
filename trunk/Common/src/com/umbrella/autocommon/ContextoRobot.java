@@ -2,7 +2,8 @@ package com.umbrella.autocommon;
 
 import java.io.Serializable;
 
-import com.umbrella.autoslave.utils2.EstateRobots;
+import com.umbrella.utils.EstateRobots;
+
 
 public class ContextoRobot implements Serializable {
 	
@@ -43,6 +44,7 @@ public class ContextoRobot implements Serializable {
 	public static synchronized EstateRobots getEstadoInterno() {
 		return estadoInterno;
 	}
+	
 	public static synchronized void setEstadoInterno(EstateRobots estadoInterno) {
 		ContextoRobot.estadoInterno = estadoInterno;
 	}

@@ -1,7 +1,6 @@
 package com.umbrella.autocommon;
 
 import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autoslave.logic.Contexto;
 
 public class Clock extends Thread{
 	
