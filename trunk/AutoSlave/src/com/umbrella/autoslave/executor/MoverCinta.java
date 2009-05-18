@@ -2,8 +2,9 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
+import com.umbrella.utils.EstateThreads;
 
-import com.umbrella.autoslave.utils2.EstateThreads;
+
 
 public class MoverCinta extends Thread{
 	

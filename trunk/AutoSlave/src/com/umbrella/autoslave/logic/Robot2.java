@@ -8,11 +8,12 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.ContextoRobot;
-import com.umbrella.autoslave.utils2.EstateRobots;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.utils.EstateRobots;
+
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel

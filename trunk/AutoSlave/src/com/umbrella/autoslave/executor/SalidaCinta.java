@@ -2,7 +2,8 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.autoslave.utils2.EstateThreads;
+import com.umbrella.utils.EstateThreads;
+
 
 public class SalidaCinta extends Thread{
 

@@ -1,7 +1,8 @@
 package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.autoslave.utils2.EstateThreads;
+import com.umbrella.utils.EstateThreads;
+
 
 /*
  * Maquinas que tardan un tiempo '_tiempoEjecucoin' en ejecutarse
