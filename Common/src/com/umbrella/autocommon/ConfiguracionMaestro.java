@@ -10,8 +10,9 @@ package com.umbrella.autocommon;
 
 import java.io.Serializable;
 
-import com.umbrella.autoslave.executor.Estado;
-import com.umbrella.autoslave.utils2.NombreMaquinas;
+import com.umbrella.utils.NombreMaquinas;
+
+
 
 /*
  * Importante!!!
