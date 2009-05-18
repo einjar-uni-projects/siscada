@@ -4,13 +4,14 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import com.umbrella.autoslave.logic.Clock;
-import com.umbrella.autoslave.logic.Configuracion;
-import com.umbrella.autoslave.logic.ConfiguracionMaestro;
-import com.umbrella.autoslave.logic.Contexto;
-import com.umbrella.autoslave.logic.ContextoMaestro;
-import com.umbrella.autoslave.logic.ContextoRobot;
+import com.umbrella.autocommon.Clock;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.ConfiguracionMaestro;
+import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.ContextoMaestro;
+import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.mail.mailbox.ClientMailBox;
+
 
 /*
  * esta clase gestiona los automatas
