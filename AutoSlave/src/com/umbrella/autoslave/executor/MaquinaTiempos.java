@@ -1,6 +1,6 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autocommon.Contexto;
 import com.umbrella.autoslave.utils2.EstateThreads;
 
 /*

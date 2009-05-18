@@ -1,11 +1,11 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.logic.Configuracion;
-import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Contexto;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.Pastel;
 
-public class DispensadoraActivada extends Thread implements Estado{
+public class DispensadoraActivada extends Thread{
 
 	
 	/*
@@ -16,7 +16,7 @@ public class DispensadoraActivada extends Thread implements Estado{
 	private Configuracion configuracion=Configuracion.getInstance();
 	private Contexto contexto=Contexto.getInstance();
 	
-	private static Estado INSTANCE = null;
+	private static DispensadoraActivada INSTANCE = null;
 
 	private double _posicion;
 	private int _posicionAsociada;
@@ -98,12 +98,12 @@ public class DispensadoraActivada extends Thread implements Estado{
 		}
 	}
 
-	public static Estado getInstance(double posicion, int posAsociada) {
+	public static DispensadoraActivada getInstance(double posicion, int posAsociada) {
 		if (INSTANCE == null) createInstance(posicion, posAsociada);
 		return INSTANCE;
 	}
 
-	public static Estado getInstance() {
+	public static DispensadoraActivada getInstance() {
 		return INSTANCE;
 	}
 	

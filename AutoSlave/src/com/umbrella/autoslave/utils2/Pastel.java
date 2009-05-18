@@ -2,7 +2,7 @@ package com.umbrella.autoslave.utils2;
 
 import java.io.Serializable;
 
-import com.umbrella.autoslave.logic.Configuracion;
+import com.umbrella.autocommon.Configuracion;
 
 public class Pastel implements Serializable {
 

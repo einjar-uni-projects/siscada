@@ -2,7 +2,7 @@ package com.umbrella.autoslave.utils2;
 
 import java.io.*;
 
-import com.umbrella.autoslave.logic.Configuracion;
+import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autoslave.logic.ConfiguracionMaestro;
 
 public class InputSerializable {

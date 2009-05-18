@@ -1,14 +1,14 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.logic.Configuracion;
-import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Contexto;
 import com.umbrella.autoslave.utils2.EstateThreads;
 import com.umbrella.autoslave.utils2.Pastel;
 
 /*
  * Maquina que no tiene un tiempo de ejecucion 
  */
-public class MaquinaInstantanea extends Thread implements Estado{
+public class MaquinaInstantanea extends Thread{
 
 	
 	private Configuracion configuracion=Configuracion.getInstance();

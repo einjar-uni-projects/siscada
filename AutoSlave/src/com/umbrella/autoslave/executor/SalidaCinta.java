@@ -1,10 +1,10 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.logic.Configuracion;
-import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Contexto;
 import com.umbrella.autoslave.utils2.EstateThreads;
 
-public class SalidaCinta extends Thread implements Estado{
+public class SalidaCinta extends Thread{
 
 	private double _posicion;
 	private int _posicionAsociada;
