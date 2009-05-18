@@ -86,7 +86,7 @@ public class Model {
 		System.out.println("Arrancando el Model");
 		_observable = ObservableProvider.getInstance();
 		try {
-			Postmaster.getInstance();
+			new Thread(Postmaster.getInstance()).run();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
