@@ -19,7 +19,6 @@ import com.umbrella.scada.controller.ActionParamsEnum;
 public class Postmaster extends Thread {
 	
 	private final ClientMailBox _clientMailBox;
-	private final ServerMailBox _serverMailBox;
 	private final LinkedList<MessageInterface> llmi;
 	private static Postmaster instance = null;
 	private boolean _no_end;
@@ -30,8 +29,7 @@ public class Postmaster extends Thread {
 		PropertiesFile pfmodel = PropertiesFile.getInstance();
 		PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 		PropertiesFileHandler.getInstance().writeFile();
-		_serverMailBox = new ServerMailBox(pfmodel.getSCADAPort());
-		_clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveName, ServerMailBox._sendName);
+		_clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveSCADAName, ServerMailBox._sendSCADAName);
 		llmi = new LinkedList<MessageInterface>();
 		_no_end = true;
 	}
@@ -65,7 +63,9 @@ public class Postmaster extends Thread {
 		while(_no_end){
 			try {
 				params = null;
+		System.out.println("Esperando mensaje de mailbox");
 				MessageInterface msg = _clientMailBox.receiveBlocking();
+		System.out.println(msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case ESTADO_AUTOMATA: //TODO esto cambia todo
 					params = new ActionParams();
