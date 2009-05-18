@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -10,6 +11,11 @@ import javax.swing.border.BevelBorder;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
+import java.awt.Insets;
+import java.text.AttributedString;
+import java.text.AttributedCharacterIterator.Attribute;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConveyorBeltAttributePanel extends AttributePanel {
 
@@ -37,6 +43,8 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 		gridBagConstraints11.gridx = 0;
 		gridBagConstraints11.fill = GridBagConstraints.NONE;
 		gridBagConstraints11.gridwidth = 2;
+		gridBagConstraints11.anchor = GridBagConstraints.CENTER;
+		gridBagConstraints11.insets = new Insets(5, 5, 0, 5);
 		gridBagConstraints11.gridy = 0;
 		titleLabel = new JLabel();
 		titleLabel.setText("Conveyor Belt");
@@ -44,14 +52,18 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 		gridBagConstraints5.fill = GridBagConstraints.BOTH;
 		gridBagConstraints5.gridy = 6;
 		gridBagConstraints5.weightx = 1.0;
+		gridBagConstraints5.insets = new Insets(0, 5, 5, 5);
 		gridBagConstraints5.gridx = 1;
 		GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 		gridBagConstraints4.gridx = 1;
+		gridBagConstraints4.insets = new Insets(0, 5, 0, 5);
 		gridBagConstraints4.gridy = 5;
 		sizeValueLabel = new JLabel();
 		sizeValueLabel.setText("JLabel");
 		GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 		gridBagConstraints3.gridx = 0;
+		gridBagConstraints3.insets = new Insets(0, 5, 0, 0);
+		gridBagConstraints3.anchor = GridBagConstraints.WEST;
 		gridBagConstraints3.gridy = 4;
 		sizeLabel = new JLabel();
 		sizeLabel.setText("Size");
@@ -59,20 +71,26 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 		gridBagConstraints2.fill = GridBagConstraints.BOTH;
 		gridBagConstraints2.gridy = 3;
 		gridBagConstraints2.weightx = 1.0;
+		gridBagConstraints2.insets = new Insets(0, 5, 0, 5);
 		gridBagConstraints2.gridx = 1;
 		GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 		gridBagConstraints1.gridy = 2;
-		gridBagConstraints1.anchor = GridBagConstraints.EAST;
+		gridBagConstraints1.anchor = GridBagConstraints.CENTER;
 		gridBagConstraints1.fill = GridBagConstraints.NONE;
+		gridBagConstraints1.insets = new Insets(0, 5, 0, 5);
 		gridBagConstraints1.gridx = 1;
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.anchor = GridBagConstraints.WEST;
+		gridBagConstraints.anchor = GridBagConstraints.CENTER;
+		gridBagConstraints.ipadx = 0;
+		gridBagConstraints.insets = new Insets(0, 5, 0, 0);
 		gridBagConstraints.gridy = 1;
 		speedValueLabel = new JLabel();
 		speedValueLabel.setText("JLabel");
 		speedLabel = new JLabel();
+		//speedLabel.setFont(new Font("SansSerif",Font.,11).);
 		speedLabel.setText("Speed");
+		//speedLabel.
 		this.setLayout(new GridBagLayout());
 		this.setSize(206, 160);
 		this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
