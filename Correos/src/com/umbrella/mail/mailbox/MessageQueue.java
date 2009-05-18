@@ -27,7 +27,7 @@ public class MessageQueue extends java.rmi.server.UnicastRemoteObject implements
      */
     public MessageQueue() throws RemoteException {		
         super();
-        _messageList = new LinkedList();        
+        _messageList = new LinkedList();
     }
     
     /**
