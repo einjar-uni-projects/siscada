@@ -15,7 +15,8 @@ public class Launch {
 	}
 	
 	public Launch() {
-		new Thread(new MainFrameLaunch(),"MainFrameLaunch").start();
+		new Thread(new MainFrameLaunch()).run();
+		
 		Model.getInstance().test();
 	}
 	
@@ -26,4 +27,5 @@ public class Launch {
 			MainFrameModel.getInstance().initialize();
 		}
 	}
+
 }
