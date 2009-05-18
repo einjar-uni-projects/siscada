@@ -2,8 +2,8 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.autoslave.utils2.EstateThreads;
-import com.umbrella.autoslave.utils2.Pastel;
+import com.umbrella.utils.EstateThreads;
+
 
 /*
  * Maquina que no tiene un tiempo de ejecucion 

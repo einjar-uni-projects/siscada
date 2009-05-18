@@ -13,13 +13,13 @@ import com.umbrella.autoslave.executor.MaquinaInstantanea;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
-import com.umbrella.autoslave.utils2.Blister;
-import com.umbrella.autoslave.utils2.EstateThreads;
-import com.umbrella.autoslave.utils2.NombreMaquinas;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.utils.Blister;
+import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.NombreMaquinas;
 
 
 /*
