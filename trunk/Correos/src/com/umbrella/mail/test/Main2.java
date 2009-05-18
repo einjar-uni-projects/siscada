@@ -30,8 +30,7 @@ public class Main2 {
 		 * recibe es Cola2 y la cola por la que se envia es Cola1
 		 */
 		try {
-			ClientMailBox buzon = new ClientMailBox("localhost", 9003, "Cola2",
-					"Cola1");
+			ClientMailBox buzon = new ClientMailBox("192.168.10.100", 9003, "Cola2","Cola1");
 
 			MessageInterface message;
 
