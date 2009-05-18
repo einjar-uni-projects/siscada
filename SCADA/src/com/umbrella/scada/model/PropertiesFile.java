@@ -53,8 +53,15 @@ public final class PropertiesFile implements PropertiesModel {
 		return properties.get(prekey+"master_aut_IP").getValue();
 	}
 	
-	
-	
+	public int getSCADAPort() {
+		int ret = -1;
+		try{
+			ret = Integer.parseInt(properties.get(prekey+"SCADA_port").getValue());
+		}catch(NumberFormatException nfe){
+			
+		}
+		return ret;
+	}
 	
 	public int getMasterAutPort(){
 		int ret = -1;
@@ -83,12 +90,14 @@ public final class PropertiesFile implements PropertiesModel {
 	public Map<String, Property> getDefaultProperties() throws PropertyException {
 		Map< String, Property> properties = new Hashtable<String, Property>();
 		
-		Property master_aut_IP = new Property(" IP del automataMaestro,",prekey+"master_aut_IP","localhost");
-		Property master_aut_port = new Property(" Puerto de comunicacion para los buzones",prekey+"master_aut_port","9003");
-
+		Property property = new Property(" IP del automataMaestro,",prekey+"master_aut_IP","localhost");
+		properties.put(property.getKey(), property);
 		
-		properties.put(master_aut_IP.getKey(), master_aut_IP);
-		properties.put(master_aut_port.getKey(), master_aut_port);
+		property = new Property(" Puerto de comunicacion para los buzones del maestro",prekey+"master_aut_port","9003");
+		properties.put(property.getKey(), property);
+		
+		property = new Property(" Puerto de comunicacion para los buzones de SCADA",prekey+"SCADA_port","9003");
+		properties.put(property.getKey(), property);
 		return properties;
 	}
 

@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 import com.umbrella.mail.mailbox.ClientMailBox;
+import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
@@ -17,7 +18,8 @@ import com.umbrella.scada.controller.ActionParamsEnum;
 
 public class Postmaster extends Thread {
 	
-	private final ClientMailBox _mailBox;
+	private final ClientMailBox _clientMailBox;
+	private final ServerMailBox _serverMailBox;
 	private final LinkedList<MessageInterface> llmi;
 	private static Postmaster instance = null;
 	private boolean _no_end;
@@ -28,8 +30,8 @@ public class Postmaster extends Thread {
 		PropertiesFile pfmodel = PropertiesFile.getInstance();
 		PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 		PropertiesFileHandler.getInstance().writeFile();
-	
-		_mailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), "reciveBox", "sendBox");
+		_serverMailBox = new ServerMailBox(pfmodel.getSCADAPort());
+		_clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveName, ServerMailBox._sendName);
 		llmi = new LinkedList<MessageInterface>();
 		_no_end = true;
 	}
@@ -63,7 +65,7 @@ public class Postmaster extends Thread {
 		while(_no_end){
 			try {
 				params = null;
-				MessageInterface msg = _mailBox.receiveBlocking();
+				MessageInterface msg = _clientMailBox.receiveBlocking();
 				switch (msg.getIdentificador()) {
 				case ESTADO_AUTOMATA: //TODO esto cambia todo
 					params = new ActionParams();
