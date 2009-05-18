@@ -41,8 +41,7 @@ public class Main {
 			 * va a enviar. En este caso, la cola por la que se recibe es Cola1
 			 * y por la que se envia Cola2
 			 */
-			ClientMailBox buzon = new ClientMailBox("localhost", 9003, "Cola1",
-					"Cola2");// Solo esta sentencia puede lanzar excepcion
+			ClientMailBox buzon = new ClientMailBox("192.168.10.100", 9003, "Cola1","Cola2");// Solo esta sentencia puede lanzar excepcion
 
 			System.out.println("Envia mensaje");
 
