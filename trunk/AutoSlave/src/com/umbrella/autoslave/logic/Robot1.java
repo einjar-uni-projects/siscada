@@ -5,6 +5,9 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import com.umbrella.autocommon.Clock;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autoslave.utils2.EstateRobots;
 import com.umbrella.autoslave.utils2.NombreMaquinas;
 import com.umbrella.mail.mailbox.ClientMailBox;

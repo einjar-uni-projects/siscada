@@ -1,10 +1,11 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autoslave.logic.Configuracion;
-import com.umbrella.autoslave.logic.Contexto;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Contexto;
+
 import com.umbrella.autoslave.utils2.EstateThreads;
 
-public class MoverCinta extends Thread implements Estado{
+public class MoverCinta extends Thread{
 	
 	private EstateThreads _estadoHilo;
 	

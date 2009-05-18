@@ -6,9 +6,9 @@ package com.umbrella.autoslave.executor;
  * es el mejor lugar para cargar los datos de arranque 
  */
 
-public class Apagado implements Estado{
+public class Apagado{
 
-	private static Estado INSTANCE = null;
+	private static Apagado INSTANCE=null;
 
 	private Apagado() {
 
@@ -30,7 +30,7 @@ public class Apagado implements Estado{
 		}
 	}
 
-	public static Estado getInstance() {
+	public static Apagado getInstance() {
 		if (INSTANCE == null) createInstance();
 		return INSTANCE;
 	}

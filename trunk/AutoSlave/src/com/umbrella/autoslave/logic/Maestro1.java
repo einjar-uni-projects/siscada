@@ -4,9 +4,11 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import com.umbrella.autocommon.Clock;
+import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Contexto;
 import com.umbrella.autoslave.executor.Apagado;
 import com.umbrella.autoslave.executor.DispensadoraActivada;
-import com.umbrella.autoslave.executor.Estado;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
@@ -41,8 +43,8 @@ public class Maestro1 {
 	public static void main(String[] args) {
 		try	{
 			
-			Estado estado= Apagado.getInstance();
- 			contexto.setState( estado );
+			Apagado estado= Apagado.getInstance();
+ 			//contexto.setState( estado );
  			
  			/*
  			 * tenemos dos hilos, uno es el reloj y el otro es la ejecucion del automata que debe quedarse bloqueado entre 
