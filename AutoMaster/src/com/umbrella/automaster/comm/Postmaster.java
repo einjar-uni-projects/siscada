@@ -33,27 +33,33 @@ public class Postmaster{
 		ClientMailBox clientMailBox;
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendSCADAName, ServerMailBox._reciveSCADAName);
 		_SCADAmessageConsulter = new MessageConsulter(clientMailBox);
-		new Thread(_SCADAmessageConsulter).run();
+		_SCADAmessageConsulter.start();
+		//new Thread(_SCADAmessageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
 		_RB1messageConsulter = new MessageConsulter(clientMailBox);
-		new Thread(_RB1messageConsulter).run();
+		_RB1messageConsulter.start();
+		//new Thread(_RB1messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR2Name, ServerMailBox._reciveR2Name);
 		_RB2messageConsulter = new MessageConsulter(clientMailBox);
-		new Thread(_RB2messageConsulter).run();
+		_RB2messageConsulter.start();
+		//new Thread(_RB2messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendAU1Name, ServerMailBox._reciveAU1Name);
 		_AU1messageConsulter = new MessageConsulter(clientMailBox);
-		new Thread(_AU1messageConsulter).run();
+		_AU1messageConsulter.start();
+		//new Thread(_AU1messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendAU2Name, ServerMailBox._reciveAU2Name);
 		_AU2messageConsulter = new MessageConsulter(clientMailBox);
-		new Thread(_AU2messageConsulter).run();
+		_AU2messageConsulter.start();
+		//new Thread(_AU2messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendAU3Name, ServerMailBox._reciveAU3Name);
 		_AU3AmessageConsulter = new MessageConsulter(clientMailBox);
-		new Thread(_AU3AmessageConsulter).run();
+		_AU3AmessageConsulter.start();
+		//new Thread(_AU3AmessageConsulter).run();
 	}
 
 	/**
@@ -109,7 +115,7 @@ public class Postmaster{
 		_RB2messageConsulter.shutdown();	
 	}
 	
-	private class MessageConsulter implements Runnable {
+	private class MessageConsulter extends Thread {
 		private boolean no_end = true;
 		private Object mutex = new Object();
 		private ClientMailBox _clientMailBox;
