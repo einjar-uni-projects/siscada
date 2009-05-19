@@ -2,7 +2,7 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 
 
 /*
@@ -16,10 +16,10 @@ public class MaquinaInstantanea extends Thread{
 	
 	private double _posicion;
 	private int _posicionAsociada;
-	private EstateThreads _estadoHilo;
+	private ThreadState _estadoHilo;
 	
 	public MaquinaInstantanea(double posicion, int posAsociada) {
-		set_estadoHilo(EstateThreads.CREADO);
+		set_estadoHilo(ThreadState.CREADO);
 		this._posicion=posicion;
 		set_posicionAsociada(posAsociada);
 	}
@@ -30,7 +30,7 @@ public class MaquinaInstantanea extends Thread{
 	
 	@Override
 	public void run(){
-		set_estadoHilo(EstateThreads.EJECUTANDO);
+		set_estadoHilo(ThreadState.EJECUTANDO);
 		contexto.setDispositivosInternos(_posicionAsociada, true);
 		try {
 			wait();
@@ -40,7 +40,7 @@ public class MaquinaInstantanea extends Thread{
 		}
 		// espera un ciclo de reloj para cambiar el estado de la maquina
 		contexto.setDispositivosInternos(_posicionAsociada, false);
-		set_estadoHilo(EstateThreads.ACABADO);
+		set_estadoHilo(ThreadState.ACABADO);
 	}
 
 	public void enviaMensaje() {
@@ -49,10 +49,10 @@ public class MaquinaInstantanea extends Thread{
 	public void cambiaMensaje(boolean[] msg) {
 		// TODO Auto-generated method stub	
 	}
-	public synchronized EstateThreads get_estadoHilo() {
+	public synchronized ThreadState get_estadoHilo() {
 		return _estadoHilo;
 	}
-	private synchronized void set_estadoHilo(EstateThreads estate) {
+	private synchronized void set_estadoHilo(ThreadState estate) {
 		this._estadoHilo=estate;
 	}
 	private synchronized int get_posicionAsociada() {

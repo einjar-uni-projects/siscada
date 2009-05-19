@@ -8,7 +8,7 @@ import java.util.Vector;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.autoslave.executor.Apagado;
+import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.MaquinaInstantanea;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
@@ -18,7 +18,7 @@ import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 import com.umbrella.utils.NombreMaquinas;
 
 
@@ -49,7 +49,7 @@ public class Slave3 {
 
 		try	{
 
-			Apagado estado= Apagado.getInstance();
+			TurnOff estado= TurnOff.getInstance();
 			//contexto.setState( estado );
 
 			/*
@@ -160,7 +160,7 @@ public class Slave3 {
 							 * lo unico q hace es cargar los valores iniciales 
 							 */
 							if(primeraVez){
-								((Apagado) estado).transitar();
+								((TurnOff) estado).transitar();
 								primeraVez=false;
 							}else{
 								/*
@@ -252,9 +252,9 @@ public class Slave3 {
 	 */
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_calidad.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_selladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_salBlister.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		if(_calidad.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_selladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
 	
@@ -285,11 +285,11 @@ public class Slave3 {
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
-			if(_calidad.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_calidad.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.SELLADO))
-			if(_selladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_selladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_3))
-			if(_salBlister.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	
