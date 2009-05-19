@@ -11,7 +11,7 @@ import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.ActivatedDispenser;
 import com.umbrella.autoslave.executor.TimeMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
-import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
@@ -29,7 +29,7 @@ public class Slave1 {
 	private static Clock _clock;
 	private static MoveConveyorBelt _moverCinta;
 	private static ActivatedDispenser _dispensadora;
-	private static SalidaCinta _salPastel;
+	private static ConveyorBeltExit _salPastel;
 	private static TimeMachine _chocolate;
 	private static TimeMachine _caramelo;
 	
@@ -60,7 +60,7 @@ public class Slave1 {
  					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_1));
  			_dispensadora=(ActivatedDispenser)ActivatedDispenser.getInstance(configuracion.getPosBizc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.DISPENSADORA));
- 			_salPastel=new SalidaCinta(configuracion.getPosFinAut1(),
+ 			_salPastel=new ConveyorBeltExit(configuracion.getPosFinAut1(),
  					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "pastel");
  			_caramelo=new TimeMachine(configuracion.getValvCaram(), configuracion.getPosCaram(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
@@ -241,7 +241,7 @@ public class Slave1 {
 		if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_caramelo.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_chocolate.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_salPastel.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_salPastel.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
 	
@@ -258,7 +258,7 @@ public class Slave1 {
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), true);
 			salida=true;
 		}
-		if(contexto.activaSensor(configuracion, _salPastel.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), true);
 			salida=true;
@@ -277,7 +277,7 @@ public class Slave1 {
 		if(nombre.equals(NombreMaquinas.CARAMELO))
 			if(_caramelo.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_1))
-			if(_salPastel.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_salPastel.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	
@@ -297,7 +297,7 @@ public class Slave1 {
 					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO))) salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_1))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_1) && 
-					contexto.activaSensor(configuracion, _salPastel.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 &&
 					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))) salida=true;
 		return salida;
 	}
@@ -311,7 +311,7 @@ public class Slave1 {
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), false);
 		num=-1;
-		num=contexto.activaSensor(configuracion, _salPastel.get_posicion());
+		num=contexto.activaSensor(configuracion, _salPastel.getPosition());
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
 	}

@@ -10,7 +10,7 @@ import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
-import com.umbrella.autoslave.executor.SalidaCinta;
+import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
@@ -28,7 +28,7 @@ public class Slave2 {
 	
 	private static Clock _clock;
 	private static MoveConveyorBelt _moverCinta;
-	private static SalidaCinta _salBlister;
+	private static ConveyorBeltExit _salBlister;
 	private static InstantaneousMachine _cortadora;
 	private static InstantaneousMachine _troqueladora;
 	
@@ -60,7 +60,7 @@ public class Slave2 {
  			 */
  			_moverCinta=new MoveConveyorBelt(configuracion.getVelCintaAut2(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_2));
- 			_salBlister=new SalidaCinta(configuracion.getPosFinAut2(),
+ 			_salBlister=new ConveyorBeltExit(configuracion.getPosFinAut2(),
  					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "blister");
  			_cortadora=new InstantaneousMachine(configuracion.getPosCortadora(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA));
@@ -202,14 +202,14 @@ public class Slave2 {
 		boolean hay=false;
 		if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_troqueladora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
 	
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
-		if(contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), true);
 			salida=true;
@@ -226,7 +226,7 @@ public class Slave2 {
 		if(nombre.equals(NombreMaquinas.CORTADORA))
 			if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_2))
-			if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	
@@ -249,7 +249,7 @@ public class Slave2 {
 				
 		if(tipo.equals(NombreMaquinas.FIN_2))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_2) && 
-					contexto.activaSensor(configuracion, _salBlister.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))) 
 				salida=true;
 		return salida;
@@ -268,7 +268,7 @@ public class Slave2 {
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), false);
 		num=-1;
-		num=contexto.activaSensor(configuracion, _salBlister.get_posicion());
+		num=contexto.activaSensor(configuracion, _salBlister.getPosition());
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
 	}
