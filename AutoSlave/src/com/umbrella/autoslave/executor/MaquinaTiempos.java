@@ -1,7 +1,7 @@
 package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 
 
 /*
@@ -19,20 +19,20 @@ public class MaquinaTiempos extends Thread{
 	/*
 	 * indica el estado interno del hilo
 	 */
-	private EstateThreads _estadoHilo;
+	private ThreadState _estadoHilo;
 	
 	private Contexto contexto=Contexto.getInstance();
 	
 	public MaquinaTiempos(double tiempoEjecucion, double posicion, int posAsociada) {
 		this._tiempoEjecucion=tiempoEjecucion;
 		this._posicion=posicion;
-		set_estadoHilo(EstateThreads.CREADO);
+		set_estadoHilo(ThreadState.CREADO);
 		set_posicionAsociada(posAsociada);
 	}
 
 	@Override
 	public void run(){
-		set_estadoHilo(EstateThreads.EJECUTANDO);
+		set_estadoHilo(ThreadState.EJECUTANDO);
 		contexto.setDispositivosInternos(get_posicionAsociada(), true);
 		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
 		while(((System.currentTimeMillis()-tiempoActual)*1000)<this._tiempoEjecucion){
@@ -53,7 +53,7 @@ public class MaquinaTiempos extends Thread{
 		}
 		contexto.setDispositivosInternos(get_posicionAsociada(), false);
 		//se ha echado el caramelo en el bizcocho
-		set_estadoHilo(EstateThreads.ACABADO);
+		set_estadoHilo(ThreadState.ACABADO);
 	}
 	
 	public void enviaMensaje() {
@@ -66,11 +66,11 @@ public class MaquinaTiempos extends Thread{
 		
 	}	
 	
-	public synchronized EstateThreads get_estadoHilo() {
+	public synchronized ThreadState get_estadoHilo() {
 		return _estadoHilo;
 	}
 	
-	private synchronized void set_estadoHilo(EstateThreads estate) {
+	private synchronized void set_estadoHilo(ThreadState estate) {
 		this._estadoHilo=estate;
 	}
 

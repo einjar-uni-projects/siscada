@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.autoslave.executor.Apagado;
+import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.MaquinaInstantanea;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
@@ -16,7 +16,7 @@ import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 import com.umbrella.utils.NombreMaquinas;
 
 
@@ -45,7 +45,7 @@ public class Slave2 {
 		
 		try	{
 			
-			Apagado estado= Apagado.getInstance();
+			TurnOff estado= TurnOff.getInstance();
  			//contexto.setState( estado );
  			
  			/*
@@ -146,7 +146,7 @@ public class Slave2 {
  							 * lo unico q hace es cargar los valores iniciales 
  							 */
  							if(primeraVez){
- 								((Apagado) estado).transitar();
+ 								((TurnOff) estado).transitar();
  								primeraVez=false;
  							}else{
  								hayEspacio();
@@ -200,9 +200,9 @@ public class Slave2 {
 	 */
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_cortadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_troqueladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_salBlister.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		if(_cortadora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_troqueladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
 	
@@ -222,11 +222,11 @@ public class Slave2 {
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.TROQUELADORA))
-			if(_troqueladora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_troqueladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.CORTADORA))
-			if(_cortadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_cortadora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_2))
-			if(_salBlister.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	

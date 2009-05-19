@@ -1,3 +1,5 @@
+
+
 package com.umbrella.autoslave.executor;
 
 /*
@@ -6,11 +8,11 @@ package com.umbrella.autoslave.executor;
  * es el mejor lugar para cargar los datos de arranque 
  */
 
-public class Apagado{
+public class TurnOff{
 
-	private static Apagado INSTANCE=null;
+	private static TurnOff INSTANCE=null;
 
-	private Apagado() {
+	private TurnOff() {
 
 	}
 
@@ -26,11 +28,11 @@ public class Apagado{
 	
 	private synchronized static void createInstance() {
 		if (INSTANCE == null) { 
-			INSTANCE = new Apagado();
+			INSTANCE = new TurnOff();
 		}
 	}
 
-	public static Apagado getInstance() {
+	public static TurnOff getInstance() {
 		if (INSTANCE == null) createInstance();
 		return INSTANCE;
 	}

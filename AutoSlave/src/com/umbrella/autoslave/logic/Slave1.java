@@ -7,8 +7,8 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.autoslave.executor.Apagado;
-import com.umbrella.autoslave.executor.DispensadoraActivada;
+import com.umbrella.autoslave.executor.TurnOff;
+import com.umbrella.autoslave.executor.ActivatedDispenser;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
@@ -16,7 +16,7 @@ import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 import com.umbrella.utils.NombreMaquinas;
 
 
@@ -28,7 +28,7 @@ public class Slave1 {
 	
 	private static Clock _clock;
 	private static MoverCinta _moverCinta;
-	private static DispensadoraActivada _dispensadora;
+	private static ActivatedDispenser _dispensadora;
 	private static SalidaCinta _salPastel;
 	private static MaquinaTiempos _chocolate;
 	private static MaquinaTiempos _caramelo;
@@ -43,7 +43,7 @@ public class Slave1 {
 	public static void main(String[] args) {
 		try	{
 			
-			Apagado estado= Apagado.getInstance();
+			TurnOff estado= TurnOff.getInstance();
  			//contexto.setState( estado );
  			
  			/*
@@ -58,7 +58,7 @@ public class Slave1 {
  			 */
  			_moverCinta=new MoverCinta(configuracion.getVelCinta(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_1));
- 			_dispensadora=(DispensadoraActivada)DispensadoraActivada.getInstance(configuracion.getPosBizc(),
+ 			_dispensadora=(ActivatedDispenser)ActivatedDispenser.getInstance(configuracion.getPosBizc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.DISPENSADORA));
  			_salPastel=new SalidaCinta(configuracion.getPosFinAut1(),
  					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "pastel");
@@ -126,7 +126,7 @@ public class Slave1 {
  							String maquina=mensaje.getParametros().get(0);
  							int cantidad=Integer.parseInt(mensaje.getParametros().get(1));
  							if(maquina.compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
- 								_dispensadora.llenarDeposito(cantidad);
+ 								_dispensadora.fillDeposit(cantidad);
  							if(maquina.compareTo(NombreMaquinas.CARAMELO.getName())==0)
  								contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadCaramelo());
  							if(maquina.compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
@@ -194,7 +194,7 @@ public class Slave1 {
  							// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
  							if(!contexto.isParadaCorrecta())
  								_dispensadora.run();
- 							if(_dispensadora.get_PastelesRestantes()==0){
+ 							if(_dispensadora.getRemainderCakes()==0){
  								DefaultMessage mensajeSend= new DefaultMessage();
 								mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
 								mensajeSend.getParametros().add(NombreMaquinas.DISPENSADORA.getName()); 									
@@ -238,10 +238,10 @@ public class Slave1 {
 	 */
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_dispensadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_caramelo.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_chocolate.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
-		else if(_salPastel.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) hay=true;
+		if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_caramelo.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_chocolate.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_salPastel.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
 	
@@ -271,13 +271,13 @@ public class Slave1 {
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.DISPENSADORA))
-			if(_dispensadora.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.CHOCOLATE))
-			if(_chocolate.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_chocolate.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.CARAMELO))
-			if(_caramelo.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_caramelo.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_1))
-			if(_salPastel.get_estadoHilo().equals(EstateThreads.EJECUTANDO)) salida=true;
+			if(_salPastel.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	

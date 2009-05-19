@@ -2,13 +2,13 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 
 
 
 public class MoverCinta extends Thread{
 	
-	private EstateThreads _estadoHilo;
+	private ThreadState _estadoHilo;
 	
 	private int _posicionAsociada;
 	
@@ -40,7 +40,7 @@ public class MoverCinta extends Thread{
 		/*
 		 * si se ejecuta la cinta 1 vez la cinta se desplaza minimo una cantidad X, suponemos q eso es siempre superior a un click
 		 */
-		_estadoHilo=EstateThreads.EJECUTANDO;
+		_estadoHilo=ThreadState.EJECUTANDO;
 
 		/*
 		 * nos dice si algun sensor se va a encender
@@ -75,7 +75,7 @@ public class MoverCinta extends Thread{
 			e.printStackTrace();
 		}
 
-		set_estadoHilo(EstateThreads.ESPERANDO);
+		set_estadoHilo(ThreadState.ESPERANDO);
 	}
 	
 	public void enviaMensaje() {
@@ -88,11 +88,11 @@ public class MoverCinta extends Thread{
 		
 	}	
 	
-	public synchronized EstateThreads get_estadoHilo() {
+	public synchronized ThreadState get_estadoHilo() {
 		return _estadoHilo;
 	}
 	
-	private synchronized void set_estadoHilo(EstateThreads estate) {
+	private synchronized void set_estadoHilo(ThreadState estate) {
 		this._estadoHilo=estate;
 	}
 

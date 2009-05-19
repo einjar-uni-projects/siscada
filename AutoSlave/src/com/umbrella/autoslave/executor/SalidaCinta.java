@@ -2,7 +2,7 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuracion;
 import com.umbrella.autocommon.Contexto;
-import com.umbrella.utils.EstateThreads;
+import com.umbrella.utils.ThreadState;
 
 
 public class SalidaCinta extends Thread{
@@ -10,7 +10,7 @@ public class SalidaCinta extends Thread{
 	private double _posicion;
 	private int _posicionAsociada;
 
-	private EstateThreads _estadoHilo;
+	private ThreadState _estadoHilo;
 	
 	private Contexto contexto=Contexto.getInstance();
 	private Configuracion configuracion=Configuracion.getInstance();
@@ -19,7 +19,7 @@ public class SalidaCinta extends Thread{
 	
 	public SalidaCinta(double posicion, int posAsociada, String tipo) {
 		// TODO Auto-generated constructor stub
-		set_estadoHilo(EstateThreads.CREADO);
+		set_estadoHilo(ThreadState.CREADO);
 		this._posicion=posicion;
 		set_posicionAsociada(posAsociada);
 		this.tipo=tipo;
@@ -27,7 +27,7 @@ public class SalidaCinta extends Thread{
 
 	@Override
 	public void run(){
-		set_estadoHilo(EstateThreads.EJECUTANDO);
+		set_estadoHilo(ThreadState.EJECUTANDO);
 		contexto.setDispositivosInternos(get_posicionAsociada(), true);
 		
 		boolean finCintaLibre=finCintaLibre(tipo);
@@ -45,7 +45,7 @@ public class SalidaCinta extends Thread{
 		contexto.decrementarNumPasteles();
 		//se ha recogido el bizcocho del fin de la lista
 		contexto.setDispositivosInternos(get_posicionAsociada(), false);
-		set_estadoHilo(EstateThreads.ACABADO);
+		set_estadoHilo(ThreadState.ACABADO);
 	}
 		
 	public void enviaMensaje() {
@@ -59,11 +59,11 @@ public class SalidaCinta extends Thread{
 	}	
 	
 
-	public synchronized EstateThreads get_estadoHilo() {
+	public synchronized ThreadState get_estadoHilo() {
 		return _estadoHilo;
 	}
 	
-	private synchronized void set_estadoHilo(EstateThreads estate) {
+	private synchronized void set_estadoHilo(ThreadState estate) {
 		this._estadoHilo=estate;
 	}
 	
