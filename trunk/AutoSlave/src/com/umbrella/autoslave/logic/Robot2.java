@@ -6,7 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Clock;
-import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
@@ -20,7 +20,7 @@ import com.umbrella.utils.EstateRobots;
  */
 public class Robot2 {
 
-	private static Configuracion _configuracion= Configuracion.getInstance();
+	private static Configuration _configuracion= Configuration.getInstance();
 	private static ContextoRobot _contexto= ContextoRobot.getInstance();
 	
 	private static Clock _clock;
@@ -70,7 +70,7 @@ public class Robot2 {
 						_contexto=(ContextoRobot)mensaje.getObject();
 						break;
 					case ACTUALIZARCONFIGURACION: 						
-						_configuracion=(Configuracion)mensaje.getObject();
+						_configuracion=(Configuration)mensaje.getObject();
 						break;
 					case ARRANCAR:
 						_contexto=_contexto.reset();

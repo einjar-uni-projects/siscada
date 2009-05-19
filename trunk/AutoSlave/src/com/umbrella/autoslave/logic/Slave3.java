@@ -6,10 +6,10 @@ import java.rmi.RemoteException;
 import java.util.Vector;
 
 import com.umbrella.autocommon.Clock;
-import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.TurnOff;
-import com.umbrella.autoslave.executor.MaquinaInstantanea;
+import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
@@ -31,12 +31,12 @@ public class Slave3 {
 	private static Clock _clock;
 	private static MoverCinta _moverCinta;
 	private static SalidaCinta _salBlister;
-	private static MaquinaInstantanea _calidad;
+	private static InstantaneousMachine _calidad;
 	private static MaquinaTiempos _selladora;
 	private static ClientMailBox _buzon;
 
-	private static Contexto contexto=Contexto.getInstance("blister");
-	private static Configuracion configuracion=Configuracion.getInstance();
+	private static Context contexto=Context.getInstance("blister");
+	private static Configuration configuracion=Configuration.getInstance();
 
 	private static String host = "localhost";
 	private static int puerto = 9003;
@@ -66,7 +66,7 @@ public class Slave3 {
 					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_3));
 			_salBlister=new SalidaCinta(configuracion.getPosFinAut3(),
 					configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), "blister");
-			_calidad=new MaquinaInstantanea(configuracion.getPosCalidad(),
+			_calidad=new InstantaneousMachine(configuracion.getPosCalidad(),
 					configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD));
 			_selladora=new MaquinaTiempos(configuracion.getSelladora(), configuracion.getPosSelladora(),
 					configuracion.getPosicionAsociada(NombreMaquinas.SELLADO));
@@ -109,10 +109,10 @@ public class Slave3 {
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
  							break;
 						case ACTUALIZARCONFIGURACION: 						
- 							configuracion=(Configuracion)mensaje.getObject();
+ 							configuracion=(Configuration)mensaje.getObject();
  							break;
 						case ARRANCAR:
- 							contexto=Contexto.reset("pastel");
+ 							contexto=Context.reset("pastel");
  							contexto.setApagado(false);
  							break;
 						case FININTERFERENCIA:
@@ -132,7 +132,7 @@ public class Slave3 {
  							break;
  						case RESET:
  							if(contexto.isApagado() || contexto.isFallo()){
- 								contexto=Contexto.reset("pastel");
+ 								contexto=Context.reset("pastel");
  								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  							}
@@ -252,7 +252,7 @@ public class Slave3 {
 	 */
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_calidad.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_selladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
@@ -285,7 +285,7 @@ public class Slave3 {
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
-			if(_calidad.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.SELLADO))
 			if(_selladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_3))
@@ -297,7 +297,7 @@ public class Slave3 {
 		boolean salida=false;
 		if(tipo.equals(NombreMaquinas.CONTROL_CALIDAD))
 			if(!ejecutandoAlgo(NombreMaquinas.CONTROL_CALIDAD) && 
-					contexto.activaSensor(configuracion, _calidad.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _calidad.getPosition())>=0 &&
 						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD)))
 				salida=true;
 		
@@ -317,7 +317,7 @@ public class Slave3 {
 	
 	private synchronized static void apagarSensores(){
 		int num=-1;
-		num=contexto.activaSensor(configuracion, _calidad.get_posicion());
+		num=contexto.activaSensor(configuracion, _calidad.getPosition());
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD), false);
 		num=-1;

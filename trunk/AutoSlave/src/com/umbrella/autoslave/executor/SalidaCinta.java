@@ -1,7 +1,7 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.utils.ThreadState;
 
 
@@ -12,8 +12,8 @@ public class SalidaCinta extends Thread{
 
 	private ThreadState _estadoHilo;
 	
-	private Contexto contexto=Contexto.getInstance();
-	private Configuracion configuracion=Configuracion.getInstance();
+	private Context contexto=Context.getInstance();
+	private Configuration configuracion=Configuration.getInstance();
 	
 	private String tipo;
 	

@@ -1,6 +1,6 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Context;
 import com.umbrella.utils.ThreadState;
 
 
@@ -21,7 +21,7 @@ public class MaquinaTiempos extends Thread{
 	 */
 	private ThreadState _estadoHilo;
 	
-	private Contexto contexto=Contexto.getInstance();
+	private Context contexto=Context.getInstance();
 	
 	public MaquinaTiempos(double tiempoEjecucion, double posicion, int posAsociada) {
 		this._tiempoEjecucion=tiempoEjecucion;

@@ -5,10 +5,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Clock;
-import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.TurnOff;
-import com.umbrella.autoslave.executor.MaquinaInstantanea;
+import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
 import com.umbrella.mail.mailbox.ClientMailBox;
@@ -29,11 +29,11 @@ public class Slave2 {
 	private static Clock _clock;
 	private static MoverCinta _moverCinta;
 	private static SalidaCinta _salBlister;
-	private static MaquinaInstantanea _cortadora;
-	private static MaquinaInstantanea _troqueladora;
+	private static InstantaneousMachine _cortadora;
+	private static InstantaneousMachine _troqueladora;
 	
-	private static Contexto contexto=Contexto.getInstance("blister");
-	private static Configuracion configuracion=Configuracion.getInstance();
+	private static Context contexto=Context.getInstance("blister");
+	private static Configuration configuracion=Configuration.getInstance();
 	private static ClientMailBox _buzon;
 
 	private static String host = "localhost";
@@ -62,9 +62,9 @@ public class Slave2 {
  					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_2));
  			_salBlister=new SalidaCinta(configuracion.getPosFinAut2(),
  					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "blister");
- 			_cortadora=new MaquinaInstantanea(configuracion.getPosCortadora(),
+ 			_cortadora=new InstantaneousMachine(configuracion.getPosCortadora(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA));
- 			_troqueladora=new MaquinaInstantanea(configuracion.getPosTroqueladora(),
+ 			_troqueladora=new InstantaneousMachine(configuracion.getPosTroqueladora(),
  					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
  	
  			
@@ -100,10 +100,10 @@ public class Slave2 {
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
  							break;
 						case ACTUALIZARCONFIGURACION: 						
- 							configuracion=(Configuracion)mensaje.getObject();
+ 							configuracion=(Configuration)mensaje.getObject();
  							break;
 						case ARRANCAR:
- 							contexto=Contexto.reset("pastel");
+ 							contexto=Context.reset("pastel");
  							contexto.setApagado(false);
  							break;
 						case FININTERFERENCIA:
@@ -123,7 +123,7 @@ public class Slave2 {
  							break;
  						case RESET:
  							if(contexto.isApagado() || contexto.isFallo()){
- 								contexto=Contexto.reset("pastel");
+ 								contexto=Context.reset("pastel");
  								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  							}
@@ -157,11 +157,11 @@ public class Slave2 {
 
  									if(puedoUsar(NombreMaquinas.CORTADORA) ){
  										_cortadora.run();
- 										contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.get_posicion())).set_cortado(true);
+ 										contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.getPosition())).set_cortado(true);
  									}
  									if(puedoUsar(NombreMaquinas.TROQUELADORA) ){
  										_troqueladora.run();
- 										contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.get_posicion())).set_troquelado(true);
+ 										contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.getPosition())).set_troquelado(true);
  									}
  								}
  							}
@@ -200,8 +200,8 @@ public class Slave2 {
 	 */
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_cortadora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_troqueladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_troqueladora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
@@ -222,9 +222,9 @@ public class Slave2 {
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.TROQUELADORA))
-			if(_troqueladora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_troqueladora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.CORTADORA))
-			if(_cortadora.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_2))
 			if(_salBlister.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
@@ -234,16 +234,16 @@ public class Slave2 {
 		boolean salida=false;
 		if(tipo.equals(NombreMaquinas.CORTADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.CORTADORA) && 
-					contexto.activaSensor(configuracion, _cortadora.get_posicion())>=0){
-				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.get_posicion())).is_cortado())
+					contexto.activaSensor(configuracion, _cortadora.getPosition())>=0){
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.getPosition())).is_cortado())
 					salida=true;
 			}
 				
 		
 		if(tipo.equals(NombreMaquinas.TROQUELADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.TROQUELADORA) && 
-					contexto.activaSensor(configuracion, _troqueladora.get_posicion())>=0){
-				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.get_posicion())).is_troquelado())
+					contexto.activaSensor(configuracion, _troqueladora.getPosition())>=0){
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.getPosition())).is_troquelado())
 					salida=true;
 			}
 				
@@ -260,11 +260,11 @@ public class Slave2 {
 		//TODO hay q cambiarlo, ahora hay q mirar el blister para ver sus atributos y ver si ha pasado por el sensor
 		
 		int num=-1;
-		num=contexto.activaSensor(configuracion, _cortadora.get_posicion());
+		num=contexto.activaSensor(configuracion, _cortadora.getPosition());
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), false);
 		num=-1;
-		num=contexto.activaSensor(configuracion, _troqueladora.get_posicion());
+		num=contexto.activaSensor(configuracion, _troqueladora.getPosition());
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), false);
 		num=-1;

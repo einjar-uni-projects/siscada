@@ -5,8 +5,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Clock;
-import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.ActivatedDispenser;
 import com.umbrella.autoslave.executor.MaquinaTiempos;
@@ -33,8 +33,8 @@ public class Slave1 {
 	private static MaquinaTiempos _chocolate;
 	private static MaquinaTiempos _caramelo;
 	
-	private static Contexto contexto=Contexto.getInstance("pastel");
-	private static Configuracion configuracion=Configuracion.getInstance();
+	private static Context contexto=Context.getInstance("pastel");
+	private static Configuration configuracion=Configuration.getInstance();
 	private static ClientMailBox _buzon;
 	
 	private static String host = "localhost";
@@ -101,10 +101,10 @@ public class Slave1 {
  							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
  							break;
 						case ACTUALIZARCONFIGURACION: 						
- 							configuracion=(Configuracion)mensaje.getObject();
+ 							configuracion=(Configuration)mensaje.getObject();
  							break;
 						case ARRANCAR:
- 							contexto=Contexto.reset("pastel");
+ 							contexto=Context.reset("pastel");
  							contexto.setApagado(false);
  							break;
 						case FININTERFERENCIA:
@@ -134,7 +134,7 @@ public class Slave1 {
  							break;
  						case RESET:
  							if(contexto.isApagado() || contexto.isFallo()){
- 								contexto=Contexto.reset("pastel");
+ 								contexto=Context.reset("pastel");
  								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  							}
