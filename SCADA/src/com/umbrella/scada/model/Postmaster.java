@@ -65,6 +65,7 @@ public class Postmaster extends Thread {
 				params = null;
 		System.out.println("Esperando mensaje de mailbox");
 				MessageInterface msg = _clientMailBox.receiveBlocking();
+				_clientMailBox.send(msg);
 		System.out.println(msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case ESTADO_AUTOMATA: //TODO esto cambia todo
