@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import com.umbrella.automaster.logic.MessageInterpreter;
+import com.umbrella.automaster.logic.MessageInterpreter.MachineEnum;
 import com.umbrella.automaster.model.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
@@ -32,32 +34,32 @@ public class Postmaster{
 		
 		ClientMailBox clientMailBox;
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendSCADAName, ServerMailBox._reciveSCADAName);
-		_SCADAmessageConsulter = new MessageConsulter(clientMailBox);
+		_SCADAmessageConsulter = new MessageConsulter(clientMailBox, MachineEnum.SCADA);
 		_SCADAmessageConsulter.start();
 		//new Thread(_SCADAmessageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
-		_RB1messageConsulter = new MessageConsulter(clientMailBox);
+		_RB1messageConsulter = new MessageConsulter(clientMailBox, MachineEnum.RB1);
 		_RB1messageConsulter.start();
 		//new Thread(_RB1messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR2Name, ServerMailBox._reciveR2Name);
-		_RB2messageConsulter = new MessageConsulter(clientMailBox);
+		_RB2messageConsulter = new MessageConsulter(clientMailBox, MachineEnum.RB2);
 		_RB2messageConsulter.start();
 		//new Thread(_RB2messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendAU1Name, ServerMailBox._reciveAU1Name);
-		_AU1messageConsulter = new MessageConsulter(clientMailBox);
+		_AU1messageConsulter = new MessageConsulter(clientMailBox, MachineEnum.AU1);
 		_AU1messageConsulter.start();
 		//new Thread(_AU1messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendAU2Name, ServerMailBox._reciveAU2Name);
-		_AU2messageConsulter = new MessageConsulter(clientMailBox);
+		_AU2messageConsulter = new MessageConsulter(clientMailBox, MachineEnum.AU2);
 		_AU2messageConsulter.start();
 		//new Thread(_AU2messageConsulter).run();
 		
 		clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendAU3Name, ServerMailBox._reciveAU3Name);
-		_AU3AmessageConsulter = new MessageConsulter(clientMailBox);
+		_AU3AmessageConsulter = new MessageConsulter(clientMailBox, MachineEnum.AU3);
 		_AU3AmessageConsulter.start();
 		//new Thread(_AU3AmessageConsulter).run();
 	}
@@ -116,12 +118,14 @@ public class Postmaster{
 	}
 	
 	private class MessageConsulter extends Thread {
-		private boolean no_end = true;
-		private Object mutex = new Object();
+		private boolean _no_end = true;
+		private Object _mutex = new Object();
 		private ClientMailBox _clientMailBox;
+		private final MachineEnum _me;
 		
-		public MessageConsulter(ClientMailBox clientMailBox) {
+		public MessageConsulter(ClientMailBox clientMailBox, MachineEnum machineEnum) {
 			_clientMailBox = clientMailBox;
+			_me = machineEnum;
 		}
 		
 		@Override
@@ -131,7 +135,7 @@ public class Postmaster{
 				try {
 					System.out.println("Escuchando:");
 					miInterface = _clientMailBox.receiveBlocking();
-					System.out.println(miInterface);
+					MessageInterpreter.executueMessageBehaviour(miInterface, _me);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -141,15 +145,15 @@ public class Postmaster{
 		
 		public boolean isNo_end(){
 			boolean ret;
-			synchronized (mutex) {
-				ret = no_end;
+			synchronized (_mutex) {
+				ret = _no_end;
 			}
 			return ret;
 		}
 		
 		void shutdown(){
-			synchronized (mutex) {
-				no_end = false;
+			synchronized (_mutex) {
+				_no_end = false;
 			}
 		}
 		
