@@ -4,33 +4,51 @@ import java.io.Serializable;
 
 
 
-public enum EstateThreads implements Serializable{
+/**
+ * @author 
+ *
+ */
+public enum ThreadState implements Serializable{
 	CREADO("creado","hilo creado pero sin ejecutarse"),
 	ESPERANDO("esperando","hilo en ejecucion que esta esperando por una viariable, similar al bloqueado"),
 	EJECUTANDO("ejecutando","hilo ejecutando"),
 	ACABADO("acabado","el hilo ha acabado, pero no esta muerto");
 	
 	private final String name;
-	private final String descripcion;
+	private final String description;
 	
 	
-	private EstateThreads(String name, String descripcion){
+	/**
+	 * @param name
+	 * @param description
+	 */
+	private ThreadState(String name, String description){
 		this.name = name;
-		this.descripcion = descripcion;
+		this.description = description;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	/**
+	 * @return
+	 */
+	public String getDescription() {
+		return description;
 	}
 	
-	public boolean equals(EstateThreads obj){
+	/**
+	 * @param obj
+	 * @return
+	 */
+	public boolean equals(ThreadState obj){
 		boolean sal=true;
 		if(this.name.compareTo(obj.getName())!=0) sal=false;
-		if(this.descripcion.compareTo(obj.getDescripcion())!=0) sal=false;
+		if(this.description.compareTo(obj.getDescription())!=0) sal=false;
 		return sal;
 	}
 }

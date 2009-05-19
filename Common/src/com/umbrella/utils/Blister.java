@@ -2,7 +2,7 @@ package com.umbrella.utils;
 
 import java.io.Serializable;
 
-import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Configuration;
 
 public class Blister implements Serializable{
 	/*
@@ -25,7 +25,7 @@ public class Blister implements Serializable{
 	 */
 	private boolean[] calidad={false,false,false,false,false};
 	
-	Configuracion configuracion=Configuracion.getInstance();
+	Configuration configuracion=Configuration.getInstance();
 	
 	public Blister(double posicion){
 		set_posicion(posicion);

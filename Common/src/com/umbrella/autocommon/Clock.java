@@ -1,12 +1,12 @@
 package com.umbrella.autocommon;
 
-import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Configuration;
 
 public class Clock extends Thread{
 	
 	private long _clock=0;
-	Contexto contexto=Contexto.getInstance();
-	Configuracion configuracion=Configuracion.getInstance();
+	Context contexto=Context.getInstance();
+	Configuration configuracion=Configuration.getInstance();
 	long time=configuracion.get_tiempoReloj();
 	
 	private static Clock INSTANCE = null;
