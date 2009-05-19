@@ -23,7 +23,7 @@ import com.umbrella.scada.view.screen.attributePanels.AttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.BlisterConveyorBeltAttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.CakeConveyorBeltAttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.PackageConveyorBeltAttributePanel;
-import com.umbrella.scada.view.screen.attributePanels.Robot1AttrbutePanel;
+import com.umbrella.scada.view.screen.attributePanels.Robot1AttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.Robot2AttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.VoidAttributePanel;
 
@@ -114,7 +114,7 @@ public class MainFrame implements UpdatableInterface{
 			_attributePanels[1] = new CakeConveyorBeltAttributePanel();
 			_attributePanels[2] = new BlisterConveyorBeltAttributePanel();
 			_attributePanels[3] = new PackageConveyorBeltAttributePanel();
-			_attributePanels[4] = new Robot1AttrbutePanel();
+			_attributePanels[4] = new Robot1AttributePanel();
 			_attributePanels[5] = new Robot2AttributePanel();
 			
 			_rightPanel.add(_attributePanels[0], "1");
@@ -357,6 +357,11 @@ public class MainFrame implements UpdatableInterface{
 		if (_menuReports == null) {
 			_menuReports = new JMenuItem();
 			_menuReports.setText("View Report");
+			_menuReports.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					new ReportViewer().setVisible(true);
+				}
+			});
 		}
 		return _menuReports;
 	}

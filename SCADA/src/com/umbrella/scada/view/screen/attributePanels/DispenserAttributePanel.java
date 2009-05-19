@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.border.BevelBorder;
@@ -9,14 +10,15 @@ import javax.swing.JTextField;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
+import java.awt.Insets;
 
 public abstract class DispenserAttributePanel extends AttributePanel {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel titleLabel = null;
-	private JLabel countLabel = null;
-	private JLabel countValueLabel = null;
-	private JTextField countNewText = null;
+	protected JLabel titleLabel = null;
+	protected JLabel countLabel = null;
+	protected JLabel countValueLabel = null;
+	protected JTextField countNewText = null;
 
 	/**
 	 * This is the default constructor
@@ -24,6 +26,7 @@ public abstract class DispenserAttributePanel extends AttributePanel {
 	public DispenserAttributePanel() {
 		super();
 		initialize();
+		updateLanguage();
 	}
 
 	/**
@@ -36,20 +39,24 @@ public abstract class DispenserAttributePanel extends AttributePanel {
 		gridBagConstraints3.fill = GridBagConstraints.BOTH;
 		gridBagConstraints3.gridy = 3;
 		gridBagConstraints3.weightx = 1.0;
+		gridBagConstraints3.insets = new Insets(0, 0, 5, 5);
 		gridBagConstraints3.gridx = 1;
 		GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
 		gridBagConstraints2.gridx = 1;
+		gridBagConstraints2.insets = new Insets(0, 0, 0, 5);
 		gridBagConstraints2.gridy = 2;
 		countValueLabel = new JLabel();
 		countValueLabel.setText("JLabel");
 		GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 		gridBagConstraints1.gridx = 0;
+		gridBagConstraints1.insets = new Insets(0, 5, 0, 0);
 		gridBagConstraints1.gridy = 1;
 		countLabel = new JLabel();
 		countLabel.setText("Available");
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridwidth = 2;
+		gridBagConstraints.insets = new Insets(5, 5, 0, 5);
 		gridBagConstraints.gridy = 0;
 		titleLabel = new JLabel();
 		titleLabel.setText("Dispenser");
@@ -72,13 +79,6 @@ public abstract class DispenserAttributePanel extends AttributePanel {
 			countNewText = new JTextField();
 		}
 		return countNewText;
-	}
-	
-	@Override
-	public void updateLanguage() {
-		LanguageIDs l = _model.get_selectedLanguage();
-		titleLabel.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, l));
-		countLabel.setText(_languageResources.getLocal(LocalizatorIDs.AVAILABLE, l));
 	}
 
 }

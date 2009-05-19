@@ -1,6 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
-public class Robot2AttributePanel extends RobotAttributePanel {
+public class Robot1AttributePanel extends RobotAttributePanel {
 
 	@Override
 	public void refreshData() {
