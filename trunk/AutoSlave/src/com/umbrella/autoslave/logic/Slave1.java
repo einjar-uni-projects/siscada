@@ -40,6 +40,9 @@ public class Slave1 {
 	private static String host = "localhost";
 	private static int puerto = 9003;
 	
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try	{
 			
@@ -232,7 +235,7 @@ public class Slave1 {
  		}
 	}
 	
-	/*
+	/**
 	 * Nos dice si algun hilo esta bloqueando al resto, es decir uno de los hilos esta en ejecucion
 	 * true= algun hilo esta bloqueando
 	 */
@@ -245,6 +248,9 @@ public class Slave1 {
 		return hay;
 	}
 	
+	/**
+	 * @return
+	 */
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
@@ -268,6 +274,10 @@ public class Slave1 {
 		return salida;
 	}
 	
+	/**
+	 * @param nombre
+	 * @return
+	 */
 	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.DISPENSADORA))
@@ -281,6 +291,10 @@ public class Slave1 {
 		return salida;
 	}
 	
+	/**
+	 * @param tipo
+	 * @return
+	 */
 	private synchronized static boolean puedoUsar(NombreMaquinas tipo){
 		boolean salida=false;
 		/*
@@ -301,6 +315,9 @@ public class Slave1 {
 					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))) salida=true;
 		return salida;
 	}
+	/**
+	 * 
+	 */
 	private synchronized static void apagarSensores(){
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _caramelo.getPosition());
