@@ -26,7 +26,7 @@ import com.umbrella.utils.NombreMaquinas;
  * El objetivo de esta clase es llevar el peso de la ejecucion, aqui se crean los hilos q luego se ejecutaran en 
  * paralelo entre ellos
  */
-public class Maestro3 {
+public class Slave3 {
 
 	private static Clock _clock;
 	private static MoverCinta _moverCinta;
