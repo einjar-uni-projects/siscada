@@ -9,7 +9,7 @@ import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.ActivatedDispenser;
-import com.umbrella.autoslave.executor.MaquinaTiempos;
+import com.umbrella.autoslave.executor.TimeMachine;
 import com.umbrella.autoslave.executor.MoverCinta;
 import com.umbrella.autoslave.executor.SalidaCinta;
 import com.umbrella.mail.mailbox.ClientMailBox;
@@ -30,8 +30,8 @@ public class Slave1 {
 	private static MoverCinta _moverCinta;
 	private static ActivatedDispenser _dispensadora;
 	private static SalidaCinta _salPastel;
-	private static MaquinaTiempos _chocolate;
-	private static MaquinaTiempos _caramelo;
+	private static TimeMachine _chocolate;
+	private static TimeMachine _caramelo;
 	
 	private static Context contexto=Context.getInstance("pastel");
 	private static Configuration configuracion=Configuration.getInstance();
@@ -62,9 +62,9 @@ public class Slave1 {
  					configuracion.getPosicionAsociada(NombreMaquinas.DISPENSADORA));
  			_salPastel=new SalidaCinta(configuracion.getPosFinAut1(),
  					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "pastel");
- 			_caramelo=new MaquinaTiempos(configuracion.getValvCaram(), configuracion.getPosCaram(),
+ 			_caramelo=new TimeMachine(configuracion.getValvCaram(), configuracion.getPosCaram(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
- 			_chocolate=new MaquinaTiempos(configuracion.getValvChoc(), configuracion.getPosChoc(),
+ 			_chocolate=new TimeMachine(configuracion.getValvChoc(), configuracion.getPosChoc(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
 
  			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
@@ -165,7 +165,7 @@ public class Slave1 {
  								if(puedoUsar(NombreMaquinas.CHOCOLATE)){
  									if(contexto.getCapacidadChocolate()>0){
  										_chocolate.run();
- 										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.get_posicion())).set_chocolate();
+ 										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.getPosition())).set_chocolate();
  										contexto.decrementarChocolate();
  									}else{
  										DefaultMessage mensajeSend= new DefaultMessage();
@@ -178,7 +178,7 @@ public class Slave1 {
  								if(puedoUsar(NombreMaquinas.CARAMELO)){
  									if(contexto.getCapacidadCaramelo()>0){
  										_caramelo.run();
- 										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.get_posicion())).set_caramelo();
+ 										contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.getPosition())).set_caramelo();
  										contexto.decrementarCaramelo();
  									}else{
  										DefaultMessage mensajeSend= new DefaultMessage();
@@ -239,8 +239,8 @@ public class Slave1 {
 	private synchronized static boolean hayHiloBloqueante(){
 		boolean hay=false;
 		if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_caramelo.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_chocolate.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_caramelo.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
+		else if(_chocolate.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_salPastel.get_estadoHilo().equals(ThreadState.EJECUTANDO)) hay=true;
 		return hay;
 	}
@@ -248,12 +248,12 @@ public class Slave1 {
 	private synchronized static boolean seEnciendeSensor(){
 		boolean salida=false;
 		
-		if(contexto.activaSensor(configuracion, _caramelo.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), true);
 			salida=true;
 		}
-		if(contexto.activaSensor(configuracion, _chocolate.get_posicion())>=0 && 
+		if(contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), true);
 			salida=true;
@@ -273,9 +273,9 @@ public class Slave1 {
 		if(nombre.equals(NombreMaquinas.DISPENSADORA))
 			if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.CHOCOLATE))
-			if(_chocolate.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_chocolate.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.CARAMELO))
-			if(_caramelo.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
+			if(_caramelo.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(NombreMaquinas.FIN_1))
 			if(_salPastel.get_estadoHilo().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
@@ -289,11 +289,11 @@ public class Slave1 {
 		*/
 		if(tipo.equals(NombreMaquinas.CHOCOLATE))
 			if(!ejecutandoAlgo(NombreMaquinas.CHOCOLATE) && 
-					contexto.activaSensor(configuracion, _chocolate.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 &&
 					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE))) salida=true;
 		if(tipo.equals(NombreMaquinas.CARAMELO))
 			if(!ejecutandoAlgo(NombreMaquinas.CARAMELO) && 
-					contexto.activaSensor(configuracion, _caramelo.get_posicion())>=0 &&
+					contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 &&
 					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO))) salida=true;
 		if(tipo.equals(NombreMaquinas.FIN_1))
 			if(!ejecutandoAlgo(NombreMaquinas.FIN_1) && 
@@ -303,11 +303,11 @@ public class Slave1 {
 	}
 	private synchronized static void apagarSensores(){
 		int num=-1;
-		num=contexto.activaSensor(configuracion, _caramelo.get_posicion());
+		num=contexto.activaSensor(configuracion, _caramelo.getPosition());
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), false);
 		num=-1;
-		num=contexto.activaSensor(configuracion, _chocolate.get_posicion());
+		num=contexto.activaSensor(configuracion, _chocolate.getPosition());
 		if(num<0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), false);
 		num=-1;
