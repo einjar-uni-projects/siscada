@@ -9,7 +9,7 @@ import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
-import com.umbrella.autoslave.executor.MoverCinta;
+import com.umbrella.autoslave.executor.MoveConveyorBelt;
 import com.umbrella.autoslave.executor.SalidaCinta;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
@@ -27,7 +27,7 @@ import com.umbrella.utils.NombreMaquinas;
 public class Slave2 {
 	
 	private static Clock _clock;
-	private static MoverCinta _moverCinta;
+	private static MoveConveyorBelt _moverCinta;
 	private static SalidaCinta _salBlister;
 	private static InstantaneousMachine _cortadora;
 	private static InstantaneousMachine _troqueladora;
@@ -58,7 +58,7 @@ public class Slave2 {
  			/*
  			 * se crean los hilos de ejecucion
  			 */
- 			_moverCinta=new MoverCinta(configuracion.getVelCintaAut2(),
+ 			_moverCinta=new MoveConveyorBelt(configuracion.getVelCintaAut2(),
  					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_2));
  			_salBlister=new SalidaCinta(configuracion.getPosFinAut2(),
  					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "blister");
