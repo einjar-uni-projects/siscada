@@ -15,17 +15,21 @@ public class Launch {
 	}
 	
 	public Launch() {
-		new Thread(new MainFrameLaunch()).start();
-		
+		/* TODO CACA */ 
+		MainFrameModel.getInstance().initialize();
 		Model.getInstance().test();
+		
+		/*new Thread(new ModelLaunch()).start();
+		
+		MainFrameModel.getInstance().initialize();*/
 	}
 	
 	
-	class MainFrameLaunch implements Runnable{
+	/*class ModelLaunch implements Runnable{
 		@Override
 		public void run() {
-			MainFrameModel.getInstance().initialize();
+			Model.getInstance().test();
 		}
-	}
+	}*/
 
 }

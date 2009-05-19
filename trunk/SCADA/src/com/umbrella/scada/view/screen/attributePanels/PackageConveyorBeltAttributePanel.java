@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import com.umbrella.scada.view.localization.LocalizatorIDs;
@@ -61,10 +62,9 @@ public class PackageConveyorBeltAttributePanel extends AttributePanel {
 	 */
 	@Override
 	public void updateLanguage() {
-		//_conveyorBeltL.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, _model.get_selectedLanguage()));
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.PACKAGE_CONVEYOR_BELT, _model.get_selectedLanguage()));
-		/*_speedL.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, _model.get_selectedLanguage()));
-		_speedInput.setText("30 m/min");*/
+		Font f = _title.getFont();
+		_title.setFont(f.deriveFont(f.getStyle() ^ (Font.BOLD ^ Font.ITALIC), 16));
 	}
 
 	@Override
