@@ -59,7 +59,7 @@ public class ClientMailBox {
      * Se queda esperando hasta que haya un mensaje en la cola.
      * @return the head of this queue, or null if this queue is empty.
      */
-    public MessageInterface receiveBlocking() throws Exception{
+    public MessageInterface receiveBlocking() throws RemoteException{
         MessageInterface returnMessage;
         do{		
             returnMessage =  _inputQueue.unqueueMessage();      
@@ -71,10 +71,16 @@ public class ClientMailBox {
      * Metodo no bloqueante que desencola un mensaje de la cola de entrada
      * Si no hay un mensaje en la cola de entrada la salida ser� null
      * @return the head of this queue, or null if this queue is empty.
+     * @throws RemoteException 
      */
-    public MessageInterface receive() throws Exception{
+    public MessageInterface receive() throws RemoteException{
         MessageInterface returnMessage=null;
         returnMessage =  _inputQueue.unqueueMessage();      
         return returnMessage;
     }
+
+	public boolean getState() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }
