@@ -1,7 +1,7 @@
 package com.umbrella.autoslave.executor;
 
-import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.utils.ThreadState;
 import com.umbrella.utils.Pastel;
 
@@ -20,8 +20,8 @@ public class ActivatedDispenser extends Thread{
 	 */
 	private int _remainderCakes;
 	
-	private Configuracion _configuration=Configuracion.getInstance();
-	private Contexto _context=Contexto.getInstance();
+	private Configuration _configuration=Configuration.getInstance();
+	private Context _context=Context.getInstance();
 	
 	private static ActivatedDispenser INSTANCE = null;
 
