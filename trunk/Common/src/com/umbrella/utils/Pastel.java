@@ -2,7 +2,7 @@ package com.umbrella.utils;
 
 import java.io.Serializable;
 
-import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Configuration;
 
 public class Pastel implements Serializable {
 
@@ -13,7 +13,7 @@ public class Pastel implements Serializable {
 	private boolean _chocolate;
 	private boolean _caramelo;
 	
-	private Configuracion configuracion=Configuracion.getInstance();
+	private Configuration configuracion=Configuration.getInstance();
 	
 	public Pastel(){
 		_posicion=configuracion.getPosBizc();

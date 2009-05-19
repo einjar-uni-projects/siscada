@@ -10,12 +10,12 @@ package com.umbrella.autocommon;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Configuration;
 import com.umbrella.utils.Blister;
 import com.umbrella.utils.Pastel;
 
 
-public class Contexto implements Serializable{
+public class Context implements Serializable{
 
 	//private Estado estado;
 	
@@ -58,7 +58,7 @@ public class Contexto implements Serializable{
 	private int capacidadCaramelo;
 	private int capacidadChocolate;
 	
-	private static Contexto INSTANCE = null;
+	private static Context INSTANCE = null;
 	
 	private boolean fallo=false;
 	
@@ -68,7 +68,7 @@ public class Contexto implements Serializable{
 	private int numPasteles;
 	
 	// Private constructor suppresses 
-    private Contexto(String tipo) {
+    private Context(String tipo) {
     	
     	for(int i=0;i<dispositivosInternos.length;i++){
     		dispositivosInternos[i]=false;
@@ -88,16 +88,16 @@ public class Contexto implements Serializable{
      */ 
     private synchronized static void createInstance(String tipo) {
         if (INSTANCE == null) { 
-            INSTANCE = new Contexto(tipo);
+            INSTANCE = new Context(tipo);
         }
     }
     
-    public static Contexto getInstance(String tipo) {
+    public static Context getInstance(String tipo) {
         if (INSTANCE == null) createInstance(tipo);
         return INSTANCE;
     }
     
-    public static Contexto getInstance() {
+    public static Context getInstance() {
         return INSTANCE;
     }
     /*
@@ -155,7 +155,7 @@ public class Contexto implements Serializable{
 	 * devuelve el numero de pastel q activa el sensor q tiene la posicion pasada,
 	 *  -1 si no hay coincidencia
 	 */
-	public synchronized int activaSensor(Configuracion configuracion, double posicion){
+	public synchronized int activaSensor(Configuration configuracion, double posicion){
 		//false = pasteles, true = blister
 		int sal=-1;	
 		if(tipo.equalsIgnoreCase("blister")){
@@ -195,7 +195,7 @@ public class Contexto implements Serializable{
 		return pastelesRestantes;
 	}
 
-	public synchronized void setPastelesRestantes(int pastelesRestantes) {
+	public synchronized void setRemainderCakes(int pastelesRestantes) {
 		this.pastelesRestantes = pastelesRestantes;
 	}
 
@@ -224,8 +224,8 @@ public class Contexto implements Serializable{
 		this.apagado = apagado;
 	}
 	
-	public synchronized static Contexto reset(String tipo) {
-		INSTANCE = new Contexto(tipo);
+	public synchronized static Context reset(String tipo) {
+		INSTANCE = new Context(tipo);
 		return INSTANCE;
 	}
 

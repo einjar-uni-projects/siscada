@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 import com.umbrella.utils.NombreMaquinas;
 
-public class Configuracion implements Serializable {
+public class Configuration implements Serializable {
 
 	
 	/*
@@ -94,7 +94,7 @@ public class Configuracion implements Serializable {
 	/*
 	 * Es algo unico, no puede crearse dos veces	
 	 */
-	private static Configuracion INSTANCE = null;
+	private static Configuration INSTANCE = null;
 	
 	/*
 	 * posicion donde se encuentra el sensor y el dispensador de chocolate, medido en CM
@@ -168,7 +168,7 @@ public class Configuracion implements Serializable {
 	
 	
     
-	public Configuracion(ConfiguracionMaestro conf){
+	public Configuration(ConfiguracionMaestro conf){
 		this._tiempoReloj=conf.get_tiempoReloj();
 		this.almacenarBlister=conf.getAlmacenarBlister();
 		this.capacidadPasteles=conf.getCapacidadPasteles();
@@ -205,7 +205,7 @@ public class Configuracion implements Serializable {
 		this.porcentajeFallos=conf.getPorcentajeFallos();
 	}
 	
-	private Configuracion(){
+	private Configuration(){
 		
 	}
 	/*
@@ -214,11 +214,11 @@ public class Configuracion implements Serializable {
      */ 
     private synchronized static void createInstance() {
         if (INSTANCE == null) { 
-            INSTANCE = new Configuracion();
+            INSTANCE = new Configuration();
         }
     }
     
-    public static Configuracion getInstance() {
+    public static Configuration getInstance() {
         if (INSTANCE == null) createInstance();
         return INSTANCE;
     }

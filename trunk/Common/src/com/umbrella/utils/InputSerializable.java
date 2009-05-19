@@ -2,7 +2,7 @@ package com.umbrella.utils;
 
 import java.io.*;
 
-import com.umbrella.autocommon.Configuracion;
+import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ConfiguracionMaestro;
 
 public class InputSerializable {
@@ -45,11 +45,11 @@ public class InputSerializable {
 		}
 	}
 	
-	public Configuracion readConfiguration() {
-		Configuracion conf = null;
+	public Configuration readConfiguration() {
+		Configuration conf = null;
 		if (_input!=null) {
 			try {
-				conf = (Configuracion)_input.readObject();
+				conf = (Configuration)_input.readObject();
 			} catch (IOException e) {
 				System.out.println("ERROR AL LEER EL FICHERO CONFIGURACION");
 			} catch (ClassNotFoundException e) {
