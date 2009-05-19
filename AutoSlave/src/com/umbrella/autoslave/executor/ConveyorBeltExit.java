@@ -5,6 +5,10 @@ import com.umbrella.autocommon.Context;
 import com.umbrella.utils.ThreadState;
 
 
+/**
+ * @author 
+ *
+ */
 public class ConveyorBeltExit extends Thread{
 
 	private double _position;
@@ -17,6 +21,11 @@ public class ConveyorBeltExit extends Thread{
 	
 	private String _type;
 	
+	/**
+	 * @param position
+	 * @param associatedPosition
+	 * @param type
+	 */
 	public ConveyorBeltExit(double position, int associatedPosition, String type) {
 		// TODO Auto-generated constructor stub
 		setThreadState(ThreadState.CREADO);

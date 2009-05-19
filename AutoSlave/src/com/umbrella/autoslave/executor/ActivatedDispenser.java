@@ -143,14 +143,20 @@ public class ActivatedDispenser extends Thread{
 		
 	}
 	
+	/**
+	 * @return
+	 */
 	public synchronized ThreadState getThreadState() {
 		return _threadState;
 	}
 	
+	/**
+	 * @param state
+	 */
 	private synchronized void setThreadState(ThreadState state) {
 		this._threadState=state;
 	}
-	/*
+	/**
 	 * devuelve la distancia del ultimo pastel a la posicion del dispensador de bizcochos
 	 */
 	private synchronized double getSpaceCounter(){
