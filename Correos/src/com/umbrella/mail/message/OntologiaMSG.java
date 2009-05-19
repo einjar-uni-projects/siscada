@@ -7,22 +7,22 @@ package com.umbrella.mail.message;
  * tiene el nombre de todos los mensajes que se pueden usar
  */
 public enum OntologiaMSG {
-	ACTUALIZARCONTEXTO("ActualizarContexto",4),
-	ACTUALIZARCONTEXTOROBOT("ActualizarContextoRobot",4),
-	ACTUALIZARCONFIGURACION("ActualizarConfiguracion",4),
-	AVISARUNFALLO("AvisarUnFallo",4),
-	INTERFERENCIA("Interferencia",4), //primer parametro es el robot que la causa y el 2 parametro es la cinta en la que la causa, se saca del enumerado de Maquinas
+	ACTUALIZARCONTEXTO("ActualizarContexto",0),
+	ACTUALIZARCONTEXTOROBOT("ActualizarContextoRobot",0),//se pasa el nuevo contexto en el objeto
+	ACTUALIZARCONFIGURACION("ActualizarConfiguracion",0),//se pasa el nuevo configuracion en el objeto
+	AVISARUNFALLO("AvisarUnFallo",1),//nombre de la maquina q causa el fallo, sacado del enumerado
+	INTERFERENCIA("Interferencia",2), //primer parametro es el robot que la causa y el 2 parametro es la cinta en la que la causa, se saca del enumerado de Maquinas
 	FININTERFERENCIA("FinInterferencia",4),
 	PASTELLISTO("PastelListo",3),
 	BLISTERLISTO("BlisterListo",4),
 	BLISTERCOMPLETO("BlisterCompleto",4),
 	BLISTERALMACENADO("BlisterAlmacenado",3),
+	BLISTERVALIDO("BlisterValido",0),
+	BLISTERNOVALIDO("BlisterNoValido",0),
 	ARRANCAR("Arrancar",3),
 	PARADA("Parada",2),
 	PARADAFALLO("ParadaFallo",2),
 	PARADAEMERGENCIA("ParadaEmergencia",2),
-	BLISTERNOVALIDO("BlisterNoValido",0),
-	BLISTERVALIDO("BlisterValido",0),
 	ARRANCARDESDEEMERGENCIA("ArrancarDesdeEmergencia",4),
 	RESET("Reset",2),
 	PRODUCTORECOGIDO("ProductoRecogido",4), //primer parametro el robot y segundo parametro el tipo de producto
