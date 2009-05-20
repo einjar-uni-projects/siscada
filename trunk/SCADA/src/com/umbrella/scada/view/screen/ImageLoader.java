@@ -316,18 +316,34 @@ public class ImageLoader {
 		return _robotTartaDef;
 	}
 
+	/**
+	 * Obtiene la imagen de la cortadora
+	 * @return imagen de la cortadora
+	 */
 	public Image get_cortadora() {
 		return _cortadora;
 	}
 
+	/**
+	 * Obtiene la imagen de la estampadora
+	 * @return imagen de la estampadora
+	 */
 	public Image get_estampadora() {
 		return _estampadora;
 	}
 
+	/**
+	 * Obtiene la imagen de la verificadora de calidad
+	 * @return imagen de la verificadora de calidad
+	 */
 	public Image get_calidad() {
 		return _calidad;
 	}
 
+	/**
+	 * Obtiene la imagen de la selladora
+	 * @return imagen de la selladora
+	 */
 	public Image get_selladora() {
 		return _selladora;
 	}
