@@ -3,7 +3,7 @@ package com.umbrella.utils;
 import java.io.*;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.ConfiguracionMaestro;
+import com.umbrella.autocommon.MasterConfiguration;
 
 public class InputSerializable {
 	private FileInputStream _file;
@@ -59,11 +59,11 @@ public class InputSerializable {
 		return conf;
 	}
 
-	public ConfiguracionMaestro readMasterConfiguration() {
-		ConfiguracionMaestro conf = null;
+	public MasterConfiguration readMasterConfiguration() {
+		MasterConfiguration conf = null;
 		if (_input!=null) {
 			try {
-				conf = (ConfiguracionMaestro)_input.readObject();
+				conf = (MasterConfiguration)_input.readObject();
 			} catch (IOException e) {
 				System.out.println("ERROR AL LEER EL FICHERO CONFIGURACION MAESTRO");
 			} catch (ClassNotFoundException e) {

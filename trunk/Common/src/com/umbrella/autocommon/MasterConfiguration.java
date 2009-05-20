@@ -19,159 +19,172 @@ import com.umbrella.utils.NombreMaquinas;
  * 
  * a esta clase solo tiene acceso el AUTOMATA MAESTRO que podra cambiar cualquier cosa
  */
-public class ConfiguracionMaestro implements Serializable {
+
+public class MasterConfiguration implements Serializable {
 
 	
 	/*
 	 * El tiempo de reloj realmente me lo tiene q dar el usuario, se tiene q cargar y estaria muy bien leerlo
 	 * de algun sitio para todos los automatas
 	 */
-	private int _tiempoReloj=200;
+	private int _clockTime=200;
 	
 	/*
 	 * indica el error del sensor, en metros
 	 */
-	private double errorSensor=0.20;
+	private double _sensorError=0.20;
 	
 	/*
 	 * Tama–o de la cinta
 	 */
-	private double sizeCintaAut1=10;
-	private double sizeCintaAut2=10;
-	private double sizeCintaAut3=10;
+	private double _conveyorBeltSize1=10;
+	private double _conveyorBeltSize2=10;
+	private double _conveyorBeltSize3=10;
 	
 	/*
 	 * Capacidad del deposito de pasteles
 	 */
-	private int capacidadPasteles=50;
-	private int capacidadCaramelo=50;
-	private int capacidadChocolate=50;
+	private int _cakeCapacity=50;
+	private int _caramelCapacity=50;
+	private int _chocolateCapacity=50;
 	
 	/*
 	 * Velocidad de la cinta, medida en m/min
 	 */
-	private double velCintaAut1=20;
-	private double velCintaAut2=20;
-	private double velCintaAut3=10;
+	private double _conveyorBeltSpeed1=20;
+	private double _conveyorBeltSpeed2=20;
+	private double _conveyorBeltSpeed3=10;
 	
 	/*
 	 * Tiempo de activacion de la valvula de chocolate, en segundos
 	 */
-	private int valvChoc=3;
+	private int _chocolateValveTime=3;
 	
 	/*
 	 * Tiempo de activacion de la valvula de chocolate, en segundos
 	 */
-	private int valvCaram=2;
+	private int _caramelValveTime=2;
 	
 	/*
 	 * Tiempo de activacion de la selladora, en segundos
 	 */
-	private int selladora=5;
+	private int _sealingMachineTime=5;
 	
 	/*
 	 * Tiempo que tarda el robot 1 en recoger y colocar un bliser, en segundos
 	 */
-	private int moverBlister=5;
+	private int _moveBlisterTime=5;
 	
 	/*
 	 * Tiempo que tarda el robot 1 en recoger y colocar un pastel, en segundos
 	 */
-	private int moverPastel=5;
+	private int _moveCakeTime=5;
 	
 	/*
 	 * Tiempo que tarda el robot 2 en recoger almacenar un bliser, en segundos
 	 */
-	private int almacenarBlister=5;
+	private int _storeBlisterTime=5;
 	
 	/*
 	 * Interferencia de los robots en el movimiento de la cinta
 	 */
-	private int interferencia=2;
+	private int _interference=2;
 	
 	/*
 	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
 	 */
-	private double sizeBizcocho=0.10;
-	private double sizeBlister=sizeBizcocho*2+0.10;
+	private double _spongeCakeSize=0.10;
+	private double _blisterSize=_spongeCakeSize*2+0.10;
 	
 	/*
 	 * Es algo unico, no puede crearse dos veces	
 	 */
-	private static ConfiguracionMaestro INSTANCE = null;
+	private static MasterConfiguration INSTANCE = null;
 	
 	/*
 	 * posicion donde se encuentra el sensor y el dispensador de chocolate, medido en CM
 	 */
-	private double posChoc=(sizeCintaAut1/3);
+	private double _chocolatePosition=(_conveyorBeltSize1/3);
 	
 	/*
 	 * posicion donde se encuentra el sensor y el dispensador de caramelo, medido en CM
 	 */
-	private double posCaram=(sizeCintaAut1*2/3);
+	private double _caramelPosition=(_conveyorBeltSize1*2/3);
 	
 	/*
 	 * posicion donde se encuentra el dispensador de bizcochos, medido en CM
 	 */
-	private double posBizc=sizeBizcocho/2;
+	private double _spongeCakePosition=_spongeCakeSize/2;
 	
-	private double posTroqueladora=sizeCintaAut2*1/3;
-	private double posCortadora=posTroqueladora+sizeBlister;
+	private double _stamperMachinePosition=_conveyorBeltSize2*1/3;
+	private double _cuttingMachinePosition=_stamperMachinePosition+_blisterSize;
 	
 	
-	private double posInicioAut3=sizeBlister/2;
-	private double posCalidad=sizeCintaAut3*1/3;
-	private double posSelladora=sizeCintaAut3*2/3;
+	private double _aut3InitialPosition=_blisterSize/2;
+	private double _qualityPosition=_conveyorBeltSize3*1/3;
+	private double _sealingMachinePosition=_conveyorBeltSize3*2/3;
 	
 	/*
 	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
 	 */
 	//private int posFin=pointsControl-1;
-	private double posFinAut1=sizeCintaAut1-sizeBizcocho/2;
-	private double posFinAut2=sizeCintaAut2-sizeBlister/2;
-	private double posFinAut3=sizeCintaAut3-sizeBlister/2;
+	private double _aut1FinalPosition=_conveyorBeltSize1-_spongeCakeSize/2;
+	private double _aut2FinalPosition=_conveyorBeltSize2-_blisterSize/2;
+	private double _aut3FinalPosition=_conveyorBeltSize3-_blisterSize/2;
 	
 	/*
 	 * espacio entre dos bizcochos, es decir el espacio que hay en la cintra entre 2 biscochos, en metros
 	 */
-	private double espEntreBizc=sizeBizcocho+0.2;
-	private double espEntreBlister=sizeBlister+0.2;
+	private double _spaceBetweenSpongeCakes=_spongeCakeSize+0.2;
+	/**
+	 * 
+	 */
+	private double _spaceBetweenBlisters=_blisterSize+0.2;
 	
-	private double porcentajeFallos=0.05;
+	/**
+	 * 
+	 */
+	private double _failurePercentage=0.05;
 	
+	/**
+	 * @return
+	 */
 	public synchronized double getPorcentajeFallos() {
-		return porcentajeFallos;
+		return _failurePercentage;
 	}
 
-	public synchronized void setPorcentajeFallos(double porcentajeFallos) {
-		this.porcentajeFallos = porcentajeFallos;
+	/**
+	 * @param failurePercentage
+	 */
+	public synchronized void setFailurePercentage(double failurePercentage) {
+		this._failurePercentage = failurePercentage;
 	}
 
 	/*
 	 * posiciones asociadas al estado interno
 	 */
-	private int posicionAsociadaSensorFinAut1=0;
-	private int posicionAsociadaSensorCaramelo=1;
-	private int posicionAsociadaSensorChocolate=2;
-	private int posicionAsociadaCaramelo=3;
-	private int posicionAsociadaChocolate=4;
-	private int posicionAsociadaDispensadora=5;
-	private int posicionAsociadaCintaAut1=6;
+	private int _posAssocSensorFinAut1=0;
+	private int _posAssocSensorCaramel=1;
+	private int _posAssocSensorChocolate=2;
+	private int _posAssocCaramel=3;
+	private int _posAssocChocolate=4;
+	private int _posAssocDispenser=5;
+	private int _posAssocConveyorBeltAut1=6;
 	
-	private int posicionAsociadaSensorFinAut2=0;
-	private int posicionAsociadaSensorTroqueladora=1;
-	private int posicionAsociadaSensorCortadora=2;
-	private int posicionAsociadaTroqueladora=3;
-	private int posicionAsociadaCortadora=4;
-	private int posicionAsociadaCintaAut2=5;
+	private int _posAssocSensorFinAut2=0;
+	private int _posAssocSensorStamper=1;
+	private int _posAssocSensorCutter=2;
+	private int _posAssocStamper=3;
+	private int _posAssocCutter=4;
+	private int _posAssocConveyorBeltAut2=5;
 	
-	private int posicionAsociadaSensorFinAut3=0;
-	private int posicionAsociadaSensorSelladora=1;
-	private int posicionAsociadaSensorCalidad=2;
-	private int posicionAsociadaSensorInicioCinta=3;
-	private int posicionAsociadaSelladora=4;
-	private int posicionAsociadaCalidad=5;
-	private int posicionAsociadaCintaAut3=6;
+	private int _posAssocSensorFinAut3=0;
+	private int _posAssocSensorSealing=1;
+	private int _posAssocSensorQuality=2;
+	private int _posAssocSensorBeginConveyorBelt=3;
+	private int _posAssocSealing=4;
+	private int _posAssocQuality=5;
+	private int _posAssocConveyorBeltAut3=6;
 	
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
@@ -179,522 +192,588 @@ public class ConfiguracionMaestro implements Serializable {
      */ 
     private synchronized static void createInstance() {
         if (INSTANCE == null) { 
-            INSTANCE = new ConfiguracionMaestro();
+            INSTANCE = new MasterConfiguration();
         }
     }
     
-    public static ConfiguracionMaestro getInstance() {
+    /**
+     * @return
+     */
+    public static MasterConfiguration getInstance() {
         if (INSTANCE == null) createInstance();
         return INSTANCE;
     }
 
-	public int get_tiempoReloj() {
-		return _tiempoReloj;
+	/**
+	 * @return
+	 */
+	public int getClockTime() {
+		return _clockTime;
 	}
 
-	public synchronized double getSizeBizcocho() {
-		return sizeBizcocho;
+	/**
+	 * @return
+	 */
+	public synchronized double getSpongeCakeSize() {
+		return _spongeCakeSize;
 	}
 
 	public double getErrorSensor() {
-		return errorSensor;
+		return _sensorError;
 	}
 
-	public double getSizeCinta() {
-		return sizeCintaAut1;
+	/**
+	 * @return
+	 */
+	public double getConveyorBeltSize() {
+		return _conveyorBeltSize1;
 	}
 
-	public int getCapacidadPasteles() {
-		return capacidadPasteles;
+	/**
+	 * @return
+	 */
+	public int getCakeCapacity() {
+		return _cakeCapacity;
 	}
 
-	public double getVelCinta() {
-		return velCintaAut1;
+	/**
+	 * @return
+	 */
+	public double getConveyorBeltSpeed() {
+		return _conveyorBeltSpeed1;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getValvChoc() {
-		return valvChoc;
+		return _chocolateValveTime;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getValvCaram() {
-		return valvCaram;
+		return _caramelValveTime;
 	}
 
+	/**
+	 * @return
+	 */
 	public double getPosChoc() {
-		return posChoc;
+		return _chocolatePosition;
 	}
 
+	/**
+	 * @return
+	 */
 	public double getPosCaram() {
-		return posCaram;
+		return _caramelPosition;
 	}
 
-	public double getPosBizc() {
-		return posBizc;
+	/**
+	 * @return
+	 */
+	public double getPosSpongeCake() {
+		return _spongeCakePosition;
 	}
 
-	public double getEspEntreBizc() {
-		return espEntreBizc;
+	/**
+	 * @return
+	 */
+	public double getSpaceBetweenSpongeCakes() {
+		return _spaceBetweenSpongeCakes;
 	}
 	
+	/**
+	 * @return
+	 */
 	public double getSizeBlister() {
-		return sizeBlister;
+		return _blisterSize;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized double getSizeCintaAut1() {
-		return sizeCintaAut1;
+		return _conveyorBeltSize1;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized double getSizeCintaAut2() {
-		return sizeCintaAut2;
+		return _conveyorBeltSize2;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized double getSizeCintaAut3() {
-		return sizeCintaAut3;
+		return _conveyorBeltSize3;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized double getVelCintaAut1() {
-		return velCintaAut1;
+		return _conveyorBeltSpeed1;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized double getVelCintaAut2() {
-		return velCintaAut2;
+		return _conveyorBeltSpeed2;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized double getVelCintaAut3() {
-		return velCintaAut3;
+		return _conveyorBeltSpeed3;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized int getSelladora() {
-		return selladora;
+		return _sealingMachineTime;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized int getMoverBlister() {
-		return moverBlister;
+		return _moveBlisterTime;
 	}
 
+	/**
+	 * @return
+	 */
 	public synchronized int getMoverPastel() {
-		return moverPastel;
+		return _moveCakeTime;
 	}
 
 	public double getPosInicioAut3() {
-		return posInicioAut3;
+		return _aut3InitialPosition;
 	}
 
 	public double getPosCalidad() {
-		return posCalidad;
+		return _qualityPosition;
 	}
 
 	public double getPosCortadora() {
-		return posCortadora;
+		return _cuttingMachinePosition;
 	}
 
 	public double getPosTroqueladora() {
-		return posTroqueladora;
+		return _stamperMachinePosition;
 	}
 
 	public double getPosSelladora() {
-		return posSelladora;
+		return _sealingMachinePosition;
 	}
 
 	public double getPosFinAut1() {
-		return posFinAut1;
+		return _aut1FinalPosition;
 	}
 
 	public double getPosFinAut2() {
-		return posFinAut2;
+		return _aut2FinalPosition;
 	}
 
 	public double getPosFinAut3() {
-		return posFinAut3;
+		return _aut3FinalPosition;
 	}
 	
 	public double getEspEntreBlister() {
-		return espEntreBlister;
+		return _spaceBetweenBlisters;
 	}
 
 	
 	public int getPosicionAsociada(NombreMaquinas nombre){
 		int sal=-1;
 		if(nombre.equals(NombreMaquinas.FIN_1))
-			sal=posicionAsociadaSensorFinAut1;
+			sal=_posAssocSensorFinAut1;
 		else if(nombre.equals(NombreMaquinas.SENSOR_CARAMELO))
-			sal=posicionAsociadaSensorCaramelo;
+			sal=_posAssocSensorCaramel;
 		else if(nombre.equals(NombreMaquinas.SENSOR_CHOCOLATE))
-			sal=posicionAsociadaSensorChocolate;
+			sal=_posAssocSensorChocolate;
 		else if(nombre.equals(NombreMaquinas.CARAMELO))
-			sal=posicionAsociadaCaramelo;
+			sal=_posAssocCaramelo;
 		else if(nombre.equals(NombreMaquinas.CHOCOLATE))
-			sal=posicionAsociadaChocolate;
+			sal=_posAssocChocolate;
 		else if(nombre.equals(NombreMaquinas.DISPENSADORA))
-			sal=posicionAsociadaDispensadora;
+			sal=_posAssocDispenser;
 		else if(nombre.equals(NombreMaquinas.CINTA_1))
-			sal=posicionAsociadaCintaAut1;
+			sal=_posAssocConveyorBeltAut1;
 		
 		if(nombre.equals(NombreMaquinas.FIN_2))
-			sal=posicionAsociadaSensorFinAut2;
+			sal=_posAssocSensorFinAut2;
 		else if(nombre.equals(NombreMaquinas.SENSOR_TROQUELADORA))
-			sal=posicionAsociadaSensorTroqueladora;
+			sal=_posAssocSensorStamper;
 		else if(nombre.equals(NombreMaquinas.SENSOR_CORTADORA))
-			sal=posicionAsociadaSensorCortadora;
+			sal=_posAssocSensorCutter;
 		else if(nombre.equals(NombreMaquinas.TROQUELADORA))
-			sal=posicionAsociadaTroqueladora;
+			sal=_posAssocStamper;
 		else if(nombre.equals(NombreMaquinas.CORTADORA))
-			sal=posicionAsociadaCortadora;
+			sal=_posAssocCutter;
 		else if(nombre.equals(NombreMaquinas.CINTA_2))
-			sal=posicionAsociadaCintaAut2;
+			sal=_posAssocConveyorBeltAut2;
 		
 		if(nombre.equals(NombreMaquinas.FIN_3))
-			sal=posicionAsociadaSensorFinAut3;
+			sal=_posAssocSensorFinAut3;
 		else if(nombre.equals(NombreMaquinas.SENSOR_SELLADORA))
-			sal=posicionAsociadaSensorSelladora;
+			sal=_posAssocSensorSealing;
 		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD))
-			sal=posicionAsociadaSensorCalidad;
+			sal=_posAssocSensorQuality;
 		else if(nombre.equals(NombreMaquinas.INICIO))
-			sal=posicionAsociadaSensorInicioCinta;
+			sal=_posAssocSensorBeginConveyorBelt;
 		else if(nombre.equals(NombreMaquinas.SELLADO))
-			sal=posicionAsociadaSelladora;
+			sal=_posAssocSealing;
 		else if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
-			sal=posicionAsociadaCalidad;
+			sal=_posAssocQuality;
 		else if(nombre.equals(NombreMaquinas.CINTA_3))
-			sal=posicionAsociadaCintaAut3;
+			sal=_posAssocConveyorBeltAut3;
 		
 		return sal;
 		
 	}
 
 	public synchronized int getInterferencia() {
-		return interferencia;
+		return _interference;
 	}
 
 	public synchronized int getAlmacenarBlister() {
-		return almacenarBlister;
+		return _storeBlisterTime;
 	}
 
 	public synchronized void setAlmacenarBlister(int almacenarBlister) {
-		this.almacenarBlister = almacenarBlister;
+		this._storeBlisterTime = almacenarBlister;
 	}
 
-	public static synchronized ConfiguracionMaestro getINSTANCE() {
+	public static synchronized MasterConfiguration getINSTANCE() {
 		return INSTANCE;
 	}
 
-	public static synchronized void setINSTANCE(ConfiguracionMaestro instance) {
+	public static synchronized void setINSTANCE(MasterConfiguration instance) {
 		INSTANCE = instance;
 	}
 
 	public synchronized int getPosicionAsociadaSensorFinAut1() {
-		return posicionAsociadaSensorFinAut1;
+		return _posAssocSensorFinAut1;
 	}
 
 	public synchronized void setPosicionAsociadaSensorFinAut1(
 			int posicionAsociadaSensorFinAut1) {
-		this.posicionAsociadaSensorFinAut1 = posicionAsociadaSensorFinAut1;
+		this._posAssocSensorFinAut1 = posicionAsociadaSensorFinAut1;
 	}
 
 	public synchronized int getPosicionAsociadaSensorCaramelo() {
-		return posicionAsociadaSensorCaramelo;
+		return _posAssocSensorCaramel;
 	}
 
 	public synchronized void setPosicionAsociadaSensorCaramelo(
 			int posicionAsociadaSensorCaramelo) {
-		this.posicionAsociadaSensorCaramelo = posicionAsociadaSensorCaramelo;
+		this._posAssocSensorCaramel = posicionAsociadaSensorCaramelo;
 	}
 
 	public synchronized int getPosicionAsociadaSensorChocolate() {
-		return posicionAsociadaSensorChocolate;
+		return _posAssocSensorChocolate;
 	}
 
 	public synchronized void setPosicionAsociadaSensorChocolate(
 			int posicionAsociadaSensorChocolate) {
-		this.posicionAsociadaSensorChocolate = posicionAsociadaSensorChocolate;
+		this._posAssocSensorChocolate = posicionAsociadaSensorChocolate;
 	}
 
 	public synchronized int getPosicionAsociadaCaramelo() {
-		return posicionAsociadaCaramelo;
+		return _posAssocCaramel;
 	}
 
 	public synchronized void setPosicionAsociadaCaramelo(
 			int posicionAsociadaCaramelo) {
-		this.posicionAsociadaCaramelo = posicionAsociadaCaramelo;
+		this._posAssocCaramel = posicionAsociadaCaramelo;
 	}
 
 	public synchronized int getPosicionAsociadaChocolate() {
-		return posicionAsociadaChocolate;
+		return _posAssocChocolate;
 	}
 
 	public synchronized void setPosicionAsociadaChocolate(
 			int posicionAsociadaChocolate) {
-		this.posicionAsociadaChocolate = posicionAsociadaChocolate;
+		this._posAssocChocolate = posicionAsociadaChocolate;
 	}
 
 	public synchronized int getPosicionAsociadaDispensadora() {
-		return posicionAsociadaDispensadora;
+		return _posAssocDispenser;
 	}
 
 	public synchronized void setPosicionAsociadaDispensadora(
 			int posicionAsociadaDispensadora) {
-		this.posicionAsociadaDispensadora = posicionAsociadaDispensadora;
+		this._posAssocDispenser = posicionAsociadaDispensadora;
 	}
 
 	public synchronized int getPosicionAsociadaCintaAut1() {
-		return posicionAsociadaCintaAut1;
+		return _posAssocConveyorBeltAut1;
 	}
 
 	public synchronized void setPosicionAsociadaCintaAut1(
 			int posicionAsociadaCintaAut1) {
-		this.posicionAsociadaCintaAut1 = posicionAsociadaCintaAut1;
+		this._posAssocConveyorBeltAut1 = posicionAsociadaCintaAut1;
 	}
 
 	public synchronized int getPosicionAsociadaSensorFinAut2() {
-		return posicionAsociadaSensorFinAut2;
+		return _posAssocSensorFinAut2;
 	}
 
 	public synchronized void setPosicionAsociadaSensorFinAut2(
 			int posicionAsociadaSensorFinAut2) {
-		this.posicionAsociadaSensorFinAut2 = posicionAsociadaSensorFinAut2;
+		this._posAssocSensorFinAut2 = posicionAsociadaSensorFinAut2;
 	}
 
 	public synchronized int getPosicionAsociadaSensorTroqueladora() {
-		return posicionAsociadaSensorTroqueladora;
+		return _posAssocSensorStamper;
 	}
 
 	public synchronized void setPosicionAsociadaSensorTroqueladora(
 			int posicionAsociadaSensorTroqueladora) {
-		this.posicionAsociadaSensorTroqueladora = posicionAsociadaSensorTroqueladora;
+		this._posAssocSensorStamper = posicionAsociadaSensorTroqueladora;
 	}
 
 	public synchronized int getPosicionAsociadaSensorCortadora() {
-		return posicionAsociadaSensorCortadora;
+		return _posAssocSensorCutter;
 	}
 
 	public synchronized void setPosicionAsociadaSensorCortadora(
 			int posicionAsociadaSensorCortadora) {
-		this.posicionAsociadaSensorCortadora = posicionAsociadaSensorCortadora;
+		this._posAssocSensorCutter = posicionAsociadaSensorCortadora;
 	}
 
 	public synchronized int getPosicionAsociadaTroqueladora() {
-		return posicionAsociadaTroqueladora;
+		return _posAssocStamper;
 	}
 
 	public synchronized void setPosicionAsociadaTroqueladora(
 			int posicionAsociadaTroqueladora) {
-		this.posicionAsociadaTroqueladora = posicionAsociadaTroqueladora;
+		this._posAssocStamper = posicionAsociadaTroqueladora;
 	}
 
 	public synchronized int getPosicionAsociadaCortadora() {
-		return posicionAsociadaCortadora;
+		return _posAssocCutter;
 	}
 
 	public synchronized void setPosicionAsociadaCortadora(
 			int posicionAsociadaCortadora) {
-		this.posicionAsociadaCortadora = posicionAsociadaCortadora;
+		this._posAssocCutter = posicionAsociadaCortadora;
 	}
 
 	public synchronized int getPosicionAsociadaCintaAut2() {
-		return posicionAsociadaCintaAut2;
+		return _posAssocConveyorBeltAut2;
 	}
 
 	public synchronized void setPosicionAsociadaCintaAut2(
 			int posicionAsociadaCintaAut2) {
-		this.posicionAsociadaCintaAut2 = posicionAsociadaCintaAut2;
+		this._posAssocConveyorBeltAut2 = posicionAsociadaCintaAut2;
 	}
 
 	public synchronized int getPosicionAsociadaSensorFinAut3() {
-		return posicionAsociadaSensorFinAut3;
+		return _posAssocSensorFinAut3;
 	}
 
 	public synchronized void setPosicionAsociadaSensorFinAut3(
 			int posicionAsociadaSensorFinAut3) {
-		this.posicionAsociadaSensorFinAut3 = posicionAsociadaSensorFinAut3;
+		this._posAssocSensorFinAut3 = posicionAsociadaSensorFinAut3;
 	}
 
 	public synchronized int getPosicionAsociadaSensorSelladora() {
-		return posicionAsociadaSensorSelladora;
+		return _posAssocSensorSealing;
 	}
 
 	public synchronized void setPosicionAsociadaSensorSelladora(
 			int posicionAsociadaSensorSelladora) {
-		this.posicionAsociadaSensorSelladora = posicionAsociadaSensorSelladora;
+		this._posAssocSensorSealing = posicionAsociadaSensorSelladora;
 	}
 
 	public synchronized int getPosicionAsociadaSensorCalidad() {
-		return posicionAsociadaSensorCalidad;
+		return _posAssocSensorQuality;
 	}
 
 	public synchronized void setPosicionAsociadaSensorCalidad(
 			int posicionAsociadaSensorCalidad) {
-		this.posicionAsociadaSensorCalidad = posicionAsociadaSensorCalidad;
+		this._posAssocSensorQuality = posicionAsociadaSensorCalidad;
 	}
 
 	public synchronized int getPosicionAsociadaSensorInicioCinta() {
-		return posicionAsociadaSensorInicioCinta;
+		return _posAssocSensorBeginConveyorBelt;
 	}
 
 	public synchronized void setPosicionAsociadaSensorInicioCinta(
 			int posicionAsociadaSensorInicioCinta) {
-		this.posicionAsociadaSensorInicioCinta = posicionAsociadaSensorInicioCinta;
+		this._posAssocSensorBeginConveyorBelt = posicionAsociadaSensorInicioCinta;
 	}
 
 	public synchronized int getPosicionAsociadaSelladora() {
-		return posicionAsociadaSelladora;
+		return _posAssocSealing;
 	}
 
 	public synchronized void setPosicionAsociadaSelladora(
 			int posicionAsociadaSelladora) {
-		this.posicionAsociadaSelladora = posicionAsociadaSelladora;
+		this._posAssocSealing = posicionAsociadaSelladora;
 	}
 
 	public synchronized int getPosicionAsociadaCalidad() {
-		return posicionAsociadaCalidad;
+		return _posAssocQuality;
 	}
 
 	public synchronized void setPosicionAsociadaCalidad(int posicionAsociadaCalidad) {
-		this.posicionAsociadaCalidad = posicionAsociadaCalidad;
+		this._posAssocQuality = posicionAsociadaCalidad;
 	}
 
 	public synchronized int getPosicionAsociadaCintaAut3() {
-		return posicionAsociadaCintaAut3;
+		return _posAssocConveyorBeltAut3;
 	}
 
 	public synchronized void setPosicionAsociadaCintaAut3(
 			int posicionAsociadaCintaAut3) {
-		this.posicionAsociadaCintaAut3 = posicionAsociadaCintaAut3;
+		this._posAssocConveyorBeltAut3 = posicionAsociadaCintaAut3;
 	}
 
 	public synchronized void set_tiempoReloj(int reloj) {
-		_tiempoReloj = reloj;
+		_clockTime = reloj;
 	}
 
 	public synchronized void setErrorSensor(double errorSensor) {
-		this.errorSensor = errorSensor;
+		this._sensorError = errorSensor;
 	}
 
 	public synchronized void setSizeCintaAut1(double sizeCintaAut1) {
-		this.sizeCintaAut1 = sizeCintaAut1;
+		this._conveyorBeltSize1 = sizeCintaAut1;
 	}
 
 	public synchronized void setSizeCintaAut2(double sizeCintaAut2) {
-		this.sizeCintaAut2 = sizeCintaAut2;
+		this._conveyorBeltSize2 = sizeCintaAut2;
 	}
 
 	public synchronized void setSizeCintaAut3(double sizeCintaAut3) {
-		this.sizeCintaAut3 = sizeCintaAut3;
+		this._conveyorBeltSize3 = sizeCintaAut3;
 	}
 
 	public synchronized void setCapacidadPasteles(int capacidadPasteles) {
-		this.capacidadPasteles = capacidadPasteles;
+		this._cakeCapacity = capacidadPasteles;
 	}
 
 	public synchronized void setVelCintaAut1(double velCintaAut1) {
-		this.velCintaAut1 = velCintaAut1;
+		this._conveyorBeltSpeed1 = velCintaAut1;
 	}
 
 	public synchronized void setVelCintaAut2(double velCintaAut2) {
-		this.velCintaAut2 = velCintaAut2;
+		this._conveyorBeltSpeed2 = velCintaAut2;
 	}
 
 	public synchronized void setVelCintaAut3(double velCintaAut3) {
-		this.velCintaAut3 = velCintaAut3;
+		this._conveyorBeltSpeed3 = velCintaAut3;
 	}
 
 	public synchronized void setValvChoc(int valvChoc) {
-		this.valvChoc = valvChoc;
+		this._chocolateValveTime = valvChoc;
 	}
 
 	public synchronized void setValvCaram(int valvCaram) {
-		this.valvCaram = valvCaram;
+		this._caramelValveTime = valvCaram;
 	}
 
 	public synchronized void setSelladora(int selladora) {
-		this.selladora = selladora;
+		this._sealingMachineTime = selladora;
 	}
 
 	public synchronized void setMoverBlister(int moverBlister) {
-		this.moverBlister = moverBlister;
+		this._moveBlisterTime = moverBlister;
 	}
 
 	public synchronized void setMoverPastel(int moverPastel) {
-		this.moverPastel = moverPastel;
+		this._moveCakeTime = moverPastel;
 	}
 
 	public synchronized void setInterferencia(int interferencia) {
-		this.interferencia = interferencia;
+		this._interference = interferencia;
 	}
 
 	public synchronized void setSizeBizcocho(double sizeBizcocho) {
-		this.sizeBizcocho = sizeBizcocho;
+		this._spongeCakeSize = sizeBizcocho;
 	}
 
 	public synchronized void setSizeBlister(double sizeBlister) {
-		this.sizeBlister = sizeBlister;
+		this._blisterSize = sizeBlister;
 	}
 
 	public synchronized void setPosChoc(double posChoc) {
-		this.posChoc = posChoc;
+		this._chocolatePosition = posChoc;
 	}
 
 	public synchronized void setPosCaram(double posCaram) {
-		this.posCaram = posCaram;
+		this._caramelPosition = posCaram;
 	}
 
 	public synchronized void setPosBizc(double posBizc) {
-		this.posBizc = posBizc;
+		this._spongeCakePosition = posBizc;
 	}
 
 	public synchronized void setPosTroqueladora(double posTroqueladora) {
-		this.posTroqueladora = posTroqueladora;
+		this._stamperMachinePosition = posTroqueladora;
 	}
 
 	public synchronized void setPosCortadora(double posCortadora) {
-		this.posCortadora = posCortadora;
+		this._cuttingMachinePosition = posCortadora;
 	}
 
 	public synchronized void setPosInicioAut3(double posInicioAut3) {
-		this.posInicioAut3 = posInicioAut3;
+		this._aut3InitialPosition = posInicioAut3;
 	}
 
 	public synchronized void setPosCalidad(double posCalidad) {
-		this.posCalidad = posCalidad;
+		this._qualityPosition = posCalidad;
 	}
 
 	public synchronized void setPosSelladora(double posSelladora) {
-		this.posSelladora = posSelladora;
+		this._sealingMachinePosition = posSelladora;
 	}
 
 	public synchronized void setPosFinAut1(double posFinAut1) {
-		this.posFinAut1 = posFinAut1;
+		this._aut1FinalPosition = posFinAut1;
 	}
 
 	public synchronized void setPosFinAut2(double posFinAut2) {
-		this.posFinAut2 = posFinAut2;
+		this._aut2FinalPosition = posFinAut2;
 	}
 
 	public synchronized void setPosFinAut3(double posFinAut3) {
-		this.posFinAut3 = posFinAut3;
+		this._aut3FinalPosition = posFinAut3;
 	}
 
 	public synchronized void setEspEntreBizc(double espEntreBizc) {
-		this.espEntreBizc = espEntreBizc;
+		this._spaceBetweenSpongeCakes = espEntreBizc;
 	}
 
 	public synchronized void setEspEntreBlister(double espEntreBlister) {
-		this.espEntreBlister = espEntreBlister;
+		this._spaceBetweenBlisters = espEntreBlister;
 	}
 
 	public synchronized int getCapacidadCaramelo() {
-		return capacidadCaramelo;
+		return _caramelCapacity;
 	}
 
 	public synchronized void setCapacidadCaramelo(int capacidadCaramelo) {
-		this.capacidadCaramelo = capacidadCaramelo;
+		this._caramelCapacity = capacidadCaramelo;
 	}
 
 	public synchronized int getCapacidadChocolate() {
-		return capacidadChocolate;
+		return _chocolateCapacity;
 	}
 
 	public synchronized void setCapacidadChocolate(int capacidadChocolate) {
-		this.capacidadChocolate = capacidadChocolate;
+		this._chocolateCapacity = capacidadChocolate;
 	}
 
 	

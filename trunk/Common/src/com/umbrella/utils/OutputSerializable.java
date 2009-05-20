@@ -3,7 +3,7 @@ package com.umbrella.utils;
 import java.io.*;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.ConfiguracionMaestro;
+import com.umbrella.autocommon.MasterConfiguration;
 
 
 public class OutputSerializable {
@@ -19,7 +19,7 @@ public class OutputSerializable {
 				System.out.println("ERROR AL ESCRIBIR EL FICHERO DE CONFIGURACION");
 			} 
 		}
-		else if (tipo instanceof ConfiguracionMaestro) {
+		else if (tipo instanceof MasterConfiguration) {
 			try {
 				this.openConfiguracionMaestro();
 			}
