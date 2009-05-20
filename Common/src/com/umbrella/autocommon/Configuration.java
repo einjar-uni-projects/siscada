@@ -168,19 +168,19 @@ public class Configuration implements Serializable {
 	
 	
     
-	public Configuration(ConfiguracionMaestro conf){
-		this._tiempoReloj=conf.get_tiempoReloj();
+	public Configuration(MasterConfiguration conf){
+		this._tiempoReloj=conf.getClockTime();
 		this.almacenarBlister=conf.getAlmacenarBlister();
-		this.capacidadPasteles=conf.getCapacidadPasteles();
+		this.capacidadPasteles=conf.getCakeCapacity();
 		this.capacidadCaramelo=conf.getCapacidadCaramelo();
 		this.capacidadChocolate=conf.getCapacidadChocolate();
 		this.errorSensor=conf.getErrorSensor();
-		this.espEntreBizc=conf.getEspEntreBizc();
+		this.espEntreBizc=conf.getSpaceBetweenSpongeCakes();
 		this.espEntreBlister=conf.getEspEntreBlister();
 		this.interferencia=conf.getInterferencia();
 		this.moverBlister=conf.getMoverBlister();
 		this.moverPastel=conf.getMoverPastel();
-		this.posBizc=conf.getPosBizc();
+		this.posBizc=conf.getPosSpongeCake();
 		this.posCalidad=conf.getPosCalidad();
 		this.posCaram=conf.getPosCaram();
 		this.posChoc=conf.getPosChoc();
@@ -192,7 +192,7 @@ public class Configuration implements Serializable {
 		this.posSelladora=conf.getPosSelladora();
 		this.posTroqueladora=conf.getPosTroqueladora();
 		this.selladora=conf.getSelladora();
-		this.sizeBizcocho=conf.getSizeBizcocho();
+		this.sizeBizcocho=conf.getSpongeCakeSize();
 		this.sizeBlister=conf.getSizeBlister();
 		this.sizeCintaAut1=conf.getSizeCintaAut1();
 		this.sizeCintaAut2=conf.getSizeCintaAut2();
