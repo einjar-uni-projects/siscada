@@ -40,6 +40,10 @@ public class ImageLoader {
 	private Image _robotTarta;
 	private Image _robotBlister;
 	private Image _robotTartaDef;
+	private Image _cortadora;
+	private Image _estampadora;
+	private Image _calidad;
+	private Image _selladora;
 	
 	/*
 	 * Valor auxiliar para el MediaTracker encargado de esperar por la carga de las imágenes
@@ -77,6 +81,10 @@ public class ImageLoader {
 		_robotTarta = toolkit.getImage("resources/robotTarta.png");
 		_robotBlister = toolkit.getImage("resources/robotBlister.png");
 		_robotTartaDef = toolkit.getImage("resources/robotTartaDef.png");
+		_cortadora = toolkit.getImage("resources/cortadora.png");
+		_estampadora = toolkit.getImage("resources/estampadora.png");
+		_calidad = toolkit.getImage("resources/calidad.png");
+		_selladora = toolkit.getImage("resources/selladora.png");
 		
 		tracker.addImage(_expendedora, getNextNumIncr());
 		tracker.addImage(_expendedoraChoc, getNextNumIncr());
@@ -101,6 +109,10 @@ public class ImageLoader {
 		tracker.addImage(_robotTarta, getNextNumIncr());
 		tracker.addImage(_robotBlister, getNextNumIncr());
 		tracker.addImage(_robotTartaDef, getNextNumIncr());
+		tracker.addImage(_cortadora, getNextNumIncr());
+		tracker.addImage(_estampadora, getNextNumIncr());
+		tracker.addImage(_calidad, getNextNumIncr());
+		tracker.addImage(_selladora, getNextNumIncr());
 		
 		try {
 			tracker.waitForAll();
@@ -302,6 +314,22 @@ public class ImageLoader {
 	 */
 	public Image get_robotTartaDef() {
 		return _robotTartaDef;
+	}
+
+	public Image get_cortadora() {
+		return _cortadora;
+	}
+
+	public Image get_estampadora() {
+		return _estampadora;
+	}
+
+	public Image get_calidad() {
+		return _calidad;
+	}
+
+	public Image get_selladora() {
+		return _selladora;
 	}
 	
 }
