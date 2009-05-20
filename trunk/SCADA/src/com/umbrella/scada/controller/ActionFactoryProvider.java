@@ -1,5 +1,7 @@
 package com.umbrella.scada.controller;
 
+import javax.activity.ActivityCompletedException;
+
 public class ActionFactoryProvider implements ActionFactory {
 	// El constructor privado no permite que se genere un constructor por defecto
 	// (con mismo modificador de acceso que la definicion de la clase) 
@@ -38,6 +40,26 @@ public class ActionFactoryProvider implements ActionFactory {
 			break;
 		case UPDATE_STATE:
 			ret = new ActUpdateState();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+		case UPDATE_CAKE_CONVEYOR_BELT_ATTR:
+			ret = new ActUpdateCakeConveyorBelt();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+		case UPDATE_BLISTER_CONVEYOR_BELT_ATTR:
+			ret = new ActUpdateBlisterConveyorBelt();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+		case UPDATE_PACKAGE_CONVEYOR_BELT_ATTR:
+			ret = new ActUpdatePackageConveyorBelt();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+		case UPDATE_ROBOT1_ATTR:
+			ret = new ActUpdateRobot1();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+		case UPDATE_ROBOT2_ATTR:
+			ret = new ActUpdateRobot2();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 				
