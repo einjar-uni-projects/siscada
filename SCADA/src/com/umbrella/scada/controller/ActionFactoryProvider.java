@@ -42,23 +42,23 @@ public class ActionFactoryProvider implements ActionFactory {
 			ret = new ActUpdateState();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
-		case UPDATE_CAKE_CONVEYOR_BELT_ATTR:
+		case UPDATE_CAKE_CONVEYOR_BELT:
 			ret = new ActUpdateCakeConveyorBelt();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
-		case UPDATE_BLISTER_CONVEYOR_BELT_ATTR:
+		case UPDATE_BLISTER_CONVEYOR_BELT:
 			ret = new ActUpdateBlisterConveyorBelt();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
-		case UPDATE_PACKAGE_CONVEYOR_BELT_ATTR:
+		case UPDATE_PACKAGE_CONVEYOR_BELT:
 			ret = new ActUpdatePackageConveyorBelt();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
-		case UPDATE_ROBOT1_ATTR:
+		case UPDATE_ROBOT1:
 			ret = new ActUpdateRobot1();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
-		case UPDATE_ROBOT2_ATTR:
+		case UPDATE_ROBOT2:
 			ret = new ActUpdateRobot2();
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();

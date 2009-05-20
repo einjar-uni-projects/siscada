@@ -3,6 +3,7 @@ package com.umbrella.scada.view.screen.attributePanels;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import com.umbrella.scada.controller.ActionParams;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 /**
@@ -72,6 +73,12 @@ public class PackageConveyorBeltAttributePanel extends AttributePanel {
 		for (AttributePanel subPanel : _subPanels) {
 			subPanel.refreshData();
 		}
+	}
+	
+	@Override
+	public ActionParams getNewAttributes() {
+		// No tiene sentido llamarlo para esta clase
+		return null;
 	}
 	
 }

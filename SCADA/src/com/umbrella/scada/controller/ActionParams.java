@@ -14,7 +14,9 @@ public class ActionParams implements ParamGroup<ActionParamsEnum> {
 	@Override
 	public Object getParam(ActionParamsEnum param) {
 		InfoJoin info = _params.get(param);
-		return info.b;
+		if(info != null)
+			return info.b;
+		return null;
 	}
 
 	private class InfoJoin<T>{
@@ -28,4 +30,14 @@ public class ActionParams implements ParamGroup<ActionParamsEnum> {
 		
 	}
 
+	public boolean join(ActionParams other) {
+		_params.putAll(other._params);
+		return false;
+	}
+	
+	@Override
+	public boolean join(ParamGroup<ActionParamsEnum> other) {
+		/*TODO QUITAR*/ System.out.println("No debería pasar por aquí");
+		return false;
+	}
 }

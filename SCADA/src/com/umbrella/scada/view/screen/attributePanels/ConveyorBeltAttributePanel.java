@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
+import com.umbrella.scada.controller.ActionParams;
+import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
 import java.awt.Insets;
@@ -25,7 +27,7 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 	private JTextField newSpeedText = null;
 	private JLabel sizeLabel = null;
 	private JLabel sizeValueLabel = null;
-	private JTextField newSizeLabel = null;
+	private JTextField newSizeText = null;
 	private JLabel titleLabel = null;
 	
 	/**
@@ -121,10 +123,10 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getNewSizeLabel() {
-		if (newSizeLabel == null) {
-			newSizeLabel = new JTextField();
+		if (newSizeText == null) {
+			newSizeText = new JTextField();
 		}
-		return newSizeLabel;
+		return newSizeText;
 	}
 
 	@Override
@@ -140,6 +142,16 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 	@Override
 	public void refreshData() {
 		// TODO sin hacer
+	}
+
+	@Override
+	public ActionParams getNewAttributes() {
+		ActionParams params = new ActionParams();
+		if(newSpeedText.getText().length() != 0)
+			params.setParam(ActionParamsEnum.SPEED, ActionParamsEnum.SPEED.getEnclosedClass(), Integer.parseInt(newSpeedText.getText()));
+		if(newSizeText.getText().length() != 0)
+			params.setParam(ActionParamsEnum.SIZE, ActionParamsEnum.SIZE.getEnclosedClass(), Integer.parseInt(newSizeText.getText()));
+		return params;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="0,0"

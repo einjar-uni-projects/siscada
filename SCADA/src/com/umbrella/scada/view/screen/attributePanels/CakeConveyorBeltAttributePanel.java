@@ -5,6 +5,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import com.umbrella.scada.controller.Action;
+import com.umbrella.scada.controller.ActionFactoryProvider;
+import com.umbrella.scada.controller.ActionKey;
+import com.umbrella.scada.controller.ActionParams;
+import com.umbrella.scada.controller.ActionParamsEnum;
+import com.umbrella.scada.controller.ActionResult;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 /**
@@ -43,6 +49,8 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		Font f = _title.getFont();
 		_title.setFont(f.deriveFont(f.getStyle() ^ (Font.BOLD ^ Font.ITALIC), 16));
 		
+		setAcceptAction();
+		
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
 		
@@ -65,6 +73,19 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		
 	}
 
+	private void setAcceptAction() {
+		_acceptButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				ActionParams params = new ActionParams();
+				for (AttributePanel panel : _subPanels) {
+					params.join(panel.getNewAttributes());
+				}
+				Action action = ActionFactoryProvider.getInstance().factoryMethod(ActionKey.UPDATE_CAKE_CONVEYOR_BELT, params);
+				ActionResult result = action.execute();
+			}
+		});
+	}
+
 	/* (non-Javadoc)
 	 * @see com.umbrella.scada.view.screen.AttributePanel#updateLanguage()
 	 */
@@ -79,6 +100,12 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		for (AttributePanel subPanel : _subPanels) {
 			subPanel.refreshData();
 		}
+	}
+
+	@Override
+	public ActionParams getNewAttributes() {
+		// No tiene sentido llamarlo para esta clase
+		return null;
 	}
 	
 }

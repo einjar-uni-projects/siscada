@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.umbrella.scada.controller.ActionParams;
 import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.screen.MainFrameModel;
 
@@ -59,4 +60,9 @@ public abstract class AttributePanel extends JPanel {
 	 * Actualiza los datos mostrados desde el modelo
 	 */
 	public abstract void refreshData();
+
+	/**
+	 * Devuelve los datos nuevos introducidos en los campos.
+	 */
+	public abstract ActionParams getNewAttributes();
 }

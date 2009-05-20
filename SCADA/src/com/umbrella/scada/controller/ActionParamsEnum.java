@@ -1,7 +1,13 @@
 package com.umbrella.scada.controller;
 
 public enum ActionParamsEnum {
-	STATE(Boolean.class), MACHINE(String.class);
+	STATE(Boolean.class),
+	MACHINE(String.class),
+	SPEED(Integer.class),
+	SIZE(Integer.class),
+	CAKE_QUANTITY(Integer.class),
+	CHOCOLAT_QUANTITY(Integer.class),
+	CARAMEL_QUANTITY(Integer.class);
 	
 	private Class _enclosedClass;
 
