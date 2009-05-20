@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import com.umbrella.scada.controller.ActionParams;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 /**
@@ -41,6 +42,12 @@ public class VoidAttributePanel extends AttributePanel {
 	@Override
 	public void refreshData() {
 		// No hace nada
+	}
+	
+	@Override
+	public ActionParams getNewAttributes() {
+		// No tiene sentido llamarlo para esta clase
+		return null;
 	}
 
 }
