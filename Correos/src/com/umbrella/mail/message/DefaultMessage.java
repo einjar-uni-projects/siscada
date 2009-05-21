@@ -6,7 +6,7 @@ public class DefaultMessage implements MessageInterface{
 
 	OntologiaMSG _identificador;
 	Object _objeto;
-	Vector<String> _parametros;
+	Vector<String> _parametros = new Vector<String>();
 	
 	@Override
 	public OntologiaMSG getIdentificador() {
@@ -32,6 +32,19 @@ public class DefaultMessage implements MessageInterface{
 	public void setObject(Object objeto) {
 		// TODO Auto-generated method stub
 		this._objeto=objeto;
+	}
+	
+	@Override
+	public String toString() {
+		String ret = _identificador+" ("+_objeto+") [";
+		if(_parametros != null){
+			for (String str : _parametros) {
+				if(str != null)
+					ret += " " +str;
+			}
+		}
+		ret += " ]";
+		return ret;
 	}
 	
 	
