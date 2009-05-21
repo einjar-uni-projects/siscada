@@ -1,7 +1,10 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import com.umbrella.scada.controller.Action;
 import com.umbrella.scada.controller.ActionFactoryProvider;
@@ -38,18 +41,31 @@ public class Automata3AttributePanel extends AttributePanel {
 	 */
 	@Override
 	protected void initialize() {
-		updateLanguage();
+
+		Font f = _title.getFont();
+		_title.setFont(f.deriveFont(f.getStyle() ^ (Font.BOLD ^ Font.ITALIC), 16));
+		
 		setAcceptAction();
+		updateLanguage();
 		
-		setLayout(new GridLayout(3,1));
+		GridBagLayout gbl = new GridBagLayout();
+		setLayout(gbl);
 		
-		add(_title);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(5,0,5,0);
+		c.gridwidth = 1;
+		add(_title, c);
+		c.gridy = 1;
+		c.fill = GridBagConstraints.BOTH;
 		
 		for (AttributePanel subPanel : _subPanels) {
-			add(subPanel);
+			add(subPanel, c);
+			c.gridy++;
 		}
 		
-		add(_acceptButton);
+		add(_acceptButton, c);
 	}
 
 	/* (non-Javadoc)
@@ -58,8 +74,6 @@ public class Automata3AttributePanel extends AttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.PACKAGE_CONVEYOR_BELT, _model.get_selectedLanguage()));
-		Font f = _title.getFont();
-		_title.setFont(f.deriveFont(f.getStyle() ^ (Font.BOLD ^ Font.ITALIC), 16));
 	}
 
 	@Override
