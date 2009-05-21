@@ -13,7 +13,7 @@ public enum OntologiaMSG {
 	AVISARUNFALLO("AvisarUnFallo",1),//nombre de la maquina q causa el fallo, sacado del enumerado
 	INTERFERENCIA("Interferencia",2), //primer parametro es el robot que la causa y el 2 parametro es la cinta en la que la causa, se saca del enumerado de Maquinas
 	FININTERFERENCIA("FinInterferencia",4),
-	PASTELLISTO("PastelListo",3),
+	PASTELLISTO("PastelListo",0),
 	BLISTERLISTO("BlisterListo",4),
 	BLISTERCOMPLETO("BlisterCompleto",4),
 	BLISTERALMACENADO("BlisterAlmacenado",3),
@@ -28,7 +28,7 @@ public enum OntologiaMSG {
 	PRODUCTORECOGIDO("ProductoRecogido",4), //primer parametro el robot y segundo parametro el tipo de producto
 	FINCINTALIBRE("FinCintaLibre",3),
 	PRODUCTOCOLOCADO("ProductoColocado",3),
-	RELLENARMAQUINA("RellanarMaquina",3), // en el vector 0 el nombre de la maquina sacado del Numerado y el 2� parametro un int contertido a String que es la cantidad
+	RELLENARMAQUINA("RellanarMaquina",3), // en el vector 0 el nombre de la maquina sacado del Numerado y el sig parametro un int contertido a String que es la cantidad
 	MODIFICARCAMPO("ModificarCampo",4),
 	MOVERDESDEMESA("MoverDesdeMesa",2), 
 	ESTADO_AUTOMATA("EstadoAutomata",0); //parametro 1 String["AU1", "AU2", "AU3", "RB1", "RB2"], Boolean(true, false)
