@@ -44,6 +44,7 @@ public class ImageLoader {
 	private Image _estampadora;
 	private Image _calidad;
 	private Image _selladora;
+	private Image _table;
 	
 	/*
 	 * Valor auxiliar para el MediaTracker encargado de esperar por la carga de las imágenes
@@ -85,6 +86,7 @@ public class ImageLoader {
 		_estampadora = toolkit.getImage("resources/estampadora.png");
 		_calidad = toolkit.getImage("resources/calidad.png");
 		_selladora = toolkit.getImage("resources/selladora.png");
+		_table = toolkit.getImage("resources/mesa.png");
 		
 		tracker.addImage(_expendedora, getNextNumIncr());
 		tracker.addImage(_expendedoraChoc, getNextNumIncr());
@@ -113,6 +115,7 @@ public class ImageLoader {
 		tracker.addImage(_estampadora, getNextNumIncr());
 		tracker.addImage(_calidad, getNextNumIncr());
 		tracker.addImage(_selladora, getNextNumIncr());
+		tracker.addImage(_table, getNextNumIncr());
 		
 		try {
 			tracker.waitForAll();
@@ -346,6 +349,14 @@ public class ImageLoader {
 	 */
 	public Image get_selladora() {
 		return _selladora;
+	}
+
+	/**
+	 * Obtiene la imagen de la mesa
+	 * @return imagen de la mesa
+	 */
+	public Image get_table() {
+		return _table;
 	}
 	
 }
