@@ -55,6 +55,10 @@ public class Postmaster extends Thread {
 		return instance;
 	}
 	
+	public boolean sendMessage(MessageInterface message){
+		return _clientMailBox.send(message);
+	}
+	
 	@Override
 	public void run() {
 		ActionFactory af = ActionFactoryProvider.getInstance();
@@ -65,7 +69,7 @@ public class Postmaster extends Thread {
 			try {
 				params = null;
 				MessageInterface msg = _clientMailBox.receiveBlocking();
-				_clientMailBox.send(msg);
+				System.out.println(msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 					case AUTOM_STATE: //TODO esto cambia todo
 						params = new ActionParams();
@@ -95,6 +99,13 @@ public class Postmaster extends Thread {
 						params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
 						af.executeAction(ActionKey.UPDATE_ROBOT_CONTENT, params);
 						break;
+					case ACTUALIZARCONFIGURACION:
+						params = new ActionParams();
+						ape = ActionParamsEnum.CONFIGURATION;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						af.executeAction(ActionKey.UPDATE_CONFIGURATION, params);
+						break;
+						
 				}
 				
 			} catch (Exception e) {
