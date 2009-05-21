@@ -53,5 +53,6 @@ public class Robot1AttributePanel extends RobotAttributePanel {
 		_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 		robotTitle.setText(_languageResources.getLocal(LocalizatorIDs.ARM, _model.get_selectedLanguage()));
 		timeDespl.setText(_languageResources.getLocal(LocalizatorIDs.DESPL_TIME, _model.get_selectedLanguage())+":");
+		timeInter.setText(_languageResources.getLocal(LocalizatorIDs.INTER_TIME, _model.get_selectedLanguage())+":");
 	}
 }

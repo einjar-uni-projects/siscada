@@ -19,6 +19,9 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	protected JLabel timeDespl = null;
 	private JLabel desplTimeDisp = null;
 	private JTextField desplTimeSet = null;
+	protected JLabel timeInter = null;
+	private JLabel interTimeDisp = null;
+	private JTextField interTimeSet = null;
 
 	/**
 	 * This is the default constructor
@@ -70,6 +73,24 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	 */
 	private JPanel getPanelInfo() {
 		if (panelInfo == null) {
+			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
+			gridBagConstraints6.fill = GridBagConstraints.BOTH;
+			gridBagConstraints6.gridy = 6;
+			gridBagConstraints6.weightx = 1.0;
+			gridBagConstraints6.insets = new Insets(5, 5, 0, 5);
+			gridBagConstraints6.gridx = 1;
+			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
+			gridBagConstraints5.fill = GridBagConstraints.BOTH;
+			gridBagConstraints5.gridy = 5;
+			gridBagConstraints5.weightx = 1.0;
+			gridBagConstraints5.insets = new Insets(0, 5, 0, 0);
+			gridBagConstraints5.gridx = 1;
+			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
+			gridBagConstraints4.fill = GridBagConstraints.BOTH;
+			gridBagConstraints4.gridy = 4;
+			gridBagConstraints4.weightx = 1.0;
+			gridBagConstraints4.insets = new Insets(0, 5, 0, 0);
+			gridBagConstraints4.gridx = 0;
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.fill = GridBagConstraints.BOTH;
 			gridBagConstraints3.gridy = 3;
@@ -90,7 +111,7 @@ public abstract class RobotAttributePanel extends AttributePanel {
 			timeDespl.setText("JLabel");
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
-			gridBagConstraints.insets = new Insets(5, 5, 0, 5);
+			gridBagConstraints.insets = new Insets(0, 5, 0, 0);
 			gridBagConstraints.gridwidth = 2;
 			gridBagConstraints.gridy = 0;
 			robotTitle = new JLabel();
@@ -102,8 +123,29 @@ public abstract class RobotAttributePanel extends AttributePanel {
 			panelInfo.add(timeDespl, gridBagConstraints1);
 			panelInfo.add(desplTimeDisp, gridBagConstraints2);
 			panelInfo.add(getDesplTimeSet(), gridBagConstraints3);
+			panelInfo.add(getTimeInter(), gridBagConstraints4);
+			panelInfo.add(getInterTimeDisp(), gridBagConstraints5);
+			panelInfo.add(getInterTimeSet(), gridBagConstraints6);
+			
 		}
 		return panelInfo;
+	}
+
+	private JTextField getInterTimeSet() {
+		interTimeSet = new JTextField();
+		return interTimeSet;
+	}
+
+	private JLabel getInterTimeDisp() {
+		interTimeDisp = new JLabel();
+		interTimeDisp.setText("Label");
+		return interTimeDisp;
+	}
+
+	private JLabel getTimeInter() {
+		timeInter = new JLabel();
+		timeInter.setText("Interruption time");
+		return timeInter;
 	}
 
 	/**

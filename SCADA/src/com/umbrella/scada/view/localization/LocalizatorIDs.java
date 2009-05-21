@@ -33,6 +33,7 @@ public enum LocalizatorIDs {
 	SPEED,
 	SIZE,
 	DESPL_TIME,
+	INTER_TIME,
 	M_MIN,
 	AVAILABLE,
 	ACCEPT
