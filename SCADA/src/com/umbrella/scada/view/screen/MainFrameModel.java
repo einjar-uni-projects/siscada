@@ -30,6 +30,8 @@ public class MainFrameModel implements Updatable {
 	private double _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
 	
 	private int _cakeDepot;
+	
+	private int _rb1Content;
 
 	// ACTIONS
 
@@ -249,6 +251,11 @@ public class MainFrameModel implements Updatable {
 		case RB1_STATE:
 			synchronized (_cerrojos[TransferBufferKeys.RB1_STATE.ordinal()]) {
 				_statesAutRob[3] = (Boolean) o;
+			}
+			break;
+		case RB1_CONTENT:
+			synchronized (_cerrojos[TransferBufferKeys.RB1_CONTENT.ordinal()]) {
+				_rb1Content = ((Integer)o).intValue();
 			}
 			break;
 		case RB2_BLISTER_DELAY:
