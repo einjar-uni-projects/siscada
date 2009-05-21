@@ -3,7 +3,11 @@ package com.umbrella.scada.view.screen.attributePanels;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import com.umbrella.scada.controller.Action;
+import com.umbrella.scada.controller.ActionFactoryProvider;
+import com.umbrella.scada.controller.ActionKey;
 import com.umbrella.scada.controller.ActionParams;
+import com.umbrella.scada.controller.ActionResult;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 /**
@@ -19,21 +23,10 @@ public class PackageConveyorBeltAttributePanel extends AttributePanel {
 	 */
 	private static final long serialVersionUID = -2348859836999031383L;
 	
-	/*private JLabel _availableCakesL = new JLabel();
-	private JLabel _conveyorBeltL = new JLabel();
-	private JLabel _speedL = new JLabel();
-	private TextField _speedInput = new TextField();*/
-	
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
 	 */
 	public PackageConveyorBeltAttributePanel() {
-		/*super();
-		add(_conveyorBeltL);
-		add(_availableCakesL);
-		add(_speedL);
-		add(_speedInput);*/
-		
 		_subPanels = new AttributePanel[1];
 		_subPanels[0] = new ConveyorBeltAttributePanel();
 		
@@ -46,6 +39,7 @@ public class PackageConveyorBeltAttributePanel extends AttributePanel {
 	@Override
 	protected void initialize() {
 		updateLanguage();
+		setAcceptAction();
 		
 		setLayout(new GridLayout(3,1));
 		
@@ -79,6 +73,21 @@ public class PackageConveyorBeltAttributePanel extends AttributePanel {
 	public ActionParams getNewAttributes() {
 		// No tiene sentido llamarlo para esta clase
 		return null;
+	}
+	
+	private void setAcceptAction() {
+		_acceptButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				ActionParams params = new ActionParams();
+				for (AttributePanel panel : _subPanels) {
+					params.join(panel.getNewAttributes());
+				}
+				Action action = ActionFactoryProvider.getInstance().factoryMethod(ActionKey.UPDATE_PACKAGE_CONVEYOR_BELT, params);
+				ActionResult result = action.execute();
+				if (result != ActionResult.EXECUTE_CORRECT)
+					System.out.println("Error al ejecutar la acción");
+			}
+		});
 	}
 	
 }

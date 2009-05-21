@@ -9,7 +9,6 @@ import com.umbrella.scada.controller.Action;
 import com.umbrella.scada.controller.ActionFactoryProvider;
 import com.umbrella.scada.controller.ActionKey;
 import com.umbrella.scada.controller.ActionParams;
-import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.controller.ActionResult;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
@@ -37,7 +36,7 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		_subPanels[3] = new CaramelDispenserAttributePanel();
 		
 		initialize();
-		updateLanguage();
+		
 	}
 
 	/* (non-Javadoc)
@@ -50,6 +49,7 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		_title.setFont(f.deriveFont(f.getStyle() ^ (Font.BOLD ^ Font.ITALIC), 16));
 		
 		setAcceptAction();
+		updateLanguage();
 		
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
@@ -61,7 +61,7 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 		c.gridwidth = 1;
 		add(_title, c);
 		c.gridy = 1;
-		c.fill = c.BOTH;
+		c.fill = GridBagConstraints.BOTH;
 		
 		for (AttributePanel subPanel : _subPanels) {
 			add(subPanel, c);
@@ -82,6 +82,8 @@ public class CakeConveyorBeltAttributePanel extends AttributePanel {
 				}
 				Action action = ActionFactoryProvider.getInstance().factoryMethod(ActionKey.UPDATE_CAKE_CONVEYOR_BELT, params);
 				ActionResult result = action.execute();
+				if (result != ActionResult.EXECUTE_CORRECT)
+					System.out.println("Error al ejecutar la acción");
 			}
 		});
 	}

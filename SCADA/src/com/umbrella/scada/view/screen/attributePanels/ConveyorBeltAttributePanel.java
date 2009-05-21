@@ -3,6 +3,7 @@ package com.umbrella.scada.view.screen.attributePanels;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -13,11 +14,6 @@ import com.umbrella.scada.controller.ActionParams;
 import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
-import java.awt.Insets;
-import java.text.AttributedString;
-import java.text.AttributedCharacterIterator.Attribute;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ConveyorBeltAttributePanel extends AttributePanel {
 

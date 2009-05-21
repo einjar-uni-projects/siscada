@@ -1,13 +1,14 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
 public abstract class RobotAttributePanel extends AttributePanel {
@@ -33,6 +34,9 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	 * @return void
 	 */
 	protected void initialize() {
+		setAcceptAction();
+		updateLanguage();
+		
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.setRows(1);
 		this.setLayout(gridLayout);
@@ -100,5 +104,7 @@ public abstract class RobotAttributePanel extends AttributePanel {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	protected abstract void setAcceptAction();
 
 }
