@@ -33,7 +33,7 @@ public enum OntologiaMSG {
 	//MOVERDESDEMESA("MoverDesdeMesa",2), 
 	AUTOM_STATE("AutomState",0),//parametro 1 String["AU1", "AU2", "AU3", "RB1", "RB2"], Boolean(true, false)
 	CAKE_DEPOT("CakeDepot",0),
-	Prueba("",0)
+	AU1_CAKES_POS("Au1CakesPos",0),
 	; 
 	
 	

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import com.umbrella.automaster.comm.Postmaster;
 import com.umbrella.automaster.model.PropertiesFile;
@@ -131,14 +132,61 @@ public class LaunchAutMaster {
 					
 					break;
 				case CAKE_DEPOT:
-					System.out.println("Elegir el automata: R1 R2 AU1 AU2 AU3");
+					System.out.println("Elegir la cantidad de pasteles en el deposito: <Entero>");
 					Integer n_cake_depot = readInt();
 					if(n_cake_depot != null){
 						dm.setObject(n_cake_depot);
 					}else
 						error = true;
 					break;
-	
+				case AU1_CAKES_POS:
+					ArrayList<Integer> ali = new ArrayList<Integer>(7);
+					System.out.println("Elegir la cantidad de pasteles en la posicion 1: <Entero>");
+					Integer au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(0, au1_cakes_pos);
+					else
+						error = true;
+					System.out.println("Elegir la cantidad de pasteles en la posicion 2: <Entero>");
+					au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(1, au1_cakes_pos);
+					else
+						error = true;
+					System.out.println("Elegir la cantidad de pasteles en la posicion 3: <Entero>");
+					au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(2, au1_cakes_pos);
+					else
+						error = true;
+					System.out.println("Elegir la cantidad de pasteles en la posicion 4: <Entero>");
+					au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(3, au1_cakes_pos);
+					else
+						error = true;
+					System.out.println("Elegir la cantidad de pasteles en la posicion 5: <Entero>");
+					au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(4, au1_cakes_pos);
+					else
+						error = true;
+					System.out.println("Elegir la cantidad de pasteles en la posicion 6: <Entero>");
+					au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(5, au1_cakes_pos);
+					else
+						error = true;
+					System.out.println("Elegir la cantidad de pasteles en la posicion 7: <Entero>");
+					au1_cakes_pos = readInt();
+					if(au1_cakes_pos != null)
+						ali.add(6, au1_cakes_pos);
+					else
+						error = true;
+					
+					dm.setObject(ali);
+					
+					break;
 				default:
 					break;
 				}
