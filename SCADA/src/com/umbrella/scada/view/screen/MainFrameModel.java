@@ -432,4 +432,10 @@ public class MainFrameModel implements Updatable {
 		}
 	}
 
+	public int get_rb1Content() {
+		synchronized (_cerrojos[TransferBufferKeys.RB1_CONTENT.ordinal()]) {
+			return _rb1Content;
+		}
+	}
+
 }
