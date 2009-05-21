@@ -99,6 +99,9 @@ public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 		this.add(sizeValueLabel, gridBagConstraints4);
 		this.add(getNewSizeLabel(), gridBagConstraints5);
 		this.add(titleLabel, gridBagConstraints11);
+		
+		Font f = titleLabel.getFont();
+		titleLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 	}
 
 	/**
@@ -129,8 +132,6 @@ public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 	public void updateLanguage() {
 		LanguageIDs l = _model.get_selectedLanguage();
 		titleLabel.setText(_languageResources.getLocal(LocalizatorIDs.CONVEYOR_BELT, l));
-		Font f = titleLabel.getFont();
-		titleLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 		speedLabel.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, l)+":");
 		sizeLabel.setText(_languageResources.getLocal(LocalizatorIDs.SIZE, l)+":");
 	}

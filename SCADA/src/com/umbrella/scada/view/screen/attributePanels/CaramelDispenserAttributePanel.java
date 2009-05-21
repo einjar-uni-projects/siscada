@@ -24,8 +24,6 @@ public class CaramelDispenserAttributePanel extends DispenserAttributePanel {
 	public void updateLanguage() {
 		LanguageIDs l = _model.get_selectedLanguage();
 		titleLabel.setText(_languageResources.getLocal(LocalizatorIDs.CARAMEL_DISPENSER, l));
-		Font f = titleLabel.getFont();
-		titleLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 		countLabel.setText(_languageResources.getLocal(LocalizatorIDs.AVAILABLE, l));
 	}
 
