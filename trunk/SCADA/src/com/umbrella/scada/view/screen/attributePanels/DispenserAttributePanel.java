@@ -1,16 +1,13 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.border.BevelBorder;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-
-import com.umbrella.scada.view.localization.LocalizatorIDs;
-import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 
 public abstract class DispenserAttributePanel extends AttributePanel {
 
