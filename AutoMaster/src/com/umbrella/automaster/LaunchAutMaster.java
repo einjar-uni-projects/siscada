@@ -41,8 +41,10 @@ public class LaunchAutMaster {
 		OntologiaMSG om[] = OntologiaMSG.values();
 		Postmaster post = Postmaster.getInstance();
 		DefaultMessage dm = new DefaultMessage();
+		boolean error;
 		
 		while(option >= 0){
+			error = false;
 			showOptions(om);
 			option = readInt();
 			if(option >= 0){
@@ -80,8 +82,17 @@ public class LaunchAutMaster {
 				case BLISTERVALIDO:
 					
 					break;
-				case ESTADO_AUTOMATA:
-					
+				case ESTADO_AUTOMATA:					
+					dm.setIdentificador(om[option]);
+					System.out.println("Elegir el automata: R1 R2 AU1 AU2 AU3");
+					String aut = readStr();
+					System.out.println("Elegir el estado: true false");
+					Boolean bol = readBoolean();
+					if(aut != null && bol != null){
+						dm.setObject(bol);
+						dm.getParametros().add(aut);
+					}else
+						error = true;
 					break;
 				case FINCINTALIBRE:
 					
@@ -93,9 +104,6 @@ public class LaunchAutMaster {
 					
 					break;
 				case MODIFICARCAMPO:
-					
-					break;
-				case MOVERDESDEMESA:
 					
 					break;
 				case PARADA:
@@ -126,27 +134,43 @@ public class LaunchAutMaster {
 				default:
 					break;
 				}
-				
-				post.sendMessageSCADA(dm);
+				if(!error){
+					System.out.println("Se manda el mensaje: "+dm);
+					post.sendMessageSCADA(dm);
+				}else
+					System.err.println("Parametro incorrecto");
 			}else{
 				System.err.println("Opción no válida");
 			}
-
-				
-				
 		}
 	}
 
+	private Boolean readBoolean() {
+		Boolean ret = null;
+		System.out.print("[Boolean]>");
+		try{
+			ret = Boolean.parseBoolean(br.readLine());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return ret;
+	}
+
 	private void showOptions(OntologiaMSG[] om) {
-		System.out.println("Opciones de mensaje:");
-		for (int i = 0; i < om.length; i++) {
+		System.out.println("\nOpciones de mensaje:");
+		int i;
+		for (i = 0; i < om.length-1; i+=2) {
+				System.out.println(i+"-"+om[i]+"\t\t"+(i+1)+"-"+om[i+1]);
+		}
+		if(i < om.length){
 			System.out.println(i+"-"+om[i]);
 		}
+		
 	}
 	
 	private String readStr(){
 		String line = null;
-		System.out.println(">");
+		System.out.print("[String]>");
 		try {
 			line = br.readLine();
 		} catch (IOException e) {
@@ -158,7 +182,7 @@ public class LaunchAutMaster {
 	
 	private int readInt(){
 		int ret = -1;
-		System.out.println(">");
+		System.out.print("[Integer]>");
 		try{
 			ret = Integer.parseInt(br.readLine());
 		}catch (Exception e) {
