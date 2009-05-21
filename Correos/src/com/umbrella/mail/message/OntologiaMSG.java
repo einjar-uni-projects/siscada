@@ -34,6 +34,7 @@ public enum OntologiaMSG {
 	AUTOM_STATE("AutomState",0),//parametro 1 String["AU1", "AU2", "AU3", "RB1", "RB2"], Boolean(true, false)
 	CAKE_DEPOT("CakeDepot",0),
 	AU1_CAKES_POS("Au1CakesPos",0),
+	ROBOT_SET_CONTENT("RobotSetContent",0)
 	; 
 	
 	

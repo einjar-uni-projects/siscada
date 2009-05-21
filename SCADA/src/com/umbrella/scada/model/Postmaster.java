@@ -87,6 +87,14 @@ public class Postmaster extends Thread {
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						af.executeAction(ActionKey.AU1_CAKES_POS, params);
 						break;
+					case ROBOT_SET_CONTENT:
+						params = new ActionParams();
+						ape = ActionParamsEnum.ROBOT_CONTENT;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						ape = ActionParamsEnum.MACHINE;
+						params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
+						af.executeAction(ActionKey.UPDATE_ROBOT_CONTENT, params);
+						break;
 				}
 				
 			} catch (Exception e) {
