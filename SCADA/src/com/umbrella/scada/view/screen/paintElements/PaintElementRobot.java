@@ -52,5 +52,9 @@ public class PaintElementRobot extends PaintElement {
 		}
 
 	}
+	
+	public void setState(int state){
+		_state = state;
+	}
 
 }
