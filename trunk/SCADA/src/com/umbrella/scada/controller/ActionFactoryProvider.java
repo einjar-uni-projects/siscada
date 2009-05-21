@@ -1,6 +1,5 @@
 package com.umbrella.scada.controller;
 
-import javax.activity.ActivityCompletedException;
 
 public class ActionFactoryProvider implements ActionFactory {
 	// El constructor privado no permite que se genere un constructor por defecto

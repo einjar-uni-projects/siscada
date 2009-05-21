@@ -2,8 +2,8 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
-import com.umbrella.utils.ThreadState;
 import com.umbrella.utils.Pastel;
+import com.umbrella.utils.ThreadState;
 
 
 /**
@@ -61,10 +61,10 @@ public class ActivatedDispenser extends Thread{
 			while(_threadState.equals(ThreadState.EJECUTANDO)){
 				/*
 				 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
-				 * el œltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
+				 * el ï¿½ltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
 				 */
 				try {
-					// se queda esperando a la se–al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
+					// se queda esperando a la seï¿½al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
 					wait();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

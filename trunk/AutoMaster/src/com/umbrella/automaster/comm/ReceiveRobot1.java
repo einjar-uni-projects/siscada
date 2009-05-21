@@ -5,14 +5,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
-import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.EstateRobots;
 import com.umbrella.utils.NombreMaquinas;
 
 /**
@@ -85,7 +81,7 @@ public class ReceiveRobot1 extends Thread{
 				 * casos:
 				 * 	pongo un blister en la mesa
 				 * 	pongo un pastel entre 0 y 4
-				 *  pongo el 4¼ pastel
+				 *  pongo el 4ï¿½ pastel
 				 */
 				String colocado=msg.getParametros().get(1);
 				if(colocado.equals("blister")){

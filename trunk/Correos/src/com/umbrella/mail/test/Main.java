@@ -9,11 +9,6 @@
 
 package com.umbrella.mail.test;
 
-import java.io.IOException;
-import java.rmi.*;
-import java.rmi.registry.Registry;
-import java.rmi.registry.LocateRegistry;
-
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.MessageInterface;
 

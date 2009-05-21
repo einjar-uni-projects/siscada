@@ -1,6 +1,5 @@
 package com.umbrella.autocommon;
 
-import com.umbrella.autocommon.Configuration;
 
 public class Clock extends Thread{
 	
@@ -13,7 +12,7 @@ public class Clock extends Thread{
 	
 	/*
 	 *  creador sincronizado para protegerse de posibles problemas  multi-hilo
-	 *  otra prueba para evitar instanciaci—n mœltiple
+	 *  otra prueba para evitar instanciaciï¿½n mï¿½ltiple
 	 */ 
     private synchronized static void createInstance() {
         if (INSTANCE == null) { 
@@ -27,7 +26,7 @@ public class Clock extends Thread{
     }
 	
 	public void run(){
-		// Aquí el código pesado que tarda mucho
+		// Aquï¿½ el cï¿½digo pesado que tarda mucho
 		try {
 			wait(time);
 			_clock++;
