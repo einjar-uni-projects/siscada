@@ -31,7 +31,7 @@ public class MainFrameModel implements Updatable {
 	
 	private int _cakeDepot;
 	
-	private int _rb1Content;
+	private int _rb1Content, _rb2Content;
 
 	// ACTIONS
 
@@ -269,6 +269,11 @@ public class MainFrameModel implements Updatable {
 				_statesAutRob[4] = (Boolean) o;
 			}
 			break;
+		case RB2_CONTENT:
+			synchronized (_cerrojos[TransferBufferKeys.RB2_CONTENT.ordinal()]) {
+				_rb2Content = ((Integer)o).intValue();
+			}
+			break;
 
 		default:
 			break;
@@ -435,6 +440,12 @@ public class MainFrameModel implements Updatable {
 	public int get_rb1Content() {
 		synchronized (_cerrojos[TransferBufferKeys.RB1_CONTENT.ordinal()]) {
 			return _rb1Content;
+		}
+	}
+	
+	public int get_rb2Content() {
+		synchronized (_cerrojos[TransferBufferKeys.RB2_CONTENT.ordinal()]) {
+			return _rb2Content;
 		}
 	}
 
