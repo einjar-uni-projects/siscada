@@ -96,15 +96,6 @@ public class Model {
 		_observable = ObservableProvider.getInstance();
 		try {
 			new Thread(Postmaster.getInstance()).start();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (PropertyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

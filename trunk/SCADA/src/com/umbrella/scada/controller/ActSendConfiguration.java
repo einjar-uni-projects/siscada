@@ -21,15 +21,6 @@ public class ActSendConfiguration implements Action {
 		try {
 			Postmaster.getInstance().sendMessage(dm);
 			ret = ActionResult.EXECUTE_CORRECT;
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (PropertyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
