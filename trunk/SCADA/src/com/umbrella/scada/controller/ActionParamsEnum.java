@@ -7,7 +7,8 @@ public enum ActionParamsEnum {
 	SIZE(Integer.class),
 	CAKE_QUANTITY(Integer.class),
 	CHOCOLAT_QUANTITY(Integer.class),
-	CARAMEL_QUANTITY(Integer.class);
+	CARAMEL_QUANTITY(Integer.class), 
+	CAKE_DEPOT(Integer.class);
 	
 	private Class _enclosedClass;
 

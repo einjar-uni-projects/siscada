@@ -68,6 +68,10 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case UPDATE_CAKE_DEPOT:
+			ret = new ActUpdateCakeDepot();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
 		default:
 			ret = new ActNull();
 			break;
