@@ -79,6 +79,7 @@ public class Model {
 	/*Atributos del robot1*/
 	private final ModelElementAtribute<Integer> _rb1BlisterDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB1_BLISTER_DELAY, new Integer(5));
 	private final ModelElementAtribute<Integer> _rb1CakeDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB1_CAKE_DELAY, new Integer(5));
+	private final ModelElementAtribute<Integer> _rb1Content = new ModelElementAtribute<Integer>(TransferBufferKeys.RB1_CONTENT, new Integer(0));
 	private final ModelElementAtribute<Boolean> _rb1State = new ModelElementAtribute<Boolean>(TransferBufferKeys.RB1_STATE, new Boolean(false));
 	
 	/*Atributos del robot2*/
@@ -146,6 +147,7 @@ public class Model {
 		
 		_observable.addChange(_rb1BlisterDelay.get_tbk(), _rb1BlisterDelay.get_value());
 		_observable.addChange(_rb1CakeDelay.get_tbk(), _rb1CakeDelay.get_value());
+		_observable.addChange(_rb1Content.get_tbk(), _rb1Content.get_value());
 		_observable.addChange(_rb1State.get_tbk(), _rb1State.get_value());
 		
 		_observable.addChange(_rb2BlisterDelay.get_tbk(), _rb2BlisterDelay.get_value());
@@ -162,6 +164,12 @@ public class Model {
 	
 	public String get_genIP(){
 		return _genIP.get_value();
+	}
+	
+	public void set_rb1Content(int value){
+		_rb1Content.set_value(value);
+		_observable.addChange(_rb1Content.get_tbk(), _rb1Content.get_value());
+		_modelChanges = true;
 	}
 	
 	public void set_au1State(boolean state){
@@ -359,23 +367,5 @@ public class Model {
 		_rb2BlisterDelay.set_value(blisterDelay);
 		_observable.addChange(_rb2BlisterDelay.get_tbk(), _rb2BlisterDelay.get_value());
 		_modelChanges = true;
-	}
-
-	public void test() {
-		int i = 0;
-		while(true){
-			i++;
-			
-			set_au1CakesPos1(i);
-			notifyChanges();
-			
-			try {
-				Thread.sleep(250);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
 	}
 }

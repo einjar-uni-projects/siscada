@@ -17,7 +17,7 @@ public class Launch {
 	public Launch() {
 		/* TODO CACA */ 
 		MainFrameModel.getInstance().initialize();
-		Model.getInstance().test();
+		Model.getInstance();
 		
 		/*new Thread(new ModelLaunch()).start();
 		
