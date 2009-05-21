@@ -40,32 +40,32 @@ public class PaintElementCake extends PaintElement {
 		if(pasteles[1] > 0){
 			g.drawImage(_loader.get_masa(), _posX+52, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[1]).toCharArray();
-			g.drawChars(numPasteles, 0, numPasteles.length, _posX+67-((numPasteles.length*5)/2), _posY+32);
+			g.drawChars(numPasteles, 0, numPasteles.length, _posX+67-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[2] > 0){
 			g.drawImage(_loader.get_masaChoc(), _posX+105, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[2]).toCharArray();
-			g.drawChars(numPasteles, 0, numPasteles.length, _posX+120-((numPasteles.length*5)/2), _posY+32);
+			g.drawChars(numPasteles, 0, numPasteles.length, _posX+120-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[3] > 0){
 			g.drawImage(_loader.get_masaChoc(), _posX+157, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[3]).toCharArray();
-			g.drawChars(numPasteles, 0, numPasteles.length, _posX+172-((numPasteles.length*5)/2), _posY+32);
+			g.drawChars(numPasteles, 0, numPasteles.length, _posX+172-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[4] > 0){
 			g.drawImage(_loader.get_masaCaram(), _posX+210, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[4]).toCharArray();
-			g.drawChars(numPasteles, 0, numPasteles.length, _posX+225-((numPasteles.length*5)/2), _posY+32);
+			g.drawChars(numPasteles, 0, numPasteles.length, _posX+225-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[5] > 0){
 			g.drawImage(_loader.get_masaCaram(), _posX+262, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[5]).toCharArray();
-			g.drawChars(numPasteles, 0, numPasteles.length, _posX+277-((numPasteles.length*5)/2), _posY+32);
+			g.drawChars(numPasteles, 0, numPasteles.length, _posX+277-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[6] > 0){
 			g.drawImage(_loader.get_masaCaram(), _posX+310, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[6]).toCharArray();
-			g.drawChars(numPasteles, 0, numPasteles.length, _posX+325-((numPasteles.length*5)/2), _posY+32);
+			g.drawChars(numPasteles, 0, numPasteles.length, _posX+325-((numPasteles.length*5)/2), _posY);
 		}
 	}
 
