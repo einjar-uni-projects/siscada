@@ -5,11 +5,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Clock;
-import com.umbrella.autocommon.Configuracion;
-import com.umbrella.autocommon.ConfiguracionMaestro;
-import com.umbrella.autocommon.Contexto;
+import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.autocommon.MasterConfiguration;
 import com.umbrella.mail.mailbox.ClientMailBox;
 
 
@@ -26,13 +26,8 @@ public class Maestro {
 	 * en caso de arranque normal no envia un contexto, solo la orden de arranque.
 	 */
 	private static ContextoMaestro _contextoMaestro=ContextoMaestro.getInstance();;
-	private static Contexto _contextoAut1;
-	private static Contexto _contextoAut2;
-	private static Contexto _contextoAut3;
-	private static ContextoRobot _contextoRobot1;
-	private static ContextoRobot _contextoRobot2;
-	private static ConfiguracionMaestro _configuracion;
-	private static Configuracion _general;
+	private static MasterConfiguration _configuracion;
+	private static Configuration _general;
 	
 	
 	private static ClientMailBox _correoAut1;
@@ -111,7 +106,7 @@ public class Maestro {
 				 */
 				
 				/*
-				 * si mi contadorPasteles interno = 4, envio el mensaje de blister listo al Aut3
+				 * si mi contadorPasteles interno = 4, envio el mensaje de mover blister listo al robot1
 				 */
 				
 				/*
@@ -165,15 +160,16 @@ public class Maestro {
 	}
 	private static void inicializar(){
 		_contextoMaestro=ContextoMaestro.getInstance();
-		_configuracion=ConfiguracionMaestro.getInstance();
-		_general=new Configuracion(_configuracion); //configuracion q se pasa a los automatas
+		_configuracion=MasterConfiguration.getInstance();
+		_general=new Configuration(_configuracion); //configuracion q se pasa a los automatas
 		// el contexto es el mismo en todos pero es porque acabamos de inicializar
-		_contextoAut1=Contexto.getInstance();
-		_contextoAut2=Contexto.getInstance();
-		_contextoAut3=Contexto.getInstance();
+		/*
+		_contextoAut1=Context.getInstance();
+		_contextoAut2=Context.getInstance();
+		_contextoAut3=Context.getInstance();
 		_contextoRobot1=ContextoRobot.getInstance();
 		_contextoRobot2=ContextoRobot.getInstance();
-		
+		*/
 		/*
 		 * se inicilaizan los buzones
 		 */
