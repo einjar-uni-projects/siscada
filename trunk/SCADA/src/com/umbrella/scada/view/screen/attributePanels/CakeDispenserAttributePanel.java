@@ -23,7 +23,7 @@ public class CakeDispenserAttributePanel extends DispenserAttributePanel {
 	public void updateLanguage() {
 		LanguageIDs l = _model.get_selectedLanguage();
 		titleLabel.setText(_languageResources.getLocal(LocalizatorIDs.CAKE_DISPENSER, l));
-		countLabel.setText(_languageResources.getLocal(LocalizatorIDs.AVAILABLE, l));
+		countLabel.setText(_languageResources.getLocal(LocalizatorIDs.AVAILABLE, l)+":");
 	}
 	
 	@Override
