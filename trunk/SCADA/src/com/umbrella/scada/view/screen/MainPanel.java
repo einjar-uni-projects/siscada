@@ -25,9 +25,6 @@ public class MainPanel extends JPanel{
 	private int _wallpaperWidth = 800;
 	private int _wallpaperHeight = 600;
 	
-	private long _time1;
-	private long _time2;
-	
 	
 	private ElementsGroup[] _conjuntosCinta = new ElementsGroup[5];
 	
@@ -44,30 +41,6 @@ public class MainPanel extends JPanel{
 		_conjuntosCinta[4] = new ConjuntoRobot2(_loader, 560,275,200,150, model);
 		_conjuntosCinta[4].cintaOn(true);
 		setMouseListener();
-		runThread();
-	}
-
-	private void runThread() {
-		new Thread(new RepaintThr(), "ThreadRepaint").start();
-	}
-	
-	private class RepaintThr implements Runnable{
-		public void run() {
-			while(true){
-				_time1 = System.currentTimeMillis();
-				repaint();
-				_time2 = System.currentTimeMillis();
-				
-				long sleep = 200-(_time2-_time1);
-				if(sleep > 0)
-					try {
-						Thread.sleep(sleep);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-		}
 	}
 
 	@Override
@@ -77,20 +50,11 @@ public class MainPanel extends JPanel{
 		Graphics altGr = alt.getGraphics();
 		altGr.setColor(Color.WHITE);
 		altGr.fillRect(0, 0, _wallpaperWidth, _wallpaperHeight);
-		//_conjuntosCinta[0]._loader = _loader; TODO LOL
 		for (int i = 0; i < _conjuntosCinta.length; i++) {
 			_conjuntosCinta[i].paint(altGr);
 		}
-		
-		/*altGr.drawImage(_loader.get_backImage(), 0, 0, _wallpaperWidth, _wallpaperHeight, null);
-		altGr.drawImage(_loader.get_cinta1(), 50, 200, null);
-		altGr.drawImage(_loader.get_cinta1(), 50, 450, null);
-		altGr.drawImage(_loader.get_cinta1(), 450, 325, null);
-		altGr.drawImage(_loader.get_expendedora(), 100, 100, null);
-		altGr.drawImage(_loader.get_masa(), 100, 120, null);*/
-		
+
 		g.drawImage(alt, 0, 0, getWidth(), getHeight(), null);
-		
 	}
 
 	public void startAutRob() {
@@ -113,17 +77,17 @@ public class MainPanel extends JPanel{
 				int y = e.getY();
 				MainFrame main = MainFrame.getInstance();
 				if(_conjuntosCinta[0].isInto(x, y))
-					main.changeRightCard("2");
+					main.changeRightCard(1);
 				else if(_conjuntosCinta[1].isInto(x, y))
-					main.changeRightCard("3");
+					main.changeRightCard(2);
 				else if(_conjuntosCinta[2].isInto(x, y))
-					main.changeRightCard("4");
+					main.changeRightCard(3);
 				else if(_conjuntosCinta[3].isInto(x, y))
-					main.changeRightCard("5");
+					main.changeRightCard(4);
 				else if(_conjuntosCinta[4].isInto(x, y))
-					main.changeRightCard("6");
+					main.changeRightCard(5);
 				else
-					main.changeRightCard("1");
+					main.changeRightCard(0);
 			}
 		});
 	}

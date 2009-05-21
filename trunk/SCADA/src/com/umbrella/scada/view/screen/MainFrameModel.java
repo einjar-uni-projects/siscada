@@ -34,7 +34,7 @@ public class MainFrameModel implements Updatable {
 	private int[] _blisters = new int[5];
 	private int[] _paquetes = new int[4];
 	
-	private int _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
+	private double _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
 
 	// ACTIONS
 
@@ -123,13 +123,13 @@ public class MainFrameModel implements Updatable {
 		case AU1_CONVEYOR_BELT_SIZE:
 			synchronized (_cerrojos[TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE
 					.ordinal()]) {
-				_cbCakeSize = ((Integer)o).intValue();
+				_cbCakeSize = ((Double)o).doubleValue();
 			}
 			break;
 		case AU1_CONVEYOR_BELT_SPEED:
 			synchronized (_cerrojos[TransferBufferKeys.AU1_CONVEYOR_BELT_SPEED
 					.ordinal()]) {
-				_cbCakeSpeed = ((Integer)o).intValue();
+				_cbCakeSpeed = ((Double)o).doubleValue();
 			}
 			break;
 		case AU1_CAKES_POS1:
@@ -175,13 +175,13 @@ public class MainFrameModel implements Updatable {
 		case AU2_CONVEYOR_BELT_SIZE:
 			synchronized (_cerrojos[TransferBufferKeys.AU2_CONVEYOR_BELT_SIZE
 					.ordinal()]) {
-				_cbBlisterSize = ((Integer)o).intValue();
+				_cbBlisterSize = ((Double)o).doubleValue();
 			}
 			break;
 		case AU2_CONVEYOR_BELT_SPEED:
 			synchronized (_cerrojos[TransferBufferKeys.AU2_CONVEYOR_BELT_SPEED
 					.ordinal()]) {
-				_cbBlisterSpeed = ((Integer)o).intValue();
+				_cbBlisterSpeed = ((Double)o).doubleValue();
 			}
 			break;
 		case AU2_VACUUM_SEALING_MACHINE:
@@ -198,13 +198,13 @@ public class MainFrameModel implements Updatable {
 		case AU3_CONVEYOR_BELT_SIZE:
 			synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SIZE
 					.ordinal()]) {
-				_cbPackageSize = ((Integer)o).intValue();
+				_cbPackageSize = ((Double)o).doubleValue();
 			}
 			break;
 		case AU3_CONVEYOR_BELT_SPEED:
 			synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED
 					.ordinal()]) {
-				_cbPackageSpeed = ((Integer)o).intValue();
+				_cbPackageSpeed = ((Double)o).doubleValue();
 			}
 			break;
 		case AU3_STATE:
@@ -372,28 +372,46 @@ public class MainFrameModel implements Updatable {
 		return ret;
 	}
 
-	public int get_cbCakeSize() {
-		return _cbCakeSize;
+	public double get_cbCakeSize() {
+		synchronized (_cerrojos[TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE
+		    					.ordinal()]) {
+			return _cbCakeSize;
+		}
 	}
 
-	public int get_cbBlisterSize() {
-		return _cbBlisterSize;
+	public double get_cbBlisterSize() {
+		synchronized (_cerrojos[TransferBufferKeys.AU2_CONVEYOR_BELT_SIZE
+		    					.ordinal()]) {
+			return _cbBlisterSize;
+		}
+	}
+	
+	public double get_cbPackageSize() {
+		synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SIZE
+		    					.ordinal()]) {
+			return _cbPackageSize;
+		}
 	}
 
-	public int get_cbPackageSize() {
-		return _cbPackageSize;
+	public double get_cbCakeSpeed() {
+		synchronized (_cerrojos[TransferBufferKeys.AU1_CONVEYOR_BELT_SPEED
+		    					.ordinal()]) {
+			return _cbCakeSpeed;
+		}
 	}
 
-	public int get_cbCakeSpeed() {
-		return _cbCakeSpeed;
+	public double get_cbBlisterSpeed() {
+		synchronized (_cerrojos[TransferBufferKeys.AU2_CONVEYOR_BELT_SPEED
+		    					.ordinal()]) {
+			return _cbBlisterSpeed;
+		}
 	}
 
-	public int get_cbBlisterSpeed() {
-		return _cbBlisterSpeed;
-	}
-
-	public int get_cbPackageSpeed() {
-		return _cbPackageSpeed;
+	public double get_cbPackageSpeed() {
+		synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED
+		    					.ordinal()]) {
+			return _cbPackageSpeed;
+		}
 	}
 
 }

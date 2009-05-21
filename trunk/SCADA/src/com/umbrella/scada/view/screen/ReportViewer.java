@@ -1,21 +1,17 @@
 package com.umbrella.scada.view.screen;
 
 import java.awt.BorderLayout;
-
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
-import java.awt.Dimension;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.swing.JScrollPane;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JToolBar;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 public class ReportViewer extends JFrame {

@@ -50,13 +50,19 @@ public class MainFrame implements UpdatableInterface{
 	private JMenuItem _englishLanguage = null;
 	private CardLayout _rightLayout;  //  @jve:decl-index=0:
 	private AttributePanel[] _attributePanels;
-	ActionFactory _actionFactory = ActionFactoryProvider.getInstance();  //  @jve:decl-index=0:
+	private ActionFactory _actionFactory = ActionFactoryProvider.getInstance();  //  @jve:decl-index=0:
 	private JMenuItem _menuReports = null;
 	private JMenuItem _menuExit = null;
+	
+	private long _time1;
+	private long _time2;
+	
+	private AttributePanel _actualAttributePanel;
 	
 	private MainFrame(){
 		getJFrame();
 		updateLanguage();
+		runThread();
 		jFrame.setVisible(true);
 	}
 	
@@ -117,14 +123,14 @@ public class MainFrame implements UpdatableInterface{
 			_attributePanels[4] = new Robot1AttributePanel();
 			_attributePanels[5] = new Robot2AttributePanel();
 			
-			_rightPanel.add(_attributePanels[0], "1");
-			_rightPanel.add(_attributePanels[1], "2");
-			_rightPanel.add(_attributePanels[2], "3");
-			_rightPanel.add(_attributePanels[3], "4");
-			_rightPanel.add(_attributePanels[4], "5");
-			_rightPanel.add(_attributePanels[5], "6");
+			_rightPanel.add(_attributePanels[0], "0");
+			_rightPanel.add(_attributePanels[1], "1");
+			_rightPanel.add(_attributePanels[2], "2");
+			_rightPanel.add(_attributePanels[3], "3");
+			_rightPanel.add(_attributePanels[4], "4");
+			_rightPanel.add(_attributePanels[5], "5");
 			
-			_rightLayout.show(_rightPanel, "1");
+			_rightLayout.show(_rightPanel, "0");
 			_rightPanel.setPreferredSize(new Dimension(200, 600));
 		}
 		return _rightPanel;
@@ -344,8 +350,9 @@ public class MainFrame implements UpdatableInterface{
 		
 	}
 	
-	void changeRightCard(String card){
-		_rightLayout.show(_rightPanel, card);
+	void changeRightCard(int card){
+		_rightLayout.show(_rightPanel, ""+card);
+		_actualAttributePanel = _attributePanels[card];
 	}
 
 	/**
@@ -382,6 +389,30 @@ public class MainFrame implements UpdatableInterface{
 			});
 		}
 		return _menuExit;
+	}
+	
+	private void runThread() {
+		new Thread(new RepaintThr(), "ThreadRepaint").start();
+	}
+	
+	private class RepaintThr implements Runnable{
+		public void run() {
+			while(true){
+				_time1 = System.currentTimeMillis();
+				_mainPanel.repaint();
+				if(_actualAttributePanel != null)
+					_actualAttributePanel.refreshData();
+				_time2 = System.currentTimeMillis();
+				long sleep = 200-(_time2-_time1);
+				if(sleep > 0)
+					try {
+						Thread.sleep(sleep);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		}
 	}
 
 }
