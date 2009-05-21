@@ -41,6 +41,9 @@ public class Configuration implements Serializable {
 	private int capacidadPasteles=50;
 	private int capacidadCaramelo=50;
 	private int capacidadChocolate=50;
+	private int umbralPasteles=10;
+	private int umbralCaramelos=10;
+	private int umbralChocolate=10;
 	
 	
 	/*
@@ -425,4 +428,17 @@ public class Configuration implements Serializable {
 	public synchronized double getPorcentajeFallos() {
 		return porcentajeFallos;
 	}
+
+	public synchronized int getUmbralPasteles() {
+		return umbralPasteles;
+	}
+
+	public synchronized int getUmbralCaramelos() {
+		return umbralCaramelos;
+	}
+
+	public synchronized int getUmbralChocolate() {
+		return umbralChocolate;
+	}
+	
 }
