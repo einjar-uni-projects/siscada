@@ -2,6 +2,8 @@ package com.umbrella.scada.controller;
 
 import java.util.ArrayList;
 
+import com.umbrella.autocommon.Configuration;
+
 public enum ActionParamsEnum {
 	STATE(Boolean.class),
 	MACHINE(String.class),
@@ -10,7 +12,10 @@ public enum ActionParamsEnum {
 	CAKE_QUANTITY(Integer.class),
 	CHOCOLAT_QUANTITY(Integer.class),
 	CARAMEL_QUANTITY(Integer.class), 
-	CAKE_DEPOT(Integer.class), AU1_CAKES_POS(ArrayList.class), ROBOT_CONTENT(Integer.class);
+	CAKE_DEPOT(Integer.class), 
+	AU1_CAKES_POS(ArrayList.class), 
+	ROBOT_CONTENT(Integer.class), 
+	CONFIGURATION(Configuration.class);
 	
 	private Class _enclosedClass;
 

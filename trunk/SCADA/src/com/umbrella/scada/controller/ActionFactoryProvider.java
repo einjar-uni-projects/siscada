@@ -83,6 +83,16 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case SEND_CONFIGURATION:
+			ret = new ActSendConfiguration();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
+		case UPDATE_CONFIGURATION:
+			ret = new ActUpdateConfiguration();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
 		default:
 			ret = new ActNull();
 			break;

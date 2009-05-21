@@ -1,7 +1,7 @@
 package com.umbrella.autocommon;
 
 /*
- * Author: pablo JosŽ Izquierdo Escudero
+ * Author: pablo Josï¿½ Izquierdo Escudero
  * Fecha: 19/04/2009
  * 
  * Objetivo: contiene la informacion de configuracion del sistema, es toda informacion estatica y el nunico modo de cambiarla es parando
@@ -29,7 +29,7 @@ public class Configuration implements Serializable {
 	private double errorSensor=0.20;
 	
 	/*
-	 * Tama–o de la cinta
+	 * Tamaï¿½o de la cinta
 	 */
 	private double sizeCintaAut1=10;
 	private double sizeCintaAut2=10;
@@ -89,7 +89,7 @@ public class Configuration implements Serializable {
 	private int interferencia=2;
 	
 	/*
-	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
+	 * indica el tamaï¿½o del bizcocho y blister, en metros, solo se refiere a la longitud
 	 */
 	private double sizeBizcocho=0.10;
 	private double sizeBlister=sizeBizcocho*2+0.10;
@@ -213,7 +213,7 @@ public class Configuration implements Serializable {
 	}
 	/*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
-     *  otra prueba para evitar instanciaci—n mœltiple
+     *  otra prueba para evitar instanciaciï¿½n mï¿½ltiple
      */ 
     private synchronized static void createInstance() {
         if (INSTANCE == null) { 
@@ -439,6 +439,11 @@ public class Configuration implements Serializable {
 
 	public synchronized int getUmbralChocolate() {
 		return umbralChocolate;
+	}
+
+	public boolean isCorrect() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 	
 }

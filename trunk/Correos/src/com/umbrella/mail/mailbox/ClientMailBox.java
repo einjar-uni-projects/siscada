@@ -22,8 +22,12 @@ import com.umbrella.mail.message.MessageInterface;
  */
 public class ClientMailBox {
     
-    QueueInterface _inputQueue;
-    QueueInterface _outputQueue;
+    private QueueInterface _inputQueue;
+    private QueueInterface _outputQueue;
+    private final String _queueServerIp;
+    private final int _queueServerPort;
+    private final String _inputQueueS;
+    private final String _outputQueueS;
     
     /** 
      * Constructor de MailBox
@@ -36,9 +40,42 @@ public class ClientMailBox {
      * @throws MalformedURLException Ip, puerto o referencia no valida
      * @throws NotBoundException No se ha podido obtener la cola del servidor de colas
       */
-    public ClientMailBox(String queueServerIp, int queueServerPort, String inputQueue, String outputQueue) throws RemoteException, MalformedURLException, NotBoundException{      
-        _inputQueue = (QueueInterface)Naming.lookup("rmi://"+queueServerIp+":"+queueServerPort+"/"+inputQueue);
-        _outputQueue = (QueueInterface)Naming.lookup("rmi://"+queueServerIp+":"+queueServerPort+"/"+outputQueue);
+    public ClientMailBox(String queueServerIp, int queueServerPort, String inputQueue, String outputQueue){
+    	_queueServerIp = queueServerIp;
+        _queueServerPort = queueServerPort;
+        _inputQueueS = inputQueue;
+        _outputQueueS = outputQueue;
+    	connect();
+    }
+    
+    private void connect(){
+    	int delay = 1000;
+    	int inc = 2;
+    	int max = 5000;
+    	boolean done = false;
+    	while(!done){
+	    	try{
+		    	_inputQueue = (QueueInterface)Naming.lookup("rmi://"+_queueServerIp+":"+_queueServerPort+"/"+_inputQueueS);
+		        _outputQueue = (QueueInterface)Naming.lookup("rmi://"+_queueServerIp+":"+_queueServerPort+"/"+_outputQueueS);
+		        done = true;
+		        System.out.println("Conectado con el host: "+_queueServerIp+":"+_queueServerPort);
+	    	}catch (Exception e) {
+	    		System.out.println("No se ha podido conectar con el host: "+e.getLocalizedMessage());
+				try {
+					Thread.sleep(delay);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				delay *= inc;
+				if(delay > max)
+					delay = 1000;
+			}
+    	}
+    }
+    
+    public void reconnect(){
+    	connect();
     }
     
     /**
@@ -47,11 +84,18 @@ public class ClientMailBox {
      * @return true if it was possible to add the element to this queue, else false
      */
     public boolean send(MessageInterface message){
-        try{
-            return _outputQueue.queueMessage(message);
-        }catch(Exception e){
-            return false;
-        }
+    	boolean done = false;
+    	boolean ret = false;
+    	
+    	while(!done){
+	        try{
+	            ret = _outputQueue.queueMessage(message);
+	            done = true;
+	        }catch(Exception e){
+	        	reconnect();
+	        }
+    	}
+    	return ret;
     }
     
     /**
@@ -59,10 +103,14 @@ public class ClientMailBox {
      * Se queda esperando hasta que haya un mensaje en la cola.
      * @return the head of this queue, or null if this queue is empty.
      */
-    public MessageInterface receiveBlocking() throws RemoteException{
-        MessageInterface returnMessage;
-        do{		
-            returnMessage =  _inputQueue.unqueueMessage();      
+    public MessageInterface receiveBlocking() {
+        MessageInterface returnMessage = null;
+        do{	
+            try {
+				returnMessage =  _inputQueue.unqueueMessage();
+			} catch (RemoteException e) {
+				reconnect();
+			}      
         }while(returnMessage == null);
         return returnMessage;
     }
