@@ -32,7 +32,15 @@ public class ContextoMaestro implements Serializable{
 	
 	private boolean _FIN=false;
 	
+	private String _emptyMachine;
+	
 	private static ContextoMaestro INSTANCE=null;
+	
+	private Context _contextoAut1;
+	private Context _contextoAut2;
+	private Context _contextoAut3;
+	private ContextoRobot _contextoRobot1;
+	private ContextoRobot _contextoRobot2;
 	
 	private ContextoMaestro(){
 		ejecutando = new boolean[5];
@@ -135,4 +143,54 @@ public class ContextoMaestro implements Serializable{
 		if(blisterColocado) blisterColocado=false;
 		else blisterColocado=true;
 	}
+
+	public synchronized String getEmptyMachine() {
+		return _emptyMachine;
+	}
+
+	public synchronized void setEmptyMachine(String machine) {
+		_emptyMachine = machine;
+	}
+
+	public synchronized Context get_contextoAut1() {
+		return _contextoAut1;
+	}
+
+	public synchronized void set_contextoAut1(Context aut1) {
+		_contextoAut1 = aut1;
+	}
+
+	public synchronized Context get_contextoAut2() {
+		return _contextoAut2;
+	}
+
+	public synchronized void set_contextoAut2(Context aut2) {
+		_contextoAut2 = aut2;
+	}
+
+	public synchronized Context get_contextoAut3() {
+		return _contextoAut3;
+	}
+
+	public synchronized void set_contextoAut3(Context aut3) {
+		_contextoAut3 = aut3;
+	}
+
+	public synchronized ContextoRobot get_contextoRobot1() {
+		return _contextoRobot1;
+	}
+
+	public synchronized void set_contextoRobot1(ContextoRobot robot1) {
+		_contextoRobot1 = robot1;
+	}
+
+	public synchronized ContextoRobot get_contextoRobot2() {
+		return _contextoRobot2;
+	}
+
+	public synchronized void set_contextoRobot2(ContextoRobot robot2) {
+		_contextoRobot2 = robot2;
+	}
+	
+	
 }

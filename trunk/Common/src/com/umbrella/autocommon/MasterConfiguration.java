@@ -401,7 +401,7 @@ public class MasterConfiguration implements Serializable {
 		else if(nombre.equals(NombreMaquinas.SENSOR_CHOCOLATE))
 			sal=_posAssocSensorChocolate;
 		else if(nombre.equals(NombreMaquinas.CARAMELO))
-			sal=_posAssocCaramelo;
+			sal=_posAssocCaramel;
 		else if(nombre.equals(NombreMaquinas.CHOCOLATE))
 			sal=_posAssocChocolate;
 		else if(nombre.equals(NombreMaquinas.DISPENSADORA))
