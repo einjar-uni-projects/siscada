@@ -69,8 +69,6 @@ public class Automata1AttributePanel extends AttributePanel {
 		}
 		
 		add(_acceptButton, c);
-		
-		
 	}
 
 	private void setAcceptAction() {

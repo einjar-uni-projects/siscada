@@ -1,8 +1,8 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
@@ -15,8 +15,8 @@ public abstract class RobotAttributePanel extends AttributePanel {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panelInfo = null;
-	private JLabel robotTitle = null;
-	private JLabel tiempoDespl = null;
+	protected JLabel robotTitle = null;
+	protected JLabel timeDespl = null;
 	private JLabel desplTimeDisp = null;
 	private JTextField desplTimeSet = null;
 
@@ -24,7 +24,6 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	 * This is the default constructor
 	 */
 	public RobotAttributePanel() {
-		super();
 		initialize();
 	}
 
@@ -34,14 +33,34 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	 * @return void
 	 */
 	protected void initialize() {
+
+		getPanelInfo();
+		
+		Font f = _title.getFont();
+		_title.setFont(f.deriveFont(f.getStyle() ^ (Font.BOLD ^ Font.ITALIC), 16));
+		
+		f = robotTitle.getFont();
+		robotTitle.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
+		
 		setAcceptAction();
 		updateLanguage();
 		
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.setRows(1);
-		this.setLayout(gridLayout);
-		this.setSize(300, 200);
-		this.add(getPanelInfo(), null);
+		GridBagLayout gbl = new GridBagLayout();
+		setLayout(gbl);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(5,0,5,0);
+		c.gridwidth = 1;
+		add(_title, c);
+		c.gridy = 1;
+		c.fill = GridBagConstraints.BOTH;
+			
+		add(panelInfo, c);
+		c.gridy++;
+				
+		add(_acceptButton, c);
 	}
 
 	/**
@@ -67,8 +86,8 @@ public abstract class RobotAttributePanel extends AttributePanel {
 			gridBagConstraints1.gridx = 0;
 			gridBagConstraints1.insets = new Insets(0, 5, 0, 0);
 			gridBagConstraints1.gridy = 1;
-			tiempoDespl = new JLabel();
-			tiempoDespl.setText("JLabel");
+			timeDespl = new JLabel();
+			timeDespl.setText("JLabel");
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.insets = new Insets(5, 5, 0, 5);
@@ -80,7 +99,7 @@ public abstract class RobotAttributePanel extends AttributePanel {
 			panelInfo.setLayout(new GridBagLayout());
 			panelInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 			panelInfo.add(robotTitle, gridBagConstraints);
-			panelInfo.add(tiempoDespl, gridBagConstraints1);
+			panelInfo.add(timeDespl, gridBagConstraints1);
 			panelInfo.add(desplTimeDisp, gridBagConstraints2);
 			panelInfo.add(getDesplTimeSet(), gridBagConstraints3);
 		}
@@ -97,12 +116,6 @@ public abstract class RobotAttributePanel extends AttributePanel {
 			desplTimeSet = new JTextField();
 		}
 		return desplTimeSet;
-	}
-
-	@Override
-	public void updateLanguage() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	protected abstract void setAcceptAction();

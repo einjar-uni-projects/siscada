@@ -351,8 +351,9 @@ public class MainFrame implements UpdatableInterface{
 	}
 	
 	void changeRightCard(int card){
-		_rightLayout.show(_rightPanel, ""+card);
 		_actualAttributePanel = _attributePanels[card];
+		_actualAttributePanel.refreshData();
+		_rightLayout.show(_rightPanel, ""+card);
 	}
 
 	/**
