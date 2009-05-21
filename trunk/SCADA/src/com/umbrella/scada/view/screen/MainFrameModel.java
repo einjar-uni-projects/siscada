@@ -26,11 +26,15 @@ public class MainFrameModel implements Updatable {
 	private boolean _cintaPasteles;
 	private boolean _cintaBlister;
 	private boolean _cintaMontaje;
+	
 	private int _brazoMontaje;
 	private boolean _brazoDesechar;
+	
 	private int[] _pasteles = new int[7];
 	private int[] _blisters = new int[5];
 	private int[] _paquetes = new int[4];
+	
+	private int _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
 
 	// ACTIONS
 
@@ -119,13 +123,13 @@ public class MainFrameModel implements Updatable {
 		case AU1_CONVEYOR_BELT_SIZE:
 			synchronized (_cerrojos[TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE
 					.ordinal()]) {
-
+				_cbCakeSize = ((Integer)o).intValue();
 			}
 			break;
 		case AU1_CONVEYOR_BELT_SPEED:
 			synchronized (_cerrojos[TransferBufferKeys.AU1_CONVEYOR_BELT_SPEED
 					.ordinal()]) {
-
+				_cbCakeSpeed = ((Integer)o).intValue();
 			}
 			break;
 		case AU1_CAKES_POS1:
@@ -171,13 +175,13 @@ public class MainFrameModel implements Updatable {
 		case AU2_CONVEYOR_BELT_SIZE:
 			synchronized (_cerrojos[TransferBufferKeys.AU2_CONVEYOR_BELT_SIZE
 					.ordinal()]) {
-
+				_cbBlisterSize = ((Integer)o).intValue();
 			}
 			break;
 		case AU2_CONVEYOR_BELT_SPEED:
 			synchronized (_cerrojos[TransferBufferKeys.AU2_CONVEYOR_BELT_SPEED
 					.ordinal()]) {
-
+				_cbBlisterSpeed = ((Integer)o).intValue();
 			}
 			break;
 		case AU2_VACUUM_SEALING_MACHINE:
@@ -194,13 +198,13 @@ public class MainFrameModel implements Updatable {
 		case AU3_CONVEYOR_BELT_SIZE:
 			synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SIZE
 					.ordinal()]) {
-
+				_cbPackageSize = ((Integer)o).intValue();
 			}
 			break;
 		case AU3_CONVEYOR_BELT_SPEED:
 			synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED
 					.ordinal()]) {
-
+				_cbPackageSpeed = ((Integer)o).intValue();
 			}
 			break;
 		case AU3_STATE:
@@ -366,6 +370,30 @@ public class MainFrameModel implements Updatable {
 		}
 
 		return ret;
+	}
+
+	public int get_cbCakeSize() {
+		return _cbCakeSize;
+	}
+
+	public int get_cbBlisterSize() {
+		return _cbBlisterSize;
+	}
+
+	public int get_cbPackageSize() {
+		return _cbPackageSize;
+	}
+
+	public int get_cbCakeSpeed() {
+		return _cbCakeSpeed;
+	}
+
+	public int get_cbBlisterSpeed() {
+		return _cbBlisterSpeed;
+	}
+
+	public int get_cbPackageSpeed() {
+		return _cbPackageSpeed;
 	}
 
 }
