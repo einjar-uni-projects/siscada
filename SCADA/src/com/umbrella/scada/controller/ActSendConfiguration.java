@@ -1,9 +1,5 @@
 package com.umbrella.scada.controller;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.OntologiaMSG;

@@ -1,9 +1,5 @@
 package com.umbrella.scada.model;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.scada.observer.Observable;
 import com.umbrella.scada.observer.ObservableProvider;

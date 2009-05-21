@@ -9,12 +9,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import com.umbrella.automaster.comm.Postmaster;
-import com.umbrella.automaster.model.PropertiesFile;
-import com.umbrella.mail.mailbox.ClientMailBox;
-import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.OntologiaMSG;
-import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 
 public class LaunchAutMaster {

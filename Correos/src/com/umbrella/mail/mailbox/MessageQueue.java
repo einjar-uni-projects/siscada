@@ -8,8 +8,8 @@
  */
 
 package com.umbrella.mail.mailbox;
-import java.util.*;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 import com.umbrella.mail.message.MessageInterface;
 

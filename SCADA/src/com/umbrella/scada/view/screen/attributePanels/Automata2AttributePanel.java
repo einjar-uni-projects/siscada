@@ -3,7 +3,6 @@ package com.umbrella.scada.view.screen.attributePanels;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 
 import com.umbrella.scada.controller.Action;

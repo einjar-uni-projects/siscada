@@ -13,7 +13,6 @@ import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.EstateRobots;
 import com.umbrella.utils.NombreMaquinas;
 
 /**

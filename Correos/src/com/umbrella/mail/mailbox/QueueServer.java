@@ -9,10 +9,10 @@
 
 package com.umbrella.mail.mailbox;
 import java.net.MalformedURLException;
-import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 
 /**

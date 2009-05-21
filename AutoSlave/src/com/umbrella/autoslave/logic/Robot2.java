@@ -11,7 +11,6 @@ import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.utils.EstateRobots;
 
 

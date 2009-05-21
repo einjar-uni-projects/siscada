@@ -1,7 +1,7 @@
 package com.umbrella.autocommon;
 
 /*
- * Author: pablo JosŽ Izquierdo Escudero
+ * Author: pablo Josï¿½ Izquierdo Escudero
  * Fecha: 19/04/2009
  * 
  * Objetivo: contiene la informacion del estado del sistema, es toda informacion dinamica y que cambia o puede cambiar en tiempo de ejecucion
@@ -10,7 +10,6 @@ package com.umbrella.autocommon;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import com.umbrella.autocommon.Configuration;
 import com.umbrella.utils.Blister;
 import com.umbrella.utils.Pastel;
 
@@ -84,7 +83,7 @@ public class Context implements Serializable{
  
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
-     *  otra prueba para evitar instanciaci—n mœltiple
+     *  otra prueba para evitar instanciaciï¿½n mï¿½ltiple
      */ 
     private synchronized static void createInstance(String tipo) {
         if (INSTANCE == null) { 

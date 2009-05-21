@@ -1,7 +1,5 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
-import java.awt.Font;
-
 import com.umbrella.scada.controller.ActionParams;
 import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
