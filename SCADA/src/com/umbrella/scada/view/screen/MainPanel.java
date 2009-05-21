@@ -68,8 +68,8 @@ public class MainPanel extends JPanel{
 	private void setMouseListener() {
 		addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				int x = e.getX();
-				int y = e.getY();
+				int x = (e.getX()*_wallpaperWidth)/getWidth();
+				int y = (e.getY()*_wallpaperHeight)/getHeight();
 				MainFrame main = MainFrame.getInstance();
 				if(_conjuntosCinta[0].isInto(x, y))
 					main.changeRightCard(1);
