@@ -1,5 +1,7 @@
 package com.umbrella.scada.view.screen.elementsGroups;
 
+import java.awt.Graphics;
+
 import com.umbrella.scada.view.screen.ImageLoader;
 import com.umbrella.scada.view.screen.MainFrameModel;
 import com.umbrella.scada.view.screen.MainFrameModel.ElementsGroupModelEnum;
@@ -32,8 +34,9 @@ public class ConjuntoCintaPasteles extends ElementsGroup {
 		_paintElements.add(_tarta);
 	}
 
-	public void cintaOn(boolean on){
-		_cinta.setOn(on);
+	@Override
+	public void paint(Graphics g) {
+		_cinta.setOn(_model.is_cintaPasteles());
+		super.paint(g);
 	}
-
 }
