@@ -48,6 +48,7 @@ public class LaunchAutMaster {
 			showOptions(om);
 			option = readInt();
 			if(option >= 0){
+				dm.setIdentificador(om[option]);
 				switch (om[option]) {
 				case ACTUALIZARCONFIGURACION:
 					
@@ -82,8 +83,7 @@ public class LaunchAutMaster {
 				case BLISTERVALIDO:
 					
 					break;
-				case ESTADO_AUTOMATA:					
-					dm.setIdentificador(om[option]);
+				case AUTOM_STATE:					
 					System.out.println("Elegir el automata: R1 R2 AU1 AU2 AU3");
 					String aut = readStr();
 					System.out.println("Elegir el estado: true false");
@@ -129,6 +129,14 @@ public class LaunchAutMaster {
 					break;
 				case RESET:
 					
+					break;
+				case CAKE_DEPOT:
+					System.out.println("Elegir el automata: R1 R2 AU1 AU2 AU3");
+					Integer n_cake_depot = readInt();
+					if(n_cake_depot != null){
+						dm.setObject(n_cake_depot);
+					}else
+						error = true;
 					break;
 	
 				default:
@@ -181,8 +189,8 @@ public class LaunchAutMaster {
 		return line;
 	}
 	
-	private int readInt(){
-		int ret = -1;
+	private Integer readInt(){
+		Integer ret = null;
 		System.out.print("[Integer]>");
 		try{
 			ret = Integer.parseInt(br.readLine());
