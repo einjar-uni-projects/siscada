@@ -22,13 +22,6 @@ public class MainFrameModel implements Updatable {
 	private UpdatableInterface _mainFrame;
 
 	// ESTADOS
-
-	private boolean _cintaPasteles;
-	private boolean _cintaBlister;
-	private boolean _cintaMontaje;
-	
-	private int _brazoMontaje;
-	private boolean _brazoDesechar;
 	
 	private int[] _pasteles = new int[7];
 	private int[] _blisters = new int[5];
@@ -277,23 +270,33 @@ public class MainFrameModel implements Updatable {
 	}
 
 	public boolean is_cintaPasteles() {
-		return _cintaPasteles;
+		synchronized (_cerrojos[TransferBufferKeys.AU1_STATE.ordinal()]) {
+			return _statesAutRob[0];
+		}
 	}
 
 	public boolean is_cintaBlister() {
-		return _cintaBlister;
+		synchronized (_cerrojos[TransferBufferKeys.AU2_STATE.ordinal()]) {
+			return _statesAutRob[1];
+		}
 	}
 
 	public boolean is_cintaMontaje() {
-		return _cintaMontaje;
+		synchronized (_cerrojos[TransferBufferKeys.AU3_STATE.ordinal()]) {
+			return _statesAutRob[2];
+		}
 	}
 
-	public int get_brazoMontaje() {
-		return _brazoMontaje;
+	public boolean get_brazoMontaje() {
+		synchronized (_cerrojos[TransferBufferKeys.RB1_STATE.ordinal()]) {
+			return _statesAutRob[3];
+		}
 	}
 
 	public boolean is_brazoDesechar() {
-		return _brazoDesechar;
+		synchronized (_cerrojos[TransferBufferKeys.RB2_STATE.ordinal()]) {
+			return _statesAutRob[4];
+		}
 	}
 
 	public int[] get_pasteles() {
