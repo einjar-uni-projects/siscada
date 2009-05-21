@@ -3,6 +3,7 @@ package com.umbrella.scada.model;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.umbrella.mail.mailbox.ClientMailBox;
@@ -79,6 +80,12 @@ public class Postmaster extends Thread {
 						ape = ActionParamsEnum.CAKE_DEPOT;
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						af.executeAction(ActionKey.UPDATE_CAKE_DEPOT, params);
+						break;
+					case AU1_CAKES_POS:
+						params = new ActionParams();
+						ape = ActionParamsEnum.AU1_CAKES_POS;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						af.executeAction(ActionKey.AU1_CAKES_POS, params);
 						break;
 				}
 				
