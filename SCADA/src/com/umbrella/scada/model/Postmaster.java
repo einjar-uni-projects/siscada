@@ -63,19 +63,23 @@ public class Postmaster extends Thread {
 		while(_no_end){
 			try {
 				params = null;
-		System.out.println("Esperando mensaje de mailbox");
 				MessageInterface msg = _clientMailBox.receiveBlocking();
 				_clientMailBox.send(msg);
-		System.out.println(msg.getIdentificador());
 				switch (msg.getIdentificador()) {
-				case ESTADO_AUTOMATA: //TODO esto cambia todo
-					params = new ActionParams();
-					ape = ActionParamsEnum.STATE;
-					params.setParam(ape, ape.getEnclosedClass(), msg.getObject());
-					ape = ActionParamsEnum.MACHINE;
-					params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
-					af.executeAction(ActionKey.UPDATE_STATE, params);
-					break;
+					case AUTOM_STATE: //TODO esto cambia todo
+						params = new ActionParams();
+						ape = ActionParamsEnum.STATE;
+						params.setParam(ape, ape.getEnclosedClass(), msg.getObject());
+						ape = ActionParamsEnum.MACHINE;
+						params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
+						af.executeAction(ActionKey.UPDATE_STATE, params);
+						break;
+					case CAKE_DEPOT:
+						params = new ActionParams();
+						ape = ActionParamsEnum.CAKE_DEPOT;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						af.executeAction(ActionKey.UPDATE_CAKE_DEPOT, params);
+						break;
 				}
 				
 			} catch (Exception e) {
