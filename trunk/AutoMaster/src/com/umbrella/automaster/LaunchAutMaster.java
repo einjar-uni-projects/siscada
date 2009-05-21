@@ -187,6 +187,17 @@ public class LaunchAutMaster {
 					dm.setObject(ali);
 					
 					break;
+				case ROBOT_SET_CONTENT:
+					System.out.println("Elegir el automata: R1 R2");
+					String robot_content_machine = readStr();
+					System.out.println("Elegir el estado: vacia(0), pastel o blisterCorrecto(1) blisterVacio o blister(2)");
+					Integer state = readInt();
+					if(robot_content_machine != null && state != null){
+						dm.setObject(state);
+						dm.getParametros().add(robot_content_machine);
+					}else
+						error = true;
+					break;
 				default:
 					break;
 				}

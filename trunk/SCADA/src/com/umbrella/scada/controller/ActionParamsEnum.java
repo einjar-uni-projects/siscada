@@ -10,7 +10,7 @@ public enum ActionParamsEnum {
 	CAKE_QUANTITY(Integer.class),
 	CHOCOLAT_QUANTITY(Integer.class),
 	CARAMEL_QUANTITY(Integer.class), 
-	CAKE_DEPOT(Integer.class), AU1_CAKES_POS(ArrayList.class);
+	CAKE_DEPOT(Integer.class), AU1_CAKES_POS(ArrayList.class), ROBOT_CONTENT(Integer.class);
 	
 	private Class _enclosedClass;
 

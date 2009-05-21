@@ -84,6 +84,7 @@ public class Model {
 	
 	/*Atributos del robot2*/
 	private final ModelElementAtribute<Integer> _rb2BlisterDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB2_BLISTER_DELAY, new Integer(5));
+	private final ModelElementAtribute<Integer> _rb2Content = new ModelElementAtribute<Integer>(TransferBufferKeys.RB2_CONTENT, new Integer(0));
 	private final ModelElementAtribute<Boolean> _rb2State = new ModelElementAtribute<Boolean>(TransferBufferKeys.RB2_STATE, new Boolean(false));
 	
 	private boolean _modelChanges;
@@ -151,6 +152,7 @@ public class Model {
 		_observable.addChange(_rb1State.get_tbk(), _rb1State.get_value());
 		
 		_observable.addChange(_rb2BlisterDelay.get_tbk(), _rb2BlisterDelay.get_value());
+		_observable.addChange(_rb2Content.get_tbk(), _rb2Content.get_value());
 		_observable.addChange(_rb2State.get_tbk(), _rb2State.get_value());
 		_modelChanges = true;
 	}
@@ -164,6 +166,12 @@ public class Model {
 	
 	public String get_genIP(){
 		return _genIP.get_value();
+	}
+	
+	public void set_rb2Content(int value){
+		_rb2Content.set_value(value);
+		_observable.addChange(_rb2Content.get_tbk(), _rb2Content.get_value());
+		_modelChanges = true;
 	}
 	
 	public void set_rb1Content(int value){
