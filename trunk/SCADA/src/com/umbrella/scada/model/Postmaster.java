@@ -71,43 +71,11 @@ public class Postmaster extends Thread {
 				case ESTADO_AUTOMATA: //TODO esto cambia todo
 					params = new ActionParams();
 					ape = ActionParamsEnum.STATE;
-					params.setParam(ape, ape.getEnclosedClass(), true);
+					params.setParam(ape, ape.getEnclosedClass(), msg.getObject());
 					ape = ActionParamsEnum.MACHINE;
-					params.setParam(ape, ape.getEnclosedClass(), "AU1");
+					params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
 					af.executeAction(ActionKey.UPDATE_STATE, params);
 					break;
-				/*case AU2ARRANCADO:
-					params = new ActionParams();
-					ape = ActionParamsEnum.STATE;
-					params.setParam(ape, ape.getEnclosedClass(), true);
-					ape = ActionParamsEnum.MACHINE;
-					params.setParam(ape, ape.getEnclosedClass(), "AU2");
-					af.executeAction(ActionKey.UPDATE_STATE, params);				
-					break;
-				case AU3ARRANCADO:
-					params = new ActionParams();
-					ape = ActionParamsEnum.STATE;
-					params.setParam(ape, ape.getEnclosedClass(), true);
-					ape = ActionParamsEnum.MACHINE;
-					params.setParam(ape, ape.getEnclosedClass(), "AU3");
-					af.executeAction(ActionKey.UPDATE_STATE, params);
-					break;
-				case RB1ARRANCADO:
-					params = new ActionParams();
-					ape = ActionParamsEnum.STATE;
-					params.setParam(ape, ape.getEnclosedClass(), true);
-					ape = ActionParamsEnum.MACHINE;
-					params.setParam(ape, ape.getEnclosedClass(), "RB1");
-					af.executeAction(ActionKey.UPDATE_STATE, params);
-					break;
-				case RB2ARRANCADO:
-					params = new ActionParams();
-					ape = ActionParamsEnum.STATE;
-					params.setParam(ape, ape.getEnclosedClass(), true);
-					ape = ActionParamsEnum.MACHINE;
-					params.setParam(ape, ape.getEnclosedClass(), "RB2");
-					af.executeAction(ActionKey.UPDATE_STATE, params);
-					break;*/
 				}
 				
 			} catch (Exception e) {
