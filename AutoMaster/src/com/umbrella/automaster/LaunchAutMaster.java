@@ -137,6 +137,7 @@ public class LaunchAutMaster {
 				if(!error){
 					System.out.println("Se manda el mensaje: "+dm);
 					post.sendMessageSCADA(dm);
+					dm = new DefaultMessage();
 				}else
 					System.err.println("Parametro incorrecto");
 			}else{
