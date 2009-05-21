@@ -20,9 +20,9 @@ import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
 import com.umbrella.scada.view.screen.attributePanels.AttributePanel;
-import com.umbrella.scada.view.screen.attributePanels.BlisterConveyorBeltAttributePanel;
-import com.umbrella.scada.view.screen.attributePanels.CakeConveyorBeltAttributePanel;
-import com.umbrella.scada.view.screen.attributePanels.PackageConveyorBeltAttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.Automata2AttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.Automata1AttributePanel;
+import com.umbrella.scada.view.screen.attributePanels.Automata3AttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.Robot1AttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.Robot2AttributePanel;
 import com.umbrella.scada.view.screen.attributePanels.VoidAttributePanel;
@@ -111,9 +111,9 @@ public class MainFrame implements UpdatableInterface{
 			_rightPanel.setLayout(_rightLayout);
 			_attributePanels = new AttributePanel[6];
 			_attributePanels[0] = new VoidAttributePanel();
-			_attributePanels[1] = new CakeConveyorBeltAttributePanel();
-			_attributePanels[2] = new BlisterConveyorBeltAttributePanel();
-			_attributePanels[3] = new PackageConveyorBeltAttributePanel();
+			_attributePanels[1] = new Automata1AttributePanel();
+			_attributePanels[2] = new Automata2AttributePanel();
+			_attributePanels[3] = new Automata3AttributePanel();
 			_attributePanels[4] = new Robot1AttributePanel();
 			_attributePanels[5] = new Robot2AttributePanel();
 			

@@ -15,16 +15,16 @@ import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
 
-public class ConveyorBeltAttributePanel extends AttributePanel {
+public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel speedLabel = null;
-	private JLabel speedValueLabel = null;
-	private JTextField newSpeedText = null;
-	private JLabel sizeLabel = null;
-	private JLabel sizeValueLabel = null;
-	private JTextField newSizeText = null;
-	private JLabel titleLabel = null;
+	protected JLabel speedLabel = null;
+	protected JLabel speedValueLabel = null;
+	protected JTextField newSpeedText = null;
+	protected JLabel sizeLabel = null;
+	protected JLabel sizeValueLabel = null;
+	protected JTextField newSizeText = null;
+	protected JLabel titleLabel = null;
 	
 	/**
 	 * This is the default constructor
@@ -133,11 +133,6 @@ public class ConveyorBeltAttributePanel extends AttributePanel {
 		titleLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 		speedLabel.setText(_languageResources.getLocal(LocalizatorIDs.SPEED, l)+":");
 		sizeLabel.setText(_languageResources.getLocal(LocalizatorIDs.SIZE, l)+":");
-	}
-
-	@Override
-	public void refreshData() {
-		// TODO sin hacer
 	}
 
 	@Override
