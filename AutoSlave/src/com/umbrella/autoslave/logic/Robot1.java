@@ -85,6 +85,9 @@ public class Robot1 {
 					case PASTELLISTO:
 						_contexto.setPastelListo(true);
 						break;
+					case BLISTERLISTO:
+						_contexto.setBlisterListo(true);
+						break;
 					case RESET:
 						_contexto=_contexto.reset();
 						break;

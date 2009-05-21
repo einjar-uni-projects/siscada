@@ -48,7 +48,7 @@ public class ReceiveAutomaton3 extends Thread{
 	public void run(){
 		MessageInterface msg=null;
 		do{
-			msg=_postmaster.reciveMessageAU1();
+			msg=_postmaster.reciveMessageAU3();
 			switch (msg.getIdentificador()) {
 			case ACTUALIZARCONTEXTO:
 				_masterContext.set_contextoAut2((Context)msg.getObject());
@@ -65,7 +65,7 @@ public class ReceiveAutomaton3 extends Thread{
 			//comprobar q cabe en la cinta o ya esta hecho???
 			
 			MessageInterface mensajeSend=new DefaultMessage();
-			mensajeSend.setIdentificador(OntologiaMSG.MOVERDESDEMESA);
+			mensajeSend.setIdentificador(OntologiaMSG.BLISTERCOMPLETO);
 			_postmaster.sendMessageRB1(mensajeSend);
 		}
 		

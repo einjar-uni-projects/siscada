@@ -110,10 +110,13 @@ public class ContextoMaestro implements Serializable{
 		return contadorCalidadSensor;
 	}
 
-	public int getContador() {
+	public synchronized int getContador() {
 		return contadorPasteles;
 	}
 
+	public void resetContador() {
+		contadorPasteles=0;
+	}
 	public void incrementarContador() {
 		contadorPasteles++;
 		contadorPasteles=contadorPasteles%5; // xq van del 0 al 4 ambos inlcuidos
