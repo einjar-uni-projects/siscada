@@ -9,6 +9,7 @@ public class ActUpdateState implements Action {
 
 	@Override
 	public ActionResult execute() {
+		System.out.println("Ejecutando ActUpdateState");
 		ActionResult ret = ActionResult.EXECUTE_CORRECT;
 		Model m = Model.getInstance();
 		switch (_machine) {

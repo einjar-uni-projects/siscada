@@ -10,8 +10,13 @@ import com.umbrella.scada.observer.ObservableProvider;
 import com.umbrella.scada.observer.TransferBufferKeys;
 
 public class Model {
-	private static class SingletonHolder {
-		private static Model instance = new Model();
+	
+	private static Model INSTANCE;
+	
+	private static synchronized void getInstanceSync(){
+		if(INSTANCE == null){
+			INSTANCE = new Model();
+		}
 	}
 	
 	/**
@@ -20,7 +25,9 @@ public class Model {
 	 * @return la instancia única de Model
 	 */
 	public static Model getInstance() {
-		return SingletonHolder.instance;
+		if(INSTANCE == null)
+			getInstanceSync();
+		return INSTANCE;
 	}
 	
 	private final Observable _observable;
@@ -86,7 +93,7 @@ public class Model {
 		System.out.println("Arrancando el Model");
 		_observable = ObservableProvider.getInstance();
 		try {
-			new Thread(Postmaster.getInstance()).run();
+			new Thread(Postmaster.getInstance()).start();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
