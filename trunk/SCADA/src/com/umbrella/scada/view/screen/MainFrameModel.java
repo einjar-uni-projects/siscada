@@ -35,6 +35,8 @@ public class MainFrameModel implements Updatable {
 	private int[] _paquetes = new int[4];
 	
 	private double _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
+	
+	private int _cakeDepot;
 
 	// ACTIONS
 
@@ -105,7 +107,7 @@ public class MainFrameModel implements Updatable {
 		switch (key) {
 		case AU1_CAKE_DEPOT:
 			synchronized (_cerrojos[TransferBufferKeys.AU1_CAKE_DEPOT.ordinal()]) {
-
+				_cakeDepot = ((Integer)o).intValue();
 			}
 			break;
 		case AU1_CARAMEL_VALVE_DELAY:
@@ -411,6 +413,12 @@ public class MainFrameModel implements Updatable {
 		synchronized (_cerrojos[TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED
 		    					.ordinal()]) {
 			return _cbPackageSpeed;
+		}
+	}
+
+	public int get_cakeDepot() {
+		synchronized (_cerrojos[TransferBufferKeys.AU1_CAKE_DEPOT.ordinal()]) {
+			return _cakeDepot;
 		}
 	}
 

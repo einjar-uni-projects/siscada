@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -64,6 +65,9 @@ public abstract class DispenserAttributePanel extends AttributePanel {
 		this.add(countLabel, gridBagConstraints1);
 		this.add(countValueLabel, gridBagConstraints2);
 		this.add(getCountNewText(), gridBagConstraints3);
+		
+		Font f = titleLabel.getFont();
+		titleLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
 	}
 
 	/**
