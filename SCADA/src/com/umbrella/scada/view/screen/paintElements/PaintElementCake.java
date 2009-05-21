@@ -44,7 +44,7 @@ public class PaintElementCake extends PaintElement {
 		}
 		if(pasteles[2] > 0){
 			g.drawImage(_loader.get_masaChoc(), _posX+105, _posY, _maxX, _maxY, null);
-			numPasteles = (""+pasteles[0]).toCharArray();
+			numPasteles = (""+pasteles[2]).toCharArray();
 			g.drawChars(numPasteles, 0, numPasteles.length, _posX+120-((numPasteles.length*5)/2), _posY+32);
 		}
 		if(pasteles[3] > 0){
