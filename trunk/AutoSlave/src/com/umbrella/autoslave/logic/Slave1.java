@@ -10,12 +10,16 @@ import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.ActivatedDispenser;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
+import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.autoslave.executor.TimeMachine;
 import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.mail.mailbox.ClientMailBox;
+import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.utils.properties.PropertiesFileHandler;
+import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
@@ -36,9 +40,8 @@ public class Slave1 {
 	private static Context contexto=Context.getInstance("pastel");
 	private static Configuration configuracion=Configuration.getInstance();
 	private static ClientMailBox _buzon;
+	private static PropertiesFile pfmodel;
 	
-	private static String host = "localhost";
-	private static int puerto = 9003;
 	
 	/**
 	 * @param args
@@ -56,6 +59,8 @@ public class Slave1 {
  			_clock=new Clock();
  			_clock.start();
  	
+ 			
+ 			
  			/*
  			 * se crean los hilos de ejecucion
  			 */
@@ -73,72 +78,81 @@ public class Slave1 {
  			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  			
- 			
- 			_buzon=new ClientMailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
- 			
- 			
+ 			try {
+ 				pfmodel = PropertiesFile.getInstance();
+ 				PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
+ 			} catch (PropertyException e1) {
+ 				// TODO Auto-generated catch block
+ 				e1.printStackTrace();
+ 			}
+ 			PropertiesFileHandler.getInstance().writeFile();
+ 			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
+
+
+
  			long cicloAct=_clock.getClock();
- 			
+
  			for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, false);
 
  			while(!contexto.isFIN()){
 
  				if(cicloAct<_clock.getClock()){
  					cicloAct=_clock.getClock();
- 					
+
  					MessageInterface mensaje=null;
 
  					do{
  						mensaje=_buzon.receive();
- 						switch (mensaje.getIdentificador()) {
-						case FINCINTALIBRE:							
- 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
- 							break;
-						case ACTUALIZARCONFIGURACION: 						
- 							configuracion=(Configuration)mensaje.getObject();
- 							contexto.setApagado(false);
- 							break;
-						case START:
- 							contexto=Context.reset("pastel");
- 							contexto.setApagado(false);
- 							break;
-						case FININTERFERENCIA:
- 							contexto.setInterferencia(false);
- 							break;
-						case INTERFERENCIA: 				
- 							contexto.setInterferencia(true);
- 							break;
-						case PARADA:
- 							contexto.setParadaCorrecta(true);
- 							break;
-						case PARADAEMERGENCIA:
- 							contexto.setApagado(true);
- 							break;
- 						case PRODUCTORECOGIDO:
- 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
- 							break;
- 						case RELLENARMAQUINA:
- 							String maquina=mensaje.getParametros().get(0);
- 							int cantidad=Integer.parseInt(mensaje.getParametros().get(1));
- 							if(maquina.compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
- 								_dispensadora.fillDeposit(cantidad);
- 							if(maquina.compareTo(NombreMaquinas.CARAMELO.getName())==0)
- 								contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadCaramelo());
- 							if(maquina.compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
- 								contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadChocolate());
- 							break;
- 						case RESET:
- 							if(contexto.isApagado() || contexto.isFallo()){
+ 						if(mensaje!=null){
+ 							switch (mensaje.getIdentificador()) {
+ 							case FINCINTALIBRE:							
+ 								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+ 								break;
+ 							case ACTUALIZARCONFIGURACION: 						
+ 								configuracion=(Configuration)mensaje.getObject();
+ 								contexto.setApagado(false);
+ 								break;
+ 							case START:
  								contexto=Context.reset("pastel");
- 								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
- 								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+ 								contexto.setApagado(false);
+ 								break;
+ 							case FININTERFERENCIA:
+ 								contexto.setInterferencia(false);
+ 								break;
+ 							case INTERFERENCIA: 				
+ 								contexto.setInterferencia(true);
+ 								break;
+ 							case PARADA:
+ 								contexto.setParadaCorrecta(true);
+ 								break;
+ 							case PARADAEMERGENCIA:
+ 								contexto.setApagado(true);
+ 								break;
+ 							case PRODUCTORECOGIDO:
+ 								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+ 								break;
+ 							case RELLENARMAQUINA:
+ 								String maquina=mensaje.getParametros().get(0);
+ 								int cantidad=Integer.parseInt(mensaje.getParametros().get(1));
+ 								if(maquina.compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
+ 									_dispensadora.fillDeposit(cantidad);
+ 								if(maquina.compareTo(NombreMaquinas.CARAMELO.getName())==0)
+ 									contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadCaramelo());
+ 								if(maquina.compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
+ 									contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadChocolate());
+ 								break;
+ 							case RESET:
+ 								if(contexto.isApagado() || contexto.isFallo()){
+ 									contexto=Context.reset("pastel");
+ 									contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+ 									contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+ 								}
+ 								break;
+ 							case PARADAFALLO:
+ 								contexto.setFallo(true);
+ 								break;
  							}
- 							break;
- 						case PARADAFALLO:
- 							contexto.setFallo(true);
- 							break;
  						}
-
  					}while(mensaje!=null);
 
  					if(contexto.isParadaCorrecta()){

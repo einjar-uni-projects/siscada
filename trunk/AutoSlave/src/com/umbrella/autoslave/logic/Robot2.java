@@ -8,10 +8,14 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
+import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.utils.properties.PropertiesFileHandler;
+import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.EstateRobots;
 import com.umbrella.utils.NombreMaquinas;
 
@@ -26,9 +30,7 @@ public class Robot2 {
 	
 	private static Clock _clock;
 	private static ClientMailBox _buzon;
-
-	private static String host = "localhost";
-	private static int puerto = 9003;
+	private static PropertiesFile pfmodel;
 	
 	/**
 	 * @param args
@@ -39,7 +41,16 @@ public class Robot2 {
 		_clock=new Clock();
 		_clock.start();
 		
-		_buzon=new ClientMailBox(host,puerto,"EntradaRobot2","SalidaRobot2");
+		try {
+			pfmodel = PropertiesFile.getInstance();
+			PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
+		} catch (PropertyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PropertiesFileHandler.getInstance().writeFile();
+		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
+
 			
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();
@@ -56,35 +67,37 @@ public class Robot2 {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					switch (mensaje.getIdentificador()) {
-					case ACTUALIZARCONTEXTO:							
-						_contexto=(ContextoRobot)mensaje.getObject();
-						break;
-					case ACTUALIZARCONFIGURACION: 						
-						_configuracion=(Configuration)mensaje.getObject();
-						break;
-					case START:
-						_contexto=_contexto.reset();
-						_contexto.setApagado(false);
-						break;
-					case PARADA:
-						_contexto.setParadaCorrecta(true);
-						break;
-					case PARADAEMERGENCIA:
-						_contexto.setApagado(true);
-						break;
-					case BLISTERNOVALIDO:
-						_contexto.setValido(false);//blister que no pasa el control de calidad
-						break;
-					case RESET:
-						_contexto=_contexto.reset();
-						break;
-					case PARADAFALLO:
-						_contexto.setFallo(true);
-						break;
-					case BLISTERVALIDO:
-						_contexto.setValido(true);//blister que pasa el control de calidad
-						break;
+					if(mensaje!=null){
+						switch (mensaje.getIdentificador()) {
+						case ACTUALIZARCONTEXTO:							
+							_contexto=(ContextoRobot)mensaje.getObject();
+							break;
+						case ACTUALIZARCONFIGURACION: 						
+							_configuracion=(Configuration)mensaje.getObject();
+							break;
+						case START:
+							_contexto=_contexto.reset();
+							_contexto.setApagado(false);
+							break;
+						case PARADA:
+							_contexto.setParadaCorrecta(true);
+							break;
+						case PARADAEMERGENCIA:
+							_contexto.setApagado(true);
+							break;
+						case BLISTERNOVALIDO:
+							_contexto.setValido(false);//blister que no pasa el control de calidad
+							break;
+						case RESET:
+							_contexto=_contexto.reset();
+							break;
+						case PARADAFALLO:
+							_contexto.setFallo(true);
+							break;
+						case BLISTERVALIDO:
+							_contexto.setValido(true);//blister que pasa el control de calidad
+							break;
+						}
 					}
 				}while(mensaje!=null);
 

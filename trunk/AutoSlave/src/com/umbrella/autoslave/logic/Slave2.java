@@ -10,11 +10,15 @@ import com.umbrella.autocommon.Context;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
+import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.mail.mailbox.ClientMailBox;
+import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.utils.properties.PropertiesFileHandler;
+import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
@@ -36,8 +40,7 @@ public class Slave2 {
 	private static Configuration configuracion=Configuration.getInstance();
 	private static ClientMailBox _buzon;
 
-	private static String host = "localhost";
-	private static int puerto = 9003;
+	private static PropertiesFile pfmodel;
 	
 	public static void main(String[] args) {
 		
@@ -68,7 +71,16 @@ public class Slave2 {
  					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
  	
  			
- 			_buzon=new ClientMailBox(host,puerto,"EntradaMaestro2","SalidaMaestro2");
+ 			try {
+ 				pfmodel = PropertiesFile.getInstance();
+ 				PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
+ 			} catch (PropertyException e1) {
+ 				// TODO Auto-generated catch block
+ 				e1.printStackTrace();
+ 			}
+ 			PropertiesFileHandler.getInstance().writeFile();
+ 			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
+
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;
@@ -81,46 +93,48 @@ public class Slave2 {
  					 */
  				
  					MessageInterface mensaje=null;
- 					
+
  					do{
  						mensaje=_buzon.receive();
- 						switch (mensaje.getIdentificador()) {
-						case FINCINTALIBRE:							
- 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
- 							break;
-						case ACTUALIZARCONFIGURACION: 						
- 							configuracion=(Configuration)mensaje.getObject();
- 							contexto.setApagado(false);
- 							break;
-						case START:
- 							contexto=Context.reset("pastel");
- 							contexto.setApagado(false);
- 							break;
-						case FININTERFERENCIA:
- 							contexto.setInterferencia(false);
- 							break;
-						case INTERFERENCIA: 				
- 							contexto.setInterferencia(true);
- 							break;
-						case PARADA:
- 							contexto.setParadaCorrecta(true);
- 							break;
-						case PARADAEMERGENCIA:
- 							contexto.setApagado(true);
- 							break;
- 						case PRODUCTORECOGIDO:
- 							contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
- 							break;
- 						case RESET:
- 							if(contexto.isApagado() || contexto.isFallo()){
+ 						if(mensaje!=null){
+ 							switch (mensaje.getIdentificador()) {
+ 							case FINCINTALIBRE:							
+ 								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+ 								break;
+ 							case ACTUALIZARCONFIGURACION: 						
+ 								configuracion=(Configuration)mensaje.getObject();
+ 								contexto.setApagado(false);
+ 								break;
+ 							case START:
  								contexto=Context.reset("pastel");
- 								contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
- 								contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+ 								contexto.setApagado(false);
+ 								break;
+ 							case FININTERFERENCIA:
+ 								contexto.setInterferencia(false);
+ 								break;
+ 							case INTERFERENCIA: 				
+ 								contexto.setInterferencia(true);
+ 								break;
+ 							case PARADA:
+ 								contexto.setParadaCorrecta(true);
+ 								break;
+ 							case PARADAEMERGENCIA:
+ 								contexto.setApagado(true);
+ 								break;
+ 							case PRODUCTORECOGIDO:
+ 								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+ 								break;
+ 							case RESET:
+ 								if(contexto.isApagado() || contexto.isFallo()){
+ 									contexto=Context.reset("pastel");
+ 									contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+ 									contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+ 								}
+ 								break;
+ 							case PARADAFALLO:
+ 								contexto.setFallo(true);
+ 								break;
  							}
- 							break;
- 						case PARADAFALLO:
- 							contexto.setFallo(true);
- 							break;
  						}
  					}while(mensaje!=null);
 
