@@ -3,6 +3,7 @@ package com.umbrella.autoslave.logic;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
@@ -22,6 +23,7 @@ import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
 
 
@@ -229,9 +231,9 @@ public class Slave1 implements Notificable {
 					//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
 					// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
 					if(!contexto.isParadaCorrecta()){
-System.out.println("si no es parada correcta");			
-if(_notificable != null)
-	_notificable.notifyNoSyncJoy2(NombreMaquinas.DISPENSADORA.getName());
+						System.out.println("si no es parada correcta");			
+						if(_notificable != null)
+							_notificable.notifyNoSyncJoy2(NombreMaquinas.DISPENSADORA.getName());
 
 						//_dispensadora.start();
 					}
@@ -247,6 +249,8 @@ System.out.println("si tengo 0 pasteles restantes");
 
 					for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
 					apagarSensores();
+					
+					actualizarContadorAutomata();
 	System.out.println("llega 5");
 					// envia el mensaje de contexto
 					DefaultMessage mensajeSend=new DefaultMessage();
@@ -408,4 +412,30 @@ System.out.println("si tengo 0 pasteles restantes");
 	public synchronized void pauseJoy2() {
 	}
 
+	/**
+	 * repasa la linkedlist de pasteles y los pone en las posiciones del contador
+	 */
+	private void actualizarContadorAutomata(){
+		
+		contexto.resetContadorAutomata1();
+		LinkedList<Pastel> lista=new LinkedList<Pastel>();
+		for(int i=0;i<lista.size();i++){
+			double pos=lista.get(i).get_posicion();
+			if( pos<(configuracion.getPosBizc()+configuracion.getSizeBizcocho()/2) ){
+				contexto.incrementarContadorAutomata1(0);
+			}else if(pos<(configuracion.getPosChoc()-configuracion.getSizeBizcocho()/2)){
+				contexto.incrementarContadorAutomata1(1);
+			}else if(pos<(configuracion.getPosChoc()+configuracion.getSizeBizcocho()/2)){
+				contexto.incrementarContadorAutomata1(2);
+			}else if(pos<(configuracion.getPosCaram()-configuracion.getSizeBizcocho()/2)){
+				contexto.incrementarContadorAutomata1(3);
+			}else if(pos<(configuracion.getPosCaram()+configuracion.getSizeBizcocho()/2)){
+				contexto.incrementarContadorAutomata1(4);
+			}else if(pos<(configuracion.getPosFinAut1()-configuracion.getSizeBizcocho()/2)){
+				contexto.incrementarContadorAutomata1(5);
+			}else if(pos<(configuracion.getPosFinAut1()+configuracion.getSizeBizcocho()/2)){
+				contexto.incrementarContadorAutomata1(6);
+			}
+		}
+	}
 }
