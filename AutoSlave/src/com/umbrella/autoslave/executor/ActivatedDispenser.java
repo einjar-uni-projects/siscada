@@ -4,6 +4,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
 
@@ -32,6 +33,7 @@ public class ActivatedDispenser extends Thread implements Notificable{
 	private ThreadState _threadState;
 	
 	private boolean _joy = true;
+	private boolean _joy2 = true;
 	private  Clock _clock;
 	
 	/**
@@ -57,48 +59,53 @@ public class ActivatedDispenser extends Thread implements Notificable{
 	
 	@Override
 	public void run(){
-		setThreadState(ThreadState.EJECUTANDO);
-		
-		while(!_threadState.equals(ThreadState.ACABADO)){
-			if(_threadState.equals(ThreadState.ESPERANDO)) 
-				if(_remainderCakes>0) setThreadState(ThreadState.EJECUTANDO);
+		while(!_context.isApagado()){
+			setThreadState(ThreadState.EJECUTANDO);
 			
-			while(_threadState.equals(ThreadState.EJECUTANDO)){
-				/*
-				 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
-				 * el �ltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
-				 */
-
-				// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
-				pauseJoy();
-				guardedJoy();
-
-				/*
-				 * SE SUPONE Q ESTE IF ES INNECESARIO
-				 * si en la posicion donde esta la dispensadora no hay bizcocho
-				 * &&
-				 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
-				 */
-				if(getSpaceCounter()>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
-					_context.setDispositivosInternos(getAssociatedPosition(), true);
+			while(!_threadState.equals(ThreadState.ACABADO)){
+				if(_threadState.equals(ThreadState.ESPERANDO)) 
+					if(_remainderCakes>0) setThreadState(ThreadState.EJECUTANDO);
+				
+				while(_threadState.equals(ThreadState.EJECUTANDO)){
 					/*
-					 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
-					 * se pone la posicion de la cinta inicial como ocupada
+					 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
+					 * el �ltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
 					 */
-					_remainderCakes--;
-					_context.incrementarNumPasteles();
-					_context.get_listaPasteles().add(new Pastel());
-					_context.setDispositivosInternos(getAssociatedPosition(), false);
-					if(_remainderCakes==0){
-						setThreadState(ThreadState.ESPERANDO);
+	
+					// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
+					pauseJoy();
+					guardedJoy();
+	System.out.println("despierta del wait");
+					/*
+					 * SE SUPONE Q ESTE IF ES INNECESARIO
+					 * si en la posicion donde esta la dispensadora no hay bizcocho
+					 * &&
+					 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
+					 */
+					if(getSpaceCounter()>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
+	System.out.println("entra en el if de la dispensadora de si tengo espacio");					
+						_context.setDispositivosInternos(getAssociatedPosition(), true);
+						/*
+						 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
+						 * se pone la posicion de la cinta inicial como ocupada
+						 */
+						_remainderCakes--;
+						_context.incrementarNumPasteles();
+						_context.get_listaPasteles().add(new Pastel());
+						_context.setDispositivosInternos(getAssociatedPosition(), false);
+						if(_remainderCakes==0){
+							setThreadState(ThreadState.ESPERANDO);
+						}
+					}else{
+						// aqui no tendria q entrar nunca
+						System.err.println("Error en la ejecucion del hilo de DsipensadoraActivada");
 					}
-				}else{
-					// aqui no tendria q entrar nunca
-					System.err.println("Error en la ejecucion del hilo de DsipensadoraActivada");
-				}
-			} 
+				} 
+			}
+			_context.setRemainderCakes(_remainderCakes);
+			pauseJoy2();
+			guardedJoy2();
 		}
-		_context.setRemainderCakes(_remainderCakes);
 		setThreadState(ThreadState.ACABADO);
 	}
 	
@@ -223,5 +230,32 @@ public class ActivatedDispenser extends Thread implements Notificable{
 
 	public synchronized void pauseJoy() {
 		_joy = false;
+	}
+	
+	public synchronized void guardedJoy2() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy2) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy2(String machine) {
+		notifyJoy2(machine);
+	}
+
+	public synchronized void notifyJoy2(String machine) {
+		if(machine.equals(NombreMaquinas.DISPENSADORA.getName())){
+			_joy2 = true;
+			notifyAll();
+		}
+	}
+
+	public synchronized void pauseJoy2() {
+		_joy2 = false;
 	}
 }

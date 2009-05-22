@@ -30,6 +30,8 @@ public class Robot1 implements Notificable{
 
 	private Clock _clock;
 	private boolean _joy = true;
+	
+	
 	private ClientMailBox _buzon;
 
 	private PropertiesFile pfmodel;
@@ -298,5 +300,18 @@ public class Robot1 implements Notificable{
 
 	public synchronized void pauseJoy() {
 		_joy = false;
+	}
+	
+	public synchronized void guardedJoy2() {
+	}
+	
+	@Override
+	public void notifyNoSyncJoy2(String machine) {
+	}
+
+	public synchronized void notifyJoy2() {
+	}
+
+	public synchronized void pauseJoy2() {
 	}
 }//class

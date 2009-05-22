@@ -4,6 +4,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
 
@@ -22,6 +23,7 @@ public class MoveConveyorBelt extends Thread implements Notificable{
 	private Configuration configuration=Configuration.getInstance();
 	
 	private boolean _joy = true;
+	private boolean _joy2 = true;
 	private  Clock _clock;
 	/*
 	 * lo q desplaza la cinta en un click, en metros
@@ -52,39 +54,43 @@ public class MoveConveyorBelt extends Thread implements Notificable{
 	 */
 	@Override
 	public void run(){
-		/*
-		 * si se ejecuta la cinta 1 vez la cinta se desplaza minimo una cantidad X, suponemos q eso es siempre superior a un click
-		 */
-		_threadState=ThreadState.EJECUTANDO;
+		while(!context.isApagado()){
+			/*
+			 * si se ejecuta la cinta 1 vez la cinta se desplaza minimo una cantidad X, suponemos q eso es siempre superior a un click
+			 */
+			_threadState=ThreadState.EJECUTANDO;
 
-		/*
-		 * nos dice si algun sensor se va a encender
-		 * se da el valor False xq al menos tiene q dar el salto una vez
-		 */
-		if(context.getTipo().equalsIgnoreCase("blister")){
-			for(int i=0;i<context.get_listaBlister().size();i++){
-				if((context.get_listaBlister().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
-					context.get_listaBlister().get(i).incrementarPosicion(spaceElapsedByClick);
-				else{
-					//el pastel SE HA CAIDO DE LA CINTA
-					context.get_listaBlister().get(i).set_posicion(configuration.getSizeCinta());
+			/*
+			 * nos dice si algun sensor se va a encender
+			 * se da el valor False xq al menos tiene q dar el salto una vez
+			 */
+			if(context.getTipo().equalsIgnoreCase("blister")){
+				for(int i=0;i<context.get_listaBlister().size();i++){
+					if((context.get_listaBlister().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
+						context.get_listaBlister().get(i).incrementarPosicion(spaceElapsedByClick);
+					else{
+						//el pastel SE HA CAIDO DE LA CINTA
+						context.get_listaBlister().get(i).set_posicion(configuration.getSizeCinta());
+					}
+				}
+			}else{
+				for(int i=0;i<context.get_listaPasteles().size();i++){
+					if((context.get_listaPasteles().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
+						context.get_listaPasteles().get(i).incrementarPosicion(spaceElapsedByClick);
+					else{
+						//el pastel SE HA CAIDO DE LA CINTA
+						context.get_listaPasteles().get(i).set_posicion(configuration.getSizeCinta());
+					}
 				}
 			}
-		}else{
-			for(int i=0;i<context.get_listaPasteles().size();i++){
-				if((context.get_listaPasteles().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
-					context.get_listaPasteles().get(i).incrementarPosicion(spaceElapsedByClick);
-				else{
-					//el pastel SE HA CAIDO DE LA CINTA
-					context.get_listaPasteles().get(i).set_posicion(configuration.getSizeCinta());
-				}
-			}
+
+			pauseJoy();
+			guardedJoy();
+
+			setThreadState(ThreadState.ESPERANDO);
+			pauseJoy2();
+			guardedJoy2();
 		}
-
-		pauseJoy();
-		guardedJoy();
-
-		setThreadState(ThreadState.ESPERANDO);
 	}
 	
 	/**
@@ -196,5 +202,32 @@ public class MoveConveyorBelt extends Thread implements Notificable{
 
 	public synchronized void pauseJoy() {
 		_joy = false;
+	}
+	
+	public synchronized void guardedJoy2() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy2) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy2(String machine) {
+		notifyJoy2(machine);
+	}
+
+	public synchronized void notifyJoy2(String machine) {
+		if(machine.equals(NombreMaquinas.DISPENSADORA.getName())){
+			_joy2 = true;
+			notifyAll();
+		}
+	}
+
+	public synchronized void pauseJoy2() {
+		_joy2 = false;
 	}
 }

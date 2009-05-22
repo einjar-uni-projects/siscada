@@ -64,7 +64,7 @@ public class Context implements Serializable{
 	/*
 	 * numero de pasteles en la cinta, no sirve para nada tecnicamente solo da informacion
 	 */
-	private int numPasteles;
+	private int numPasteles=50;
 	
 	// Private constructor suppresses 
     private Context(String tipo) {
