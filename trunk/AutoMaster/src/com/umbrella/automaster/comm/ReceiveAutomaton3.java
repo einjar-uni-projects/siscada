@@ -53,8 +53,12 @@ public class ReceiveAutomaton3 extends Thread {
 				case ACTUALIZARCONTEXTO:
 					Context con_update_context = (Context) msg.getObject();
 					_masterContext.set_contextoAut3(con_update_context);
-					String machine_update_context = msg.getParametros().get(0);
-					sendAU3MachineState(dm, !con_update_context.isApagado(), machine_update_context);
+					
+					//Se notifica del estado al SCADA
+					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setObject(!con_update_context.isApagado());
+					dm.getParametros().add("AU3");
+					_postmaster.sendMessageSCADA(dm);
 					break;
 				}
 			}
@@ -115,25 +119,4 @@ public class ReceiveAutomaton3 extends Thread {
 		sal = list.get(pos).getCalidad()[0];
 		return sal;
 	}
-	
-	public static void sendAU3MachineState(DefaultMessage dm, boolean b,
-			String machine) {
-		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
-		dm.setObject(b);
-		dm.getParametros().add(machine);
-		try {
-			Postmaster.getInstance().sendMessageAU3(dm);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		dm = new DefaultMessage();
-	}
-
 }

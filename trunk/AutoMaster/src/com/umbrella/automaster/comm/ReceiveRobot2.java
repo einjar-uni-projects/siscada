@@ -58,8 +58,12 @@ public class ReceiveRobot2 extends Thread {
 				case ACTUALIZARCONTEXTOROBOT:
 					ContextoRobot con_update_context = (ContextoRobot) msg.getObject();
 					_masterContext.set_contextoRobot2(con_update_context);
-					String machine_update_context = msg.getParametros().get(0);
-					sendRB2MachineState(dm, !con_update_context.isApagado(), machine_update_context);
+					
+					//Se notifica del estado al SCADA
+					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setObject(!con_update_context.isApagado());
+					dm.getParametros().add("RB2");
+					_postmaster.sendMessageSCADA(dm);
 					break;
 				case PRODUCTORECOGIDO:
 					// se envia un mensaje a la cinta 3 de PRODUCTORECOGIDO, el
@@ -80,26 +84,6 @@ public class ReceiveRobot2 extends Thread {
 			dm = new DefaultMessage();
 			
 		} while (msg != null);
-	}
-
-	public static void sendRB2MachineState(DefaultMessage dm, boolean b,
-			String machine) {
-		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
-		dm.setObject(b);
-		dm.getParametros().add(machine);
-		try {
-			Postmaster.getInstance().sendMessageRB2(dm);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		dm = new DefaultMessage();
 	}
 	
 }
