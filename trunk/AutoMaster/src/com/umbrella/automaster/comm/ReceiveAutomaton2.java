@@ -45,7 +45,9 @@ public class ReceiveAutomaton2 extends Thread {
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageAU2();
+			
 			if (msg != null) {
+				System.out.println("AU2 Recive: " + msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case ACTUALIZARCONTEXTO:
 					_masterContext.set_contextoAut2((Context) msg.getObject());

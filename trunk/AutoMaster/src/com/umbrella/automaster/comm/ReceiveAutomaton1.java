@@ -44,7 +44,9 @@ public class ReceiveAutomaton1 extends Thread {
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageAU1();
+			
 			if (msg != null) {
+				System.out.println("AU1 Recive: " + msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case AVISARUNFALLO:
 					String emptyMachine = msg.getParametros().get(0);
@@ -52,6 +54,8 @@ public class ReceiveAutomaton1 extends Thread {
 					break;
 				case ACTUALIZARCONTEXTO:
 					_masterContext.set_contextoAut1((Context) msg.getObject());
+					msg.getParametros().add(0, "AU1");
+					//ReceiveSCADA
 					break;
 				}
 			}
