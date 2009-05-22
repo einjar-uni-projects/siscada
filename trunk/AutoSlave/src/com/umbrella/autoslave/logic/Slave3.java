@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
+import com.umbrella.autocommon.Notificable;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
@@ -30,24 +31,25 @@ import com.umbrella.utils.ThreadState;
  * El objetivo de esta clase es llevar el peso de la ejecucion, aqui se crean los hilos q luego se ejecutaran en 
  * paralelo entre ellos
  */
-public class Slave3 {
+public class Slave3 implements Notificable{
 
-	private static Clock _clock;
-	private static MoveConveyorBelt _moverCinta;
-	private static ConveyorBeltExit _salBlister;
-	private static InstantaneousMachine _calidad;
-	private static TimeMachine _selladora;
-	private static ClientMailBox _buzon;
+	private  Clock _clock;
+	private  MoveConveyorBelt _moverCinta;
+	private  ConveyorBeltExit _salBlister;
+	private  InstantaneousMachine _calidad;
+	private  TimeMachine _selladora;
+	private  ClientMailBox _buzon;
 
-	private static Context contexto=Context.getInstance("blister");
-	private static Configuration configuracion=Configuration.getInstance();
+	private  Context contexto=Context.getInstance("blister");
+	private  Configuration configuracion=Configuration.getInstance();
 
-	private static PropertiesFile pfmodel;
+	private  PropertiesFile pfmodel;
 
-	public static double porcentajeFallos=0.03;
+	public  double porcentajeFallos=0.03;
+	private boolean _joy = true;
 
-	public static void main(String[] args) {
-
+	public Slave3(){
+		
 		for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,false);
 
 		try	{
@@ -61,6 +63,7 @@ public class Slave3 {
 			 */
 			_clock=new Clock();
 			_clock.start();
+			_clock.setNotificable(this);
 
 			/*
 			 * se crean los hilos de ejecucion
@@ -83,8 +86,14 @@ public class Slave3 {
  			}
  			PropertiesFileHandler.getInstance().writeFile();
  			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
+		}catch( Exception e ){
+			e.printStackTrace();
+		}
 
+	}
+	public void execute() {
 
+		
 			long cicloAct=_clock.getClock();
 			boolean primeraVez=true;
 
@@ -104,7 +113,12 @@ public class Slave3 {
 
 
 					do{
-						mensaje =_buzon.receive();
+						try {
+							mensaje =_buzon.receive();
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						if(mensaje!=null){
 							switch (mensaje.getIdentificador()) {
 							case FINCINTALIBRE:							
@@ -163,7 +177,7 @@ public class Slave3 {
 							 * lo unico q hace es cargar los valores iniciales 
 							 */
 							if(primeraVez){
-								((TurnOff) estado).transitar();
+								//((TurnOff) estado).transitar();
 								primeraVez=false;
 							}else{
 								/*
@@ -244,16 +258,14 @@ public class Slave3 {
 			_salBlister=null;
 			_calidad=null;
 
-		}catch( Exception e ){
-			e.printStackTrace();
-		}
+		
 	}
 	
 	/*
 	 * Nos dice si algun hilo esta bloqueando al resto, es decir uno de los hilos esta en ejecucion
 	 * true= algun hilo esta bloqueando
 	 */
-	private synchronized static boolean hayHiloBloqueante(){
+	private synchronized boolean hayHiloBloqueante(){
 		boolean hay=false;
 		if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
 		else if(_selladora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
@@ -261,7 +273,7 @@ public class Slave3 {
 		return hay;
 	}
 	
-	private synchronized static boolean seEnciendeSensor(){
+	private synchronized boolean seEnciendeSensor(){
 		boolean salida=false;
 		/*//no se tienen en cuenta los sensores asociados a maquinas instantaneas
 		if(contexto.activaSensor(_calidad.get_posicion())>=0 && 
@@ -285,7 +297,7 @@ public class Slave3 {
 		return salida;
 	}
 	
-	private synchronized static boolean ejecutandoAlgo(NombreMaquinas nombre){
+	private synchronized boolean ejecutandoAlgo(NombreMaquinas nombre){
 		boolean salida=false;
 		if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
 			if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
@@ -296,7 +308,7 @@ public class Slave3 {
 		return salida;
 	}
 	
-	private synchronized static boolean puedoUsar(NombreMaquinas tipo){
+	private synchronized boolean puedoUsar(NombreMaquinas tipo){
 		boolean salida=false;
 		if(tipo.equals(NombreMaquinas.CONTROL_CALIDAD))
 			if(!ejecutandoAlgo(NombreMaquinas.CONTROL_CALIDAD) && 
@@ -318,7 +330,7 @@ public class Slave3 {
 	}
 	
 	
-	private synchronized static void apagarSensores(){
+	private synchronized void apagarSensores(){
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _calidad.getPosition());
 		if(num>=0)
@@ -332,7 +344,7 @@ public class Slave3 {
 		if(num>=0)
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
 	}
-	private synchronized static boolean tengoEspacio(){
+	private synchronized boolean tengoEspacio(){
 		boolean sal=false;
 		double min=configuracion.getSizeCintaAut3()+50;
 		for(int i=0;i<contexto.get_listaBlister().size();i++){
@@ -340,5 +352,30 @@ public class Slave3 {
 		}
 		if(min>configuracion.getSizeBlister()) sal=true;
 		return sal;
+	}
+	
+	public synchronized void guardedJoy() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy() {
+		notifyJoy();
+	}
+
+	public synchronized void notifyJoy() {
+		_joy = true;
+		notifyAll();
+	}
+
+	public synchronized void pauseJoy() {
+		_joy = false;
 	}
 }
