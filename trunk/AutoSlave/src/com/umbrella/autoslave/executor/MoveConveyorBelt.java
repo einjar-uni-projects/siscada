@@ -1,7 +1,9 @@
 package com.umbrella.autoslave.executor;
 
+import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
+import com.umbrella.autocommon.Notificable;
 import com.umbrella.utils.ThreadState;
 
 
@@ -10,7 +12,7 @@ import com.umbrella.utils.ThreadState;
  * @author 
  *
  */
-public class MoveConveyorBelt extends Thread{
+public class MoveConveyorBelt extends Thread implements Notificable{
 	
 	private ThreadState _threadState;
 	
@@ -18,6 +20,9 @@ public class MoveConveyorBelt extends Thread{
 	
 	private Context context=Context.getInstance();
 	private Configuration configuration=Configuration.getInstance();
+	
+	private boolean _joy = true;
+	private  Clock _clock;
 	/*
 	 * lo q desplaza la cinta en un click, en metros
 	 */
@@ -39,6 +44,8 @@ public class MoveConveyorBelt extends Thread{
 		setConveyorBeltSpeedByMilisecond(getConveyorBeltSpeed()/(60*1000));
 		setSpaceElapsedByClick(getConveyorBeltSpeedByMilisecond()*configuration.get_tiempoReloj());
 		setAssociatedPosition(associatedPosition);
+		_clock=Clock.getInstance();
+		_clock.setNotificable(this);
 	}
 
 	/*
@@ -74,14 +81,8 @@ public class MoveConveyorBelt extends Thread{
 			}
 		}
 
-		try {
-			//espera al prox ciclo de reloj
-			wait();
-			// dormimos este tiempo porq no puede ocurrir nada en ese periodo
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		pauseJoy();
+		guardedJoy();
 
 		setThreadState(ThreadState.ESPERANDO);
 	}
@@ -170,5 +171,30 @@ public class MoveConveyorBelt extends Thread{
 	 */
 	private synchronized void setAssociatedPosition(int associated) {
 		_associatedPosition = associated;
+	}
+
+	public synchronized void guardedJoy() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy() {
+		notifyJoy();
+	}
+
+	public synchronized void notifyJoy() {
+		_joy = true;
+		notifyAll();
+	}
+
+	public synchronized void pauseJoy() {
+		_joy = false;
 	}
 }

@@ -51,7 +51,7 @@ public class Robot1 implements Notificable{
 			e1.printStackTrace();
 		}
 		PropertiesFileHandler.getInstance().writeFile();
-		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
+		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR1Name, ServerMailBox._sendR1Name);
 
 		//_buzon=new ClientMailBox(host,puerto,"EntradaRobot1","SalidaRobot1");
 
@@ -60,18 +60,22 @@ public class Robot1 implements Notificable{
 	public void execute() {
 		// TODO Auto-generated method stub
 		while(!_contexto.isFIN()){
+			System.out.println("antes de dormir");
 			pauseJoy();
 			guardedJoy();
-
+			System.out.println("despues de dormir");
 			MessageInterface mensaje=null;
 			do{
 				try {
+					System.out.println("antes de recibir");
 					mensaje=_buzon.receive();
+					System.out.println("despues de recibir");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
+					System.out.println("recibiendo el mensaje: " + mensaje.getIdentificador());
 					switch (mensaje.getIdentificador()) {
 					case ACTUALIZARCONTEXTO:							
 						_contexto=(ContextoRobot)mensaje.getObject();
