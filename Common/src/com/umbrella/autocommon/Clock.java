@@ -33,7 +33,7 @@ public class Clock extends Thread{
 	public void run(){
 		// Aqu� el c�digo pesado que tarda mucho
 		try {
-			wait(time);
+			sleep(time);
 			_clock++;
 			if(_notificable != null)
 				_notificable.notifyNoSyncJoy();
