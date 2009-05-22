@@ -17,82 +17,88 @@ import com.umbrella.utils.NombreMaquinas;
 
 /**
  * 
- * @author pablo
- * Clase que leera los mensajes enviados por al automata 2 y actuara en consecuencia
+ * @author pablo Clase que leera los mensajes enviados por al automata 2 y
+ *         actuara en consecuencia
  */
-public class ReceiveAutomaton3 extends Thread{
+public class ReceiveAutomaton3 extends Thread {
 
 	Postmaster _postmaster;
 	ContextoMaestro _masterContext;
 	Configuration _configutarion;
-	
-	
-	public synchronized void inicializar(){
-		try{
-			_postmaster=Postmaster.getInstance();
-			_masterContext=ContextoMaestro.getInstance();
-			_configutarion=Configuration.getInstance();
-		}catch (RemoteException e1) {
+
+	public synchronized void inicializar() {
+		try {
+			_postmaster = Postmaster.getInstance();
+			_masterContext = ContextoMaestro.getInstance();
+			_configutarion = Configuration.getInstance();
+		} catch (RemoteException e1) {
 			// TODO: handle exception
-		}catch (MalformedURLException e2) {
+		} catch (MalformedURLException e2) {
 			// TODO: handle exception
-		}catch (PropertyException e4) {
+		} catch (PropertyException e4) {
 			// TODO: handle exception
 		}
 	}
-	
+
 	@Override
-	public void run(){
-		MessageInterface msg=null;
-		do{
-			msg=_postmaster.reciveMessageAU3();
-			switch (msg.getIdentificador()) {
-			case ACTUALIZARCONTEXTO:
-				_masterContext.set_contextoAut2((Context)msg.getObject());
-				break;
+	public void run() {
+		MessageInterface msg = null;
+		do {
+			msg = _postmaster.reciveMessageAU3();
+			if (msg != null) {
+				switch (msg.getIdentificador()) {
+				case ACTUALIZARCONTEXTO:
+					_masterContext.set_contextoAut2((Context) msg.getObject());
+					break;
+				}
 			}
-		}while(msg!=null);
+		} while (msg != null);
 
 		/*
-		 * si el estado interno nos dice que hay un blister completo listo al inicio de la cinta
+		 * si el estado interno nos dice que hay un blister completo listo al
+		 * inicio de la cinta
 		 */
-		if(_masterContext.get_contextoAut3().getDispositivosInternos(_configutarion.getPosicionAsociada(NombreMaquinas.INICIO)) &&
-				_masterContext.getContador()==4){
-			
-			//comprobar q cabe en la cinta o ya esta hecho???
-			
-			MessageInterface mensajeSend=new DefaultMessage();
+		if (_masterContext.get_contextoAut3().getDispositivosInternos(
+				_configutarion.getPosicionAsociada(NombreMaquinas.INICIO))
+				&& _masterContext.getContador() == 4) {
+
+			// comprobar q cabe en la cinta o ya esta hecho???
+
+			MessageInterface mensajeSend = new DefaultMessage();
 			mensajeSend.setIdentificador(OntologiaMSG.BLISTERCOMPLETO);
 			_postmaster.sendMessageRB1(mensajeSend);
 		}
-		
+
 		/*
-		 * si el estado interno nos dice que hay un blister comleto y  sellado al final de la cinta
+		 * si el estado interno nos dice que hay un blister comleto y sellado al
+		 * final de la cinta
 		 */
-		if(_masterContext.get_contextoAut3().getDispositivosInternos(_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))){
-			MessageInterface mensajeSend=new DefaultMessage();
-			if(valido()){
+		if (_masterContext.get_contextoAut3().getDispositivosInternos(
+				_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))) {
+			MessageInterface mensajeSend = new DefaultMessage();
+			if (valido()) {
 				mensajeSend.setIdentificador(OntologiaMSG.BLISTERVALIDO);
-			}else{
+			} else {
 				mensajeSend.setIdentificador(OntologiaMSG.BLISTERNOVALIDO);
 			}
 			_postmaster.sendMessageRB1(mensajeSend);
 		}
 	}
-	
-	private boolean valido(){
-		boolean sal=false;
-		LinkedList<Blister> list=_masterContext.get_contextoAut3().get_listaBlister();
-		double max=0;
-		int pos=0;
-		for(int i=0;i<list.size();i++){
-			if(list.get(i).get_posicion()>max){
-				max=list.get(i).get_posicion();
-				pos=i;
+
+	private boolean valido() {
+		boolean sal = false;
+		LinkedList<Blister> list = _masterContext.get_contextoAut3()
+				.get_listaBlister();
+		double max = 0;
+		int pos = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).get_posicion() > max) {
+				max = list.get(i).get_posicion();
+				pos = i;
 			}
 		}
-		sal=list.get(pos).getCalidad()[0];
+		sal = list.get(pos).getCalidad()[0];
 		return sal;
 	}
-	
+
 }
