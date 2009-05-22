@@ -4,7 +4,7 @@ package com.umbrella.autocommon;
 public class Clock extends Thread{
 	
 	private long _clock=0;
-	Context contexto=Context.getInstance();
+	//Context contexto=Context.getInstance();
 	Configuration configuracion=Configuration.getInstance();
 	long time=configuracion.get_tiempoReloj();
 	private Notificable _notificable;
@@ -32,16 +32,17 @@ public class Clock extends Thread{
 	
 	public void run(){
 		// Aqu� el c�digo pesado que tarda mucho
-		try {
-			sleep(time);
-			_clock++;
-			if(_notificable != null)
-				_notificable.notifyNoSyncJoy();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(true){
+			try {
+				sleep(time);
+				_clock++;
+				if(_notificable != null)
+					_notificable.notifyNoSyncJoy();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
 	}
 	public synchronized long getClock(){
 		return _clock;

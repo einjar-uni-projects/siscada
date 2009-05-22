@@ -49,9 +49,9 @@ public class ContextoMaestro implements Serializable{
 		for(int i=0;i<contadorCalidadSensor.length;i++)
 			contadorCalidadSensor[i]=0;
 		
-		_contextoAut1=Context.getInstance();
-		_contextoAut2=Context.getInstance();
-		_contextoAut3=Context.getInstance();
+		_contextoAut1=Context.getInstance("pastel");
+		_contextoAut2=Context.getInstance("blister");
+		_contextoAut3=Context.getInstance("blister");
 		_contextoRobot1=ContextoRobot.getInstance();
 		_contextoRobot2=ContextoRobot.getInstance();
 	}

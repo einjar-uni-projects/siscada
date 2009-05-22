@@ -71,6 +71,7 @@ public class Context implements Serializable{
     	
     	for(int i=0;i<dispositivosInternos.length;i++){
     		dispositivosInternos[i]=false;
+    		estadoAnterior[i]=false;
     	}
     	this.tipo=tipo;
     	if(tipo.equalsIgnoreCase("pastel"))
@@ -85,6 +86,7 @@ public class Context implements Serializable{
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
      *  otra prueba para evitar instanciaci�n m�ltiple
      */ 
+    
     private synchronized static void createInstance(String tipo) {
         if (INSTANCE == null) { 
             INSTANCE = new Context(tipo);
@@ -95,10 +97,11 @@ public class Context implements Serializable{
         if (INSTANCE == null) createInstance(tipo);
         return INSTANCE;
     }
-    
+    /*
     public static Context getInstance() {
         return INSTANCE;
     }
+    */
     /*
  	public void setState( Estado state ){
  		this.estado = state;
