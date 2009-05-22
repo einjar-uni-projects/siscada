@@ -73,18 +73,34 @@ public class Maestro implements Notificable  {
 	public void execute() {
 		_clock.start();
 		while (!_contextoMaestro.is_FIN()) {
-			System.out.println("Me duermo"); // TODO quitar
+			//System.out.println("Me duermo"); // TODO quitar
 			pauseJoy();
 			guardedJoy();
-			System.out.println("Me despierto");
+			//System.out.println("Me despierto");
 			_reciveAU1.start();
 			_reciveAU2.start();
 			_reciveRB1.start();
 			_reciveAU3.start();
 			_reciveRB2.start();
 			_reciveSCADA.start();
+			rebootThreads();
 		}
 		apagar();
+	}
+
+	private void rebootThreads() {
+		_reciveRB1 = new ReceiveRobot1();
+		_reciveRB1.inicializar();
+		_reciveRB2 = new ReceiveRobot2();
+		_reciveRB2.inicializar();
+		_reciveAU1 = new ReceiveAutomaton1();
+		_reciveAU1.inicializar();
+		_reciveAU2 = new ReceiveAutomaton2();
+		_reciveAU2.inicializar();
+		_reciveAU3 = new ReceiveAutomaton3();
+		_reciveAU3.inicializar();
+		_reciveSCADA = new ReceiveSCADA();
+		_reciveSCADA.inicializar();
 	}
 
 	public synchronized void guardedJoy() {
@@ -129,18 +145,7 @@ public class Maestro implements Notificable  {
 		_clock = Clock.getInstance();
 		_clock.setNotificable(this);
 
-		_reciveRB1 = new ReceiveRobot1();
-		_reciveRB1.inicializar();
-		_reciveRB2 = new ReceiveRobot2();
-		_reciveRB2.inicializar();
-		_reciveAU1 = new ReceiveAutomaton1();
-		_reciveAU1.inicializar();
-		_reciveAU2 = new ReceiveAutomaton2();
-		_reciveAU2.inicializar();
-		_reciveAU3 = new ReceiveAutomaton3();
-		_reciveAU3.inicializar();
-		_reciveSCADA = new ReceiveSCADA();
-		_reciveSCADA.inicializar();
+		rebootThreads();
 
 		/*
 		 * se envian los mensajes a los destinos con la configuracion el mensaje
