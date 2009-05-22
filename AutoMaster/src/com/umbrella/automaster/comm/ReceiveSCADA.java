@@ -1,7 +1,6 @@
 package com.umbrella.automaster.comm;
 
 import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
@@ -15,7 +14,6 @@ import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.NombreMaquinas;
 
 /**
  * 
