@@ -135,7 +135,7 @@ public class MainFrame implements UpdatableInterface{
 			_rightPanel.add(_attributePanels[5], "5");
 			
 			_rightLayout.show(_rightPanel, "0");
-			_rightPanel.setPreferredSize(new Dimension(200, 600));
+			_rightPanel.setPreferredSize(_attributePanels[0].getPreferredSize());
 		}
 		return _rightPanel;
 	}

@@ -25,13 +25,14 @@ public class ConjuntoCintaBlister extends ElementsGroup {
 		_cinta = new PaintElementCinta(loader,posX,posY+maxY-100,maxX,100, model);
 		_blister_ini = new  PaintElementBlisterIni(loader, -30, posY+maxY-110, 100, 70, model);
 		_blister = new  PaintElementBlister(loader, -30, posY+maxY-110, 100, 70, model);
-		_estampadora = new PaintElementEstampadora(loader, posX+90, posY+50, 100, 70, model);
-		_cutter = new PaintElementCutter(loader, posX+190, posY+50, 100, 70, model);
+		_estampadora = new PaintElementEstampadora(loader, posX+27, posY+50, 100, 70, model);
+		_cutter = new PaintElementCutter(loader, posX+115, posY+50, 100, 70, model);
 		_paintElements.add(_cinta);
 		_paintElements.add(_blister_ini);
 		_paintElements.add(_blister);
-		_paintElements.add(_estampadora);
 		_paintElements.add(_cutter);
+		_paintElements.add(_estampadora);
+		
 	}
 
 	@Override
