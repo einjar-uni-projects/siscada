@@ -54,34 +54,41 @@ public class ReceiveAutomaton3 extends Thread {
 			}
 		} while (msg != null);
 
-		/*
-		 * si el estado interno nos dice que hay un blister completo listo al
-		 * inicio de la cinta
-		 */
-		if (_masterContext.get_contextoAut3().getDispositivosInternos(
-				_configutarion.getPosicionAsociada(NombreMaquinas.INICIO))
-				&& _masterContext.getContador() == 4) {
+		Context context = _masterContext.get_contextoAut3();
 
-			// comprobar q cabe en la cinta o ya esta hecho???
+		if (context != null) {
 
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.setIdentificador(OntologiaMSG.BLISTERCOMPLETO);
-			_postmaster.sendMessageRB1(mensajeSend);
-		}
+			/*
+			 * si el estado interno nos dice que hay un blister completo listo
+			 * al inicio de la cinta
+			 */
+			if (context.getDispositivosInternos(_configutarion
+					.getPosicionAsociada(NombreMaquinas.INICIO))
+					&& _masterContext.getContador() == 4) {
 
-		/*
-		 * si el estado interno nos dice que hay un blister comleto y sellado al
-		 * final de la cinta
-		 */
-		if (_masterContext.get_contextoAut3().getDispositivosInternos(
-				_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))) {
-			MessageInterface mensajeSend = new DefaultMessage();
-			if (valido()) {
-				mensajeSend.setIdentificador(OntologiaMSG.BLISTERVALIDO);
-			} else {
-				mensajeSend.setIdentificador(OntologiaMSG.BLISTERNOVALIDO);
+				// comprobar q cabe en la cinta o ya esta hecho???
+
+				MessageInterface mensajeSend = new DefaultMessage();
+				mensajeSend.setIdentificador(OntologiaMSG.BLISTERCOMPLETO);
+				_postmaster.sendMessageRB1(mensajeSend);
 			}
-			_postmaster.sendMessageRB1(mensajeSend);
+
+			/*
+			 * si el estado interno nos dice que hay un blister comleto y
+			 * sellado al final de la cinta
+			 */
+			if (context.getDispositivosInternos(
+					_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))) {
+				MessageInterface mensajeSend = new DefaultMessage();
+				if (valido()) {
+					mensajeSend.setIdentificador(OntologiaMSG.BLISTERVALIDO);
+				} else {
+					mensajeSend.setIdentificador(OntologiaMSG.BLISTERNOVALIDO);
+				}
+				_postmaster.sendMessageRB1(mensajeSend);
+			}
+		}else{
+			System.out.println("Context is null!!! AU3");
 		}
 	}
 
