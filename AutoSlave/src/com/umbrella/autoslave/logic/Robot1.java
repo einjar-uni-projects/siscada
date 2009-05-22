@@ -165,7 +165,7 @@ public class Robot1 implements Notificable{
 					}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
 						// controlar interferencias, mejor lo hace el maestro
 						if(  _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
-							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
+							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_2);
 							/*
 							 * envia el mensaje de interferencia sobre la cinta 2
 							 */

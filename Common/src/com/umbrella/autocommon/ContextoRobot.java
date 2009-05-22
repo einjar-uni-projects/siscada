@@ -14,7 +14,7 @@ public class ContextoRobot implements Serializable {
 	
 	private static long diffTiempo;
 	private static boolean pastel=false;
-	private static boolean blister=false;
+	// private static boolean blister=false;
 	private static boolean pastelListo=false;
 	private static boolean blisterListo=false;
 	private static boolean blisterCompletoListo=false;
@@ -67,7 +67,7 @@ public class ContextoRobot implements Serializable {
 	public static synchronized void setPastel(boolean pastel) {
 		ContextoRobot.pastel = pastel;
 	}
-	
+/*	
 	public static synchronized boolean isBlister() {
 		return blister;
 	}
@@ -75,7 +75,7 @@ public class ContextoRobot implements Serializable {
 	public static synchronized void setBlister(boolean blister) {
 		ContextoRobot.blister = blister;
 	}
-
+*/
 	
 	public static synchronized boolean isBlisterCompletoListo() {
 		return blisterCompletoListo;

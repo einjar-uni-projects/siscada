@@ -16,11 +16,6 @@ import com.umbrella.utils.Pastel;
 
 public class Context implements Serializable{
 
-	//private Estado estado;
-	
-	//private Configuracion conf= Configuracion.getInstance();
-	
-	
 	/*
 	 * tipo=pastel o blister
 	 */
@@ -66,7 +61,8 @@ public class Context implements Serializable{
 	 */
 	private int numPasteles=50;
 	
-	// Private constructor suppresses 
+	private int contadorAutomata1[]= new int[7];
+	
     private Context(String tipo) {
     	
     	for(int i=0;i<dispositivosInternos.length;i++){
@@ -80,6 +76,10 @@ public class Context implements Serializable{
     		_listaBlister=new LinkedList<Blister>();
     	else
     		System.err.println("ese valor no es valido, solo se admite 'pastel' o 'blister'.");
+    	
+    	for(int i=0;i<contadorAutomata1.length;i++){
+    		contadorAutomata1[i]=0;
+    	}
     }
  
     /*
@@ -262,5 +262,20 @@ public class Context implements Serializable{
 	public synchronized void decrementarChocolate(){
 		capacidadChocolate--;
 	}
-
+	
+	public void incrementarContadorAutomata1(int pos){
+		contadorAutomata1[pos]++;
+	}
+	public void decrementarContadorAutomata1(int pos){
+		contadorAutomata1[pos]--;
+	}
+	public void valorContadorAutomata1(int pos, int valor){
+		contadorAutomata1[pos]=valor;
+	}
+	public void resetContadorAutomata1(){
+		for(int i=0;i<contadorAutomata1.length;i++) contadorAutomata1[i]=0;
+	}
+	public synchronized int[] getContadorAutomata1(){
+		return contadorAutomata1;
+	}
 }
