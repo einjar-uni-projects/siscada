@@ -51,11 +51,11 @@ public class Context implements Serializable{
 	
 	//Configuracion configuracion=Configuracion.getInstance();
 	
-	private int pastelesRestantes;
+	private int pastelesRestantes = 50;
 	private boolean blisterListoInicioCinta3=false;
 	
-	private int capacidadCaramelo;
-	private int capacidadChocolate;
+	private int capacidadCaramelo = 50;
+	private int capacidadChocolate = 50;
 	
 	private static Context INSTANCE = null;
 	
