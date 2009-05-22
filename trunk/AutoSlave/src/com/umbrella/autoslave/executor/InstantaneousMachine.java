@@ -4,6 +4,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
 
@@ -20,6 +21,7 @@ public class InstantaneousMachine extends Thread implements Notificable{
 	private int _associatedPosition;
 	private ThreadState _threadState;
 	private boolean _joy = true;
+	private boolean _joy2 = true;
 	private  Clock _clock;
 	
 	/**
@@ -43,14 +45,18 @@ public class InstantaneousMachine extends Thread implements Notificable{
 	
 	@Override
 	public void run(){
-		setThreadState(ThreadState.EJECUTANDO);
-		context.setDispositivosInternos(_associatedPosition, true);
+		while(!context.isApagado()){
+			setThreadState(ThreadState.EJECUTANDO);
+			context.setDispositivosInternos(_associatedPosition, true);
 
-		pauseJoy();
-		guardedJoy();
+			pauseJoy();
+			guardedJoy();
 
-		// espera un ciclo de reloj para cambiar el estado de la maquina
-		context.setDispositivosInternos(_associatedPosition, false);
+			// espera un ciclo de reloj para cambiar el estado de la maquina
+			context.setDispositivosInternos(_associatedPosition, false);
+			pauseJoy2();
+			guardedJoy2();
+		}
 		setThreadState(ThreadState.ACABADO);
 	}
 
@@ -113,5 +119,32 @@ public class InstantaneousMachine extends Thread implements Notificable{
 
 	public synchronized void pauseJoy() {
 		_joy = false;
+	}
+	
+	public synchronized void guardedJoy2() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy2) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy2(String machine) {
+		notifyJoy2(machine);
+	}
+
+	public synchronized void notifyJoy2(String machine) {
+		if(machine.equals(NombreMaquinas.DISPENSADORA.getName())){
+			_joy2 = true;
+			notifyAll();
+		}
+	}
+
+	public synchronized void pauseJoy2() {
+		_joy2 = false;
 	}
 }

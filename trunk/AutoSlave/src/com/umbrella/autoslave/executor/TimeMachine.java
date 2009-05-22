@@ -3,6 +3,7 @@ package com.umbrella.autoslave.executor;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
 
@@ -13,6 +14,7 @@ public class TimeMachine extends Thread implements Notificable {
 	private double _executionTime;
 	private double _position;
 	private boolean _joy = true;
+	private boolean _joy2 = true;
 	private  Clock _clock;
 	/*
 	 * posicion del estado interno asociada
@@ -43,6 +45,7 @@ public class TimeMachine extends Thread implements Notificable {
 
 	@Override
 	public void run(){
+		while(!context.isApagado()){
 		setThreadState(ThreadState.EJECUTANDO);
 		context.setDispositivosInternos(getAssociatedPosition(), true);
 		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
@@ -59,8 +62,12 @@ public class TimeMachine extends Thread implements Notificable {
 			guardedJoy();
 		}
 		context.setDispositivosInternos(getAssociatedPosition(), false);
-		//se ha echado el caramelo en el bizcocho
+		//se ha echado el caramelo en el bizcocho	
 		setThreadState(ThreadState.ACABADO);
+		
+		pauseJoy2();
+		guardedJoy2();
+	}
 	}
 	
 	/**
@@ -137,5 +144,32 @@ public class TimeMachine extends Thread implements Notificable {
 
 	public synchronized void pauseJoy() {
 		_joy = false;
+	}
+	
+	public synchronized void guardedJoy2() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy2) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy2(String machine) {
+		notifyJoy2(machine);
+	}
+
+	public synchronized void notifyJoy2(String machine) {
+		if(machine.equals(NombreMaquinas.DISPENSADORA.getName())){
+			_joy2 = true;
+			notifyAll();
+		}
+	}
+
+	public synchronized void pauseJoy2() {
+		_joy2 = false;
 	}
 }

@@ -4,6 +4,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
 
@@ -17,15 +18,16 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 	private int _associatedPosition;
 
 	private ThreadState _threadState;
-	
+
 	private Context _context=Context.getInstance();
 	private Configuration _configuration=Configuration.getInstance();
-	
+
 	private boolean _joy = true;
+	private boolean _joy2 = true;
 	private  Clock _clock;
-	
+
 	private String _type;
-	
+
 	/**
 	 * @param position
 	 * @param associatedPosition
@@ -43,29 +45,34 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 
 	@Override
 	public void run(){
-		setThreadState(ThreadState.EJECUTANDO);
-		_context.setDispositivosInternos(getAssociatedPosition(), true);
-		
-		boolean finCintaLibre=endEmptyConveyorBelt(_type);
-		while (!finCintaLibre){
-			//se espera al siguiente click de la cinta
-			pauseJoy();
-			guardedJoy();
-			//comprobar el estado de la cinta
-			finCintaLibre=endEmptyConveyorBelt(_type);
+		while(!_context.isApagado()){
+			setThreadState(ThreadState.EJECUTANDO);
+			_context.setDispositivosInternos(getAssociatedPosition(), true);
+
+			boolean finCintaLibre=endEmptyConveyorBelt(_type);
+			while (!finCintaLibre){
+				//se espera al siguiente click de la cinta
+				pauseJoy();
+				guardedJoy();
+				//comprobar el estado de la cinta
+				finCintaLibre=endEmptyConveyorBelt(_type);
+			}
+			_context.decrementarNumPasteles();
+			//se ha recogido el bizcocho del fin de la lista
+			_context.setDispositivosInternos(getAssociatedPosition(), false);
+
+			pauseJoy2();
+			guardedJoy2();
 		}
-		_context.decrementarNumPasteles();
-		//se ha recogido el bizcocho del fin de la lista
-		_context.setDispositivosInternos(getAssociatedPosition(), false);
 		setThreadState(ThreadState.ACABADO);
 	}
-		
+
 	/**
 	 * 
 	 */
 	public void sendMessage() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -73,9 +80,9 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 	 */
 	public void changeMessage(boolean[] msg) {
 		// TODO Auto-generated method stub
-		
+
 	}	
-	
+
 
 	/**
 	 * @return
@@ -83,14 +90,14 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 	public synchronized ThreadState getThreadState() {
 		return _threadState;
 	}
-	
+
 	/**
 	 * @param state
 	 */
 	private synchronized void setThreadState(ThreadState state) {
 		this._threadState=state;
 	}
-	
+
 	/**
 	 * @param type
 	 * @return
@@ -108,14 +115,14 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 		}
 		return libre;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public synchronized double getPosition() {
 		return _position;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -129,7 +136,7 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 	private synchronized void setAssociatedPosition(int associated) {
 		_associatedPosition = associated;
 	}
-	
+
 	public synchronized void guardedJoy() {
 		// This guard only loops once for each special event, which may not
 		// be the event we're waiting for.
@@ -140,7 +147,7 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 			}
 		}
 	}
-	
+
 	@Override
 	public void notifyNoSyncJoy() {
 		notifyJoy();
@@ -153,5 +160,32 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 
 	public synchronized void pauseJoy() {
 		_joy = false;
+	}
+
+	public synchronized void guardedJoy2() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy2) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+
+	@Override
+	public void notifyNoSyncJoy2(String machine) {
+		notifyJoy2(machine);
+	}
+
+	public synchronized void notifyJoy2(String machine) {
+		if(machine.equals(NombreMaquinas.DISPENSADORA.getName())){
+			_joy2 = true;
+			notifyAll();
+		}
+	}
+
+	public synchronized void pauseJoy2() {
+		_joy2 = false;
 	}
 }
