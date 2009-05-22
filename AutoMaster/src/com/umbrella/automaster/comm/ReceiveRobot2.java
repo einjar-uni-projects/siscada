@@ -7,7 +7,9 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.NombreMaquinas;
 
@@ -38,6 +40,7 @@ public class ReceiveRobot2 extends Thread {
 
 	@Override
 	public void run() {
+		DefaultMessage dm = new DefaultMessage();
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageRB2();
@@ -53,8 +56,10 @@ public class ReceiveRobot2 extends Thread {
 					_postmaster.sendMessageAU3(msg);
 					break;
 				case ACTUALIZARCONTEXTOROBOT:
-					_masterContext.set_contextoRobot2((ContextoRobot) msg
-							.getObject());
+					ContextoRobot con_update_context = (ContextoRobot) msg.getObject();
+					_masterContext.set_contextoRobot2(con_update_context);
+					String machine_update_context = msg.getParametros().get(0);
+					sendRB2MachineState(dm, !con_update_context.isApagado(), machine_update_context);
 					break;
 				case PRODUCTORECOGIDO:
 					// se envia un mensaje a la cinta 3 de PRODUCTORECOGIDO, el
@@ -71,7 +76,30 @@ public class ReceiveRobot2 extends Thread {
 					break;
 				}
 			}
+			
+			dm = new DefaultMessage();
+			
 		} while (msg != null);
 	}
 
+	public static void sendRB2MachineState(DefaultMessage dm, boolean b,
+			String machine) {
+		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+		dm.setObject(b);
+		dm.getParametros().add(machine);
+		try {
+			Postmaster.getInstance().sendMessageRB2(dm);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dm = new DefaultMessage();
+	}
+	
 }

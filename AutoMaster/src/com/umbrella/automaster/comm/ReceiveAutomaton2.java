@@ -42,6 +42,7 @@ public class ReceiveAutomaton2 extends Thread {
 
 	@Override
 	public void run() {
+		DefaultMessage dm = new DefaultMessage();
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageAU2();
@@ -50,10 +51,15 @@ public class ReceiveAutomaton2 extends Thread {
 				System.out.println("AU2 Recive: " + msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case ACTUALIZARCONTEXTO:
-					_masterContext.set_contextoAut2((Context) msg.getObject());
+					Context con_update_context = (Context) msg.getObject();
+					_masterContext.set_contextoAut2(con_update_context);
+					String machine_update_context = msg.getParametros().get(0);
+					sendAU2MachineState(dm, !con_update_context.isApagado(), machine_update_context);
 					break;
 				}
 			}
+			dm = new DefaultMessage();
+			
 		} while (msg != null);
 		/*
 		 * el estado interno del aut2 me dice q tiene el fin de la cinta ocupado
@@ -75,6 +81,26 @@ public class ReceiveAutomaton2 extends Thread {
 			System.out.println("Context is null!!! AU2");
 
 		}
+	}
+	
+	public static void sendAU2MachineState(DefaultMessage dm, boolean b,
+			String machine) {
+		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+		dm.setObject(b);
+		dm.getParametros().add(machine);
+		try {
+			Postmaster.getInstance().sendMessageAU2(dm);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dm = new DefaultMessage();
 	}
 
 }

@@ -41,6 +41,7 @@ public class ReceiveAutomaton1 extends Thread {
 
 	@Override
 	public void run() {
+		DefaultMessage dm = new DefaultMessage();
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageAU1();
@@ -53,13 +54,16 @@ public class ReceiveAutomaton1 extends Thread {
 					_masterContext.setEmptyMachine(emptyMachine);
 					break;
 				case ACTUALIZARCONTEXTO:
-					_masterContext.set_contextoAut1((Context) msg.getObject());
-					msg.getParametros().add(0, "AU1");
-					//ReceiveSCADA
+					Context con_update_context = (Context) msg.getObject();
+					_masterContext.set_contextoAut1(con_update_context);
+					String machine_update_context = msg.getParametros().get(0);
+					sendAU1MachineState(dm, !con_update_context.isApagado(), machine_update_context);
 					break;
 				}
 			}
 
+			dm = new DefaultMessage();
+			
 			/*
 			 * si el contexto del aut 1 me dice q quedan pocos pasteles envio el
 			 * mensaje a SCADA de pocos pasteles
@@ -128,6 +132,26 @@ public class ReceiveAutomaton1 extends Thread {
 		}else{
 			System.out.println("Context is null!!! AU1");
 		}
+	}
+	
+	public static void sendAU1MachineState(DefaultMessage dm, boolean b,
+			String machine) {
+		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+		dm.setObject(b);
+		dm.getParametros().add(machine);
+		try {
+			Postmaster.getInstance().sendMessageAU1(dm);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dm = new DefaultMessage();
 	}
 
 }
