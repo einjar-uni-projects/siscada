@@ -142,13 +142,11 @@ public class ClientMailBox {
 	 */
 	public MessageInterface receive() throws RemoteException {
 		MessageInterface returnMessage = null;
-		do {
-			try {
-				returnMessage = _inputQueue.unqueueMessage();
-			} catch (RemoteException e) {
-				reconnect();
-			}
-		} while (returnMessage == null);
+		try {
+			returnMessage = _inputQueue.unqueueMessage();
+		} catch (RemoteException e) {
+			reconnect();
+		}
 		return returnMessage;
 	}
 
