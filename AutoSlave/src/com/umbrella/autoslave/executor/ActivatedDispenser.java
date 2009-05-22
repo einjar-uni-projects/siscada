@@ -1,7 +1,9 @@
 package com.umbrella.autoslave.executor;
 
+import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
+import com.umbrella.autocommon.Notificable;
 import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
 
@@ -12,7 +14,7 @@ import com.umbrella.utils.ThreadState;
  * Fecha de inicio: 
  *
  */
-public class ActivatedDispenser extends Thread{
+public class ActivatedDispenser extends Thread implements Notificable{
 
 	
 	/*
@@ -28,9 +30,10 @@ public class ActivatedDispenser extends Thread{
 	private double _position;
 	private int _associatedPosition;
 	private ThreadState _threadState;
-	/*
-	 * 
-	 */
+	
+	private boolean _joy = true;
+	private  Clock _clock;
+	
 	/**
 	 * @param position posicion que ocupa en la cinta
 	 * @param associatedPosition el numero que ocupa en la cadena de 16 bits
@@ -41,6 +44,8 @@ public class ActivatedDispenser extends Thread{
 		this._position=position;
 		setAssociatedPosition(associatedPosition);
 		_context.setRemainderCakes(_remainderCakes);
+		_clock=Clock.getInstance();
+		_clock.setNotificable(this);
 	}
 
 	/**
@@ -63,13 +68,11 @@ public class ActivatedDispenser extends Thread{
 				 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
 				 * el �ltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
 				 */
-				try {
-					// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
-					wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+				// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
+				pauseJoy();
+				guardedJoy();
+
 				/*
 				 * SE SUPONE Q ESTE IF ES INNECESARIO
 				 * si en la posicion donde esta la dispensadora no hay bizcocho
@@ -196,5 +199,29 @@ public class ActivatedDispenser extends Thread{
 	 */
 	public synchronized int getRemainderCakes(){
 		return _remainderCakes;
+	}
+	public synchronized void guardedJoy() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy() {
+		notifyJoy();
+	}
+
+	public synchronized void notifyJoy() {
+		_joy = true;
+		notifyAll();
+	}
+
+	public synchronized void pauseJoy() {
+		_joy = false;
 	}
 }

@@ -1,15 +1,19 @@
 package com.umbrella.autoslave.executor;
 
+import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Context;
+import com.umbrella.autocommon.Notificable;
 import com.umbrella.utils.ThreadState;
 
 
 /*
  * Maquinas que tardan un tiempo '_tiempoEjecucoin' en ejecutarse
  */
-public class TimeMachine extends Thread{
+public class TimeMachine extends Thread implements Notificable {
 	private double _executionTime;
 	private double _position;
+	private boolean _joy = true;
+	private  Clock _clock;
 	/*
 	 * posicion del estado interno asociada
 	 */
@@ -33,6 +37,8 @@ public class TimeMachine extends Thread{
 		this._position=position;
 		setThreadState(ThreadState.CREADO);
 		setAssociatedPosition(associatedPosition);
+		_clock=Clock.getInstance();
+		_clock.setNotificable(this);
 	}
 
 	@Override
@@ -49,12 +55,8 @@ public class TimeMachine extends Thread{
 			 *  y el click en el que se ejecuta pero nos da = porq solo nos interesa en el refresco
 			 *  de la aplicaccion.
 			 */
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			pauseJoy();
+			guardedJoy();
 		}
 		context.setDispositivosInternos(getAssociatedPosition(), false);
 		//se ha echado el caramelo en el bizcocho
@@ -112,4 +114,28 @@ public class TimeMachine extends Thread{
 		_associatedPosition = associated;
 	}
 	
+	public synchronized void guardedJoy() {
+		// This guard only loops once for each special event, which may not
+		// be the event we're waiting for.
+		while (!_joy) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+	
+	@Override
+	public void notifyNoSyncJoy() {
+		notifyJoy();
+	}
+
+	public synchronized void notifyJoy() {
+		_joy = true;
+		notifyAll();
+	}
+
+	public synchronized void pauseJoy() {
+		_joy = false;
+	}
 }

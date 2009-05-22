@@ -86,7 +86,7 @@ public class Slave1 implements Notificable {
 				e1.printStackTrace();
 			}
 			PropertiesFileHandler.getInstance().writeFile();
-			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._sendR1Name, ServerMailBox._reciveR1Name);
+			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR1Name, ServerMailBox._sendR1Name);
 			
 			for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, false);
 		}catch( Exception e ){
@@ -96,14 +96,17 @@ public class Slave1 implements Notificable {
 	
 	public void execute(){
 		while(!contexto.isFIN()){
-
+			System.out.println("antes de dormir");
 			pauseJoy();
 			guardedJoy();
+			System.out.println("despues de dormir");
 
 			MessageInterface mensaje=null;
 			do{
 				try {
+					System.out.println("antes de recibir");
 					mensaje=_buzon.receive();
+					System.out.println("despues de recibir: "+mensaje);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -218,11 +221,8 @@ public class Slave1 implements Notificable {
 					}
 
 				}
-
 				for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
-
 				apagarSensores();
-
 			} // fin del if(!contexto.isfallo)
 
 			// envia el mensaje de contexto
@@ -230,8 +230,6 @@ public class Slave1 implements Notificable {
 			mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
 			mensajeSend.setObject(contexto);
 			_buzon.send(mensajeSend);
-
-
 		}// fin del while(!esFin)
 		/*
 		 * se matan los hilos
