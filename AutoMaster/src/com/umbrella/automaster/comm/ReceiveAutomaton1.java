@@ -56,8 +56,12 @@ public class ReceiveAutomaton1 extends Thread {
 				case ACTUALIZARCONTEXTO:
 					Context con_update_context = (Context) msg.getObject();
 					_masterContext.set_contextoAut1(con_update_context);
-					String machine_update_context = msg.getParametros().get(0);
-					sendAU1MachineState(dm, !con_update_context.isApagado(), machine_update_context);
+
+					//Se notifica del estado al SCADA
+					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setObject(!con_update_context.isApagado());
+					dm.getParametros().add("AU1");
+					_postmaster.sendMessageSCADA(dm);
 					break;
 				}
 			}
@@ -133,25 +137,4 @@ public class ReceiveAutomaton1 extends Thread {
 			System.out.println("Context is null!!! AU1");
 		}
 	}
-	
-	public static void sendAU1MachineState(DefaultMessage dm, boolean b,
-			String machine) {
-		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
-		dm.setObject(b);
-		dm.getParametros().add(machine);
-		try {
-			Postmaster.getInstance().sendMessageAU1(dm);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		dm = new DefaultMessage();
-	}
-
 }
