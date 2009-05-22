@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import com.umbrella.automaster.comm.Postmaster;
+import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
@@ -30,6 +31,10 @@ public class LaunchAutMaster {
 	public LaunchAutMaster() throws PropertyException, RemoteException, MalformedURLException, NotBoundException {
 		if(debug){
 			testSCADA();
+		}else{
+			Maestro m = Maestro.getInstance();
+			m.inicializar();
+			m.execute();
 		}
 	}
 

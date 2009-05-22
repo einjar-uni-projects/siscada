@@ -9,6 +9,7 @@ import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
@@ -53,7 +54,7 @@ public class ReceiveSCADA extends Thread{
 			System.out.println("SCADA Recive: "+msg.getIdentificador());
 			switch (msg.getIdentificador()) {
 			case START:
-				Configuration conf = null; // TODO cambiar
+				Configuration conf = Maestro.getInstance().getConfiguration();
 				dm.setIdentificador(OntologiaMSG.ACTUALIZARCONFIGURACION);
 				dm.setObject(conf);
 
