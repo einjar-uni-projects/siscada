@@ -23,7 +23,7 @@ public class Postmaster{
 	
 	// El constructor privado no permite que se genere un constructor por defecto
 	// (con mismo modificador de acceso que la definicion de la clase) 
-	private Postmaster() throws PropertyException, RemoteException, MalformedURLException, NotBoundException {
+	private Postmaster() throws PropertyException, RemoteException, MalformedURLException {
 		PropertiesFile pfmodel = PropertiesFile.getInstance();
 		PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 		PropertiesFileHandler.getInstance().writeFile();
@@ -57,8 +57,10 @@ public class Postmaster{
 	 * realiza la creación del mismo.
 	 * @return la instancia única de Postmaster
 	 * @throws PropertyException 
+	 * @throws MalformedURLException 
+	 * @throws RemoteException 
 	 */
-	public static Postmaster getInstance() throws RemoteException, MalformedURLException, NotBoundException, PropertyException {
+	public static Postmaster getInstance() throws PropertyException, RemoteException, MalformedURLException {
 		Postmaster ret;
 		if(instance == null){
 			return getSyncInstance();
@@ -66,7 +68,7 @@ public class Postmaster{
 		return instance;
 	}
 
-	private static synchronized Postmaster getSyncInstance() throws RemoteException, MalformedURLException, NotBoundException, PropertyException{
+	private static synchronized Postmaster getSyncInstance() throws PropertyException, RemoteException, MalformedURLException{
 		if(instance == null)
 			instance = new Postmaster();
 		return instance;

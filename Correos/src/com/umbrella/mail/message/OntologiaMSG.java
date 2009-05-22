@@ -19,7 +19,7 @@ public enum OntologiaMSG {
 	BLISTERALMACENADO("BlisterAlmacenado",1), // el parametro dice si es valido o no lo es
 	BLISTERVALIDO("BlisterValido",0),
 	BLISTERNOVALIDO("BlisterNoValido",0),
-	ARRANCAR("Arrancar",3),
+	START("Start",3),
 	PARADA("Parada",2),
 	PARADAFALLO("ParadaFallo",2),
 	PARADAEMERGENCIA("ParadaEmergencia",2),
