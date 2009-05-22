@@ -7,6 +7,7 @@ public class Clock extends Thread{
 	Context contexto=Context.getInstance();
 	Configuration configuracion=Configuration.getInstance();
 	long time=configuracion.get_tiempoReloj();
+	private Notificable _notificable;
 	
 	private static Clock INSTANCE = null;
 	
@@ -24,13 +25,18 @@ public class Clock extends Thread{
         if (INSTANCE == null) createInstance();
         return INSTANCE;
     }
+    
+    public void setNotificable(Notificable notificable){
+    	_notificable = notificable;
+    }
 	
 	public void run(){
 		// Aqu� el c�digo pesado que tarda mucho
 		try {
 			wait(time);
 			_clock++;
-			notifyAll();
+			if(_notificable != null)
+				_notificable.notifyNoSyncJoy();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
