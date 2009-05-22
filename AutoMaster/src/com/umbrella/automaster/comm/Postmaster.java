@@ -74,26 +74,32 @@ public class Postmaster{
 	}
 	
 	public boolean sendMessageSCADA(MessageInterface message){
+		System.out.println("Send: "+message);
 		return _SCADAmessageConsulter.send(message);
 	}
 	
 	public boolean sendMessageAU1(MessageInterface message){
+		System.out.println("Send: "+message);
 		return _AU1messageConsulter.send(message);
 	}
 	
 	public boolean sendMessageAU2(MessageInterface message){
+		System.out.println("Send: "+message);
 		return _AU2messageConsulter.send(message);
 	}
 	
 	public boolean sendMessageAU3(MessageInterface message){
+		System.out.println("Send: "+message);
 		return _AU3AmessageConsulter.send(message);
 	}
 	
 	public boolean sendMessageRB1(MessageInterface message){
+		System.out.println("Send: "+message);
 		return _RB1messageConsulter.send(message);
 	}
 	
 	public boolean sendMessageRB2(MessageInterface message){
+		System.out.println("Send: "+message);
 		return _RB2messageConsulter.send(message);
 	}
 	
