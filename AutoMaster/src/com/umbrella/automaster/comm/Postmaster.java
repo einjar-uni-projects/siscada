@@ -61,7 +61,6 @@ public class Postmaster{
 	 * @throws RemoteException 
 	 */
 	public static Postmaster getInstance() throws PropertyException, RemoteException, MalformedURLException {
-		Postmaster ret;
 		if(instance == null){
 			return getSyncInstance();
 		}
