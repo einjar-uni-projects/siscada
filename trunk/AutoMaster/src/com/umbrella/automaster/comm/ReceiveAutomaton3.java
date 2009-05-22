@@ -42,6 +42,7 @@ public class ReceiveAutomaton3 extends Thread {
 
 	@Override
 	public void run() {
+		DefaultMessage dm = new DefaultMessage();
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageAU3();
@@ -50,10 +51,15 @@ public class ReceiveAutomaton3 extends Thread {
 				System.out.println("AU3 Recive: " + msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case ACTUALIZARCONTEXTO:
-					_masterContext.set_contextoAut2((Context) msg.getObject());
+					Context con_update_context = (Context) msg.getObject();
+					_masterContext.set_contextoAut3(con_update_context);
+					String machine_update_context = msg.getParametros().get(0);
+					sendAU3MachineState(dm, !con_update_context.isApagado(), machine_update_context);
 					break;
 				}
 			}
+			dm = new DefaultMessage();
+			
 		} while (msg != null);
 
 		Context context = _masterContext.get_contextoAut3();
@@ -108,6 +114,26 @@ public class ReceiveAutomaton3 extends Thread {
 		}
 		sal = list.get(pos).getCalidad()[0];
 		return sal;
+	}
+	
+	public static void sendAU3MachineState(DefaultMessage dm, boolean b,
+			String machine) {
+		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+		dm.setObject(b);
+		dm.getParametros().add(machine);
+		try {
+			Postmaster.getInstance().sendMessageAU3(dm);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dm = new DefaultMessage();
 	}
 
 }

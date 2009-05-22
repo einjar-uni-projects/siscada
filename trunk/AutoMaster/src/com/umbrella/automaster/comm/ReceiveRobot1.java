@@ -5,9 +5,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.NombreMaquinas;
 
@@ -38,6 +41,7 @@ public class ReceiveRobot1 extends Thread {
 
 	@Override
 	public void run() {
+		DefaultMessage dm = new DefaultMessage();
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageRB1();
@@ -119,12 +123,36 @@ public class ReceiveRobot1 extends Thread {
 
 					break;
 				case ACTUALIZARCONTEXTOROBOT:
-					_masterContext.set_contextoRobot1((ContextoRobot) msg
-							.getObject());
+					ContextoRobot con_update_context = (ContextoRobot) msg.getObject();
+					_masterContext.set_contextoRobot1(con_update_context);
+					String machine_update_context = msg.getParametros().get(0);
+					sendRB1MachineState(dm, !con_update_context.isApagado(), machine_update_context);
 					break;
 				}
 			}
+			
+			dm = new DefaultMessage();
 
 		} while (msg != null);
+	}
+	
+	public static void sendRB1MachineState(DefaultMessage dm, boolean b,
+			String machine) {
+		dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+		dm.setObject(b);
+		dm.getParametros().add(machine);
+		try {
+			Postmaster.getInstance().sendMessageRB1(dm);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dm = new DefaultMessage();
 	}
 }
