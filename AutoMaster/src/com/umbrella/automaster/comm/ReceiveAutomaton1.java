@@ -62,6 +62,13 @@ public class ReceiveAutomaton1 extends Thread {
 					dm.setObject(!con_update_context.isApagado());
 					dm.getParametros().add("AU1");
 					_postmaster.sendMessageSCADA(dm);
+					
+					dm = new DefaultMessage();
+					dm.setIdentificador(OntologiaMSG.CAKE_DEPOT);
+					dm.setObject(con_update_context.getPastelesRestantes());
+					dm.getParametros().add("AU1");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				}
 			}
