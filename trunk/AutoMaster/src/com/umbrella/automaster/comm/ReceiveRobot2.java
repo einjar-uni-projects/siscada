@@ -11,6 +11,7 @@ import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
+import com.umbrella.utils.EstateRobots;
 import com.umbrella.utils.NombreMaquinas;
 
 /**
@@ -64,6 +65,20 @@ public class ReceiveRobot2 extends Thread {
 					dm.setObject(!con_update_context.isApagado());
 					dm.getParametros().add("RB2");
 					_postmaster.sendMessageSCADA(dm);
+					
+					//Envia el estado
+					dm = new DefaultMessage();
+					dm.setIdentificador(OntologiaMSG.ROBOT_SET_CONTENT);
+					if(con_update_context.getEstadoInterno() == EstateRobots.CAMINOPOSICION_2){
+							dm.setObject(1);
+					}else if(con_update_context.getEstadoInterno() == EstateRobots.CAMINOPOSICION_3){
+						dm.setObject(2);
+					}else
+						dm.setObject(0);
+					
+					dm.getParametros().add("RB1");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				case PRODUCTORECOGIDO:
 					// se envia un mensaje a la cinta 3 de PRODUCTORECOGIDO, el

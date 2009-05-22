@@ -12,6 +12,7 @@ import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
+import com.umbrella.utils.EstateRobots;
 import com.umbrella.utils.NombreMaquinas;
 
 /**
@@ -131,6 +132,23 @@ public class ReceiveRobot1 extends Thread {
 					dm.setObject(!con_update_context.isApagado());
 					dm.getParametros().add("RB1");
 					_postmaster.sendMessageSCADA(dm);
+					
+					//Envia el estado
+					dm = new DefaultMessage();
+					dm.setIdentificador(OntologiaMSG.ROBOT_SET_CONTENT);
+					if(con_update_context.getEstadoInterno() == EstateRobots.CAMINOPOSICION_3){
+						if(con_update_context.isPastel())
+							dm.setObject(1);
+						else
+							dm.setObject(2);
+					}else if(con_update_context.getEstadoInterno() == EstateRobots.DESPLAZARBLISTERCOMPLETO){
+						dm.setObject(3);
+					}else
+						dm.setObject(0);
+					
+					dm.getParametros().add("RB1");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				}
 			}
