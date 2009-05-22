@@ -18,6 +18,7 @@ public class LaunchAutMaster {
 	public static boolean debug = false;
 	private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
+	
 	/**
 	 * @param args
 	 * @throws PropertyException 
