@@ -42,6 +42,7 @@ public class ReceiveRobot2 extends Thread {
 		do {
 			msg = _postmaster.reciveMessageRB2();
 			if (msg != null) {
+				System.out.println("RB2 Recive: " + msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case INTERFERENCIA:
 					// envio a la cinta 3

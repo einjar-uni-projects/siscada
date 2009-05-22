@@ -41,7 +41,9 @@ public class ReceiveRobot1 extends Thread {
 		MessageInterface msg = null;
 		do {
 			msg = _postmaster.reciveMessageRB1();
+			
 			if (msg != null) {
+				System.out.println("RB1 Recive: " + msg.getIdentificador());
 				switch (msg.getIdentificador()) {
 				case INTERFERENCIA:
 					String cinta = msg.getParametros().get(1);
