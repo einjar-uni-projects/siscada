@@ -35,8 +35,6 @@ public class ReceiveAutomaton2 extends Thread{
 			// TODO: handle exception
 		}catch (MalformedURLException e2) {
 			// TODO: handle exception
-		}catch (NotBoundException e3) {
-			// TODO: handle exception
 		}catch (PropertyException e4) {
 			// TODO: handle exception
 		}
