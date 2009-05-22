@@ -60,10 +60,6 @@ public class Slave1 implements Notificable {
 			_clock=new Clock();
 			_clock.start();
 			_clock.setNotificable(this);
-
-
-
-
 			/*
 			 * se crean los hilos de ejecucion
 			 */
@@ -105,7 +101,6 @@ public class Slave1 implements Notificable {
 			guardedJoy();
 
 			MessageInterface mensaje=null;
-
 			do{
 				try {
 					mensaje=_buzon.receive();
@@ -114,6 +109,7 @@ public class Slave1 implements Notificable {
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
+					System.out.println(mensaje.getIdentificador());
 					switch (mensaje.getIdentificador()) {
 					case FINCINTALIBRE:							
 						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
