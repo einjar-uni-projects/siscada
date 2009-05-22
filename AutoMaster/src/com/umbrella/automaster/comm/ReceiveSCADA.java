@@ -86,36 +86,6 @@ public class ReceiveSCADA extends Thread {
 				dm = new DefaultMessage();
 			}
 		} while (msg != null);
-
-		/*
-		 * si el estado interno nos dice que hay un blister completo listo al
-		 * inicio de la cinta
-		 */
-		if (_masterContext.get_contextoAut3().getDispositivosInternos(
-				_configutarion.getPosicionAsociada(NombreMaquinas.INICIO))
-				&& _masterContext.getContador() == 4) {
-
-			// comprobar q cabe en la cinta o ya esta hecho???
-
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.setIdentificador(OntologiaMSG.BLISTERCOMPLETO);
-			_postmaster.sendMessageRB1(mensajeSend);
-		}
-
-		/*
-		 * si el estado interno nos dice que hay un blister comleto y sellado al
-		 * final de la cinta
-		 */
-		if (_masterContext.get_contextoAut3().getDispositivosInternos(
-				_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))) {
-			MessageInterface mensajeSend = new DefaultMessage();
-			if (valido()) {
-				mensajeSend.setIdentificador(OntologiaMSG.BLISTERVALIDO);
-			} else {
-				mensajeSend.setIdentificador(OntologiaMSG.BLISTERNOVALIDO);
-			}
-			_postmaster.sendMessageRB1(mensajeSend);
-		}
 	}
 
 	private void sendSCADAMachineState(DefaultMessage dm, boolean b,
