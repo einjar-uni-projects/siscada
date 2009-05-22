@@ -2,9 +2,11 @@ package com.umbrella.scada.view.screen;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -115,6 +117,7 @@ public class MainFrame implements UpdatableInterface{
 			_rightPanel = new JPanel();
 			_rightLayout = new CardLayout();	
 			_rightPanel.setLayout(_rightLayout);
+			_rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			_attributePanels = new AttributePanel[6];
 			_attributePanels[0] = new VoidAttributePanel();
 			_attributePanels[1] = new Automata1AttributePanel();
@@ -354,6 +357,10 @@ public class MainFrame implements UpdatableInterface{
 		_actualAttributePanel = _attributePanels[card];
 		_actualAttributePanel.refreshData();
 		_rightLayout.show(_rightPanel, ""+card);
+		Dimension d = _actualAttributePanel.getPreferredSize();
+		d.height+=10;
+		d.width+=10;
+		_rightPanel.setPreferredSize(d);
 	}
 
 	/**
