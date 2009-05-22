@@ -11,7 +11,9 @@ import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
+import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.utils.EstateRobots;
+import com.umbrella.utils.NombreMaquinas;
 
 
 /*
@@ -36,18 +38,8 @@ public class Robot2 {
 		
 		_clock=new Clock();
 		_clock.start();
-		try {
-			_buzon=new ClientMailBox(host,puerto,"EntradaRobot2","SalidaRobot2");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		_buzon=new ClientMailBox(host,puerto,"EntradaRobot2","SalidaRobot2");
 			
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();
@@ -108,19 +100,6 @@ public class Robot2 {
 						//posicion 3 es la caja de no validos
 						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 						if(_contexto.getEstadoInterno().equals(EstateRobots.REPOSO)){
-							/*
-							 * si recibe un mensaje de recoger blister valido: CAMINOPOSICION_2 y coge el tiempo
-							 * si recibe un mensaje de recoger blister no valido: CAMINOPOSICION_3 y coge el tiempo
-							 */
-							
-							/*
-							if(<Mensaje de blister valido>){
-								_contexto.setValido(true);
-							}
-							if(<Mensaje de blister no valido>){
-								_contexto.setValido(false);
-							}
-							*/
 							_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_1);
 						 	_contexto.setTiempo(System.currentTimeMillis());
 						 	_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
@@ -133,6 +112,11 @@ public class Robot2 {
 								/*
 								 * envia el mensaje de interferencia sobre la cinta 3
 								 */
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.INTERFERENCIA);
+								send.getParametros().add(NombreMaquinas.ROBOT_2.getDescripcion());
+								send.getParametros().add(NombreMaquinas.CINTA_3.getDescripcion());
+								_buzon.send(send);
 							}
 						}
 						else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_1)){//OK
@@ -146,18 +130,27 @@ public class Robot2 {
 								/*
 								 * enviar mensaje de FIN de cinta 3 libre
 								 */
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.PRODUCTORECOGIDO);
+								send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParametros().add("blisterCompleto");
+								_buzon.send(send);
+								_contexto.setPastelListo(false);
 								_contexto.setPastel(false);
 							}
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
 							if(!_contexto.isPastel() && (_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
 								_contexto.setPastel(true);
 							}
-							
 						}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
 							if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*2*1000)){
 								/*
 								 * Enviar mensaje de pastel valido depositado
 								 */
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.BLISTERALMACENADO);
+								send.getParametros().add("true");
+								_buzon.send(send);
 								_contexto.setEstadoInterno(EstateRobots.REPOSO);
 							}
 							
@@ -171,6 +164,10 @@ public class Robot2 {
 								/*
 								 * Enviar mensaje de pastel NO valido depositado
 								 */
+								MessageInterface send=new DefaultMessage();
+								send.setIdentificador(OntologiaMSG.BLISTERALMACENADO);
+								send.getParametros().add("false");
+								_buzon.send(send);
 								_contexto.setEstadoInterno(EstateRobots.REPOSO);
 							}
 						}

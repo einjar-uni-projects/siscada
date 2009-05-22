@@ -68,18 +68,7 @@ public class Slave2 {
  					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
  	
  			
- 			try {
- 				_buzon=new ClientMailBox(host,puerto,"EntradaMaestro2","SalidaMaestro2");
- 			} catch (RemoteException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			} catch (MalformedURLException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			} catch (NotBoundException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
+ 			_buzon=new ClientMailBox(host,puerto,"EntradaMaestro2","SalidaMaestro2");
  			
  			long cicloAct=_clock.getClock();
  			boolean primeraVez=true;

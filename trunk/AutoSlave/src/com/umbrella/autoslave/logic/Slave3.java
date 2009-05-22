@@ -71,18 +71,7 @@ public class Slave3 {
 			_selladora=new TimeMachine(configuracion.getSelladora(), configuracion.getPosSelladora(),
 					configuracion.getPosicionAsociada(NombreMaquinas.SELLADO));
 
-			try {
-				_buzon=new ClientMailBox(host,puerto,"EntradaMaestro3","SalidaMaestro3");
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NotBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			_buzon=new ClientMailBox(host,puerto,"EntradaMaestro3","SalidaMaestro3");
 
 			long cicloAct=_clock.getClock();
 			boolean primeraVez=true;
