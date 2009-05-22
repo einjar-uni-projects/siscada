@@ -62,7 +62,7 @@ public class Robot1 {
 					case ACTUALIZARCONFIGURACION: 						
 						_configuracion=(Configuration)mensaje.getObject();
 						break;
-					case ARRANCAR:
+					case START:
 						_contexto=_contexto.reset();
 						_contexto.setApagado(false);
 						break;

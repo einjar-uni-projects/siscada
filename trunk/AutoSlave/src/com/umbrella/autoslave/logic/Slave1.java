@@ -97,7 +97,7 @@ public class Slave1 {
 						case ACTUALIZARCONFIGURACION: 						
  							configuracion=(Configuration)mensaje.getObject();
  							break;
-						case ARRANCAR:
+						case START:
  							contexto=Context.reset("pastel");
  							contexto.setApagado(false);
  							break;

@@ -56,7 +56,7 @@ public class LaunchAutMaster {
 				case ACTUALIZARCONTEXTOROBOT:
 					
 					break;
-				case ARRANCAR:
+				case START:
 					
 					break;
 				case ARRANCARDESDEEMERGENCIA:
