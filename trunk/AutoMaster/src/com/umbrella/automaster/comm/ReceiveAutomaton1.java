@@ -62,64 +62,67 @@ public class ReceiveAutomaton1 extends Thread {
 			 */
 
 		} while (msg != null);
-
-		if (_masterContext.get_contextoAut1().getDispositivosInternos(
-				_configutarion.getPosicionAsociada(NombreMaquinas.FIN_1))
-				&& _masterContext.get_contextoRobot1().getEstadoInterno()
-						.equals(EstateRobots.REPOSO)
-				&& _masterContext.getContador() < 4) {
-			/*
-			 * el estado interno del aut1 me dice q tiene el fin de la cinta
-			 * ocupado envio el mensaje al robot 1 si esta en modo reposo y
-			 * tengo un blister con posicion libre, es decir el contador es
-			 * menor que 4
-			 */
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.setIdentificador(OntologiaMSG.PASTELLISTO);
-			_postmaster.sendMessageRB1(mensajeSend);
-		}
-		if (_masterContext.get_contextoAut1().getPastelesRestantes() < _configutarion
-				.getUmbralPasteles()) {
-			/*
-			 * si el contexto del aut 1 me dice q quedan pocos pasteles envio el
-			 * mensaje a SCADA de pocos pasteles
-			 */
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.getParametros().add(
-					NombreMaquinas.DISPENSADORA.getName());
-			mensajeSend.getParametros().add(
-					_masterContext.get_contextoAut1().getPastelesRestantes()
-							+ "");
-			mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-			_postmaster.sendMessageSCADA(mensajeSend);
-		}
-		if (_masterContext.get_contextoAut1().getCapacidadCaramelo() < _configutarion
-				.getUmbralCaramelos()) {
-			/*
-			 * si el contexto del aut 1 me dice q queda poco caramelo envio el
-			 * mensaje a SCADA de poco caramelo
-			 */
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.getParametros().add(NombreMaquinas.CARAMELO.getName());
-			mensajeSend.getParametros().add(
-					_masterContext.get_contextoAut1().getCapacidadCaramelo()
-							+ "");
-			mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-			_postmaster.sendMessageSCADA(mensajeSend);
-		}
-		if (_masterContext.get_contextoAut1().getCapacidadChocolate() < _configutarion
-				.getUmbralChocolate()) {
-			/*
-			 * si el contexto del aut 1 me dice q queda poco chocolate envio el
-			 * mensaje a SCADA de poco chocolate
-			 */
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.getParametros().add(NombreMaquinas.CHOCOLATE.getName());
-			mensajeSend.getParametros().add(
-					_masterContext.get_contextoAut1().getCapacidadChocolate()
-							+ "");
-			mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-			_postmaster.sendMessageSCADA(mensajeSend);
+		Context context = _masterContext.get_contextoAut1();
+		if(context != null){
+			if (context.getDispositivosInternos(
+					_configutarion.getPosicionAsociada(NombreMaquinas.FIN_1))
+					&& _masterContext.get_contextoRobot1().getEstadoInterno()
+							.equals(EstateRobots.REPOSO)
+					&& _masterContext.getContador() < 4) {
+				/*
+				 * el estado interno del aut1 me dice q tiene el fin de la cinta
+				 * ocupado envio el mensaje al robot 1 si esta en modo reposo y
+				 * tengo un blister con posicion libre, es decir el contador es
+				 * menor que 4
+				 */
+				MessageInterface mensajeSend = new DefaultMessage();
+				mensajeSend.setIdentificador(OntologiaMSG.PASTELLISTO);
+				_postmaster.sendMessageRB1(mensajeSend);
+			}
+			if (context!= null && context.getPastelesRestantes() < _configutarion
+					.getUmbralPasteles()) {
+				/*
+				 * si el contexto del aut 1 me dice q quedan pocos pasteles envio el
+				 * mensaje a SCADA de pocos pasteles
+				 */
+				MessageInterface mensajeSend = new DefaultMessage();
+				mensajeSend.getParametros().add(
+						NombreMaquinas.DISPENSADORA.getName());
+				mensajeSend.getParametros().add(
+						context.getPastelesRestantes()
+								+ "");
+				mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+				_postmaster.sendMessageSCADA(mensajeSend);
+			}
+			if (context.getCapacidadCaramelo() < _configutarion
+					.getUmbralCaramelos()) {
+				/*
+				 * si el contexto del aut 1 me dice q queda poco caramelo envio el
+				 * mensaje a SCADA de poco caramelo
+				 */
+				MessageInterface mensajeSend = new DefaultMessage();
+				mensajeSend.getParametros().add(NombreMaquinas.CARAMELO.getName());
+				mensajeSend.getParametros().add(
+						context.getCapacidadCaramelo()
+								+ "");
+				mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+				_postmaster.sendMessageSCADA(mensajeSend);
+			}
+			if (context.getCapacidadChocolate() < _configutarion
+					.getUmbralChocolate()) {
+				/*
+				 * si el contexto del aut 1 me dice q queda poco chocolate envio el
+				 * mensaje a SCADA de poco chocolate
+				 */
+				MessageInterface mensajeSend = new DefaultMessage();
+				mensajeSend.getParametros().add(NombreMaquinas.CHOCOLATE.getName());
+				mensajeSend.getParametros().add(context.getCapacidadChocolate()
+								+ "");
+				mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+				_postmaster.sendMessageSCADA(mensajeSend);
+			}
+		}else{
+			System.out.println("Context is null!!! AU1");
 		}
 	}
 

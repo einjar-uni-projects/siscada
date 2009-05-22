@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
+import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
@@ -57,16 +58,20 @@ public class ReceiveAutomaton2 extends Thread {
 		 * y el inicio de la cinta 3 esta libre envio el mensaje al robot 1 si
 		 * esta en modo reposo de blisterlisto
 		 */
-		if (_masterContext.get_contextoAut2().getDispositivosInternos(
-				_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))
-				&& _masterContext.get_contextoRobot1().getEstadoInterno()
-						.equals(EstateRobots.REPOSO)
-				&& !_masterContext.get_contextoAut3().getDispositivosInternos(
-						_configutarion
-								.getPosicionAsociada(NombreMaquinas.INICIO))) {
-			MessageInterface mensajeSend = new DefaultMessage();
-			mensajeSend.setIdentificador(OntologiaMSG.BLISTERLISTO);
-			_postmaster.sendMessageRB1(mensajeSend);
+		Context context = _masterContext.get_contextoAut2();
+		ContextoRobot contextr1 = _masterContext.get_contextoRobot1();
+		Context contexta3 = _masterContext.get_contextoAut3();
+		if (context != null && contextr1 != null && contexta3 != null) {
+			if (context.getDispositivosInternos(_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))
+					&& contextr1.getEstadoInterno().equals(EstateRobots.REPOSO)
+					&& !contexta3.getDispositivosInternos(_configutarion.getPosicionAsociada(NombreMaquinas.INICIO))) {
+				MessageInterface mensajeSend = new DefaultMessage();
+				mensajeSend.setIdentificador(OntologiaMSG.BLISTERLISTO);
+				_postmaster.sendMessageRB1(mensajeSend);
+			}
+		} else {
+			System.out.println("Context is null!!! AU2");
+
 		}
 	}
 
