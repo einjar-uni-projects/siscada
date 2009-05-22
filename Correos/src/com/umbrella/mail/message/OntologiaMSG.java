@@ -16,7 +16,7 @@ public enum OntologiaMSG {
 	PASTELLISTO("PastelListo",0),
 	BLISTERLISTO("BlisterListo",4),
 	BLISTERCOMPLETO("BlisterCompleto",4),
-	BLISTERALMACENADO("BlisterAlmacenado",3),
+	BLISTERALMACENADO("BlisterAlmacenado",1), // el parametro dice si es valido o no lo es
 	BLISTERVALIDO("BlisterValido",0),
 	BLISTERNOVALIDO("BlisterNoValido",0),
 	ARRANCAR("Arrancar",3),
@@ -27,7 +27,7 @@ public enum OntologiaMSG {
 	RESET("Reset",2),
 	PRODUCTORECOGIDO("ProductoRecogido",2), //primer parametro el robot y segundo parametro el tipo de producto
 	FINCINTALIBRE("FinCintaLibre",3),
-	PRODUCTOCOLOCADO("ProductoColocado",3), //primer parametro es el robot y el 2� es el producto
+	PRODUCTOCOLOCADO("ProductoColocado",2), //primer parametro es el robot y el 2� es el producto
 	RELLENARMAQUINA("RellanarMaquina",3), // en el vector 0 el nombre de la maquina sacado del Numerado y el sig parametro un int contertido a String que es la cantidad
 	MODIFICARCAMPO("ModificarCampo",4),
 	//MOVERDESDEMESA("MoverDesdeMesa",2), 

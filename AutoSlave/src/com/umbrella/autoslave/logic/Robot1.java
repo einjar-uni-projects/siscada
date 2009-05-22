@@ -37,18 +37,8 @@ public class Robot1 {
 
 		_clock=new Clock();
 		_clock.start();
-		try {
-			_buzon=new ClientMailBox(host,puerto,"EntradaRobot1","SalidaRobot1");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		_buzon=new ClientMailBox(host,puerto,"EntradaRobot1","SalidaRobot1");
 
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
 		long cicloAct=_clock.getClock();

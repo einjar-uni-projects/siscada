@@ -171,23 +171,6 @@ public class Maestro {
 		/*
 		 * se inicilaizan los buzones
 		 */
-		try {
-				_correoAut1=new ClientMailBox(host,puerto,"SalidaMaestro1","EntradaMaestro1");
-				_correoAut2=new ClientMailBox(host,puerto,"SalidaMaestro2","EntradaMaestro2");
-				_correoAut3=new ClientMailBox(host,puerto,"SalidaMaestro3","EntradaMaestro3");
-				_correoRobot1=new ClientMailBox(host,puerto,"SalidaRobot1","EntradaRobot1");
-				_correoRobot2=new ClientMailBox(host,puerto,"SalidaRobot2","EntradaRobot2");
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NotBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
 		_clock=Clock.getInstance();
 		
 		/*

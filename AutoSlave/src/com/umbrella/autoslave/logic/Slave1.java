@@ -73,18 +73,9 @@ public class Slave1 {
  			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
  			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
  			
- 			try {
- 				_buzon=new ClientMailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
- 			} catch (RemoteException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			} catch (MalformedURLException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			} catch (NotBoundException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
+ 			
+ 			_buzon=new ClientMailBox(host,puerto,"EntradaMaestro1","SalidaMaestro1");
+ 			
  			
  			long cicloAct=_clock.getClock();
  			
