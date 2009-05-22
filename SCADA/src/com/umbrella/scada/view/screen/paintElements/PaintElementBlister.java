@@ -32,30 +32,30 @@ public class PaintElementBlister extends PaintElement {
 		g.setColor(Color.BLACK);
 		char[] numBlisters;
 		
-		if(blisters[0] > 0){
+		/*if(blisters[0] > 0){
 			g.drawImage(_loader.get_blisterBruto(), _posX, _posY, _maxX, _maxY, null);
 			numBlisters = (""+blisters[0]).toCharArray();
-			g.drawChars(numBlisters, 0, numBlisters.length, _posX+15, _posY+32);
-		}
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+15, _posY+80);
+		}*/
 		if(blisters[1] > 0){
 			g.drawImage(_loader.get_blisterEstampado(), _posX+75, _posY, _maxX, _maxY, null);
 			numBlisters = (""+blisters[1]).toCharArray();
-			g.drawChars(numBlisters, 0, numBlisters.length, _posX+80, _posY+32);
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+_maxX/2+75, _posY+80);
 		}
 		if(blisters[2] > 0){
 			g.drawImage(_loader.get_blisterEstampado(), _posX+152, _posY, _maxX, _maxY, null);
 			numBlisters = (""+blisters[0]).toCharArray();
-			g.drawChars(numBlisters, 0, numBlisters.length, _posX+167, _posY+32);
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+_maxX/2+152, _posY+80);
 		}
 		if(blisters[3] > 0){
-			g.drawImage(_loader.get_blisterCortado(), _posX+250, _posY, _maxX, _maxY, null);
+			g.drawImage(_loader.get_blisterCortado(), _posX+235, _posY, _maxX, _maxY, null);
 			numBlisters = (""+blisters[3]).toCharArray();
-			g.drawChars(numBlisters, 0, numBlisters.length, _posX+265, _posY+32);
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+_maxX/2+235, _posY+80);
 		}
 		if(blisters[4] > 0){
 			g.drawImage(_loader.get_blisterCortado(), _posX+320, _posY, _maxX, _maxY, null);
 			numBlisters = (""+blisters[4]).toCharArray();
-			g.drawChars(numBlisters, 0, numBlisters.length, _posX+335, _posY+32);
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+_maxX/2+320, _posY+80);
 		}
 	}
 }
