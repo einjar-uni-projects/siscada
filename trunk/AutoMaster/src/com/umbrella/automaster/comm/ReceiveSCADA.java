@@ -72,12 +72,9 @@ public class ReceiveSCADA extends Thread {
 
 					break;
 				case ACTUALIZARCONTEXTOROBOT:
-					ContextoRobot con_update_robot_context = (ContextoRobot) msg
-							.getObject();
-					String machine_update_robot_context = msg.getParametros()
-							.get(0);
-					sendSCADAMachineState(dm, !con_update_robot_context
-							.isApagado(), machine_update_robot_context);
+					ContextoRobot con_update_robot_context = (ContextoRobot) msg.getObject();
+					String machine_update_robot_context = msg.getParametros().get(0);
+					sendSCADAMachineState(dm, !con_update_robot_context.isApagado(), machine_update_robot_context);
 					break;
 				}
 
@@ -94,21 +91,4 @@ public class ReceiveSCADA extends Thread {
 		_postmaster.sendMessageSCADA(dm);
 		dm = new DefaultMessage();
 	}
-
-	private boolean valido() {
-		boolean sal = false;
-		LinkedList<Blister> list = _masterContext.get_contextoAut3()
-				.get_listaBlister();
-		double max = 0;
-		int pos = 0;
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).get_posicion() > max) {
-				max = list.get(i).get_posicion();
-				pos = i;
-			}
-		}
-		sal = list.get(pos).getCalidad()[0];
-		return sal;
-	}
-
 }
