@@ -30,7 +30,7 @@ public class MainPanel extends JPanel{
 	
 	public MainPanel(MainFrameModel model){
 		_loader = new ImageLoader(this);
-		_conjuntosCinta[0] = new ConjuntoCintaPasteles(_loader, 10,20,400,200, model);
+		_conjuntosCinta[0] = new ConjuntoCintaPasteles(_loader, 10,0,400,200, model);
 		_conjuntosCinta[1] = new ConjuntoCintaBlister(_loader, 10,375,400,200, model);
 		_conjuntosCinta[2] = new ConjuntoCintaControl(_loader, 440,200,350,150, model);
 		_conjuntosCinta[3] = new ConjuntoRobot1(_loader, 250,225,200,150, model);
