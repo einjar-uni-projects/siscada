@@ -21,9 +21,9 @@ public class ActivatedDispenser extends Thread{
 	private int _remainderCakes;
 	
 	private Configuration _configuration=Configuration.getInstance();
-	private Context _context=Context.getInstance();
+	private Context _context = Context.getInstance("pastel");
 	
-	private static ActivatedDispenser INSTANCE = null;
+	private static  ActivatedDispenser INSTANCE = null;
 
 	private double _position;
 	private int _associatedPosition;
@@ -104,7 +104,7 @@ public class ActivatedDispenser extends Thread{
 	 * @param position la posicion en la cinta
 	 * @param associatedPosition el numero que ocupa en la cadena de 16 bits
 	 */
-	private synchronized static void createInstance(double position, int associatedPosition) {
+	private synchronized static  void createInstance(double position, int associatedPosition) {
 		if (INSTANCE == null) { 
 			INSTANCE = new ActivatedDispenser(position, associatedPosition);
 		}
@@ -115,7 +115,7 @@ public class ActivatedDispenser extends Thread{
 	 * @param associatedPosition el numero que ocupa en la cadena de 16 bits
 	 * @return la dispensadora activada
 	 */
-	public static ActivatedDispenser getInstance(double position, int associatedPosition) {
+	public static  ActivatedDispenser getInstance(double position, int associatedPosition) {
 		if (INSTANCE == null) createInstance(position, associatedPosition);
 		return INSTANCE;
 	}
@@ -123,7 +123,7 @@ public class ActivatedDispenser extends Thread{
 	/**
 	 * @return la dispensadora activada
 	 */
-	public static ActivatedDispenser getInstance() {
+	public  ActivatedDispenser getInstance() {
 		return INSTANCE;
 	}
 	

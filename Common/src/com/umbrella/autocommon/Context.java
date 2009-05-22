@@ -97,11 +97,11 @@ public class Context implements Serializable{
         if (INSTANCE == null) createInstance(tipo);
         return INSTANCE;
     }
-    /*
+    
     public static Context getInstance() {
         return INSTANCE;
     }
-    */
+    
     /*
  	public void setState( Estado state ){
  		this.estado = state;
