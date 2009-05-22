@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import com.umbrella.scada.controller.ActionFactory;
 import com.umbrella.scada.controller.ActionFactoryProvider;
 import com.umbrella.scada.controller.ActionKey;
+import com.umbrella.scada.controller.ActionResult;
 import com.umbrella.scada.view.localization.LocalizationResources;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
@@ -226,7 +227,13 @@ public class MainFrame implements UpdatableInterface{
 			_initButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					_mainPanel.startAutRob();
-					_actionFactory.executeAction(ActionKey.START, null);
+					ActionResult result = _actionFactory.executeAction(ActionKey.START, null);
+					if(result == ActionResult.EXECUTE_CORRECT){
+						_initButton.setEnabled(false);
+						_pauseButton.setEnabled(true);
+						_stopButton.setEnabled(true);
+					}
+					
 				}
 			});
 		}
@@ -242,6 +249,7 @@ public class MainFrame implements UpdatableInterface{
 		if (_pauseButton == null) {
 			_pauseButton = new JButton();
 			_pauseButton.setText("Pause");
+			_pauseButton.setEnabled(false);
 			_pauseButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 
@@ -260,10 +268,16 @@ public class MainFrame implements UpdatableInterface{
 		if (_stopButton == null) {
 			_stopButton = new JButton();
 			_stopButton.setText("Stop");
+			_stopButton.setEnabled(false);
 			_stopButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					_mainPanel.stopAutRob();
-					_actionFactory.executeAction(ActionKey.STOP, null);
+					ActionResult result = _actionFactory.executeAction(ActionKey.STOP, null);
+					if(result == ActionResult.EXECUTE_CORRECT){
+						_initButton.setEnabled(true);
+						_pauseButton.setEnabled(false);
+						_stopButton.setEnabled(false);
+					}
 				}
 			});
 		}
