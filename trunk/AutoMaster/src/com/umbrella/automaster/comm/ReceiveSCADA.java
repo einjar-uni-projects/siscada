@@ -64,17 +64,6 @@ public class ReceiveSCADA extends Thread {
 					_postmaster.sendMessageRB2(dm);
 					_postmaster.sendMessageSCADA(dm);
 					break;
-				case ACTUALIZARCONTEXTO:
-					Context con_update_context = (Context) msg.getObject();
-					String machine_update_context = msg.getParametros().get(0);
-					
-
-					break;
-				case ACTUALIZARCONTEXTOROBOT:
-					ContextoRobot con_update_robot_context = (ContextoRobot) msg.getObject();
-					String machine_update_robot_context = msg.getParametros().get(0);
-					
-					break;
 				}
 
 				dm = new DefaultMessage();
