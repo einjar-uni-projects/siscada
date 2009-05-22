@@ -7,18 +7,18 @@ import com.umbrella.utils.EstateRobots;
 
 public class ContextoRobot implements Serializable {
 	
-	private static boolean FIN=false;
+	private boolean FIN=false;
 	
-	private static EstateRobots estadoInterno;
-	private static long tiempo=System.currentTimeMillis();
+	private EstateRobots estadoInterno;
+	private long tiempo=System.currentTimeMillis();
 	
-	private static long diffTiempo;
-	private static boolean pastel=false;
+	private long diffTiempo;
+	private boolean pastel=false;
 	// private static boolean blister=false;
-	private static boolean pastelListo=false;
-	private static boolean blisterListo=false;
-	private static boolean blisterCompletoListo=false;
-	private static boolean valido=false;
+	private boolean pastelListo=false;
+	private boolean blisterListo=false;
+	private boolean blisterCompletoListo=false;
+	private boolean valido=false;
 	
 	private boolean apagado=true;
 	private boolean paradaCorrecta=false; //sirve para hacer bien la parada
@@ -35,37 +35,37 @@ public class ContextoRobot implements Serializable {
 		return Instancia;
 	}
 	
-	public static synchronized boolean isFIN() {
+	public synchronized boolean isFIN() {
 		return FIN;
 	}
-	public static synchronized void setFIN(boolean fin) {
+	public synchronized void setFIN(boolean fin) {
 		FIN = fin;
 	}
-	public static synchronized EstateRobots getEstadoInterno() {
+	public synchronized EstateRobots getEstadoInterno() {
 		return estadoInterno;
 	}
 	
-	public static synchronized void setEstadoInterno(EstateRobots estadoInterno) {
-		ContextoRobot.estadoInterno = estadoInterno;
+	public synchronized void setEstadoInterno(EstateRobots estadoInterno) {
+		estadoInterno = estadoInterno;
 	}
-	public static synchronized long getTiempo() {
+	public synchronized long getTiempo() {
 		return tiempo;
 	}
-	public static synchronized void setTiempo(long tiempo) {
-		ContextoRobot.tiempo = tiempo;
+	public synchronized void setTiempo(long tiempo) {
+		tiempo = tiempo;
 	}
-	public static synchronized long getDiffTiempo() {
+	public synchronized long getDiffTiempo() {
 		return diffTiempo;
 	}
-	public static synchronized void setDiffTiempo(long diffTiempo) {
-		ContextoRobot.diffTiempo = diffTiempo;
+	public  synchronized void setDiffTiempo(long diffTiempo) {
+		diffTiempo = diffTiempo;
 	}
 	
-	public static synchronized boolean isPastel() {
+	public synchronized boolean isPastel() {
 		return pastel;
 	}
-	public static synchronized void setPastel(boolean pastel) {
-		ContextoRobot.pastel = pastel;
+	public synchronized void setPastel(boolean pastel) {
+		pastel = pastel;
 	}
 /*	
 	public static synchronized boolean isBlister() {
@@ -77,36 +77,36 @@ public class ContextoRobot implements Serializable {
 	}
 */
 	
-	public static synchronized boolean isBlisterCompletoListo() {
+	public  synchronized boolean isBlisterCompletoListo() {
 		return blisterCompletoListo;
 	}
 
-	public static synchronized void setBlisterCompletoListo(
+	public synchronized void setBlisterCompletoListo(
 			boolean blisterCompletoListo) {
-		ContextoRobot.blisterCompletoListo = blisterCompletoListo;
+		blisterCompletoListo = blisterCompletoListo;
 	}
 
-	public static synchronized boolean isPastelListo() {
+	public synchronized boolean isPastelListo() {
 		return pastelListo;
 	}
 
-	public static synchronized void setPastelListo(boolean pastelListo) {
-		ContextoRobot.pastelListo = pastelListo;
+	public synchronized void setPastelListo(boolean pastelListo) {
+		pastelListo = pastelListo;
 	}
 
-	public static synchronized boolean isBlisterListo() {
+	public synchronized boolean isBlisterListo() {
 		return blisterListo;
 	}
 
-	public static synchronized void setBlisterListo(boolean blisterListo) {
-		ContextoRobot.blisterListo = blisterListo;
+	public synchronized void setBlisterListo(boolean blisterListo) {
+		blisterListo = blisterListo;
 	}
 
-	public static synchronized boolean isValido() {
+	public  synchronized boolean isValido() {
 		return valido;
 	}
-	public static synchronized void setValido(boolean valido) {
-		ContextoRobot.valido = valido;
+	public synchronized void setValido(boolean valido) {
+		valido = valido;
 	}
 
 	public synchronized boolean isApagado() {
