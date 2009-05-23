@@ -3,6 +3,7 @@ package com.umbrella.autoslave.logic;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
@@ -22,6 +23,7 @@ import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
 import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
 
 
@@ -336,5 +338,28 @@ public class Slave2 implements Notificable {
 	}
 
 	public synchronized void pauseJoy2() {
+	}
+
+	/**
+	 * repasa la linkedlist de blisteres y los pone en las posiciones del contador
+	 */
+	private void actualizarContadorAutomata(){
+		
+		contexto.resetContadorAutomata2();
+		LinkedList<Blister> lista=new LinkedList<Blister>();
+		for(int i=0;i<lista.size();i++){
+			double pos=lista.get(i).get_posicion();
+			if( pos<(configuracion.getPosTroqueladora()) ){
+				contexto.incrementarContadorAutomata2(0);
+			}else if(pos<(configuracion.getPosCortadora()-configuracion.getSizeBlister()/2)){
+				contexto.incrementarContadorAutomata2(1);
+			}else if(pos<(configuracion.getPosCortadora()+configuracion.getSizeBlister()/2)){
+				contexto.incrementarContadorAutomata2(2);
+			}else if(pos<(configuracion.getPosFinAut2()-configuracion.getSizeBlister()/2)){
+				contexto.incrementarContadorAutomata2(3);
+			}else if(pos<(configuracion.getPosFinAut2()+configuracion.getSizeBlister()/2)){
+				contexto.incrementarContadorAutomata2(4);
+			}
+		}
 	}
 }
