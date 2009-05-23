@@ -62,6 +62,8 @@ public class Context implements Serializable{
 	private int numPasteles=50;
 	
 	private int contadorAutomata1[]= new int[7];
+	private int contadorAutomata2[]= new int[5];
+	private int contadorAutomata3[]= new int[6];
 	
     private Context(String tipo) {
     	
@@ -277,5 +279,37 @@ public class Context implements Serializable{
 	}
 	public synchronized int[] getContadorAutomata1(){
 		return contadorAutomata1;
+	}
+
+	public void incrementarContadorAutomata2(int pos){
+		contadorAutomata2[pos]++;
+	}
+	public void decrementarContadorAutomata2(int pos){
+		contadorAutomata2[pos]--;
+	}
+	public void valorContadorAutomata2(int pos, int valor){
+		contadorAutomata2[pos]=valor;
+	}
+	public void resetContadorAutomata2(){
+		for(int i=0;i<contadorAutomata2.length;i++) contadorAutomata2[i]=0;
+	}
+	public synchronized int[] getContadorAutomata2(){
+		return contadorAutomata2;
+	}
+
+	public void incrementarContadorAutomata3(int pos){
+		contadorAutomata3[pos]++;
+	}
+	public void decrementarContadorAutomata3(int pos){
+		contadorAutomata3[pos]--;
+	}
+	public void valorContadorAutomata3(int pos, int valor){
+		contadorAutomata3[pos]=valor;
+	}
+	public void resetContadorAutomata3(){
+		for(int i=0;i<contadorAutomata3.length;i++) contadorAutomata3[i]=0;
+	}
+	public synchronized int[] getContadorAutomata3(){
+		return contadorAutomata3;
 	}
 }
