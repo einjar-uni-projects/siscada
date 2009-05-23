@@ -45,6 +45,7 @@ public class Slave2 implements Notificable {
 
 	private  PropertiesFile pfmodel;
 	private boolean _joy = true;
+	private Notificable[] _notificable;
 
 	public Slave2(){
 		for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,false);
@@ -74,7 +75,12 @@ public class Slave2 implements Notificable {
 			_troqueladora=new InstantaneousMachine(configuracion.getPosTroqueladora(),
 					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
 
-
+			_notificable=new Notificable[4];
+			this.setNotificable(0, _troqueladora);
+			this.setNotificable(1, _cortadora);
+			this.setNotificable(2, _salBlister);
+			this.setNotificable(3, _moverCinta);
+			
 			try {
 				pfmodel = PropertiesFile.getInstance();
 				PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
@@ -168,21 +174,32 @@ public class Slave2 implements Notificable {
 					}else{
 						hayEspacio();
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
-							_moverCinta.run();
+							//_moverCinta.run();
+							if(_notificable[3] != null)
+								getNotificabe(3).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
 						}else{
 							seEnciendeSensor();
 
 							if(puedoUsar(NombreMaquinas.CORTADORA) ){
-								_cortadora.run();
+								//_cortadora.run();
+								if(_notificable[1] != null)
+									getNotificabe(1).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
 								contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.getPosition())).set_cortado(true);
 							}
 							if(puedoUsar(NombreMaquinas.TROQUELADORA) ){
-								_troqueladora.run();
+								//_troqueladora.run();
+								if(_notificable[0] != null)
+									getNotificabe(0).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
 								contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.getPosition())).set_troquelado(true);
 							}
 						}
 					}
 
+					if(puedoUsar(NombreMaquinas.FIN_2)){
+						//_salBlister.start();
+						if(_notificable[2] != null)
+							getNotificabe(2).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+					}
 					/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
 					for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
 					apagarSensores();
@@ -361,5 +378,12 @@ public class Slave2 implements Notificable {
 				contexto.incrementarContadorAutomata2(4);
 			}
 		}
+	}
+
+	public void setNotificable( int pos, Notificable notificable){
+    	_notificable[pos] = notificable;
+    }
+	private Notificable getNotificabe(int pos){
+		return _notificable[pos];
 	}
 }
