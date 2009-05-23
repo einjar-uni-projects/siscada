@@ -45,7 +45,7 @@ public class Slave1 implements Notificable {
 	private static ClientMailBox _buzon;
 	PropertiesFile pfmodel;
 	private boolean _joy = true;
-	private Notificable _notificable;
+	private Notificable[] _notificable;
 	
 	/**
 	 * @param args
@@ -81,11 +81,12 @@ public class Slave1 implements Notificable {
 			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
 			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 
-			this.setNotificable(_dispensadora);
-			this.setNotificable(_moverCinta);
-			this.setNotificable(_salPastel);
-			this.setNotificable(_caramelo);
-			this.setNotificable(_chocolate);
+			_notificable=new Notificable[5];
+			this.setNotificable(0, _dispensadora);
+			this.setNotificable(2, _chocolate);
+			this.setNotificable(1, _caramelo);
+			this.setNotificable(3,  _salPastel);
+			this.setNotificable(4, _moverCinta);
 			
 			
 			try {
@@ -189,14 +190,14 @@ public class Slave1 implements Notificable {
 					if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 						System.out.println("moverCinta");
 						//_moverCinta.start();
-						if(_notificable != null)
-							_notificable.notifyNoSyncJoy2(NombreMaquinas.CINTA_1.getName());
+						if(_notificable[4] != null)
+							getNotificabe(4).notifyNoSyncJoy2(NombreMaquinas.CINTA_1.getName());
 					}else{
 						if(puedoUsar(NombreMaquinas.CHOCOLATE)){
 							if(contexto.getCapacidadChocolate()>0){
 								//_chocolate.start();
-								if(_notificable != null)
-									_notificable.notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
+								if(_notificable[1] != null)
+									getNotificabe(1).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
 								contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.getPosition())).set_chocolate();
 								contexto.decrementarChocolate();
 							}else{
@@ -210,8 +211,8 @@ public class Slave1 implements Notificable {
 						if(puedoUsar(NombreMaquinas.CARAMELO)){
 							if(contexto.getCapacidadCaramelo()>0){
 								//_caramelo.start();
-								if(_notificable != null)
-									_notificable.notifyNoSyncJoy2(NombreMaquinas.CARAMELO.getName());
+								if(_notificable[2] != null)
+									getNotificabe(2).notifyNoSyncJoy2(NombreMaquinas.CARAMELO.getName());
 								contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.getPosition())).set_caramelo();
 								contexto.decrementarCaramelo();
 							}else{
@@ -224,16 +225,16 @@ public class Slave1 implements Notificable {
 						}
 						if(puedoUsar(NombreMaquinas.FIN_1)){
 							//_salPastel.start();
-							if(_notificable != null)
-								_notificable.notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+							if(_notificable[3] != null)
+								getNotificabe(3).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
 						}
 					}
 					//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
 					// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
 					if(!contexto.isParadaCorrecta()){
 						System.out.println("si no es parada correcta");			
-						if(_notificable != null)
-							_notificable.notifyNoSyncJoy2(NombreMaquinas.DISPENSADORA.getName());
+						if(_notificable[0] != null)
+							getNotificabe(0).notifyNoSyncJoy2(NombreMaquinas.DISPENSADORA.getName());
 
 						//_dispensadora.start();
 					}
@@ -271,9 +272,12 @@ System.out.println("si tengo 0 pasteles restantes");
 	}
 	
 	
-	public void setNotificable(Notificable notificable){
-    	_notificable = notificable;
+	public void setNotificable( int pos, Notificable notificable){
+    	_notificable[pos] = notificable;
     }
+	private Notificable getNotificabe(int pos){
+		return _notificable[pos];
+	}
 	
 	/**
 	 * Nos dice si algun hilo esta bloqueando al resto, es decir uno de los hilos esta en ejecucion
