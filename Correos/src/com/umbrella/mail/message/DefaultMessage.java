@@ -4,41 +4,41 @@ import java.util.Vector;
 
 public class DefaultMessage implements MessageInterface{
 
-	OntologiaMSG _identificador;
-	Object _objeto;
-	Vector<String> _parametros = new Vector<String>();
+	MSGOntology _identifier;
+	Object _object;
+	Vector<String> _parameters = new Vector<String>();
 	
 	@Override
-	public OntologiaMSG getIdentificador() {
+	public MSGOntology getIdentifier() {
 		// TODO Auto-generated method stub
-		return _identificador;
+		return _identifier;
 	}
 	@Override
 	public Object getObject() {
 		// TODO Auto-generated method stub
-		return _objeto;
+		return _object;
 	}
 	@Override
-	public Vector<String> getParametros() {
+	public Vector<String> getParameters() {
 		// TODO Auto-generated method stub
-		return _parametros;
+		return _parameters;
 	}
 	@Override
-	public void setIdentificador(OntologiaMSG identificador) {
+	public void setIdentifier(MSGOntology identifier) {
 		// TODO Auto-generated method stub
-		this._identificador=identificador;
+		this._identifier=identifier;
 	}
 	@Override
-	public void setObject(Object objeto) {
+	public void setObject(Object object) {
 		// TODO Auto-generated method stub
-		this._objeto=objeto;
+		this._object=object;
 	}
 	
 	@Override
 	public String toString() {
-		String ret = _identificador+" ("+_objeto+") [";
-		if(_parametros != null){
-			for (String str : _parametros) {
+		String ret = _identifier+" ("+_object+") [";
+		if(_parameters != null){
+			for (String str : _parameters) {
 				if(str != null)
 					ret += " " +str;
 			}

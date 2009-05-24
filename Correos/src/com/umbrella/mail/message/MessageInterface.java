@@ -18,10 +18,10 @@ import java.util.Vector;
 public interface MessageInterface extends Serializable{
 	
 	//public OntologiaMSG getMSGCode();
-	public OntologiaMSG getIdentificador();
+	public MSGOntology getIdentifier();
 	public Object getObject();
-	public Vector<String> getParametros();
+	public Vector<String> getParameters();
 	
-	public void setIdentificador(OntologiaMSG idetificador);
+	public void setIdentifier(MSGOntology idetificador);
 	public void setObject(Object objeto);
 }

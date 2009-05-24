@@ -6,7 +6,7 @@ package com.umbrella.mail.message;
 /* 
  * tiene el nombre de todos los mensajes que se pueden usar
  */
-public enum OntologiaMSG {
+public enum MSGOntology {
 	ACTUALIZARCONTEXTO("ActualizarContexto",0),
 	ACTUALIZARCONTEXTOROBOT("ActualizarContextoRobot",0),//se pasa el nuevo contexto en el objeto
 	ACTUALIZARCONFIGURACION("ActualizarConfiguracion",0),//se pasa el nuevo configuracion en el objeto
@@ -42,7 +42,7 @@ public enum OntologiaMSG {
 	private int numParametros;
 	//private String[] parametros;
 	
-	private OntologiaMSG(String nombreClase, int numParametros){
+	private MSGOntology(String nombreClase, int numParametros){
 		this.nombre=nombreClase;
 		this.numParametros=numParametros;
 		// this.parametros=parametros;
