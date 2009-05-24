@@ -12,7 +12,7 @@ package com.umbrella.mail.test;
 import java.util.Vector;
 
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.message.MSGOntology;
 
 /**
  *
@@ -53,7 +53,7 @@ public class MessagePrueba1 implements MessageInterface{
 	}
 
 	@Override
-	public OntologiaMSG getIdentificador() {
+	public MSGOntology getIdentifier() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -65,13 +65,13 @@ public class MessagePrueba1 implements MessageInterface{
 	}
 
 	@Override
-	public Vector<String> getParametros() {
+	public Vector<String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setIdentificador(OntologiaMSG idetificador) {
+	public void setIdentifier(MSGOntology idetificador) {
 		// TODO Auto-generated method stub
 		
 	}
