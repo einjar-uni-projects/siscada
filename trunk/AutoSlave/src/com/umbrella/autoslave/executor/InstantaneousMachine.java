@@ -33,7 +33,7 @@ public class InstantaneousMachine extends Thread implements Notificable{
 		this._position=position;
 		setAssociatedPosition(associatedPosition);
 		_clock=Clock.getInstance();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 	}
 
 	/**

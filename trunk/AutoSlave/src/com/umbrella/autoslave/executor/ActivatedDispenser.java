@@ -47,7 +47,7 @@ public class ActivatedDispenser extends Thread implements Notificable{
 		setAssociatedPosition(associatedPosition);
 		_context.setRemainderCakes(_remainderCakes);
 		_clock=Clock.getInstance();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 	}
 
 	/**

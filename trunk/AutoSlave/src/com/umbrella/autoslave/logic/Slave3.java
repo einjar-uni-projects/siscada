@@ -63,7 +63,7 @@ public class Slave3 implements Notificable{
 			 */
 			_clock=new Clock();
 			_clock.start();
-			_clock.setNotificable(this);
+			_clock.addNotificable(this);
 
 			/*
 			 * se crean los hilos de ejecucion

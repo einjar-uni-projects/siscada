@@ -108,7 +108,7 @@ public class Maestro implements Notificable  {
 	}
 	
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 
@@ -136,7 +136,7 @@ public class Maestro implements Notificable  {
 		// el contexto es el mismo en todos pero es porque acabamos de
 		// inicializar
 		_clock = Clock.getInstance();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 
 		rebootThreads();
 

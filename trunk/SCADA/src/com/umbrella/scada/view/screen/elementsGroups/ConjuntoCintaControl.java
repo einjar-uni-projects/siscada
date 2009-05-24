@@ -19,7 +19,8 @@ public class ConjuntoCintaControl extends ElementsGroup {
 	private PaintElementTable _table;
 	private PaintElementBlisterIni _blister_ini;
 	private PaintElementBlisterPasteles _paquetes;
-	private PaintElementQuality _quality;
+	private PaintElementQuality _qualitybg;
+	private PaintElementQuality _qualityfg;
 	private PaintElementSelladora _selladora;
 	
 	public ConjuntoCintaControl(ImageLoader loader, int posX, int posY, int maxX, int maxY, MainFrameModel model) {
@@ -27,13 +28,15 @@ public class ConjuntoCintaControl extends ElementsGroup {
 		_cinta = new PaintElementCinta(loader,posX,posY+maxY-100,maxX,100, model);
 		_table = new PaintElementTable(loader,posX-100,posY+maxY-100,120,100, model);
 		_paquetes = new  PaintElementBlisterPasteles(loader, posX, posY+maxY-110, 80, 70, model);
-		_quality = new PaintElementQuality(loader, posX+40, posY+15, 100, 100, model);
+		_qualitybg = new PaintElementQuality(loader, posX+40, posY+15, 100, 100, model);
+		_qualityfg = new PaintElementQuality(loader, posX+40, posY+15, 100, 100, model);
 		_selladora = new PaintElementSelladora(loader, posX+140, posY, 100, 100, model);
 		_paintElements.add(_cinta);
 		_paintElements.add(_table);
+		_paintElements.add(_qualitybg);
 		_paintElements.add(_blister_ini);
 		_paintElements.add(_paquetes);
-		_paintElements.add(_quality);
+		_paintElements.add(_qualityfg);
 		_paintElements.add(_selladora);
 	}
 
