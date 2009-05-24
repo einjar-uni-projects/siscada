@@ -5,6 +5,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notificable.NotificableSignal;
 import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
@@ -286,7 +287,7 @@ public class Robot1 implements Notificable{
 	}
 
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 

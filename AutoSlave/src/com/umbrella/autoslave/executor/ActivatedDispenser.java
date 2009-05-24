@@ -4,6 +4,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notificable.NotificableSignal;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
@@ -48,6 +49,7 @@ public class ActivatedDispenser extends Thread implements Notificable{
 		_context.setRemainderCakes(_remainderCakes);
 		_clock=Clock.getInstance();
 		_clock.addNotificable(this);
+		this.start(); // TODO Digo yo no??
 	}
 
 	/**
@@ -59,7 +61,8 @@ public class ActivatedDispenser extends Thread implements Notificable{
 	
 	@Override
 	public void run(){
-		while(!_context.isApagado()){
+		//while(!_context.isApagado()){
+		while(true){
 			setThreadState(ThreadState.EJECUTANDO);
 			
 			while(!_threadState.equals(ThreadState.ACABADO)){
@@ -106,7 +109,7 @@ public class ActivatedDispenser extends Thread implements Notificable{
 			pauseJoy2();
 			guardedJoy2();
 		}
-		setThreadState(ThreadState.ACABADO);
+		//setThreadState(ThreadState.ACABADO);
 	}
 	
 	
@@ -219,7 +222,7 @@ public class ActivatedDispenser extends Thread implements Notificable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 

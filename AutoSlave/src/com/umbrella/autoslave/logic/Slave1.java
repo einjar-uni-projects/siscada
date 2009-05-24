@@ -2,6 +2,7 @@ package com.umbrella.autoslave.logic;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
@@ -174,7 +175,8 @@ public class Slave1 implements Notificable {
 			}while(mensaje!=null);
 
 			if(contexto.isParadaCorrecta()){
-				if(contexto.get_listaPasteles().size()==0) contexto.setApagado(true);
+				if(contexto.get_listaPasteles().size()==0)
+					contexto.setApagado(true);
 			}
 
 			if(!contexto.isFallo()){
@@ -249,7 +251,8 @@ System.out.println("si tengo 0 pasteles restantes");
 					for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
 					apagarSensores();
 					
-					actualizarContadorAutomata();
+				//	actualizarContadorAutomata();
+					
 	System.out.println("llega 5");
 					// envia el mensaje de contexto
 					DefaultMessage mensajeSend=new DefaultMessage();
@@ -387,7 +390,7 @@ System.out.println("si tengo 0 pasteles restantes");
 	}
 	
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 
@@ -416,11 +419,12 @@ System.out.println("si tengo 0 pasteles restantes");
 
 	/**
 	 * repasa la linkedlist de pasteles y los pone en las posiciones del contador
+	 * WTF À?
 	 */
-	private void actualizarContadorAutomata(){
+	/*private void actualizarContadorAutomata(){
 		
 		contexto.resetContadorAutomata1();
-		LinkedList<Pastel> lista=new LinkedList<Pastel>();
+		LinkedList lista = new LinkedList();
 		for(int i=0;i<lista.size();i++){
 			double pos=lista.get(i).get_posicion();
 			if( pos<(configuracion.getPosBizc()+configuracion.getSizeBizcocho()/2) ){
@@ -439,5 +443,5 @@ System.out.println("si tengo 0 pasteles restantes");
 				contexto.incrementarContadorAutomata1(6);
 			}
 		}
-	}
+	}*/
 }

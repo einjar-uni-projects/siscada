@@ -4,6 +4,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notificable.NotificableSignal;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
@@ -191,7 +192,7 @@ public class MoveConveyorBelt extends Thread implements Notificable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 
