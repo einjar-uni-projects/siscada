@@ -2,7 +2,7 @@ package com.umbrella.autocommon;
 
 import java.io.Serializable;
 
-import com.umbrella.utils.EstateRobots;
+import com.umbrella.utils.RobotStates;
 
 
 public class ContextoRobot implements Serializable {
@@ -14,7 +14,7 @@ public class ContextoRobot implements Serializable {
 
 	private boolean FIN=false;
 	
-	private EstateRobots estadoInterno;
+	private RobotStates estadoInterno;
 	private long tiempo=System.currentTimeMillis();
 	
 	private long diffTiempo;
@@ -46,11 +46,11 @@ public class ContextoRobot implements Serializable {
 	public synchronized void setFIN(boolean fin) {
 		FIN = fin;
 	}
-	public synchronized EstateRobots getEstadoInterno() {
+	public synchronized RobotStates getEstadoInterno() {
 		return estadoInterno;
 	}
 	
-	public synchronized void setEstadoInterno(EstateRobots estadoInterno) {
+	public synchronized void setEstadoInterno(RobotStates estadoInterno) {
 		this.estadoInterno = estadoInterno;
 	}
 	public synchronized long getTiempo() {
