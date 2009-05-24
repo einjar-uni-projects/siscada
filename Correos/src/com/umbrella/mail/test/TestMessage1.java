@@ -18,14 +18,14 @@ import com.umbrella.mail.message.MSGOntology;
  *
  * @author l012g412
  */
-public class MessagePrueba1 implements MessageInterface{
+public class TestMessage1 implements MessageInterface{
     
     private int varInteger;
     private String varString;
     private boolean varBoolean;
     
     /** Creates a new instance of MessagePrueba1 */
-    public MessagePrueba1() {        
+    public TestMessage1() {        
     }
 
 	public void setVarInteger(int varInteger) {
