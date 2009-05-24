@@ -42,7 +42,8 @@ public class ImageLoader {
 	private Image _robotTartaDef;
 	private Image _cortadora;
 	private Image _estampadora;
-	private Image _calidad;
+	private Image _calidadfg;
+	private Image _calidadbk;
 	private Image _selladora;
 	private Image _table;
 	
@@ -84,7 +85,8 @@ public class ImageLoader {
 		_robotTartaDef = toolkit.getImage("resources/robotTartaDef.png");
 		_cortadora = toolkit.getImage("resources/cortadora.png");
 		_estampadora = toolkit.getImage("resources/estampadora.png");
-		_calidad = toolkit.getImage("resources/calidad.png");
+		_calidadfg = toolkit.getImage("resources/calidad2.png");
+		_calidadbk = toolkit.getImage("resources/calidad1.png");
 		_selladora = toolkit.getImage("resources/selladora.png");
 		_table = toolkit.getImage("resources/mesa.png");
 		
@@ -113,7 +115,8 @@ public class ImageLoader {
 		tracker.addImage(_robotTartaDef, getNextNumIncr());
 		tracker.addImage(_cortadora, getNextNumIncr());
 		tracker.addImage(_estampadora, getNextNumIncr());
-		tracker.addImage(_calidad, getNextNumIncr());
+		tracker.addImage(_calidadbk, getNextNumIncr());
+		tracker.addImage(_calidadfg, getNextNumIncr());
 		tracker.addImage(_selladora, getNextNumIncr());
 		tracker.addImage(_table, getNextNumIncr());
 		
@@ -336,11 +339,19 @@ public class ImageLoader {
 	}
 
 	/**
-	 * Obtiene la imagen de la verificadora de calidad
+	 * Obtiene la imagen de la verificadora de calidad superior
 	 * @return imagen de la verificadora de calidad
 	 */
-	public Image get_calidad() {
-		return _calidad;
+	public Image get_calidadfg() {
+		return _calidadfg;
+	}
+	
+	/**
+	 * Obtiene la imagen de la verificadora de calidad de fondo
+	 * @return imagen de la verificadora de calidad
+	 */
+	public Image get_calidadbk() {
+		return _calidadbk;
 	}
 
 	/**

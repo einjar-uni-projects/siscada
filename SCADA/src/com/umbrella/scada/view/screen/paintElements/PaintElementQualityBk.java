@@ -10,7 +10,7 @@ import com.umbrella.scada.view.screen.MainFrameModel;
  * @author Umbrella.Soft
  * @version 1.0
  */
-public class PaintElementQuality extends PaintElement {
+public class PaintElementQualityBk extends PaintElement {
 
 	/**
 	 * Llama al padre con los parámetros
@@ -21,13 +21,13 @@ public class PaintElementQuality extends PaintElement {
 	 * @param maxY tamaño en el eje y
 	 * @param model modelo de la vista
 	 */
-	public PaintElementQuality(ImageLoader loader, int posX, int posY,int maxX, int maxY, MainFrameModel model) {
+	public PaintElementQualityBk(ImageLoader loader, int posX, int posY,int maxX, int maxY, MainFrameModel model) {
 		super(loader, posX, posY, maxX, maxY, model);
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(_loader.get_calidadfg(), _posX, _posY, _maxX, _maxY, null);
+		g.drawImage(_loader.get_calidadbk(), _posX, _posY, _maxX, _maxY, null);
 
 	}
 
