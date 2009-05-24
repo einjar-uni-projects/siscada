@@ -7,7 +7,7 @@ import java.util.Vector;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
-import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notifiable;
 import com.umbrella.autoslave.executor.ActivatedDispenser;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
@@ -30,7 +30,7 @@ import com.umbrella.utils.ThreadState;
  * El objetivo de esta clase es llevar el peso de la ejecucion, aqui se crean los hilos q luego se ejecutaran en 
  * paralelo entre ellos
  */
-public class Slave1 implements Notificable {
+public class Slave1 implements Notifiable {
 	
 	private  Clock _clock;
 	private  MoveConveyorBelt _moverCinta;
@@ -44,7 +44,7 @@ public class Slave1 implements Notificable {
 	private static ClientMailBox _buzon;
 	PropertiesFile pfmodel;
 	private boolean _joy = true;
-	private Notificable[] _notificable;
+	private Notifiable[] _notificable;
 	
 	/**
 	 * @param args
@@ -80,7 +80,7 @@ public class Slave1 implements Notificable {
 			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
 			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 
-			_notificable=new Notificable[5];
+			_notificable=new Notifiable[5];
 			this.setNotificable(0, _dispensadora);
 			this.setNotificable(2, _chocolate);
 			this.setNotificable(1, _caramelo);
@@ -273,10 +273,10 @@ System.out.println("si tengo 0 pasteles restantes");
 	}
 	
 	
-	public void setNotificable( int pos, Notificable notificable){
+	public void setNotificable( int pos, Notifiable notificable){
     	_notificable[pos] = notificable;
     }
-	private Notificable getNotificabe(int pos){
+	private Notifiable getNotificabe(int pos){
 		return _notificable[pos];
 	}
 	

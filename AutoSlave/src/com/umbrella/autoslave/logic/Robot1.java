@@ -4,8 +4,8 @@ package com.umbrella.autoslave.logic;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
-import com.umbrella.autocommon.Notificable;
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.Notifiable;
+import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
@@ -14,13 +14,13 @@ import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.EstateRobots;
+import com.umbrella.utils.RobotStates;
 import com.umbrella.utils.NombreMaquinas;
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel
  */
-public class Robot1 implements Notificable{
+public class Robot1 implements Notifiable{
 
 	private Configuration _configuracion= Configuration.getInstance();
 	private ContextoRobot _contexto= ContextoRobot.getInstance();
@@ -54,7 +54,7 @@ public class Robot1 implements Notificable{
 
 		//_buzon=new ClientMailBox(host,puerto,"EntradaRobot1","SalidaRobot1");
 
-		_contexto.setEstadoInterno(EstateRobots.REPOSO);
+		_contexto.setEstadoInterno(RobotStates.REPOSO);
 	}
 	public void execute() {
 		// TODO Auto-generated method stub
@@ -120,22 +120,22 @@ public class Robot1 implements Notificable{
 				if(!_contexto.isApagado()){
 
 					_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
-					if(_contexto.getEstadoInterno().equals(EstateRobots.REPOSO)){
+					if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO)){
 						/*
 						 * si recibe un mensaje de recoger blister pues pasa al estado: CAMINOPOSICION_2 y coge el tiempo
 						 * si recibe un mensaje de recoger pastel pues pasa al estado: CAMINOPOSICION_1 y coge el tiempo
 						 * si recibe un mensaje de moverblistercompleto pues pasa al estado: DESPLAZARBLISTERCOMPLETO y coge el tiempo
 						 */
-						if(_contexto.isBlisterListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_2);
-						if(_contexto.isPastelListo()) _contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_1);
-						if(_contexto.isBlisterCompletoListo()) _contexto.setEstadoInterno(EstateRobots.DESPLAZARBLISTERCOMPLETO);
+						if(_contexto.isBlisterListo()) _contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_2);
+						if(_contexto.isPastelListo()) _contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
+						if(_contexto.isBlisterCompletoListo()) _contexto.setEstadoInterno(RobotStates.DESPLAZARBLISTERCOMPLETO);
 
 						_contexto.setTiempo(System.currentTimeMillis());
 						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_1)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_1)){
 						// controlar interferencias, mejor lo hace el maestro
 						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() -_configuracion.getInterferencia()/2)*1000)){
-							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
+							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_1);
 							/*
 							 * envia el mensaje de interferencia sobre la cinta 1
 							 */
@@ -145,10 +145,10 @@ public class Robot1 implements Notificable{
 							send.getParameters().add(NombreMaquinas.CINTA_1.getDescripcion());
 							_buzon.send(send);
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_1)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_1)){
 						//cogo el pastel
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverPastel()*1000)){
-							_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
+							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_3);
 							_contexto.setPastel(true);
 							/*
 							 * Envia el mensaje de pastel recogido
@@ -160,10 +160,10 @@ public class Robot1 implements Notificable{
 							_buzon.send(send);
 							_contexto.setPastelListo(false);
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_2)){
 						// controlar interferencias, mejor lo hace el maestro
 						if(  _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
-							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_2);
+							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_2);
 							/*
 							 * envia el mensaje de interferencia sobre la cinta 2
 							 */
@@ -173,14 +173,14 @@ public class Robot1 implements Notificable{
 							send.getParameters().add(NombreMaquinas.CINTA_2.getDescripcion());
 							_buzon.send(send);
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_2)){
 						//cogo el blister
 						/*
 						 * envia el mensaje de blister recogido
 						 */
 						//cogo el pastel
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*1000)){
-							_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
+							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_3);
 							_contexto.setPastel(false);
 							/*
 							 * Envia el mensaje de blister recogido
@@ -192,7 +192,7 @@ public class Robot1 implements Notificable{
 							_buzon.send(send);
 							_contexto.setPastelListo(false);
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
 						// controlar interferencias, mejor lo hace el maestro
 						if(_contexto.isPastel()){
 							if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() +_configuracion.getInterferencia()/2)*1000)){
@@ -206,7 +206,7 @@ public class Robot1 implements Notificable{
 								_buzon.send(send);
 							}
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2*1000)){
-								_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
+								_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_3);
 							}
 						}else{
 							if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000)){
@@ -220,10 +220,10 @@ public class Robot1 implements Notificable{
 								_buzon.send(send);
 							}
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
-								_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_3);
+								_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_3);
 							}
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_3)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_3)){
 						//dejo el pastel o blister
 						if(_contexto.isPastel()){
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2)){
@@ -235,7 +235,7 @@ public class Robot1 implements Notificable{
 								send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
 								send.getParameters().add("pastel");
 								_buzon.send(send);
-								_contexto.setEstadoInterno(EstateRobots.REPOSO);
+								_contexto.setEstadoInterno(RobotStates.REPOSO);
 							}
 						}else{
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
@@ -247,10 +247,10 @@ public class Robot1 implements Notificable{
 								send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
 								send.getParameters().add("blister");
 								_buzon.send(send);
-								_contexto.setEstadoInterno(EstateRobots.REPOSO);
+								_contexto.setEstadoInterno(RobotStates.REPOSO);
 							}
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.DESPLAZARBLISTERCOMPLETO)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.DESPLAZARBLISTERCOMPLETO)){
 						if( _contexto.getDiffTiempo() > _configuracion.getMoverBlister()){
 							/*
 							 * envia el mensaje de blister completo colocado en la cinta 3
@@ -260,7 +260,7 @@ public class Robot1 implements Notificable{
 							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
 							send.getParameters().add("blisterCompleto");
 							_buzon.send(send);
-							_contexto.setEstadoInterno(EstateRobots.REPOSO);
+							_contexto.setEstadoInterno(RobotStates.REPOSO);
 						}
 					}
 
