@@ -23,7 +23,7 @@ import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.ThreadState;
 
 
@@ -70,13 +70,13 @@ public class Slave3 implements Notifiable{
 			 * se crean los hilos de ejecucion
 			 */
 			_moverCinta=new MoveConveyorBelt(configuracion.getVelCintaAut3(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_3));
+					configuracion.getPosicionAsociada(MachineNames.CINTA_3));
 			_salBlister=new ConveyorBeltExit(configuracion.getPosFinAut3(),
-					configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), "blister");
+					configuracion.getPosicionAsociada(MachineNames.FIN_3), "blister");
 			_calidad=new InstantaneousMachine(configuracion.getPosCalidad(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD));
+					configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD));
 			_selladora=new TimeMachine(configuracion.getSelladora(), configuracion.getPosSelladora(),
-					configuracion.getPosicionAsociada(NombreMaquinas.SELLADO));
+					configuracion.getPosicionAsociada(MachineNames.SELLADO));
 
 			_notificable=new Notifiable[4];
 			this.setNotificable(0, _calidad);
@@ -129,7 +129,7 @@ public class Slave3 implements Notifiable{
 						if(mensaje!=null){
 							switch (mensaje.getIdentifier()) {
 							case FINCINTALIBRE:							
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
+								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
 								break;
 							case ACTUALIZARCONFIGURACION: 						
 								configuracion=(Configuration)mensaje.getObject();
@@ -152,7 +152,7 @@ public class Slave3 implements Notifiable{
 								contexto.setApagado(true);
 								break;
 							case PRODUCTORECOGIDO:
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
+								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
 								break;
 							case RESET:
 								if(contexto.isApagado() || contexto.isFallo()){
@@ -197,19 +197,19 @@ public class Slave3 implements Notifiable{
 								if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 									//_moverCinta.run();
 									if(_notificable[3] != null)
-										getNotificabe(3).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+										getNotificabe(3).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
 								}else{
 									seEnciendeSensor();
-									if(puedoUsar(NombreMaquinas.CONTROL_CALIDAD) ){
+									if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
 										//_calidad.run();
 										if(_notificable[0] != null)
-											getNotificabe(0).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+											getNotificabe(0).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
 										if(Math.random()<configuracion.getPorcentajeFallos()){
 											Vector<Integer> vectorAux=new Vector<Integer>();
-											vectorAux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_1));
-											vectorAux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_2));
-											vectorAux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_3));
-											vectorAux.add(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD_SENSOR_4));
+											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
+											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
+											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3));
+											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4));
 											int aux2=(int)(Math.random()*4);
 											int posAux=vectorAux.get(aux2);
 											vectorAux.remove(aux2);
@@ -235,18 +235,18 @@ public class Slave3 implements Notifiable{
 											for(int i=0;i<vectorAux.size();i++)contexto.setDispositivosInternos(vectorAux.get(i), true);
 										}
 									}
-									if(puedoUsar(NombreMaquinas.SELLADO)){
+									if(puedoUsar(MachineNames.SELLADO)){
 										//_selladora.run();
 										if(_notificable[1] != null)
-											getNotificabe(1).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+											getNotificabe(1).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
 									}
 								}
 
 							}
-							if(puedoUsar(NombreMaquinas.FIN_3)){
+							if(puedoUsar(MachineNames.FIN_3)){
 								//_salBlister.start();
 								if(_notificable[2] != null)
-									getNotificabe(2).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+									getNotificabe(2).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
 							}							
 							/*
 							 * Aqui hay q repasar todos los sensores
@@ -301,13 +301,13 @@ public class Slave3 implements Notifiable{
 		}
 		*/
 		if(contexto.activaSensor(configuracion, _selladora.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA))){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), true);
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SENSOR_SELLADORA))){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_SELLADORA), true);
 			salida=true;
 		}
 		if(contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3))){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), true);
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_3))){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), true);
 			salida=true;
 		}
 		// la dispensadora no tiene sensor asociado
@@ -315,34 +315,34 @@ public class Slave3 implements Notifiable{
 		return salida;
 	}
 	
-	private synchronized boolean ejecutandoAlgo(NombreMaquinas nombre){
+	private synchronized boolean ejecutandoAlgo(MachineNames nombre){
 		boolean salida=false;
-		if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
+		if(nombre.equals(MachineNames.CONTROL_CALIDAD))
 			if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.SELLADO))
+		if(nombre.equals(MachineNames.SELLADO))
 			if(_selladora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.FIN_3))
+		if(nombre.equals(MachineNames.FIN_3))
 			if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	
-	private synchronized boolean puedoUsar(NombreMaquinas tipo){
+	private synchronized boolean puedoUsar(MachineNames tipo){
 		boolean salida=false;
-		if(tipo.equals(NombreMaquinas.CONTROL_CALIDAD))
-			if(!ejecutandoAlgo(NombreMaquinas.CONTROL_CALIDAD) && 
+		if(tipo.equals(MachineNames.CONTROL_CALIDAD))
+			if(!ejecutandoAlgo(MachineNames.CONTROL_CALIDAD) && 
 					contexto.activaSensor(configuracion, _calidad.getPosition())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CONTROL_CALIDAD)))
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD)))
 				salida=true;
 		
-		if(tipo.equals(NombreMaquinas.SELLADO))
-			if(!ejecutandoAlgo(NombreMaquinas.SELLADO) && 
+		if(tipo.equals(MachineNames.SELLADO))
+			if(!ejecutandoAlgo(MachineNames.SELLADO) && 
 					contexto.activaSensor(configuracion, _selladora.getPosition())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SELLADO)))
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SELLADO)))
 				salida=true;
-		if(tipo.equals(NombreMaquinas.FIN_3))
-			if(!ejecutandoAlgo(NombreMaquinas.FIN_3) && 
+		if(tipo.equals(MachineNames.FIN_3))
+			if(!ejecutandoAlgo(MachineNames.FIN_3) && 
 					contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3))) 
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_3))) 
 				salida=true;
 		return salida;
 	}
@@ -352,15 +352,15 @@ public class Slave3 implements Notifiable{
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _calidad.getPosition());
 		if(num>=0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CALIDAD), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _selladora.getPosition());
 		if(num>=0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_SELLADORA), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_SELLADORA), false);
 		num=-1;
 			num=contexto.activaSensor(configuracion, _salBlister.getPosition());
 		if(num>=0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
 	}
 	private synchronized boolean tengoEspacio(){
 		boolean sal=false;

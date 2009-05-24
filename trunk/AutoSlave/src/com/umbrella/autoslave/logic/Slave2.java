@@ -21,7 +21,7 @@ import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.ThreadState;
 
 
@@ -65,13 +65,13 @@ public class Slave2 implements Notifiable {
 			 * se crean los hilos de ejecucion
 			 */
 			_moverCinta=new MoveConveyorBelt(configuracion.getVelCintaAut2(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_2));
+					configuracion.getPosicionAsociada(MachineNames.CINTA_2));
 			_salBlister=new ConveyorBeltExit(configuracion.getPosFinAut2(),
-					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "blister");
+					configuracion.getPosicionAsociada(MachineNames.FIN_2), "blister");
 			_cortadora=new InstantaneousMachine(configuracion.getPosCortadora(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CORTADORA));
+					configuracion.getPosicionAsociada(MachineNames.CORTADORA));
 			_troqueladora=new InstantaneousMachine(configuracion.getPosTroqueladora(),
-					configuracion.getPosicionAsociada(NombreMaquinas.TROQUELADORA));
+					configuracion.getPosicionAsociada(MachineNames.TROQUELADORA));
 
 			_notificable=new Notifiable[4];
 			this.setNotificable(0, _troqueladora);
@@ -116,7 +116,7 @@ public class Slave2 implements Notifiable {
 				if(mensaje!=null){
 					switch (mensaje.getIdentifier()) {
 					case FINCINTALIBRE:							
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), false);
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						configuracion=(Configuration)mensaje.getObject();
@@ -139,7 +139,7 @@ public class Slave2 implements Notifiable {
 						contexto.setApagado(true);
 						break;
 					case PRODUCTORECOGIDO:
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), false);
 						break;
 					case RESET:
 						if(contexto.isApagado() || contexto.isFallo()){
@@ -174,29 +174,29 @@ public class Slave2 implements Notifiable {
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 							//_moverCinta.run();
 							if(_notificable[3] != null)
-								getNotificabe(3).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
+								getNotificabe(3).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
 						}else{
 							seEnciendeSensor();
 
-							if(puedoUsar(NombreMaquinas.CORTADORA) ){
+							if(puedoUsar(MachineNames.CORTADORA) ){
 								//_cortadora.run();
 								if(_notificable[1] != null)
-									getNotificabe(1).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
+									getNotificabe(1).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
 								contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.getPosition())).set_cortado(true);
 							}
-							if(puedoUsar(NombreMaquinas.TROQUELADORA) ){
+							if(puedoUsar(MachineNames.TROQUELADORA) ){
 								//_troqueladora.run();
 								if(_notificable[0] != null)
-									getNotificabe(0).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
+									getNotificabe(0).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
 								contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.getPosition())).set_troquelado(true);
 							}
 						}
 					}
 
-					if(puedoUsar(NombreMaquinas.FIN_2)){
+					if(puedoUsar(MachineNames.FIN_2)){
 						//_salBlister.start();
 						if(_notificable[2] != null)
-							getNotificabe(2).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+							getNotificabe(2).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
 					}
 					/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
 					for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
@@ -239,8 +239,8 @@ public class Slave2 implements Notifiable {
 		boolean salida=false;
 		
 		if(contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), true);
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_2))){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), true);
 			salida=true;
 		}
 		// la dispensadora no tiene sensor asociado
@@ -248,38 +248,38 @@ public class Slave2 implements Notifiable {
 		return salida;
 	}
 	
-	private synchronized boolean ejecutandoAlgo(NombreMaquinas nombre){
+	private synchronized boolean ejecutandoAlgo(MachineNames nombre){
 		boolean salida=false;
-		if(nombre.equals(NombreMaquinas.TROQUELADORA))
+		if(nombre.equals(MachineNames.TROQUELADORA))
 			if(_troqueladora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.CORTADORA))
+		if(nombre.equals(MachineNames.CORTADORA))
 			if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.FIN_2))
+		if(nombre.equals(MachineNames.FIN_2))
 			if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
 	
-	private synchronized  boolean puedoUsar(NombreMaquinas tipo){
+	private synchronized  boolean puedoUsar(MachineNames tipo){
 		boolean salida=false;
-		if(tipo.equals(NombreMaquinas.CORTADORA))
-			if(!ejecutandoAlgo(NombreMaquinas.CORTADORA) && 
+		if(tipo.equals(MachineNames.CORTADORA))
+			if(!ejecutandoAlgo(MachineNames.CORTADORA) && 
 					contexto.activaSensor(configuracion, _cortadora.getPosition())>=0){
 				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.getPosition())).is_cortado())
 					salida=true;
 			}
 				
 		
-		if(tipo.equals(NombreMaquinas.TROQUELADORA))
-			if(!ejecutandoAlgo(NombreMaquinas.TROQUELADORA) && 
+		if(tipo.equals(MachineNames.TROQUELADORA))
+			if(!ejecutandoAlgo(MachineNames.TROQUELADORA) && 
 					contexto.activaSensor(configuracion, _troqueladora.getPosition())>=0){
 				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.getPosition())).is_troquelado())
 					salida=true;
 			}
 				
-		if(tipo.equals(NombreMaquinas.FIN_2))
-			if(!ejecutandoAlgo(NombreMaquinas.FIN_2) && 
+		if(tipo.equals(MachineNames.FIN_2))
+			if(!ejecutandoAlgo(MachineNames.FIN_2) && 
 					contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2))) 
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_2))) 
 				salida=true;
 		return salida;
 	}
@@ -291,15 +291,15 @@ public class Slave2 implements Notifiable {
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _cortadora.getPosition());
 		if(num<0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CORTADORA), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CORTADORA), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _troqueladora.getPosition());
 		if(num<0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_TROQUELADORA), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_TROQUELADORA), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _salBlister.getPosition());
 		if(num<0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), false);
 	}
 	
 	private synchronized  void hayEspacio(){

@@ -15,7 +15,7 @@ import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.RobotStates;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 
 
 /*
@@ -128,8 +128,8 @@ public class Robot2  implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.INTERFERENCIA);
-							send.getParameters().add(NombreMaquinas.ROBOT_2.getDescripcion());
-							send.getParameters().add(NombreMaquinas.CINTA_3.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_2.getDescripcion());
+							send.getParameters().add(MachineNames.CINTA_3.getDescripcion());
 							_buzon.send(send);
 						}
 					}
@@ -146,7 +146,7 @@ public class Robot2  implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
-							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 							send.getParameters().add("blisterCompleto");
 							_buzon.send(send);
 							_contexto.setPastelListo(false);

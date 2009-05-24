@@ -5,7 +5,7 @@ import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notifiable;
 import com.umbrella.autocommon.Notifiable.NotificableSignal;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.ThreadState;
 
 
@@ -222,7 +222,7 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 	}
 
 	public synchronized void notifyJoy2(String machine) {
-		if(machine.equals(NombreMaquinas.DISPENSADORA.getName())){
+		if(machine.equals(MachineNames.DISPENSADORA.getName())){
 			_joy2 = true;
 			notifyAll();
 		}
