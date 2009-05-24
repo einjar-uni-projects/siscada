@@ -10,7 +10,7 @@ package com.umbrella.autocommon;
 
 import java.io.Serializable;
 
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 
 
 
@@ -392,49 +392,49 @@ public class MasterConfiguration implements Serializable {
 	}
 
 	
-	public int getPosicionAsociada(NombreMaquinas nombre){
+	public int getPosicionAsociada(MachineNames nombre){
 		int sal=-1;
-		if(nombre.equals(NombreMaquinas.FIN_1))
+		if(nombre.equals(MachineNames.FIN_1))
 			sal=_posAssocSensorFinAut1;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CARAMELO))
+		else if(nombre.equals(MachineNames.SENSOR_CARAMELO))
 			sal=_posAssocSensorCaramel;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CHOCOLATE))
+		else if(nombre.equals(MachineNames.SENSOR_CHOCOLATE))
 			sal=_posAssocSensorChocolate;
-		else if(nombre.equals(NombreMaquinas.CARAMELO))
+		else if(nombre.equals(MachineNames.CARAMELO))
 			sal=_posAssocCaramel;
-		else if(nombre.equals(NombreMaquinas.CHOCOLATE))
+		else if(nombre.equals(MachineNames.CHOCOLATE))
 			sal=_posAssocChocolate;
-		else if(nombre.equals(NombreMaquinas.DISPENSADORA))
+		else if(nombre.equals(MachineNames.DISPENSADORA))
 			sal=_posAssocDispenser;
-		else if(nombre.equals(NombreMaquinas.CINTA_1))
+		else if(nombre.equals(MachineNames.CINTA_1))
 			sal=_posAssocConveyorBeltAut1;
 		
-		if(nombre.equals(NombreMaquinas.FIN_2))
+		if(nombre.equals(MachineNames.FIN_2))
 			sal=_posAssocSensorFinAut2;
-		else if(nombre.equals(NombreMaquinas.SENSOR_TROQUELADORA))
+		else if(nombre.equals(MachineNames.SENSOR_TROQUELADORA))
 			sal=_posAssocSensorStamper;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CORTADORA))
+		else if(nombre.equals(MachineNames.SENSOR_CORTADORA))
 			sal=_posAssocSensorCutter;
-		else if(nombre.equals(NombreMaquinas.TROQUELADORA))
+		else if(nombre.equals(MachineNames.TROQUELADORA))
 			sal=_posAssocStamper;
-		else if(nombre.equals(NombreMaquinas.CORTADORA))
+		else if(nombre.equals(MachineNames.CORTADORA))
 			sal=_posAssocCutter;
-		else if(nombre.equals(NombreMaquinas.CINTA_2))
+		else if(nombre.equals(MachineNames.CINTA_2))
 			sal=_posAssocConveyorBeltAut2;
 		
-		if(nombre.equals(NombreMaquinas.FIN_3))
+		if(nombre.equals(MachineNames.FIN_3))
 			sal=_posAssocSensorFinAut3;
-		else if(nombre.equals(NombreMaquinas.SENSOR_SELLADORA))
+		else if(nombre.equals(MachineNames.SENSOR_SELLADORA))
 			sal=_posAssocSensorSealing;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD))
+		else if(nombre.equals(MachineNames.SENSOR_CALIDAD))
 			sal=_posAssocSensorQuality;
-		else if(nombre.equals(NombreMaquinas.INICIO))
+		else if(nombre.equals(MachineNames.INICIO))
 			sal=_posAssocSensorBeginConveyorBelt;
-		else if(nombre.equals(NombreMaquinas.SELLADO))
+		else if(nombre.equals(MachineNames.SELLADO))
 			sal=_posAssocSealing;
-		else if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
+		else if(nombre.equals(MachineNames.CONTROL_CALIDAD))
 			sal=_posAssocQuality;
-		else if(nombre.equals(NombreMaquinas.CINTA_3))
+		else if(nombre.equals(MachineNames.CINTA_3))
 			sal=_posAssocConveyorBeltAut3;
 		
 		return sal;
