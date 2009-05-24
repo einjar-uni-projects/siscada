@@ -102,7 +102,6 @@ public class Postmaster extends Thread {
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						af.executeAction(ActionKey.UPDATE_CONFIGURATION, params);
 						break;
-						
 				}
 				
 			} catch (Exception e) {
