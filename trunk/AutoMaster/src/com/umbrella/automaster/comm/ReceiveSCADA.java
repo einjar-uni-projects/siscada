@@ -4,11 +4,11 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.ContextoMaestro;
+import com.umbrella.autocommon.MasterContext;
 import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
 
 /**
@@ -19,13 +19,13 @@ import com.umbrella.mail.utils.properties.PropertyException;
 public class ReceiveSCADA extends Thread {
 
 	Postmaster _postmaster;
-	ContextoMaestro _masterContext;
+	MasterContext _masterContext;
 	Configuration _configutarion;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
-			_masterContext = ContextoMaestro.getInstance();
+			_masterContext = MasterContext.getInstance();
 			_configutarion = Configuration.getInstance();
 		} catch (PropertyException e4) {
 			// TODO: handle exception
@@ -45,12 +45,12 @@ public class ReceiveSCADA extends Thread {
 		do {
 			msg = _postmaster.reciveMessageSCADA();
 			if (msg != null) {
-				System.out.println("SCADA Recive: " + msg.getIdentificador());
-				switch (msg.getIdentificador()) {
+				System.out.println("SCADA Recive: " + msg.getIdentifier());
+				switch (msg.getIdentifier()){
 				case START:
 					Configuration conf = Maestro.getInstance()
 							.getConfiguration();
-					dm.setIdentificador(OntologiaMSG.ACTUALIZARCONFIGURACION);
+					dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
 					dm.setObject(conf);
 
 					_postmaster.sendMessageAU1(dm);

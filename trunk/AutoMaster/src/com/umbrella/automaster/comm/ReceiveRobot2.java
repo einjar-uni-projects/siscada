@@ -4,13 +4,13 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.autocommon.MasterContext;
 import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.EstateRobots;
+import com.umbrella.utils.RobotStates;
 
 /**
  * 
@@ -20,13 +20,13 @@ import com.umbrella.utils.EstateRobots;
 public class ReceiveRobot2 extends Thread {
 
 	Postmaster _postmaster;
-	ContextoMaestro _masterContext;
+	MasterContext _masterContext;
 	Configuration _configutarion;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
-			_masterContext = ContextoMaestro.getInstance();
+			_masterContext = MasterContext.getInstance();
 			_configutarion = Configuration.getInstance();
 		} catch (RemoteException e1) {
 			// TODO: handle exception
@@ -44,8 +44,8 @@ public class ReceiveRobot2 extends Thread {
 		do {
 			msg = _postmaster.reciveMessageRB2();
 			if (msg != null) {
-				System.out.println("RB2 Recive: " + msg.getIdentificador());
-				switch (msg.getIdentificador()) {
+				System.out.println("RB2 Recive: " + msg.getIdentifier());
+				switch (msg.getIdentifier()) {
 				case INTERFERENCIA:
 					// envio a la cinta 3
 					_postmaster.sendMessageAU3(msg);
@@ -59,22 +59,22 @@ public class ReceiveRobot2 extends Thread {
 					_masterContext.set_contextoRobot2(con_update_context);
 					
 					//Se notifica del estado al SCADA
-					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setIdentifier(MSGOntology.AUTOM_STATE);
 					dm.setObject(!con_update_context.isApagado());
-					dm.getParametros().add("RB2");
+					dm.getParameters().add("RB2");
 					_postmaster.sendMessageSCADA(dm);
 					
 					//Envia el estado
 					dm = new DefaultMessage();
-					dm.setIdentificador(OntologiaMSG.ROBOT_SET_CONTENT);
-					if(con_update_context.getEstadoInterno() == EstateRobots.CAMINOPOSICION_2){
+					dm.setIdentifier(MSGOntology.ROBOT_SET_CONTENT);
+					if(con_update_context.getEstadoInterno() == RobotStates.CAMINOPOSICION_2){
 							dm.setObject(1);
-					}else if(con_update_context.getEstadoInterno() == EstateRobots.CAMINOPOSICION_3){
+					}else if(con_update_context.getEstadoInterno() == RobotStates.CAMINOPOSICION_3){
 						dm.setObject(2);
 					}else
 						dm.setObject(0);
 					
-					dm.getParametros().add("RB1");
+					dm.getParameters().add("RB1");
 					_postmaster.sendMessageSCADA(dm);
 					
 					break;
@@ -85,7 +85,7 @@ public class ReceiveRobot2 extends Thread {
 					break;
 				case BLISTERALMACENADO:
 					// envia el mensaje a SCADA informando
-					if (msg.getParametros().get(0).equalsIgnoreCase("true")) {
+					if (msg.getParameters().get(0).equalsIgnoreCase("true")) {
 						// el blister que se almaceno era valido
 					} else {
 						// el blister que se almaceno era no valido

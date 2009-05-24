@@ -7,14 +7,14 @@ import java.util.LinkedList;
 
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
-import com.umbrella.autocommon.ContextoMaestro;
+import com.umbrella.autocommon.MasterContext;
 import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.EstateRobots;
-import com.umbrella.utils.NombreMaquinas;
-import com.umbrella.utils.Pastel;
+import com.umbrella.utils.Cake;
+import com.umbrella.utils.MachineNames;
+import com.umbrella.utils.RobotStates;
 
 /**
  * 
@@ -24,13 +24,13 @@ import com.umbrella.utils.Pastel;
 public class ReceiveAutomaton1 extends Thread {
 
 	Postmaster _postmaster;
-	ContextoMaestro _masterContext;
+	MasterContext _masterContext;
 	Configuration _configuration;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
-			_masterContext = ContextoMaestro.getInstance();
+			_masterContext = MasterContext.getInstance();
 			_configuration = Configuration.getInstance();
 		} catch (RemoteException e1) {
 			// TODO: handle exception
@@ -49,10 +49,10 @@ public class ReceiveAutomaton1 extends Thread {
 			msg = _postmaster.reciveMessageAU1();
 			
 			if (msg != null) {
-				System.out.println("AU1 Recive: " + msg.getIdentificador());
-				switch (msg.getIdentificador()) {
+				System.out.println("AU1 Recive: " + msg.getIdentifier());
+				switch (msg.getIdentifier()) {
 				case AVISARUNFALLO:
-					String emptyMachine = msg.getParametros().get(0);
+					String emptyMachine = msg.getParameters().get(0);
 					_masterContext.setEmptyMachine(emptyMachine);
 					break;
 				case ACTUALIZARCONTEXTO:
@@ -60,23 +60,23 @@ public class ReceiveAutomaton1 extends Thread {
 					_masterContext.set_contextoAut1(con_update_context);
 
 					//Se notifica del estado al SCADA
-					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setIdentifier(MSGOntology.AUTOM_STATE);
 					dm.setObject(!con_update_context.isApagado());
-					dm.getParametros().add("AU1");
+					dm.getParameters().add("AU1");
 					_postmaster.sendMessageSCADA(dm);
 					
 					// Se notifica la cantidad de pasteles en la dispensadora
 					dm = new DefaultMessage();
-					dm.setIdentificador(OntologiaMSG.CAKE_DEPOT);
+					dm.setIdentifier(MSGOntology.CAKE_DEPOT);
 					dm.setObject(con_update_context.getPastelesRestantes());
-					dm.getParametros().add("AU1");
+					dm.getParameters().add("AU1");
 					_postmaster.sendMessageSCADA(dm);
 					
 					// Se notifican los pasteles en la cinta
 					dm = new DefaultMessage();
-					dm.setIdentificador(OntologiaMSG.AU1_CAKES_POS);
+					dm.setIdentifier(MSGOntology.AU1_CAKES_POS);
 					dm.setObject(getListaPasteles(con_update_context.get_listaPasteles()));
-					dm.getParametros().add("AU1");
+					dm.getParameters().add("AU1");
 					_postmaster.sendMessageSCADA(dm);
 					
 					break;
@@ -94,9 +94,9 @@ public class ReceiveAutomaton1 extends Thread {
 		Context context = _masterContext.get_contextoAut1();
 		if(context != null){
 			if (context.getDispositivosInternos(
-					_configuration.getPosicionAsociada(NombreMaquinas.FIN_1))
+					_configuration.getPosicionAsociada(MachineNames.FIN_1))
 					&& _masterContext.get_contextoRobot1().getEstadoInterno()
-							.equals(EstateRobots.REPOSO)
+							.equals(RobotStates.REPOSO)
 					&& _masterContext.getContador() < 4) {
 				/*
 				 * el estado interno del aut1 me dice q tiene el fin de la cinta
@@ -105,7 +105,7 @@ public class ReceiveAutomaton1 extends Thread {
 				 * menor que 4
 				 */
 				MessageInterface mensajeSend = new DefaultMessage();
-				mensajeSend.setIdentificador(OntologiaMSG.PASTELLISTO);
+				mensajeSend.setIdentifier(MSGOntology.PASTELLISTO);
 				_postmaster.sendMessageRB1(mensajeSend);
 			}
 			if (context!= null && context.getPastelesRestantes() < _configuration
@@ -115,12 +115,12 @@ public class ReceiveAutomaton1 extends Thread {
 				 * mensaje a SCADA de pocos pasteles
 				 */
 				MessageInterface mensajeSend = new DefaultMessage();
-				mensajeSend.getParametros().add(
-						NombreMaquinas.DISPENSADORA.getName());
-				mensajeSend.getParametros().add(
+				mensajeSend.getParameters().add(
+						MachineNames.DISPENSADORA.getName());
+				mensajeSend.getParameters().add(
 						context.getPastelesRestantes()
 								+ "");
-				mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+				mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
 				_postmaster.sendMessageSCADA(mensajeSend);
 			}
 			if (context.getCapacidadCaramelo() < _configuration
@@ -130,11 +130,11 @@ public class ReceiveAutomaton1 extends Thread {
 				 * mensaje a SCADA de poco caramelo
 				 */
 				MessageInterface mensajeSend = new DefaultMessage();
-				mensajeSend.getParametros().add(NombreMaquinas.CARAMELO.getName());
-				mensajeSend.getParametros().add(
+				mensajeSend.getParameters().add(MachineNames.CARAMELO.getName());
+				mensajeSend.getParameters().add(
 						context.getCapacidadCaramelo()
 								+ "");
-				mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+				mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
 				_postmaster.sendMessageSCADA(mensajeSend);
 			}
 			if (context.getCapacidadChocolate() < _configuration
@@ -144,10 +144,10 @@ public class ReceiveAutomaton1 extends Thread {
 				 * mensaje a SCADA de poco chocolate
 				 */
 				MessageInterface mensajeSend = new DefaultMessage();
-				mensajeSend.getParametros().add(NombreMaquinas.CHOCOLATE.getName());
-				mensajeSend.getParametros().add(context.getCapacidadChocolate()
+				mensajeSend.getParameters().add(MachineNames.CHOCOLATE.getName());
+				mensajeSend.getParameters().add(context.getCapacidadChocolate()
 								+ "");
-				mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
+				mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
 				_postmaster.sendMessageSCADA(mensajeSend);
 			}
 		}else{
@@ -155,9 +155,12 @@ public class ReceiveAutomaton1 extends Thread {
 		}
 	}
 
-	private ArrayList<Integer> getListaPasteles(LinkedList<Pastel> lista) {
+	private synchronized ArrayList<Integer> getListaPasteles(LinkedList<Cake> lista) {
 
 		ArrayList<Integer> salida = new ArrayList<Integer>(7);
+		for (int i = 0; i < 7; i++) {
+			salida.add(i, 0);
+		}
 		
 		for(int i=0;i<lista.size();i++){
 			double pos=lista.get(i).get_posicion();

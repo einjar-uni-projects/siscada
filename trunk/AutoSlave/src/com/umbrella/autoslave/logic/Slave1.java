@@ -59,7 +59,7 @@ public class Slave1 implements Notifiable {
 			 * tenemos dos hilos, uno es el reloj y el otro es la ejecucion del automata que debe quedarse bloqueado entre 
 			 * los clicks del reloj, para eso el reloj debe hacer un notify a todos los hilos notifyAll()
 			 */
-			_clock=new Clock();
+			_clock=Clock.getInstance();
 			_clock.start();
 			_clock.addNotificable(this);
 			/*

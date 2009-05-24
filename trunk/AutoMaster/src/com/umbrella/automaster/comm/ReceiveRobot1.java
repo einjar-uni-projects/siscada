@@ -4,14 +4,14 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
+import com.umbrella.autocommon.MasterContext;
 import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.EstateRobots;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
+import com.umbrella.utils.RobotStates;
 
 /**
  * 
@@ -21,13 +21,13 @@ import com.umbrella.utils.NombreMaquinas;
 public class ReceiveRobot1 extends Thread {
 
 	Postmaster _postmaster;
-	ContextoMaestro _masterContext;
+	MasterContext _masterContext;
 	Configuration _configutarion;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
-			_masterContext = ContextoMaestro.getInstance();
+			_masterContext = MasterContext.getInstance();
 			_configutarion = Configuration.getInstance();
 		} catch (RemoteException e1) {
 			// TODO: handle exception
@@ -46,28 +46,28 @@ public class ReceiveRobot1 extends Thread {
 			msg = _postmaster.reciveMessageRB1();
 			
 			if (msg != null) {
-				System.out.println("RB1 Recive: " + msg.getIdentificador());
-				switch (msg.getIdentificador()) {
+				System.out.println("RB1 Recive: " + msg.getIdentifier());
+				switch (msg.getIdentifier()) {
 				case INTERFERENCIA:
-					String cinta = msg.getParametros().get(1);
-					if (cinta.equals(NombreMaquinas.CINTA_1.getName())) {
+					String cinta = msg.getParameters().get(1);
+					if (cinta.equals(MachineNames.CINTA_1.getName())) {
 						// envio a la cinta 1
 						_postmaster.sendMessageAU1(msg);
-					} else if (cinta.equals(NombreMaquinas.CINTA_2.getName())) {
+					} else if (cinta.equals(MachineNames.CINTA_2.getName())) {
 						// envio a la cinta 2
 						_postmaster.sendMessageAU2(msg);
 					}
 					break;
 				case PRODUCTORECOGIDO:
 					// primer paraemtro el robot y 2 el producto
-					String producto = msg.getParametros().get(1);
+					String producto = msg.getParameters().get(1);
 					if (producto.equals("pastel")) {
 						// se recoge un pastel de la cinta 1
 						_masterContext
 								.get_contextoAut1()
 								.setDispositivosInternos(
 										_configutarion
-												.getPosicionAsociada(NombreMaquinas.FIN_1),
+												.getPosicionAsociada(MachineNames.FIN_1),
 										false);
 					} else {
 						// un blister de la cinta 2
@@ -75,16 +75,16 @@ public class ReceiveRobot1 extends Thread {
 								.get_contextoAut2()
 								.setDispositivosInternos(
 										_configutarion
-												.getPosicionAsociada(NombreMaquinas.FIN_2),
+												.getPosicionAsociada(MachineNames.FIN_2),
 										false);
 					}
 					break;
 				case FININTERFERENCIA:
-					String cinta2 = msg.getParametros().get(1);
-					if (cinta2.equals(NombreMaquinas.CINTA_1.getName())) {
+					String cinta2 = msg.getParameters().get(1);
+					if (cinta2.equals(MachineNames.CINTA_1.getName())) {
 						// envio a la cinta 1
 						_postmaster.sendMessageAU1(msg);
-					} else if (cinta2.equals(NombreMaquinas.CINTA_2.getName())) {
+					} else if (cinta2.equals(MachineNames.CINTA_2.getName())) {
 						// envio a la cinta 2
 						_postmaster.sendMessageAU2(msg);
 					}
@@ -96,13 +96,13 @@ public class ReceiveRobot1 extends Thread {
 					 * blister en la mesa pongo un pastel entre 0 y 4 pongo el
 					 * 4� pastel
 					 */
-					String colocado = msg.getParametros().get(1);
+					String colocado = msg.getParameters().get(1);
 					if (colocado.equals("blister")) {
 						_masterContext
 								.get_contextoAut3()
 								.setDispositivosInternos(
 										_configutarion
-												.getPosicionAsociada(NombreMaquinas.INICIO),
+												.getPosicionAsociada(MachineNames.INICIO),
 										true);
 						_masterContext.setBlisterColocado(true);
 						_masterContext.resetContador();
@@ -114,7 +114,7 @@ public class ReceiveRobot1 extends Thread {
 								.get_contextoAut3()
 								.setDispositivosInternos(
 										_configutarion
-												.getPosicionAsociada(NombreMaquinas.INICIO),
+												.getPosicionAsociada(MachineNames.INICIO),
 										false);
 						_masterContext.setBlisterColocado(false);
 						_masterContext.resetContador();
@@ -126,25 +126,25 @@ public class ReceiveRobot1 extends Thread {
 					_masterContext.set_contextoRobot1(con_update_context);
 					
 					//Se notifica del estado al SCADA
-					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setIdentifier(MSGOntology.AUTOM_STATE);
 					dm.setObject(!con_update_context.isApagado());
-					dm.getParametros().add("RB1");
+					dm.getParameters().add("RB1");
 					_postmaster.sendMessageSCADA(dm);
 					
 					//Envia el estado
 					dm = new DefaultMessage();
-					dm.setIdentificador(OntologiaMSG.ROBOT_SET_CONTENT);
-					if(con_update_context.getEstadoInterno() == EstateRobots.CAMINOPOSICION_3){
+					dm.setIdentifier(MSGOntology.ROBOT_SET_CONTENT);
+					if(con_update_context.getEstadoInterno() == RobotStates.CAMINOPOSICION_3){
 						if(con_update_context.isPastel())
 							dm.setObject(1);
 						else
 							dm.setObject(2);
-					}else if(con_update_context.getEstadoInterno() == EstateRobots.DESPLAZARBLISTERCOMPLETO){
+					}else if(con_update_context.getEstadoInterno() == RobotStates.DESPLAZARBLISTERCOMPLETO){
 						dm.setObject(3);
 					}else
 						dm.setObject(0);
 					
-					dm.getParametros().add("RB1");
+					dm.getParameters().add("RB1");
 					_postmaster.sendMessageSCADA(dm);
 					
 					break;

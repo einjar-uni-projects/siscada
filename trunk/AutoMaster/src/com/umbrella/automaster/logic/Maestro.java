@@ -2,10 +2,9 @@ package com.umbrella.automaster.logic;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.MasterConfiguration;
-import com.umbrella.autocommon.Notificable;
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.MasterContext;
+import com.umbrella.autocommon.Notifiable;
 import com.umbrella.automaster.comm.ReceiveAutomaton1;
 import com.umbrella.automaster.comm.ReceiveAutomaton2;
 import com.umbrella.automaster.comm.ReceiveAutomaton3;
@@ -17,7 +16,7 @@ import com.umbrella.automaster.comm.ReceiveSCADA;
  * esta clase gestiona los automatas
  * 
  */
-public class Maestro implements Notificable  {
+public class Maestro implements Notifiable  {
 
 	/*
 	 * esta clase no toca el contexto de los demas automatas pero si lo recibe y
@@ -28,7 +27,7 @@ public class Maestro implements Notificable  {
 	 * en caso de arranque normal no envia un contexto, solo la orden de
 	 * arranque.
 	 */
-	private ContextoMaestro _contextoMaestro = ContextoMaestro.getInstance();;
+	private MasterContext _contextoMaestro = MasterContext.getInstance();;
 	private MasterConfiguration _configuracion;
 	private Configuration _general;
 	private ReceiveRobot1 _reciveRB1;
@@ -130,7 +129,7 @@ public class Maestro implements Notificable  {
 	}
 
 	public void inicializar() {
-		_contextoMaestro = ContextoMaestro.getInstance();
+		_contextoMaestro = MasterContext.getInstance();
 		_configuracion = MasterConfiguration.getInstance();
 		_general = new Configuration(_configuracion); // configuracion q se pasa
 														// a los automatas
