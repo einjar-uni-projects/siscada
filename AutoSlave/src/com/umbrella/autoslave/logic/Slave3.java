@@ -19,7 +19,7 @@ import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
@@ -127,7 +127,7 @@ public class Slave3 implements Notificable{
 							e.printStackTrace();
 						}
 						if(mensaje!=null){
-							switch (mensaje.getIdentificador()) {
+							switch (mensaje.getIdentifier()) {
 							case FINCINTALIBRE:							
 								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_3), false);
 								break;
@@ -262,7 +262,7 @@ public class Slave3 implements Notificable{
 
 					// envia el mensaje de contexto
  					DefaultMessage mensajeSend=new DefaultMessage();
- 					mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
+ 					mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
  					mensajeSend.setObject(contexto);
  		 			_buzon.send(mensajeSend);
 				}
