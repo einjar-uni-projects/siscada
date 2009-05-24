@@ -4,8 +4,8 @@ package com.umbrella.autoslave.logic;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
-import com.umbrella.autocommon.Notificable;
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.Notifiable;
+import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
@@ -14,14 +14,14 @@ import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.EstateRobots;
+import com.umbrella.utils.RobotStates;
 import com.umbrella.utils.NombreMaquinas;
 
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel
  */
-public class Robot2  implements Notificable{
+public class Robot2  implements Notifiable{
 
 	private Configuration _configuracion= Configuration.getInstance();
 	private ContextoRobot _contexto= ContextoRobot.getInstance();
@@ -50,7 +50,7 @@ public class Robot2  implements Notificable{
 		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR2Name, ServerMailBox._sendR2Name);
 
 
-		_contexto.setEstadoInterno(EstateRobots.REPOSO);
+		_contexto.setEstadoInterno(RobotStates.REPOSO);
 	}
 	public void execute() {
 		// TODO Auto-generated method stub
@@ -113,16 +113,16 @@ public class Robot2  implements Notificable{
 					//posicion 2 es la caja de validos
 					//posicion 3 es la caja de no validos
 					_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
-					if(_contexto.getEstadoInterno().equals(EstateRobots.REPOSO)){
-						_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_1);
+					if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO)){
+						_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
 						_contexto.setTiempo(System.currentTimeMillis());
 						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 					}
 					//va hacia la cinta3
-					else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_1)){//OK
+					else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_1)){//OK
 						// controlar interferencias, mejor lo hace el maestro
 						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
-							_contexto.setEstadoInterno(EstateRobots.SOBREPOSICION_1);
+							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_1);
 							/*
 							 * envia el mensaje de interferencia sobre la cinta 3
 							 */
@@ -133,13 +133,13 @@ public class Robot2  implements Notificable{
 							_buzon.send(send);
 						}
 					}
-					else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_1)){//OK
+					else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_1)){//OK
 						//cojo el Blister
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*1000)){
 							if(_contexto.isValido()){
-								_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_2);
+								_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_2);
 							}else{
-								_contexto.setEstadoInterno(EstateRobots.CAMINOPOSICION_3);
+								_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_3);
 							}
 							/*
 							 * enviar mensaje de FIN de cinta 3 libre
@@ -152,11 +152,11 @@ public class Robot2  implements Notificable{
 							_contexto.setPastelListo(false);
 							_contexto.setPastel(false);
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_2)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_2)){
 						if(!_contexto.isPastel() && (_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
 							_contexto.setPastel(true);
 						}
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_2)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_2)){
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*2*1000)){
 							/*
 							 * Enviar mensaje de pastel valido depositado
@@ -165,15 +165,15 @@ public class Robot2  implements Notificable{
 							send.setIdentifier(MSGOntology.BLISTERALMACENADO);
 							send.getParameters().add("true");
 							_buzon.send(send);
-							_contexto.setEstadoInterno(EstateRobots.REPOSO);
+							_contexto.setEstadoInterno(RobotStates.REPOSO);
 						}
 
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.CAMINOPOSICION_3)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
 						if(!_contexto.isPastel() && (_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
 							_contexto.setPastel(true);
 						}
 
-					}else if(_contexto.getEstadoInterno().equals(EstateRobots.SOBREPOSICION_3)){
+					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_3)){
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*2*1000)){
 							/*
 							 * Enviar mensaje de pastel NO valido depositado
@@ -182,7 +182,7 @@ public class Robot2  implements Notificable{
 							send.setIdentifier(MSGOntology.BLISTERALMACENADO);
 							send.getParameters().add("false");
 							_buzon.send(send);
-							_contexto.setEstadoInterno(EstateRobots.REPOSO);
+							_contexto.setEstadoInterno(RobotStates.REPOSO);
 						}
 					}
 				}

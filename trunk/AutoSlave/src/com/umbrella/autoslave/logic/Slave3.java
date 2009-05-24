@@ -7,8 +7,8 @@ import java.util.Vector;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
-import com.umbrella.autocommon.Notificable;
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.Notifiable;
+import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
@@ -31,7 +31,7 @@ import com.umbrella.utils.ThreadState;
  * El objetivo de esta clase es llevar el peso de la ejecucion, aqui se crean los hilos q luego se ejecutaran en 
  * paralelo entre ellos
  */
-public class Slave3 implements Notificable{
+public class Slave3 implements Notifiable{
 
 	private  Clock _clock;
 	private  MoveConveyorBelt _moverCinta;
@@ -47,7 +47,7 @@ public class Slave3 implements Notificable{
 
 	public  double porcentajeFallos=0.03;
 	private boolean _joy = true;
-	private Notificable[] _notificable;
+	private Notifiable[] _notificable;
 
 	public Slave3(){
 		
@@ -78,7 +78,7 @@ public class Slave3 implements Notificable{
 			_selladora=new TimeMachine(configuracion.getSelladora(), configuracion.getPosSelladora(),
 					configuracion.getPosicionAsociada(NombreMaquinas.SELLADO));
 
-			_notificable=new Notificable[4];
+			_notificable=new Notifiable[4];
 			this.setNotificable(0, _calidad);
 			this.setNotificable(1, _selladora);
 			this.setNotificable(2, _salBlister);
@@ -437,10 +437,10 @@ public class Slave3 implements Notificable{
 	}
 	
 
-	public void setNotificable( int pos, Notificable notificable){
+	public void setNotificable( int pos, Notifiable notificable){
     	_notificable[pos] = notificable;
     }
-	private Notificable getNotificabe(int pos){
+	private Notifiable getNotificabe(int pos){
 		return _notificable[pos];
 	}
 }

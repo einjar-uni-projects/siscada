@@ -2,8 +2,8 @@ package com.umbrella.autoslave.executor;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Context;
-import com.umbrella.autocommon.Notificable;
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.Notifiable;
+import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
@@ -11,7 +11,7 @@ import com.umbrella.utils.ThreadState;
 /*
  * Maquinas que tardan un tiempo '_tiempoEjecucoin' en ejecutarse
  */
-public class TimeMachine extends Thread implements Notificable {
+public class TimeMachine extends Thread implements Notifiable {
 	private double _executionTime;
 	private double _position;
 	private boolean _joy = true;

@@ -3,8 +3,8 @@ package com.umbrella.autoslave.executor;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
-import com.umbrella.autocommon.Notificable;
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.Notifiable;
+import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
@@ -14,7 +14,7 @@ import com.umbrella.utils.ThreadState;
  * @author 
  *
  */
-public class MoveConveyorBelt extends Thread implements Notificable{
+public class MoveConveyorBelt extends Thread implements Notifiable{
 	
 	private ThreadState _threadState;
 	
