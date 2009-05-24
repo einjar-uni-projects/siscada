@@ -1,11 +1,5 @@
 package com.umbrella.automaster.logic;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
-import sun.awt.windows.ThemeReader;
-
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoMaestro;
@@ -17,7 +11,6 @@ import com.umbrella.automaster.comm.ReceiveAutomaton3;
 import com.umbrella.automaster.comm.ReceiveRobot1;
 import com.umbrella.automaster.comm.ReceiveRobot2;
 import com.umbrella.automaster.comm.ReceiveSCADA;
-import com.umbrella.mail.mailbox.ClientMailBox;
 
 /*
  * esta clase gestiona los automatas

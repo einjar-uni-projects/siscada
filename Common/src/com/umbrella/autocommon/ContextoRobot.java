@@ -7,6 +7,11 @@ import com.umbrella.utils.EstateRobots;
 
 public class ContextoRobot implements Serializable {
 	
+	/**
+	 * serial_id
+	 */
+	private static final long serialVersionUID = -4276239438312255947L;
+
 	private boolean FIN=false;
 	
 	private EstateRobots estadoInterno;
@@ -46,26 +51,26 @@ public class ContextoRobot implements Serializable {
 	}
 	
 	public synchronized void setEstadoInterno(EstateRobots estadoInterno) {
-		estadoInterno = estadoInterno;
+		this.estadoInterno = estadoInterno;
 	}
 	public synchronized long getTiempo() {
 		return tiempo;
 	}
 	public synchronized void setTiempo(long tiempo) {
-		tiempo = tiempo;
+		this.tiempo = tiempo;
 	}
 	public synchronized long getDiffTiempo() {
 		return diffTiempo;
 	}
 	public  synchronized void setDiffTiempo(long diffTiempo) {
-		diffTiempo = diffTiempo;
+		this.diffTiempo = diffTiempo;
 	}
 	
 	public synchronized boolean isPastel() {
 		return pastel;
 	}
 	public synchronized void setPastel(boolean pastel) {
-		pastel = pastel;
+		this.pastel = pastel;
 	}
 /*	
 	public static synchronized boolean isBlister() {
@@ -83,7 +88,7 @@ public class ContextoRobot implements Serializable {
 
 	public synchronized void setBlisterCompletoListo(
 			boolean blisterCompletoListo) {
-		blisterCompletoListo = blisterCompletoListo;
+		this.blisterCompletoListo = blisterCompletoListo;
 	}
 
 	public synchronized boolean isPastelListo() {
@@ -91,7 +96,7 @@ public class ContextoRobot implements Serializable {
 	}
 
 	public synchronized void setPastelListo(boolean pastelListo) {
-		pastelListo = pastelListo;
+		this.pastelListo = pastelListo;
 	}
 
 	public synchronized boolean isBlisterListo() {
@@ -99,14 +104,14 @@ public class ContextoRobot implements Serializable {
 	}
 
 	public synchronized void setBlisterListo(boolean blisterListo) {
-		blisterListo = blisterListo;
+		this.blisterListo = blisterListo;
 	}
 
 	public  synchronized boolean isValido() {
 		return valido;
 	}
 	public synchronized void setValido(boolean valido) {
-		valido = valido;
+		this.valido = valido;
 	}
 
 	public synchronized boolean isApagado() {

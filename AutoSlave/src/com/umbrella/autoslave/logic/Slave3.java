@@ -1,7 +1,5 @@
 package com.umbrella.autoslave.logic;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Vector;

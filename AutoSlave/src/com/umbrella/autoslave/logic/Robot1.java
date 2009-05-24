@@ -1,10 +1,6 @@
 package com.umbrella.autoslave.logic;
 
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
@@ -84,6 +80,7 @@ public class Robot1 implements Notificable{
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						_configuracion=(Configuration)mensaje.getObject();
+						_contexto.setApagado(false);
 						break;
 					case START:
 						_contexto=_contexto.reset();
