@@ -22,7 +22,7 @@ import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.MachineNames;
-import com.umbrella.utils.Pastel;
+import com.umbrella.utils.Cake;
 import com.umbrella.utils.ThreadState;
 
 
