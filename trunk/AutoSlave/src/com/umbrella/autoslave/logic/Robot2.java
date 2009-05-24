@@ -186,6 +186,12 @@ public class Robot2  implements Notificable{
 					}
 				}
 			}
+			
+			// envia el mensaje de contexto
+			DefaultMessage mensajeSend=new DefaultMessage();
+			mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
+			mensajeSend.setObject(_contexto);
+			_buzon.send(mensajeSend);
 		}
 	}
 
