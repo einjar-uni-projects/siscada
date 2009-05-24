@@ -3,7 +3,7 @@ package com.umbrella.mail.test;
 import com.umbrella.mail.mailbox.MessageQueue;
 import com.umbrella.mail.mailbox.QueueServer;
 
-class RegistroColas 
+class QueueRegistry 
 {
 	public static void main(String[] args) 
 	{
@@ -11,8 +11,8 @@ class RegistroColas
 			/* Se inicia el servidor de colas escuchando en un puerto.
 			 * En este caso el puerto 9003
 			 * Dan excepcion si hay problemas*/
-			QueueServer servidor = new QueueServer();
-			servidor.startRegistry(9003);
+			QueueServer server = new QueueServer();
+			server.startRegistry(9003);
 		
 			
 			/* Se instancias las colas que se quieran*/
@@ -21,8 +21,8 @@ class RegistroColas
 		
 			/* Ahora se registran las colas en el registro que escucha en el puerto 9003
 			 * Da excepcion si hay problemas*/
-			servidor.registerObject(_queue1, "Cola1", 9003);
-			servidor.registerObject(_queue2, "Cola2", 9003);
+			server.registerObject(_queue1, "Cola1", 9003);
+			server.registerObject(_queue2, "Cola2", 9003);
 		}catch(Exception e){
 
 			System.out.println("Problemas al iniciar servidor o al registrar colas");

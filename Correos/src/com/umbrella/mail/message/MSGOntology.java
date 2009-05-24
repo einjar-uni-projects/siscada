@@ -38,22 +38,22 @@ public enum MSGOntology {
 	; 
 	
 	
-	private final String nombre;
-	private int numParametros;
+	private final String name;
+	private int parametersNumber;
 	//private String[] parametros;
 	
-	private MSGOntology(String nombreClase, int numParametros){
-		this.nombre=nombreClase;
-		this.numParametros=numParametros;
+	private MSGOntology(String className, int paramNumber){
+		this.name=className;
+		this.parametersNumber=paramNumber;
 		// this.parametros=parametros;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public int getNumParametros() {
-		return numParametros;
+	public int getParametersNumber() {
+		return parametersNumber;
 	}
 	
 }
