@@ -5,6 +5,7 @@ import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.MasterConfiguration;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notificable.NotificableSignal;
 import com.umbrella.automaster.comm.ReceiveAutomaton1;
 import com.umbrella.automaster.comm.ReceiveAutomaton2;
 import com.umbrella.automaster.comm.ReceiveAutomaton3;
