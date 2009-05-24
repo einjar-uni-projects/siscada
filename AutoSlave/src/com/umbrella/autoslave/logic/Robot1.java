@@ -15,7 +15,7 @@ import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.RobotStates;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel
@@ -141,8 +141,8 @@ public class Robot1 implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.INTERFERENCIA);
-							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
-							send.getParameters().add(NombreMaquinas.CINTA_1.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.CINTA_1.getDescripcion());
 							_buzon.send(send);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_1)){
@@ -155,7 +155,7 @@ public class Robot1 implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
-							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 							send.getParameters().add("pastel");
 							_buzon.send(send);
 							_contexto.setPastelListo(false);
@@ -169,8 +169,8 @@ public class Robot1 implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.INTERFERENCIA);
-							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
-							send.getParameters().add(NombreMaquinas.CINTA_2.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.CINTA_2.getDescripcion());
 							_buzon.send(send);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_2)){
@@ -187,7 +187,7 @@ public class Robot1 implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
-							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 							send.getParameters().add("blister");
 							_buzon.send(send);
 							_contexto.setPastelListo(false);
@@ -201,8 +201,8 @@ public class Robot1 implements Notifiable{
 								 */
 								MessageInterface send=new DefaultMessage();
 								send.setIdentifier(MSGOntology.FININTERFERENCIA);
-								send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
-								send.getParameters().add(NombreMaquinas.CINTA_1.getDescripcion());
+								send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
+								send.getParameters().add(MachineNames.CINTA_1.getDescripcion());
 								_buzon.send(send);
 							}
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2*1000)){
@@ -215,8 +215,8 @@ public class Robot1 implements Notifiable{
 								 */
 								MessageInterface send=new DefaultMessage();
 								send.setIdentifier(MSGOntology.FININTERFERENCIA);
-								send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
-								send.getParameters().add(NombreMaquinas.CINTA_2.getDescripcion());
+								send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
+								send.getParameters().add(MachineNames.CINTA_2.getDescripcion());
 								_buzon.send(send);
 							}
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
@@ -232,7 +232,7 @@ public class Robot1 implements Notifiable{
 								 */
 								MessageInterface send=new DefaultMessage();
 								send.setIdentifier(MSGOntology.PRODUCTOCOLOCADO);
-								send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 								send.getParameters().add("pastel");
 								_buzon.send(send);
 								_contexto.setEstadoInterno(RobotStates.REPOSO);
@@ -244,7 +244,7 @@ public class Robot1 implements Notifiable{
 								 */
 								MessageInterface send=new DefaultMessage();
 								send.setIdentifier(MSGOntology.PRODUCTOCOLOCADO);
-								send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+								send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 								send.getParameters().add("blister");
 								_buzon.send(send);
 								_contexto.setEstadoInterno(RobotStates.REPOSO);
@@ -257,7 +257,7 @@ public class Robot1 implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.PRODUCTOCOLOCADO);
-							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 							send.getParameters().add("blisterCompleto");
 							_buzon.send(send);
 							_contexto.setEstadoInterno(RobotStates.REPOSO);

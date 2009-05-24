@@ -21,7 +21,7 @@ import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
 
@@ -66,16 +66,16 @@ public class Slave1 implements Notifiable {
 			 * se crean los hilos de ejecucion
 			 */
 			_moverCinta=new MoveConveyorBelt(configuracion.getVelCinta(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CINTA_1));
+					configuracion.getPosicionAsociada(MachineNames.CINTA_1));
 			_dispensadora=(ActivatedDispenser)ActivatedDispenser.getInstance(configuracion.getPosBizc(),
-					configuracion.getPosicionAsociada(NombreMaquinas.DISPENSADORA));
+					configuracion.getPosicionAsociada(MachineNames.DISPENSADORA));
 			
 			_salPastel=new ConveyorBeltExit(configuracion.getPosFinAut1(),
-					configuracion.getPosicionAsociada(NombreMaquinas.FIN_2), "pastel");
+					configuracion.getPosicionAsociada(MachineNames.FIN_2), "pastel");
 			_caramelo=new TimeMachine(configuracion.getValvCaram(), configuracion.getPosCaram(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO));
+					configuracion.getPosicionAsociada(MachineNames.CARAMELO));
 			_chocolate=new TimeMachine(configuracion.getValvChoc(), configuracion.getPosChoc(),
-					configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE));
+					configuracion.getPosicionAsociada(MachineNames.CHOCOLATE));
 
 			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
 			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
@@ -125,7 +125,7 @@ public class Slave1 implements Notifiable {
 					System.out.println(mensaje.getIdentifier());
 					switch (mensaje.getIdentifier()) {
 					case FINCINTALIBRE:							
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						configuracion=(Configuration)mensaje.getObject();
@@ -148,16 +148,16 @@ public class Slave1 implements Notifiable {
 						contexto.setApagado(true);
 						break;
 					case PRODUCTORECOGIDO:
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
 						break;
 					case RELLENARMAQUINA:
 						String maquina=mensaje.getParameters().get(0);
 						int cantidad=Integer.parseInt(mensaje.getParameters().get(1));
-						if(maquina.compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
+						if(maquina.compareTo(MachineNames.DISPENSADORA.getName())==0)
 							_dispensadora.fillDeposit(cantidad);
-						if(maquina.compareTo(NombreMaquinas.CARAMELO.getName())==0)
+						if(maquina.compareTo(MachineNames.CARAMELO.getName())==0)
 							contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadCaramelo());
-						if(maquina.compareTo(NombreMaquinas.CHOCOLATE.getName())==0)
+						if(maquina.compareTo(MachineNames.CHOCOLATE.getName())==0)
 							contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadChocolate());
 						break;
 					case RESET:
@@ -191,42 +191,42 @@ public class Slave1 implements Notifiable {
 						System.out.println("moverCinta");
 						//_moverCinta.start();
 						if(_notificable[4] != null)
-							getNotificabe(4).notifyNoSyncJoy2(NombreMaquinas.CINTA_1.getName());
+							getNotificabe(4).notifyNoSyncJoy2(MachineNames.CINTA_1.getName());
 					}else{
-						if(puedoUsar(NombreMaquinas.CHOCOLATE)){
+						if(puedoUsar(MachineNames.CHOCOLATE)){
 							if(contexto.getCapacidadChocolate()>0){
 								//_chocolate.start();
 								if(_notificable[1] != null)
-									getNotificabe(1).notifyNoSyncJoy2(NombreMaquinas.CHOCOLATE.getName());
+									getNotificabe(1).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
 								contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.getPosition())).set_chocolate();
 								contexto.decrementarChocolate();
 							}else{
 								DefaultMessage mensajeSend= new DefaultMessage();
 								mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
-								mensajeSend.getParameters().add(NombreMaquinas.CHOCOLATE.getName()); 									
+								mensajeSend.getParameters().add(MachineNames.CHOCOLATE.getName()); 									
 								_buzon.send(mensajeSend);
 								contexto.setFallo(true);
 							}
 						}
-						if(puedoUsar(NombreMaquinas.CARAMELO)){
+						if(puedoUsar(MachineNames.CARAMELO)){
 							if(contexto.getCapacidadCaramelo()>0){
 								//_caramelo.start();
 								if(_notificable[2] != null)
-									getNotificabe(2).notifyNoSyncJoy2(NombreMaquinas.CARAMELO.getName());
+									getNotificabe(2).notifyNoSyncJoy2(MachineNames.CARAMELO.getName());
 								contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.getPosition())).set_caramelo();
 								contexto.decrementarCaramelo();
 							}else{
 								DefaultMessage mensajeSend= new DefaultMessage();
 								mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
-								mensajeSend.getParameters().add(NombreMaquinas.CARAMELO.getName()); 									
+								mensajeSend.getParameters().add(MachineNames.CARAMELO.getName()); 									
 								_buzon.send(mensajeSend);
 								contexto.setFallo(true);
 							}
 						}
-						if(puedoUsar(NombreMaquinas.FIN_1)){
+						if(puedoUsar(MachineNames.FIN_1)){
 							//_salPastel.start();
 							if(_notificable[3] != null)
-								getNotificabe(3).notifyNoSyncJoy2(NombreMaquinas.FIN_1.getName());
+								getNotificabe(3).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
 						}
 					}
 					//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
@@ -234,7 +234,7 @@ public class Slave1 implements Notifiable {
 					if(!contexto.isParadaCorrecta()){
 						System.out.println("si no es parada correcta");			
 						if(_notificable[0] != null)
-							getNotificabe(0).notifyNoSyncJoy2(NombreMaquinas.DISPENSADORA.getName());
+							getNotificabe(0).notifyNoSyncJoy2(MachineNames.DISPENSADORA.getName());
 
 						//_dispensadora.start();
 					}
@@ -242,7 +242,7 @@ public class Slave1 implements Notifiable {
 System.out.println("si tengo 0 pasteles restantes");						
 						DefaultMessage mensajeSend= new DefaultMessage();
 						mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
-						mensajeSend.getParameters().add(NombreMaquinas.DISPENSADORA.getName()); 									
+						mensajeSend.getParameters().add(MachineNames.DISPENSADORA.getName()); 									
 						_buzon.send(mensajeSend);
 						contexto.setFallo(true);
 					}
@@ -300,18 +300,18 @@ System.out.println("si tengo 0 pasteles restantes");
 		boolean salida=false;
 		
 		if(contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO))){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), true);
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SENSOR_CARAMELO))){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CARAMELO), true);
 			salida=true;
 		}
 		if(contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE))){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), true);
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE))){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE), true);
 			salida=true;
 		}
 		if(contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))){
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), true);
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))){
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), true);
 			salida=true;
 		}
 		// la dispensadora no tiene sensor asociado
@@ -323,15 +323,15 @@ System.out.println("si tengo 0 pasteles restantes");
 	 * @param nombre
 	 * @return
 	 */
-	private synchronized  boolean ejecutandoAlgo(NombreMaquinas nombre){
+	private synchronized  boolean ejecutandoAlgo(MachineNames nombre){
 		boolean salida=false;
-		if(nombre.equals(NombreMaquinas.DISPENSADORA))
+		if(nombre.equals(MachineNames.DISPENSADORA))
 			if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.CHOCOLATE))
+		if(nombre.equals(MachineNames.CHOCOLATE))
 			if(_chocolate.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.CARAMELO))
+		if(nombre.equals(MachineNames.CARAMELO))
 			if(_caramelo.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
-		if(nombre.equals(NombreMaquinas.FIN_1))
+		if(nombre.equals(MachineNames.FIN_1))
 			if(_salPastel.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		return salida;
 	}
@@ -340,24 +340,24 @@ System.out.println("si tengo 0 pasteles restantes");
 	 * @param tipo
 	 * @return
 	 */
-	private synchronized  boolean puedoUsar(NombreMaquinas tipo){
+	private synchronized  boolean puedoUsar(MachineNames tipo){
 		boolean salida=false;
 		/*
 		if(tipo.equals(NombreMaquinas.DISPENSADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.DISPENSADORA) && contexto.activaSensor(_dispensadora.get_posicion())>=0) salida=true;
 		*/
-		if(tipo.equals(NombreMaquinas.CHOCOLATE))
-			if(!ejecutandoAlgo(NombreMaquinas.CHOCOLATE) && 
+		if(tipo.equals(MachineNames.CHOCOLATE))
+			if(!ejecutandoAlgo(MachineNames.CHOCOLATE) && 
 					contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CHOCOLATE))) salida=true;
-		if(tipo.equals(NombreMaquinas.CARAMELO))
-			if(!ejecutandoAlgo(NombreMaquinas.CARAMELO) && 
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CHOCOLATE))) salida=true;
+		if(tipo.equals(MachineNames.CARAMELO))
+			if(!ejecutandoAlgo(MachineNames.CARAMELO) && 
 					contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.CARAMELO))) salida=true;
-		if(tipo.equals(NombreMaquinas.FIN_1))
-			if(!ejecutandoAlgo(NombreMaquinas.FIN_1) && 
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CARAMELO))) salida=true;
+		if(tipo.equals(MachineNames.FIN_1))
+			if(!ejecutandoAlgo(MachineNames.FIN_1) && 
 					contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1))) salida=true;
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))) salida=true;
 		return salida;
 	}
 	/**
@@ -367,15 +367,15 @@ System.out.println("si tengo 0 pasteles restantes");
 		int num=-1;
 		num=contexto.activaSensor(configuracion, _caramelo.getPosition());
 		if(num<0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CARAMELO), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CARAMELO), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _chocolate.getPosition());
 		if(num<0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.SENSOR_CHOCOLATE), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE), false);
 		num=-1;
 		num=contexto.activaSensor(configuracion, _salPastel.getPosition());
 		if(num<0)
-			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
 	}
 	
 	public synchronized void guardedJoy() {
