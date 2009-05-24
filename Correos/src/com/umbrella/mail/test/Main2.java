@@ -30,7 +30,7 @@ public class Main2 {
 		 * recibe es Cola2 y la cola por la que se envia es Cola1
 		 */
 		try {
-			ClientMailBox buzon = new ClientMailBox("192.168.10.100", 9003, "Cola2","Cola1");
+			ClientMailBox mailbox = new ClientMailBox("192.168.10.100", 9003, "Cola2","Cola1");
 
 			MessageInterface message;
 
@@ -40,7 +40,7 @@ public class Main2 {
 				 * cola que leer. Si falla la conexion con el registro de colas,
 				 * daria una excepcion
 				 */
-				message = buzon.receiveBlocking();
+				message = mailbox.receiveBlocking();
 
 				/* Para acceder a los atributos, importante hacer el casting. */
 				System.out.println("Recibido: "
