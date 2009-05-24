@@ -12,7 +12,7 @@ package com.umbrella.autocommon;
 //import com.sun.tools.javac.tree.Tree.Synchronized;
 import java.io.Serializable;
 
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 
 public class Configuration implements Serializable {
 
@@ -364,57 +364,57 @@ public class Configuration implements Serializable {
 	}
 
 	
-	public int getPosicionAsociada(NombreMaquinas nombre){
+	public int getPosicionAsociada(MachineNames nombre){
 		int sal=-1;
-		if(nombre.equals(NombreMaquinas.FIN_1))
+		if(nombre.equals(MachineNames.FIN_1))
 			sal=posicionAsociadaSensorFinAut1;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CARAMELO))
+		else if(nombre.equals(MachineNames.SENSOR_CARAMELO))
 			sal=posicionAsociadaSensorCaramelo;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CHOCOLATE))
+		else if(nombre.equals(MachineNames.SENSOR_CHOCOLATE))
 			sal=posicionAsociadaSensorChocolate;
-		else if(nombre.equals(NombreMaquinas.CARAMELO))
+		else if(nombre.equals(MachineNames.CARAMELO))
 			sal=posicionAsociadaCaramelo;
-		else if(nombre.equals(NombreMaquinas.CHOCOLATE))
+		else if(nombre.equals(MachineNames.CHOCOLATE))
 			sal=posicionAsociadaChocolate;
-		else if(nombre.equals(NombreMaquinas.DISPENSADORA))
+		else if(nombre.equals(MachineNames.DISPENSADORA))
 			sal=posicionAsociadaDispensadora;
-		else if(nombre.equals(NombreMaquinas.CINTA_1))
+		else if(nombre.equals(MachineNames.CINTA_1))
 			sal=posicionAsociadaCintaAut1;
 		
-		if(nombre.equals(NombreMaquinas.FIN_2))
+		if(nombre.equals(MachineNames.FIN_2))
 			sal=posicionAsociadaSensorFinAut2;
-		else if(nombre.equals(NombreMaquinas.SENSOR_TROQUELADORA))
+		else if(nombre.equals(MachineNames.SENSOR_TROQUELADORA))
 			sal=posicionAsociadaSensorTroqueladora;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CORTADORA))
+		else if(nombre.equals(MachineNames.SENSOR_CORTADORA))
 			sal=posicionAsociadaSensorCortadora;
-		else if(nombre.equals(NombreMaquinas.TROQUELADORA))
+		else if(nombre.equals(MachineNames.TROQUELADORA))
 			sal=posicionAsociadaTroqueladora;
-		else if(nombre.equals(NombreMaquinas.CORTADORA))
+		else if(nombre.equals(MachineNames.CORTADORA))
 			sal=posicionAsociadaCortadora;
-		else if(nombre.equals(NombreMaquinas.CINTA_2))
+		else if(nombre.equals(MachineNames.CINTA_2))
 			sal=posicionAsociadaCintaAut2;
 		
-		if(nombre.equals(NombreMaquinas.FIN_3))
+		if(nombre.equals(MachineNames.FIN_3))
 			sal=posicionAsociadaSensorFinAut3;
-		else if(nombre.equals(NombreMaquinas.SENSOR_SELLADORA))
+		else if(nombre.equals(MachineNames.SENSOR_SELLADORA))
 			sal=posicionAsociadaSensorSelladora;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD))
+		else if(nombre.equals(MachineNames.SENSOR_CALIDAD))
 			sal=posicionAsociadaSensorCalidad;
-		else if(nombre.equals(NombreMaquinas.INICIO))
+		else if(nombre.equals(MachineNames.INICIO))
 			sal=posicionAsociadaSensorInicioCinta;
-		else if(nombre.equals(NombreMaquinas.SELLADO))
+		else if(nombre.equals(MachineNames.SELLADO))
 			sal=posicionAsociadaSelladora;
-		else if(nombre.equals(NombreMaquinas.CONTROL_CALIDAD))
+		else if(nombre.equals(MachineNames.CONTROL_CALIDAD))
 			sal=posicionAsociadaCalidad;
-		else if(nombre.equals(NombreMaquinas.CINTA_3))
+		else if(nombre.equals(MachineNames.CINTA_3))
 			sal=posicionAsociadaCintaAut3;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_1))
+		else if(nombre.equals(MachineNames.SENSOR_CALIDAD_SENSOR_1))
 			sal=posicionAsociadaCalidadSensor1;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_2))
+		else if(nombre.equals(MachineNames.SENSOR_CALIDAD_SENSOR_2))
 			sal=posicionAsociadaCalidadSensor2;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_3))
+		else if(nombre.equals(MachineNames.SENSOR_CALIDAD_SENSOR_3))
 			sal=posicionAsociadaCalidadSensor3;
-		else if(nombre.equals(NombreMaquinas.SENSOR_CALIDAD_SENSOR_4))
+		else if(nombre.equals(MachineNames.SENSOR_CALIDAD_SENSOR_4))
 			sal=posicionAsociadaCalidadSensor4;
 		
 		return sal;

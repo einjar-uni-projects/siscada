@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 
-public enum NombreMaquinas implements Serializable {
+public enum MachineNames implements Serializable {
 	CINTA_1("cinta_1","cinta del automata 1", 0),
 	CINTA_2("cinta_2","cinta del automata 2", 1),
 	CINTA_3("cinta_3","cinta del automata 3", 2),
@@ -37,7 +37,7 @@ public enum NombreMaquinas implements Serializable {
 	private final int descriptor;
 	
 	
-	private NombreMaquinas(String name, String descripcion, int descriptor){
+	private MachineNames(String name, String descripcion, int descriptor){
 		this.name = name;
 		this.descripcion = descripcion;
 		this.descriptor = descriptor;
@@ -55,7 +55,7 @@ public enum NombreMaquinas implements Serializable {
 		return descripcion;
 	}
 	
-	public boolean equals(NombreMaquinas obj){
+	public boolean equals(MachineNames obj){
 		boolean sal=true;
 		if(this.name.compareTo(obj.getName())!=0) sal=false;
 		if(this.descripcion.compareTo(obj.getDescripcion())!=0) sal=false;
