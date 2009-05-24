@@ -50,7 +50,7 @@ public class Robot2  implements Notificable{
 			e1.printStackTrace();
 		}
 		PropertiesFileHandler.getInstance().writeFile();
-		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR1Name, ServerMailBox._sendR1Name);
+		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR2Name, ServerMailBox._sendR2Name);
 
 
 		_contexto.setEstadoInterno(EstateRobots.REPOSO);
