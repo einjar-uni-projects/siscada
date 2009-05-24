@@ -36,7 +36,7 @@ public class Main {
 			 * va a enviar. En este caso, la cola por la que se recibe es Cola1
 			 * y por la que se envia Cola2
 			 */
-			ClientMailBox buzon = new ClientMailBox("192.168.10.100", 9003, "Cola1","Cola2");// Solo esta sentencia puede lanzar excepcion
+			ClientMailBox mailbox = new ClientMailBox("192.168.10.100", 9003, "Cola1","Cola2");// Solo esta sentencia puede lanzar excepcion
 
 			System.out.println("Envia mensaje");
 
@@ -62,7 +62,7 @@ public class Main {
 			 * decir, si ha habido conexi�n correcta con el registro de colas y
 			 * false en caso contrario
 			 */
-			boolean dev = buzon.send(messagePrueba);
+			boolean dev = mailbox.send(messagePrueba);
 
 			if (dev) {
 				System.out.println("Enviado!");
