@@ -165,12 +165,14 @@ public class Context implements Serializable{
 		if(tipo.equalsIgnoreCase("blister")){
 			for(int i=0;i<_listaBlister.size();i++){
 				if(_listaBlister.get(i).get_posicion()<(posicion+configuracion.getSizeBlister()/2) || 
-					_listaBlister.get(i).get_posicion()>(posicion-configuracion.getErrorSensor()/2) ) sal=i;
+					_listaBlister.get(i).get_posicion()>(posicion-configuracion.getErrorSensor()/2) )
+					sal=i;
 			}
 		}else{
 			for(int i=0;i<_listaPasteles.size();i++){
 				if(_listaPasteles.get(i).get_posicion()<(posicion+configuracion.getSizeBizcocho()/2) || 
-					_listaPasteles.get(i).get_posicion()>(posicion-configuracion.getSizeBizcocho()/2) ) sal=i;
+					_listaPasteles.get(i).get_posicion()>(posicion-configuracion.getSizeBizcocho()/2) )
+					sal=i;
 			}
 		}
 		return sal;
