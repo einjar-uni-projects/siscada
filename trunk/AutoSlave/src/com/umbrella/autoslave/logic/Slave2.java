@@ -1,7 +1,5 @@
 package com.umbrella.autoslave.logic;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
@@ -23,7 +21,6 @@ import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
 import com.umbrella.utils.NombreMaquinas;
-import com.umbrella.utils.Pastel;
 import com.umbrella.utils.ThreadState;
 
 

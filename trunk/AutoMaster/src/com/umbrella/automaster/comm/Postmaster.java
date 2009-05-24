@@ -1,7 +1,6 @@
 package com.umbrella.automaster.comm;
 
 import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.automaster.model.PropertiesFile;

@@ -2,18 +2,14 @@ package com.umbrella.automaster.comm;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
-import java.util.LinkedList;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
-import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.Blister;
 
 /**
  * 

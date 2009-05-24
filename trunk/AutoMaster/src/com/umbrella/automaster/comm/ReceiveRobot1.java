@@ -1,11 +1,9 @@
 package com.umbrella.automaster.comm;
 
 import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoMaestro;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.mail.message.DefaultMessage;
