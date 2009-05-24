@@ -2,7 +2,7 @@ package com.umbrella.utils;
 
 import java.io.Serializable;
 
-public enum EstateRobots implements Serializable{
+public enum RobotStates implements Serializable{
 	REPOSO("Reposo","Esperando ordenes, sobre una posicion que no provoca interferencias", 0),
 	CAMINOPOSICION_1("caminoposicion1","se desplaza a la posicion 1",1),
 	SOBREPOSICION_1("sobreposicion1","Se encuentra sobre la posicion 1", 2),
@@ -18,7 +18,7 @@ public enum EstateRobots implements Serializable{
 	private final int valor;
 	
 	
-	private EstateRobots(String name, String descripcion, int valor){
+	private RobotStates(String name, String descripcion, int valor){
 		this.name = name;
 		this.descripcion = descripcion;
 		this.valor = valor;
@@ -36,7 +36,7 @@ public enum EstateRobots implements Serializable{
 		return valor;
 	}
 	
-	public boolean equals(EstateRobots obj){
+	public boolean equals(RobotStates obj){
 		boolean sal=true;
 		if(this.name.compareTo(obj.getName())!=0) sal=false;
 		if(this.descripcion.compareTo(obj.getDescripcion())!=0) sal=false;
