@@ -18,7 +18,7 @@ import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.NombreMaquinas;
@@ -122,8 +122,8 @@ public class Slave1 implements Notificable {
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
-					System.out.println(mensaje.getIdentificador());
-					switch (mensaje.getIdentificador()) {
+					System.out.println(mensaje.getIdentifier());
+					switch (mensaje.getIdentifier()) {
 					case FINCINTALIBRE:							
 						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
 						break;
@@ -151,8 +151,8 @@ public class Slave1 implements Notificable {
 						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(NombreMaquinas.FIN_1), false);
 						break;
 					case RELLENARMAQUINA:
-						String maquina=mensaje.getParametros().get(0);
-						int cantidad=Integer.parseInt(mensaje.getParametros().get(1));
+						String maquina=mensaje.getParameters().get(0);
+						int cantidad=Integer.parseInt(mensaje.getParameters().get(1));
 						if(maquina.compareTo(NombreMaquinas.DISPENSADORA.getName())==0)
 							_dispensadora.fillDeposit(cantidad);
 						if(maquina.compareTo(NombreMaquinas.CARAMELO.getName())==0)
@@ -202,8 +202,8 @@ public class Slave1 implements Notificable {
 								contexto.decrementarChocolate();
 							}else{
 								DefaultMessage mensajeSend= new DefaultMessage();
-								mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-								mensajeSend.getParametros().add(NombreMaquinas.CHOCOLATE.getName()); 									
+								mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
+								mensajeSend.getParameters().add(NombreMaquinas.CHOCOLATE.getName()); 									
 								_buzon.send(mensajeSend);
 								contexto.setFallo(true);
 							}
@@ -217,8 +217,8 @@ public class Slave1 implements Notificable {
 								contexto.decrementarCaramelo();
 							}else{
 								DefaultMessage mensajeSend= new DefaultMessage();
-								mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-								mensajeSend.getParametros().add(NombreMaquinas.CARAMELO.getName()); 									
+								mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
+								mensajeSend.getParameters().add(NombreMaquinas.CARAMELO.getName()); 									
 								_buzon.send(mensajeSend);
 								contexto.setFallo(true);
 							}
@@ -241,8 +241,8 @@ public class Slave1 implements Notificable {
 					if(_dispensadora.getRemainderCakes()==0){
 System.out.println("si tengo 0 pasteles restantes");						
 						DefaultMessage mensajeSend= new DefaultMessage();
-						mensajeSend.setIdentificador(OntologiaMSG.AVISARUNFALLO);
-						mensajeSend.getParametros().add(NombreMaquinas.DISPENSADORA.getName()); 									
+						mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
+						mensajeSend.getParameters().add(NombreMaquinas.DISPENSADORA.getName()); 									
 						_buzon.send(mensajeSend);
 						contexto.setFallo(true);
 					}
@@ -256,7 +256,7 @@ System.out.println("si tengo 0 pasteles restantes");
 	System.out.println("llega 5");
 					// envia el mensaje de contexto
 					DefaultMessage mensajeSend=new DefaultMessage();
-					mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTO);
+					mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
 					mensajeSend.setObject(contexto);
 					_buzon.send(mensajeSend);
 				}// del if (!contexto.isApagado)

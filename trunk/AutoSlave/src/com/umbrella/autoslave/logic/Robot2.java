@@ -11,7 +11,7 @@ import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.EstateRobots;
@@ -68,7 +68,7 @@ public class Robot2  implements Notificable{
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
-					switch (mensaje.getIdentificador()) {
+					switch (mensaje.getIdentifier()) {
 					case ACTUALIZARCONTEXTO:							
 						_contexto=(ContextoRobot)mensaje.getObject();
 						break;
@@ -127,9 +127,9 @@ public class Robot2  implements Notificable{
 							 * envia el mensaje de interferencia sobre la cinta 3
 							 */
 							MessageInterface send=new DefaultMessage();
-							send.setIdentificador(OntologiaMSG.INTERFERENCIA);
-							send.getParametros().add(NombreMaquinas.ROBOT_2.getDescripcion());
-							send.getParametros().add(NombreMaquinas.CINTA_3.getDescripcion());
+							send.setIdentifier(MSGOntology.INTERFERENCIA);
+							send.getParameters().add(NombreMaquinas.ROBOT_2.getDescripcion());
+							send.getParameters().add(NombreMaquinas.CINTA_3.getDescripcion());
 							_buzon.send(send);
 						}
 					}
@@ -145,9 +145,9 @@ public class Robot2  implements Notificable{
 							 * enviar mensaje de FIN de cinta 3 libre
 							 */
 							MessageInterface send=new DefaultMessage();
-							send.setIdentificador(OntologiaMSG.PRODUCTORECOGIDO);
-							send.getParametros().add(NombreMaquinas.ROBOT_1.getDescripcion());
-							send.getParametros().add("blisterCompleto");
+							send.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
+							send.getParameters().add(NombreMaquinas.ROBOT_1.getDescripcion());
+							send.getParameters().add("blisterCompleto");
 							_buzon.send(send);
 							_contexto.setPastelListo(false);
 							_contexto.setPastel(false);
@@ -162,8 +162,8 @@ public class Robot2  implements Notificable{
 							 * Enviar mensaje de pastel valido depositado
 							 */
 							MessageInterface send=new DefaultMessage();
-							send.setIdentificador(OntologiaMSG.BLISTERALMACENADO);
-							send.getParametros().add("true");
+							send.setIdentifier(MSGOntology.BLISTERALMACENADO);
+							send.getParameters().add("true");
 							_buzon.send(send);
 							_contexto.setEstadoInterno(EstateRobots.REPOSO);
 						}
@@ -179,8 +179,8 @@ public class Robot2  implements Notificable{
 							 * Enviar mensaje de pastel NO valido depositado
 							 */
 							MessageInterface send=new DefaultMessage();
-							send.setIdentificador(OntologiaMSG.BLISTERALMACENADO);
-							send.getParametros().add("false");
+							send.setIdentifier(MSGOntology.BLISTERALMACENADO);
+							send.getParameters().add("false");
 							_buzon.send(send);
 							_contexto.setEstadoInterno(EstateRobots.REPOSO);
 						}
@@ -190,7 +190,7 @@ public class Robot2  implements Notificable{
 			
 			// envia el mensaje de contexto
 			DefaultMessage mensajeSend=new DefaultMessage();
-			mensajeSend.setIdentificador(OntologiaMSG.ACTUALIZARCONTEXTOROBOT);
+			mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTOROBOT);
 			mensajeSend.setObject(_contexto);
 			_buzon.send(mensajeSend);
 		}
