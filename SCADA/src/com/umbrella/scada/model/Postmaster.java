@@ -66,14 +66,14 @@ public class Postmaster extends Thread {
 			try {
 				params = null;
 				MessageInterface msg = _clientMailBox.receiveBlocking();
-				System.out.println(msg.getIdentificador());
-				switch (msg.getIdentificador()) {
+				System.out.println(msg.getIdentifier());
+				switch (msg.getIdentifier()) {
 					case AUTOM_STATE: //TODO esto cambia todo
 						params = new ActionParams();
 						ape = ActionParamsEnum.STATE;
 						params.setParam(ape, ape.getEnclosedClass(), msg.getObject());
 						ape = ActionParamsEnum.MACHINE;
-						params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
+						params.setParam(ape, ape.getEnclosedClass(), msg.getParameters().get(0));
 						af.executeAction(ActionKey.UPDATE_STATE, params);
 						break;
 					case CAKE_DEPOT:
@@ -93,7 +93,7 @@ public class Postmaster extends Thread {
 						ape = ActionParamsEnum.ROBOT_CONTENT;
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						ape = ActionParamsEnum.MACHINE;
-						params.setParam(ape, ape.getEnclosedClass(), msg.getParametros().get(0));
+						params.setParam(ape, ape.getEnclosedClass(), msg.getParameters().get(0));
 						af.executeAction(ActionKey.UPDATE_ROBOT_CONTENT, params);
 						break;
 					case ACTUALIZARCONFIGURACION:

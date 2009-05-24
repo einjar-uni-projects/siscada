@@ -6,13 +6,13 @@ import java.util.LinkedList;
 
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
-import com.umbrella.autocommon.ContextoMaestro;
+import com.umbrella.autocommon.MasterContext;
 import com.umbrella.mail.message.DefaultMessage;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
-import com.umbrella.mail.message.OntologiaMSG;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.NombreMaquinas;
+import com.umbrella.utils.MachineNames;
 
 /**
  * 
@@ -22,13 +22,13 @@ import com.umbrella.utils.NombreMaquinas;
 public class ReceiveAutomaton3 extends Thread {
 
 	Postmaster _postmaster;
-	ContextoMaestro _masterContext;
+	MasterContext _masterContext;
 	Configuration _configutarion;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
-			_masterContext = ContextoMaestro.getInstance();
+			_masterContext = MasterContext.getInstance();
 			_configutarion = Configuration.getInstance();
 		} catch (RemoteException e1) {
 			// TODO: handle exception
@@ -47,16 +47,16 @@ public class ReceiveAutomaton3 extends Thread {
 			msg = _postmaster.reciveMessageAU3();
 			
 			if (msg != null) {
-				System.out.println("AU3 Recive: " + msg.getIdentificador());
-				switch (msg.getIdentificador()) {
+				System.out.println("AU3 Recive: " + msg.getIdentifier());
+				switch (msg.getIdentifier()) {
 				case ACTUALIZARCONTEXTO:
 					Context con_update_context = (Context) msg.getObject();
 					_masterContext.set_contextoAut3(con_update_context);
 					
 					//Se notifica del estado al SCADA
-					dm.setIdentificador(OntologiaMSG.AUTOM_STATE);
+					dm.setIdentifier(MSGOntology.AUTOM_STATE);
 					dm.setObject(!con_update_context.isApagado());
-					dm.getParametros().add("AU3");
+					dm.getParameters().add("AU3");
 					_postmaster.sendMessageSCADA(dm);
 					break;
 				}
@@ -74,13 +74,13 @@ public class ReceiveAutomaton3 extends Thread {
 			 * al inicio de la cinta
 			 */
 			if (context.getDispositivosInternos(_configutarion
-					.getPosicionAsociada(NombreMaquinas.INICIO))
+					.getPosicionAsociada(MachineNames.INICIO))
 					&& _masterContext.getContador() == 4) {
 
 				// comprobar q cabe en la cinta o ya esta hecho???
 
 				MessageInterface mensajeSend = new DefaultMessage();
-				mensajeSend.setIdentificador(OntologiaMSG.BLISTERCOMPLETO);
+				mensajeSend.setIdentifier(MSGOntology.BLISTERCOMPLETO);
 				_postmaster.sendMessageRB1(mensajeSend);
 			}
 
@@ -89,12 +89,12 @@ public class ReceiveAutomaton3 extends Thread {
 			 * sellado al final de la cinta
 			 */
 			if (context.getDispositivosInternos(
-					_configutarion.getPosicionAsociada(NombreMaquinas.FIN_3))) {
+					_configutarion.getPosicionAsociada(MachineNames.FIN_3))) {
 				MessageInterface mensajeSend = new DefaultMessage();
 				if (valido()) {
-					mensajeSend.setIdentificador(OntologiaMSG.BLISTERVALIDO);
+					mensajeSend.setIdentifier(MSGOntology.BLISTERVALIDO);
 				} else {
-					mensajeSend.setIdentificador(OntologiaMSG.BLISTERNOVALIDO);
+					mensajeSend.setIdentifier(MSGOntology.BLISTERNOVALIDO);
 				}
 				_postmaster.sendMessageRB1(mensajeSend);
 			}

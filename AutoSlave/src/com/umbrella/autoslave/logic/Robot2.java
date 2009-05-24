@@ -35,7 +35,7 @@ public class Robot2  implements Notifiable{
 	 * @param args
 	 */
 	public Robot2(){
-		_clock=new Clock();
+		_clock=Clock.getInstance();
 		_clock.start();
 		_clock.addNotificable(this);
 

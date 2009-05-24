@@ -9,9 +9,11 @@ public class Clock extends Thread{
 	
 	private long _clock=0;
 	//Context contexto=Context.getInstance();
-	Configuration configuracion=Configuration.getInstance();
-	long time=configuracion.get_tiempoReloj();
-	private final LinkedList<Notifiable> _lln = new LinkedList<Notifiable>();
+	private Configuration configuracion=Configuration.getInstance();
+	private long time=configuracion.get_tiempoReloj();
+	private LinkedList<Notifiable> _lln = new LinkedList<Notifiable>();
+	
+	private Object mutex = new Object();
 	
 	private static Clock INSTANCE = null;
 	
@@ -25,15 +27,20 @@ public class Clock extends Thread{
         }
     }
     
-    public static Clock getInstance() {
+    public synchronized static Clock getInstance() {
         if (INSTANCE == null) createInstance();
         return INSTANCE;
     }
     
-    public void addNotificable(Notifiable notificable){
-    	_lln.add(notificable);
+    public synchronized void addNotificable(Notifiable notificable){
+    	synchronized (mutex) {
+    		_lln.add(notificable);
+		}
     }
 	
+	private Clock() {
+	}
+
 	public void run(){
 		// Aqu� el c�digo pesado que tarda mucho
 		while(true){
@@ -50,8 +57,10 @@ public class Clock extends Thread{
 	}
 	
 	private void notifySignal(NotificableSignal signal) {
-		for (Notifiable n : _lln) {
-			n.notifyNoSyncJoy(signal);
+		synchronized (mutex) {
+			for (Notifiable n : _lln) {
+				n.notifyNoSyncJoy(signal);
+			}
 		}
 		
 	}

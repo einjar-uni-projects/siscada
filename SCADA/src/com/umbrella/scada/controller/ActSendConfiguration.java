@@ -2,7 +2,7 @@ package com.umbrella.scada.controller;
 
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.mail.message.DefaultMessage;
-import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.scada.model.Postmaster;
 
@@ -11,7 +11,7 @@ public class ActSendConfiguration implements Action {
 	@Override
 	public ActionResult execute() {
 		DefaultMessage dm = new DefaultMessage();
-		dm.setIdentificador(OntologiaMSG.ACTUALIZARCONFIGURACION);
+		dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
 		dm.setObject(_conf);
 		ActionResult ret = ActionResult.EXECUTE_FAIL;
 		try {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import com.umbrella.automaster.comm.Postmaster;
 import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
-import com.umbrella.mail.message.OntologiaMSG;
+import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.utils.properties.PropertyException;
 
 public class LaunchAutMaster {
@@ -43,7 +43,7 @@ public class LaunchAutMaster {
 
 	private void testSCADA() throws RemoteException, MalformedURLException, NotBoundException, PropertyException {
 		int option = 0;
-		OntologiaMSG om[] = OntologiaMSG.values();
+		MSGOntology om[] = MSGOntology.values();
 		Postmaster post = Postmaster.getInstance();
 		DefaultMessage dm = new DefaultMessage();
 		boolean error;
@@ -53,7 +53,7 @@ public class LaunchAutMaster {
 			showOptions(om);
 			option = readInt();
 			if(option >= 0){
-				dm.setIdentificador(om[option]);
+				dm.setIdentifier(om[option]);
 				switch (om[option]) {
 				case ACTUALIZARCONFIGURACION:
 					
@@ -95,7 +95,7 @@ public class LaunchAutMaster {
 					Boolean bol = readBoolean();
 					if(aut != null && bol != null){
 						dm.setObject(bol);
-						dm.getParametros().add(aut);
+						dm.getParameters().add(aut);
 					}else
 						error = true;
 					break;
@@ -198,7 +198,7 @@ public class LaunchAutMaster {
 					Integer state = readInt();
 					if(robot_content_machine != null && state != null){
 						dm.setObject(state);
-						dm.getParametros().add(robot_content_machine);
+						dm.getParameters().add(robot_content_machine);
 					}else
 						error = true;
 					break;
@@ -228,7 +228,7 @@ public class LaunchAutMaster {
 		return ret;
 	}
 
-	private void showOptions(OntologiaMSG[] om) {
+	private void showOptions(MSGOntology[] om) {
 		System.out.println("\nOpciones de mensaje:");
 		int i;
 		for (i = 0; i < om.length-1; i+=2) {
