@@ -6,7 +6,7 @@ import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notifiable;
 import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.utils.MachineNames;
-import com.umbrella.utils.Pastel;
+import com.umbrella.utils.Cake;
 import com.umbrella.utils.ThreadState;
 
 
@@ -94,7 +94,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 						 */
 						_remainderCakes--;
 						_context.incrementarNumPasteles();
-						_context.get_listaPasteles().add(new Pastel());
+						_context.get_listaPasteles().add(new Cake());
 						_context.setDispositivosInternos(getAssociatedPosition(), false);
 						if(_remainderCakes==0){
 							setThreadState(ThreadState.ESPERANDO);
