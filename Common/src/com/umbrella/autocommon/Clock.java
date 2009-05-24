@@ -2,7 +2,7 @@ package com.umbrella.autocommon;
 
 import java.util.LinkedList;
 
-import com.umbrella.autocommon.Notificable.NotificableSignal;
+import com.umbrella.autocommon.Notifiable.NotificableSignal;
 
 
 public class Clock extends Thread{
@@ -11,7 +11,7 @@ public class Clock extends Thread{
 	//Context contexto=Context.getInstance();
 	Configuration configuracion=Configuration.getInstance();
 	long time=configuracion.get_tiempoReloj();
-	private final LinkedList<Notificable> _lln = new LinkedList<Notificable>();
+	private final LinkedList<Notifiable> _lln = new LinkedList<Notifiable>();
 	
 	private static Clock INSTANCE = null;
 	
@@ -30,7 +30,7 @@ public class Clock extends Thread{
         return INSTANCE;
     }
     
-    public void addNotificable(Notificable notificable){
+    public void addNotificable(Notifiable notificable){
     	_lln.add(notificable);
     }
 	
@@ -50,7 +50,7 @@ public class Clock extends Thread{
 	}
 	
 	private void notifySignal(NotificableSignal signal) {
-		for (Notificable n : _lln) {
+		for (Notifiable n : _lln) {
 			n.notifyNoSyncJoy(signal);
 		}
 		

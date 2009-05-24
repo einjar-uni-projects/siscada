@@ -1,6 +1,6 @@
 package com.umbrella.autocommon;
 
-public interface Notificable {
+public interface Notifiable {
 	public enum NotificableSignal{
 		CLOCK_SIGNAL;
 	}
