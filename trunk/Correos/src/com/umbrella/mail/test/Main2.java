@@ -44,7 +44,7 @@ public class Main2 {
 
 				/* Para acceder a los atributos, importante hacer el casting. */
 				System.out.println("Recibido: "
-						+ ((MessagePrueba1) message).getVarString());
+						+ ((TestMessage1) message).getVarString());
 
 			} catch (Exception e) {
 				System.out

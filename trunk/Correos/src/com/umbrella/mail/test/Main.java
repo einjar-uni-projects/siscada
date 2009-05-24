@@ -47,15 +47,15 @@ public class Main {
 			 * entero, una cadena y un booleano, pero se le pueden poner todos
 			 * los atributos que se necesiten.
 			 */
-			MessageInterface messagePrueba = new MessagePrueba1();
+			MessageInterface messagePrueba = new TestMessage1();
 
 			/*
 			 * Le damos el valor que queramos a los atributos. Importante hacer
 			 * el casting.
 			 */
-			((MessagePrueba1) messagePrueba).setVarInteger(23);
-			((MessagePrueba1) messagePrueba).setVarString("Mensaje de prueba");
-			((MessagePrueba1) messagePrueba).setVarBoolean(true);
+			((TestMessage1) messagePrueba).setVarInteger(23);
+			((TestMessage1) messagePrueba).setVarString("Mensaje de prueba");
+			((TestMessage1) messagePrueba).setVarBoolean(true);
 
 			/*
 			 * El metodo enviar devuelve true si se ha enviado correctamente, es
