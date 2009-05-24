@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.umbrella.autocommon.Configuration;
 
-public class Pastel implements Serializable {
+public class Cake implements Serializable {
 
 	/*
 	 * posicion del pastel medida en CM
@@ -15,7 +15,7 @@ public class Pastel implements Serializable {
 	
 	private Configuration configuracion=Configuration.getInstance();
 	
-	public Pastel(){
+	public Cake(){
 		_posicion=configuracion.getPosBizc();
 		_caramelo=false;
 		_chocolate=false;

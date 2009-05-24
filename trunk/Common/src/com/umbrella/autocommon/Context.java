@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 import com.umbrella.utils.Blister;
-import com.umbrella.utils.Pastel;
+import com.umbrella.utils.Cake;
 
 
 public class Context implements Serializable{
@@ -21,7 +21,7 @@ public class Context implements Serializable{
 	 */
 	private String tipo;
 	
-	private LinkedList<Pastel> _listaPasteles;
+	private LinkedList<Cake> _listaPasteles;
 	private LinkedList<Blister> _listaBlister;
 	
 	private boolean apagado=true;
@@ -73,7 +73,7 @@ public class Context implements Serializable{
     	}
     	this.tipo=tipo;
     	if(tipo.equalsIgnoreCase("pastel"))
-    		_listaPasteles=new LinkedList<Pastel>();
+    		_listaPasteles=new LinkedList<Cake>();
     	else if(tipo.equalsIgnoreCase("blister"))
     		_listaBlister=new LinkedList<Blister>();
     	else
@@ -181,7 +181,7 @@ public class Context implements Serializable{
 		return tipo;
 	}
 
-	public synchronized LinkedList<Pastel> get_listaPasteles() {
+	public synchronized LinkedList<Cake> get_listaPasteles() {
 		return _listaPasteles;
 	}
 
