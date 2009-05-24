@@ -2,7 +2,7 @@ package com.umbrella.autocommon;
 
 import java.io.Serializable;
 
-public class ContextoMaestro implements Serializable{
+public class MasterContext implements Serializable{
 
 	/*
 	 * tiene informacion de los automatas q estan ejecutandose
@@ -34,7 +34,7 @@ public class ContextoMaestro implements Serializable{
 	
 	private String _emptyMachine;
 	
-	private static ContextoMaestro INSTANCE=null;
+	private static MasterContext INSTANCE=null;
 	
 	private Context _contextoAut1;
 	private Context _contextoAut2;
@@ -42,7 +42,7 @@ public class ContextoMaestro implements Serializable{
 	private ContextoRobot _contextoRobot1;
 	private ContextoRobot _contextoRobot2;
 	
-	private ContextoMaestro(){
+	private MasterContext(){
 		ejecutando = new boolean[5];
 		for(int i=5;i<ejecutando.length;i++) ejecutando[i]=false;
 		contadorCalidadSensor=new int[4];
@@ -56,8 +56,8 @@ public class ContextoMaestro implements Serializable{
 		_contextoRobot2=ContextoRobot.getInstance();
 	}
 	
-	public synchronized static ContextoMaestro getInstance(){
-		if(INSTANCE==null) INSTANCE=new ContextoMaestro();
+	public synchronized static MasterContext getInstance(){
+		if(INSTANCE==null) INSTANCE=new MasterContext();
 		return INSTANCE;
 	}
 	
@@ -128,7 +128,7 @@ public class ContextoMaestro implements Serializable{
 		contadorPasteles=contadorPasteles%5; // xq van del 0 al 4 ambos inlcuidos
 	}
 	
-	public ContextoMaestro getINSTANCE() {
+	public MasterContext getINSTANCE() {
 		return INSTANCE;
 	}
 
