@@ -18,12 +18,12 @@ import com.umbrella.mail.message.MSGOntology;
  *
  * @author l012g412
  */
-public class MessagePrueba2 implements MessageInterface{
+public class TestMessage2 implements MessageInterface{
     
     String cadena;
     
     /** Creates a new instance of MessagePrueba2 */
-    public MessagePrueba2() {
+    public TestMessage2() {
     }
 
 	@Override
