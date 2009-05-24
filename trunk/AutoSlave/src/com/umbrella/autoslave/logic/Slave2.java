@@ -7,6 +7,7 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notificable.NotificableSignal;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
@@ -328,7 +329,7 @@ public class Slave2 implements Notificable {
 	}
 	
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 

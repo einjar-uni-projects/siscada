@@ -3,6 +3,7 @@ package com.umbrella.autoslave.executor;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notificable;
+import com.umbrella.autocommon.Notificable.NotificableSignal;
 import com.umbrella.utils.NombreMaquinas;
 import com.umbrella.utils.ThreadState;
 
@@ -51,7 +52,7 @@ public class TimeMachine extends Thread implements Notificable {
 		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
 		while(((System.currentTimeMillis()-tiempoActual)*1000)<this._executionTime){
 			/*
-			 *  espero a que el reloj envie la seï¿½al de Click, cuando se envie el click se comprobarï¿½
+			 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
 			 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
 			 *  
 			 *  da informacion false entre el verdadero tiempo de ejecucion de la maquina dispensadora 
@@ -133,7 +134,7 @@ public class TimeMachine extends Thread implements Notificable {
 	}
 	
 	@Override
-	public void notifyNoSyncJoy() {
+	public void notifyNoSyncJoy(NotificableSignal signal) {
 		notifyJoy();
 	}
 
