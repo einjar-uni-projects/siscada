@@ -40,7 +40,7 @@ public class ConveyorBeltExit extends Thread implements Notificable{
 		setAssociatedPosition(associatedPosition);
 		this._type=type;
 		_clock=Clock.getInstance();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 	}
 
 	@Override

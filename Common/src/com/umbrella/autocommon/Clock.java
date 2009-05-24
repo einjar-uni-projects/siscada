@@ -1,5 +1,9 @@
 package com.umbrella.autocommon;
 
+import java.util.LinkedList;
+
+import com.umbrella.autocommon.Notificable.NotificableSignal;
+
 
 public class Clock extends Thread{
 	
@@ -7,7 +11,7 @@ public class Clock extends Thread{
 	//Context contexto=Context.getInstance();
 	Configuration configuracion=Configuration.getInstance();
 	long time=configuracion.get_tiempoReloj();
-	private Notificable _notificable;
+	private final LinkedList<Notificable> _lln = new LinkedList<Notificable>();
 	
 	private static Clock INSTANCE = null;
 	
@@ -26,8 +30,8 @@ public class Clock extends Thread{
         return INSTANCE;
     }
     
-    public void setNotificable(Notificable notificable){
-    	_notificable = notificable;
+    public void addNotificable(Notificable notificable){
+    	_lln.add(notificable);
     }
 	
 	public void run(){
@@ -36,14 +40,22 @@ public class Clock extends Thread{
 			try {
 				sleep(time);
 				_clock++;
-				if(_notificable != null)
-					_notificable.notifyNoSyncJoy();
+				if(_lln != null)
+					notifySignal(NotificableSignal.CLOCK_SIGNAL);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
+	
+	private void notifySignal(NotificableSignal signal) {
+		for (Notificable n : _lln) {
+			n.notifyNoSyncJoy(signal);
+		}
+		
+	}
+
 	public synchronized long getClock(){
 		return _clock;
 	}

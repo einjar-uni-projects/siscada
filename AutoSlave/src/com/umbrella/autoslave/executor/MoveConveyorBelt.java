@@ -47,7 +47,7 @@ public class MoveConveyorBelt extends Thread implements Notificable{
 		setSpaceElapsedByClick(getConveyorBeltSpeedByMilisecond()*configuration.get_tiempoReloj());
 		setAssociatedPosition(associatedPosition);
 		_clock=Clock.getInstance();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 	}
 
 	/*

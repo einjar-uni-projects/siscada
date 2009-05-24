@@ -39,7 +39,7 @@ public class Robot1 implements Notificable{
 	public Robot1(){
 		_clock=new Clock();
 		_clock.start();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 
 		try {
 			pfmodel = PropertiesFile.getInstance();

@@ -40,7 +40,7 @@ public class TimeMachine extends Thread implements Notificable {
 		setThreadState(ThreadState.CREADO);
 		setAssociatedPosition(associatedPosition);
 		_clock=Clock.getInstance();
-		_clock.setNotificable(this);
+		_clock.addNotificable(this);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class TimeMachine extends Thread implements Notificable {
 		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
 		while(((System.currentTimeMillis()-tiempoActual)*1000)<this._executionTime){
 			/*
-			 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
+			 *  espero a que el reloj envie la seï¿½al de Click, cuando se envie el click se comprobarï¿½
 			 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
 			 *  
 			 *  da informacion false entre el verdadero tiempo de ejecucion de la maquina dispensadora 
