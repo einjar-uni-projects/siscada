@@ -135,7 +135,7 @@ public class MainFrame implements UpdatableInterface{
 			_rightPanel.add(_attributePanels[5], "5");
 			
 			_rightLayout.show(_rightPanel, "0");
-			_rightPanel.setPreferredSize(_attributePanels[0].getPreferredSize());
+			_rightPanel.setPreferredSize(_attributePanels[0].getMinimumSize());
 		}
 		return _rightPanel;
 	}
@@ -371,10 +371,14 @@ public class MainFrame implements UpdatableInterface{
 		_actualAttributePanel = _attributePanels[card];
 		_actualAttributePanel.refreshData();
 		_rightLayout.show(_rightPanel, ""+card);
-		Dimension d = _actualAttributePanel.getPreferredSize();
-		d.height+=10;
-		d.width+=10;
-		_rightPanel.setPreferredSize(d);
+		if(card != 0){
+			Dimension d = _attributePanels[4].getPreferredSize();
+			d.height+=10;
+			d.width+=10;
+			_rightPanel.setPreferredSize(d);
+		}else{
+			_rightPanel.setPreferredSize(_actualAttributePanel.getMinimumSize());
+		}
 	}
 
 	/**

@@ -25,7 +25,7 @@ public class MainFrameModel implements Updatable {
 	
 	private int[] _pasteles = new int[7];
 	private int[] _blisters = new int[5];
-	private int[] _paquetes = new int[4];
+	private int[] _paquetes = new int[5];
 	
 	private double _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
 	
@@ -353,6 +353,7 @@ public class MainFrameModel implements Updatable {
 		_paquetes[1] = 6;
 		_paquetes[2] = 6;
 		_paquetes[3] = 6;
+		_paquetes[4] = 1;
 		return _paquetes;
 	}
 
