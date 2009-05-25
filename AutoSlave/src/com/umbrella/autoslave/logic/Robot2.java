@@ -226,7 +226,7 @@ public synchronized void guardedJoy2() {
 }
 
 @Override
-public void notifyNoSyncJoy2(String machine) {
+public void notifyNoSyncJoy2() {
 
 }
 

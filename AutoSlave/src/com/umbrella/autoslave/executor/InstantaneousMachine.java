@@ -46,7 +46,9 @@ public class InstantaneousMachine extends Thread implements Notifiable{
 	
 	@Override
 	public void run(){
-		while(!context.isApagado()){
+		while(!context.isFIN()){
+			pauseJoy2();
+			guardedJoy2();
 			setThreadState(ThreadState.EJECUTANDO);
 			context.setDispositivosInternos(_associatedPosition, true);
 
@@ -55,10 +57,8 @@ public class InstantaneousMachine extends Thread implements Notifiable{
 
 			// espera un ciclo de reloj para cambiar el estado de la maquina
 			context.setDispositivosInternos(_associatedPosition, false);
-			pauseJoy2();
-			guardedJoy2();
+			setThreadState(ThreadState.ACABADO);
 		}
-		setThreadState(ThreadState.ACABADO);
 	}
 
 	/**
@@ -134,15 +134,13 @@ public class InstantaneousMachine extends Thread implements Notifiable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
-		notifyJoy2(machine);
+	public void notifyNoSyncJoy2() {
+		notifyJoy2();
 	}
 
-	public synchronized void notifyJoy2(String machine) {
-		if(machine.equals(MachineNames.DISPENSADORA.getName())){
-			_joy2 = true;
-			notifyAll();
-		}
+	public synchronized void notifyJoy2() {
+		_joy2 = true;
+		notifyAll();
 	}
 
 	public synchronized void pauseJoy2() {

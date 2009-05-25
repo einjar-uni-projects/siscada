@@ -55,17 +55,18 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 	 */
 	@Override
 	public void run(){
-		while(!context.isApagado()){
+		while(!context.isFIN()){
 			/*
 			 * si se ejecuta la cinta 1 vez la cinta se desplaza minimo una cantidad X, suponemos q eso es siempre superior a un click
 			 */
 			_threadState=ThreadState.EJECUTANDO;
-
+System.out.println("intenta mover la cinta - MOVERCINTA");
 			/*
 			 * nos dice si algun sensor se va a encender
 			 * se da el valor False xq al menos tiene q dar el salto una vez
 			 */
 			if(context.getTipo().equalsIgnoreCase("blister")){
+System.out.println("intenta mover la cinta DE BLISTER - MOVERCINTA");
 				for(int i=0;i<context.get_listaBlister().size();i++){
 					if((context.get_listaBlister().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
 						context.get_listaBlister().get(i).incrementarPosicion(spaceElapsedByClick);
@@ -75,6 +76,7 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 					}
 				}
 			}else{
+System.out.println("intenta mover la cinta DE PASTELES - MOVERCINTA");
 				for(int i=0;i<context.get_listaPasteles().size();i++){
 					if((context.get_listaPasteles().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
 						context.get_listaPasteles().get(i).incrementarPosicion(spaceElapsedByClick);
@@ -217,15 +219,13 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
-		notifyJoy2(machine);
+	public void notifyNoSyncJoy2() {
+		notifyJoy2();
 	}
 
-	public synchronized void notifyJoy2(String machine) {
-		if(machine.equals(MachineNames.DISPENSADORA.getName())){
+	public synchronized void notifyJoy2() {
 			_joy2 = true;
 			notifyAll();
-		}
 	}
 
 	public synchronized void pauseJoy2() {

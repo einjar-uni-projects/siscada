@@ -304,7 +304,7 @@ public class Robot1 implements Notifiable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
+	public void notifyNoSyncJoy2() {
 	}
 
 	public synchronized void notifyJoy2() {
