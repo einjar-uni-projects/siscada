@@ -72,6 +72,11 @@ public class Slave2 implements Notifiable {
 			_troqueladora=new InstantaneousMachine(configuracion.getPosTroqueladora(),
 					configuracion.getPosicionAsociada(MachineNames.TROQUELADORA));
 			
+			_moverCinta.start();
+			_salBlister.start();
+			_cortadora.start();
+			_troqueladora.start();
+			
 			try {
 				pfmodel = PropertiesFile.getInstance();
 				PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
@@ -96,7 +101,6 @@ public class Slave2 implements Notifiable {
 			/*
 			 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
 			 */
-
 			MessageInterface mensaje=null;
 
 			do{

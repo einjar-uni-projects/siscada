@@ -57,7 +57,7 @@ public class TimeMachine extends Thread implements Notifiable {
 if(debug) System.out.println("ejecuta la maquina temporal - TIMEMACHINE");			
 			context.setDispositivosInternos(getAssociatedPosition(), true);
 			double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
-			while(((System.currentTimeMillis()-tiempoActual)*1000)<this._executionTime){
+			while((System.currentTimeMillis()-tiempoActual)<(this._executionTime*1000)){
 				/*
 				 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
 				 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
