@@ -114,7 +114,7 @@ public class Configuration implements Serializable {
 	 */
 	private double posBizc=sizeBizcocho/2;
 	
-	private double posTroqueladora=sizeCintaAut2*1/3;
+	private double posTroqueladora=sizeBlister/2;
 	private double posCortadora=posTroqueladora+sizeBlister;
 	
 	

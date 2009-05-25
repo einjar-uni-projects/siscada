@@ -1,5 +1,6 @@
 package com.umbrella.utils;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -25,7 +26,7 @@ public class OutputSerializable {
 			try {
 				this.openConfiguracionMaestro();
 			}
-			catch(IOException ioe) {
+			catch(Exception e) {
 				System.out.println("ERROR AL ESCRIBIR EL FICHERO DE CONFIGURACION MAESTRO");
 			} 
 		}
@@ -46,9 +47,21 @@ public class OutputSerializable {
 		return true;
 	}
 	
-	public boolean openConfiguracionMaestro() throws IOException {
-		_file = new FileOutputStream("configuracionMaestro.ser");
-		_output = new ObjectOutputStream(_file);
+	public boolean openConfiguracionMaestro() {
+		try {
+			_file = new FileOutputStream("configuracionMaestro.ser");
+		}
+		catch (FileNotFoundException fnfe) {
+			// TODO: handle exception
+			System.out.println("Fichero no encontrado");
+		}
+		try {
+			_output = new ObjectOutputStream(_file);
+		}
+		catch (IOException ioe) {
+			// TODO: handle exception
+			System.out.println("Error de apertura de fichero");
+		}
 		return true;
 	}
 	

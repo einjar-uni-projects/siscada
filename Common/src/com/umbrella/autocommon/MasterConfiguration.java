@@ -10,7 +10,9 @@ package com.umbrella.autocommon;
 
 import java.io.Serializable;
 
+import com.umbrella.utils.InputSerializable;
 import com.umbrella.utils.MachineNames;
+import com.umbrella.utils.OutputSerializable;
 
 
 
@@ -454,9 +456,33 @@ public class MasterConfiguration implements Serializable {
 	}
 
 	public static synchronized MasterConfiguration getINSTANCE() {
+		if (INSTANCE==null)
+			INSTANCE=new MasterConfiguration();
 		return INSTANCE;
 	}
 
+	private MasterConfiguration() {
+		this.refresh();
+		//refresh
+		//metodo que cargue las properties del fichero
+	}
+	
+	public void refresh() {
+		InputSerializable is = new InputSerializable();
+		is.openConfiguracionMaestro();
+		is.readMasterConfiguration();
+		is.close();
+	}
+
+	//save
+	//guardar en fichero de properties
+	public void save() {
+		OutputSerializable os = new OutputSerializable(this);
+		os.openConfiguracionMaestro();
+		os.write(this);
+		os.close();
+	}
+	
 	public static synchronized void setINSTANCE(MasterConfiguration instance) {
 		INSTANCE = instance;
 	}
