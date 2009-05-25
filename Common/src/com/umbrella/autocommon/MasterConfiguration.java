@@ -8,6 +8,9 @@ package com.umbrella.autocommon;
  * 			el automata y reiniciando los valores
  */
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 
 import com.umbrella.utils.InputSerializable;
@@ -463,6 +466,12 @@ public class MasterConfiguration implements Serializable {
 
 	private MasterConfiguration() {
 		//si el fichero existe, se carga
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(".\\configuracionMaestro.ser"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//si el fichero no existe, se guarda
 		this.refresh();
 		//refresh
