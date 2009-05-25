@@ -37,6 +37,8 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 	private boolean _joy2 = true;
 	private  Clock _clock;
 	
+	//TODO debug interno propio
+	private boolean debug=false;
 	/**
 	 * @param position posicion que ocupa en la cinta
 	 * @param associatedPosition el numero que ocupa en la cadena de 16 bits
@@ -82,7 +84,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 							// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
 							pauseJoy();
 							guardedJoy();
-System.out.println("despierta del wait - DISPENSADORA");
+if(debug) System.out.println("despierta del wait - DISPENSADORA");
 							/*
 							 * SE SUPONE Q ESTE IF ES INNECESARIO
 							 * si en la posicion donde esta la dispensadora no hay bizcocho
@@ -90,7 +92,7 @@ System.out.println("despierta del wait - DISPENSADORA");
 							 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
 							 */
 
-System.out.println("entra en el if de la dispensadora de si tengo espacio  - DISPENSADORA");					
+if(debug) System.out.println("entra en el if de la dispensadora de si tengo espacio  - DISPENSADORA");					
 							_context.setDispositivosInternos(getAssociatedPosition(), true);
 							/*
 							 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio

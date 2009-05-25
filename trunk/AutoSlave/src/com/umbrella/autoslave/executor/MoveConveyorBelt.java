@@ -37,6 +37,9 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 	
 	private double conveyorBeltSpeed;
 
+	//TODO debug interno propio
+	private boolean debug=false;
+	
 	/**
 	 * @param speed
 	 * @param associatedPosition
@@ -60,13 +63,13 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 			 * si se ejecuta la cinta 1 vez la cinta se desplaza minimo una cantidad X, suponemos q eso es siempre superior a un click
 			 */
 			_threadState=ThreadState.EJECUTANDO;
-System.out.println("intenta mover la cinta - MOVERCINTA");
+if(debug) System.out.println("intenta mover la cinta - MOVERCINTA");
 			/*
 			 * nos dice si algun sensor se va a encender
 			 * se da el valor False xq al menos tiene q dar el salto una vez
 			 */
 			if(context.getTipo().equalsIgnoreCase("blister")){
-System.out.println("intenta mover la cinta DE BLISTER - MOVERCINTA");
+if(debug) System.out.println("intenta mover la cinta DE BLISTER - MOVERCINTA");
 				for(int i=0;i<context.get_listaBlister().size();i++){
 					if((context.get_listaBlister().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
 						context.get_listaBlister().get(i).incrementarPosicion(spaceElapsedByClick);
@@ -76,7 +79,7 @@ System.out.println("intenta mover la cinta DE BLISTER - MOVERCINTA");
 					}
 				}
 			}else{
-System.out.println("intenta mover la cinta DE PASTELES - MOVERCINTA");
+if(debug) System.out.println("intenta mover la cinta DE PASTELES - MOVERCINTA");
 				for(int i=0;i<context.get_listaPasteles().size();i++){
 					if((context.get_listaPasteles().get(i).get_posicion()+spaceElapsedByClick)<=configuration.getSizeCinta())
 						context.get_listaPasteles().get(i).incrementarPosicion(spaceElapsedByClick);

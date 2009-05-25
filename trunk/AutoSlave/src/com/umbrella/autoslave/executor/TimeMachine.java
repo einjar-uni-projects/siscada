@@ -29,6 +29,9 @@ public class TimeMachine extends Thread implements Notifiable {
 	private ThreadState _threadState;
 	
 	private Context context=Context.getInstance();
+
+	//TODO debug interno propio
+	private boolean debug=false;
 	
 	/**
 	 * @param executionTime
@@ -51,6 +54,7 @@ public class TimeMachine extends Thread implements Notifiable {
 			guardedJoy2();
 			
 			setThreadState(ThreadState.EJECUTANDO);
+if(debug) System.out.println("ejecuta la maquina temporal - TIMEMACHINE");			
 			context.setDispositivosInternos(getAssociatedPosition(), true);
 			double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
 			while(((System.currentTimeMillis()-tiempoActual)*1000)<this._executionTime){
@@ -68,6 +72,7 @@ public class TimeMachine extends Thread implements Notifiable {
 			context.setDispositivosInternos(getAssociatedPosition(), false);
 			//se ha echado el caramelo en el bizcocho	
 			setThreadState(ThreadState.ACABADO);
+if(debug) System.out.println("acaba la ejecucion de la maquina temporal - TIMEMACHINE");
 		}
 	}
 	
