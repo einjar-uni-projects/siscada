@@ -14,7 +14,7 @@ public class InputSerializable {
 	
 	public void openConfiguracion()  {
 		try {
-			_file = new FileInputStream("configuracion.ser");
+			_file = new FileInputStream(".\\configuracion.ser");
 		} catch (FileNotFoundException e) {
 			System.out.println("NO SE ENCUENTRA EL FICHERO CONFIGURACION PARA LEER");
 		}
@@ -27,7 +27,7 @@ public class InputSerializable {
 	
 	public void openConfiguracionMaestro() {
 		try {
-			_file = new FileInputStream("configuracionMaestro.ser");
+			_file = new FileInputStream(".\\configuracionMaestro.ser");
 		} catch (FileNotFoundException e) {
 			System.out.println("NO SE ENCUENTRA EL FICHERO CONFIGURACION MAESTRO PARA LEER");
 		}

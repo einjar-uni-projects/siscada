@@ -462,6 +462,8 @@ public class MasterConfiguration implements Serializable {
 	}
 
 	private MasterConfiguration() {
+		//si el fichero existe, se carga
+		//si el fichero no existe, se guarda
 		this.refresh();
 		//refresh
 		//metodo que cargue las properties del fichero

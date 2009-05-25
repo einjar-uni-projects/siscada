@@ -42,14 +42,14 @@ public class OutputSerializable {
 	}
 	
 	public boolean openConfiguracion() throws IOException {
-		_file = new FileOutputStream("configuracion.ser");
+		_file = new FileOutputStream(".\\configuracion.ser");
 		_output = new ObjectOutputStream(_file);
 		return true;
 	}
 	
 	public boolean openConfiguracionMaestro() {
 		try {
-			_file = new FileOutputStream("configuracionMaestro.ser");
+			_file = new FileOutputStream(".\\configuracionMaestro.ser");
 		}
 		catch (FileNotFoundException fnfe) {
 			// TODO: handle exception
