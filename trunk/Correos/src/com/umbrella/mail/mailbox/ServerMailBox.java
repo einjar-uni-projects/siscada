@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 public class ServerMailBox {
+	public static final String _keepAlive="/KA";
+	
 	public static final String _reciveSCADAName = "reciveSCADABox";
 	public static final String _sendSCADAName = "sendSCADABox";
 	
@@ -56,6 +58,31 @@ public class ServerMailBox {
 		servidor.registerObject(queue, _reciveAU3Name, port);
 		queue = new MessageQueue();
 		servidor.registerObject(queue, _sendAU3Name, port);
+		//Se activan los keepAlive
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _reciveSCADAName+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _sendSCADAName+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _reciveR1Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _sendR1Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _reciveR2Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _sendR2Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _reciveAU1Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _sendAU1Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _reciveAU2Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _sendAU2Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _reciveAU3Name+_keepAlive, port);
+		queue = new MessageQueue();
+		servidor.registerObject(queue, _sendAU3Name+_keepAlive, port);
 	}
 
 }
