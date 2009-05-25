@@ -300,8 +300,10 @@ System.out.println("llega 5 - SLAVE 1");
 		}else{
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CARAMELO), false);
 		}
+		/*if(contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 && 
+				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE))){*/
 		if(contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE))){
+				!contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.getPosition())).is_chocolate()){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE), true);
 			salida=true;
 		}else{
@@ -348,21 +350,26 @@ System.out.println("llega 5 - SLAVE 1");
 		if(tipo.equals(NombreMaquinas.DISPENSADORA))
 			if(!ejecutandoAlgo(NombreMaquinas.DISPENSADORA) && contexto.activaSensor(_dispensadora.get_posicion())>=0) salida=true;
 		*/
-		if(tipo.equals(MachineNames.CHOCOLATE))
+		if(tipo.equals(MachineNames.CHOCOLATE)){
 			if(!ejecutandoAlgo(MachineNames.CHOCOLATE) && 
 					contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 &&
 						!contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.getPosition())).is_chocolate())
 							salida=true;
+		}
 		/*&&
 		!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CHOCOLATE))) salida=true;*/
-		if(tipo.equals(MachineNames.CARAMELO))
+		if(tipo.equals(MachineNames.CARAMELO)){
 			if(!ejecutandoAlgo(MachineNames.CARAMELO) && 
 					contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CARAMELO))) salida=true;
-		if(tipo.equals(MachineNames.FIN_1))
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CARAMELO))) 
+				salida=true;
+		}
+		if(tipo.equals(MachineNames.FIN_1)){
 			if(!ejecutandoAlgo(MachineNames.FIN_1) && 
 					contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))) salida=true;
+					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))) 
+				salida=true;
+		}
 		return salida;
 	}
 	/**
