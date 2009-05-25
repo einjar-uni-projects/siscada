@@ -2,6 +2,8 @@ package com.umbrella.automaster.comm;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
@@ -11,6 +13,8 @@ import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertyException;
+import com.umbrella.utils.Blister;
+import com.umbrella.utils.Cake;
 import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.RobotStates;
 
@@ -23,13 +27,13 @@ public class ReceiveAutomaton2 extends Thread {
 
 	Postmaster _postmaster;
 	MasterContext _masterContext;
-	Configuration _configutarion;
+	Configuration _configuration;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
 			_masterContext = MasterContext.getInstance();
-			_configutarion = Configuration.getInstance();
+			_configuration = Configuration.getInstance();
 		} catch (RemoteException e1) {
 			// TODO: handle exception
 		} catch (MalformedURLException e2) {
@@ -58,6 +62,14 @@ public class ReceiveAutomaton2 extends Thread {
 					dm.setObject(!con_update_context.isApagado());
 					dm.getParameters().add("AU2");
 					_postmaster.sendMessageSCADA(dm);
+					
+					// Se notifican los pasteles en la cinta
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.AU2_BLISTER_POS);
+					dm.setObject(getListaBlisters(con_update_context.get_listaBlister()));
+					dm.getParameters().add("AU2");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				}
 			}
@@ -73,9 +85,9 @@ public class ReceiveAutomaton2 extends Thread {
 		ContextoRobot contextr1 = _masterContext.get_contextoRobot1();
 		Context contexta3 = _masterContext.get_contextoAut3();
 		if (context != null && contextr1 != null && contexta3 != null) {
-			if (context.getDispositivosInternos(_configutarion.getPosicionAsociada(MachineNames.FIN_3))
+			if (context.getDispositivosInternos(_configuration.getPosicionAsociada(MachineNames.FIN_3))
 					&& contextr1.getEstadoInterno().equals(RobotStates.REPOSO)
-					&& !contexta3.getDispositivosInternos(_configutarion.getPosicionAsociada(MachineNames.INICIO))) {
+					&& !contexta3.getDispositivosInternos(_configuration.getPosicionAsociada(MachineNames.INICIO))) {
 				MessageInterface mensajeSend = new DefaultMessage();
 				mensajeSend.setIdentifier(MSGOntology.BLISTERLISTO);
 				_postmaster.sendMessageRB1(mensajeSend);
@@ -85,4 +97,29 @@ public class ReceiveAutomaton2 extends Thread {
 
 		}
 	}
+	
+	private synchronized ArrayList<Integer> getListaBlisters(LinkedList<Blister> lista) {
+
+		ArrayList<Integer> salida = new ArrayList<Integer>(5);
+		for (int i = 0; i < 5; i++) {
+			salida.add(i, 0);
+		}
+		
+		for(int i=0;i<lista.size();i++){
+			double pos=lista.get(i).get_posicion();
+			if( pos<(_configuration.getPosTroqueladora()+_configuration.getSizeBlister()/2) ){
+				salida.set(0, salida.get(0)+1);
+			}else if(pos<(_configuration.getPosCortadora()-_configuration.getSizeBlister()/2)){
+				salida.set(1, salida.get(1)+1);
+			}else if(pos<(_configuration.getPosCortadora()+_configuration.getSizeBlister()/2)){
+				salida.set(2, salida.get(2)+1);
+			}else if(pos<(_configuration.getPosFinAut2()-_configuration.getSizeBlister()/2)){
+				salida.set(3, salida.get(3)+1);
+			}else if(pos<(_configuration.getPosFinAut2()+_configuration.getSizeBlister()/2)){
+				salida.set(4, salida.get(4)+1);
+			}
+		}
+		return salida;
+	}
+	
 }
