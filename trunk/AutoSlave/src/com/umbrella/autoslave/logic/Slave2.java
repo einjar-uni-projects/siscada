@@ -43,7 +43,6 @@ public class Slave2 implements Notifiable {
 
 	private  PropertiesFile pfmodel;
 	private boolean _joy = true;
-	private Notifiable[] _notificable;
 
 	public Slave2(){
 		for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,false);
@@ -72,12 +71,6 @@ public class Slave2 implements Notifiable {
 					configuracion.getPosicionAsociada(MachineNames.CORTADORA));
 			_troqueladora=new InstantaneousMachine(configuracion.getPosTroqueladora(),
 					configuracion.getPosicionAsociada(MachineNames.TROQUELADORA));
-
-			_notificable=new Notifiable[4];
-			this.setNotificable(0, _troqueladora);
-			this.setNotificable(1, _cortadora);
-			this.setNotificable(2, _salBlister);
-			this.setNotificable(3, _moverCinta);
 			
 			try {
 				pfmodel = PropertiesFile.getInstance();
@@ -173,21 +166,21 @@ public class Slave2 implements Notifiable {
 						hayEspacio();
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 							//_moverCinta.run();
-							if(_notificable[3] != null)
-								getNotificabe(3).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
+							if(_moverCinta != null)
+								_moverCinta.notifyNoSyncJoy2();
 						}else{
 							seEnciendeSensor();
 
 							if(puedoUsar(MachineNames.CORTADORA) ){
 								//_cortadora.run();
-								if(_notificable[1] != null)
-									getNotificabe(1).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
+								if(_cortadora != null)
+									_cortadora.notifyNoSyncJoy2();
 								contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _cortadora.getPosition())).set_cortado(true);
 							}
 							if(puedoUsar(MachineNames.TROQUELADORA) ){
 								//_troqueladora.run();
-								if(_notificable[0] != null)
-									getNotificabe(0).notifyNoSyncJoy2(MachineNames.CHOCOLATE.getName());
+								if(_troqueladora != null)
+									_troqueladora.notifyNoSyncJoy2();
 								contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _troqueladora.getPosition())).set_troquelado(true);
 							}
 						}
@@ -195,8 +188,8 @@ public class Slave2 implements Notifiable {
 
 					if(puedoUsar(MachineNames.FIN_2)){
 						//_salBlister.start();
-						if(_notificable[2] != null)
-							getNotificabe(2).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
+						if(_salBlister != null)
+							_salBlister.notifyNoSyncJoy2();
 					}
 					/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
 					for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
@@ -346,7 +339,7 @@ public class Slave2 implements Notifiable {
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
+	public void notifyNoSyncJoy2() {
 	}
 
 	public synchronized void notifyJoy2() {
@@ -378,10 +371,4 @@ public class Slave2 implements Notifiable {
 		}
 	}
 
-	public void setNotificable( int pos, Notifiable notificable){
-    	_notificable[pos] = notificable;
-    }
-	private Notifiable getNotificabe(int pos){
-		return _notificable[pos];
-	}
 }

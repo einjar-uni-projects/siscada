@@ -46,7 +46,10 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 
 	@Override
 	public void run(){
-		while(!_context.isApagado()){
+		while(!_context.isFIN()){
+			pauseJoy2();
+			guardedJoy2();
+			
 			setThreadState(ThreadState.EJECUTANDO);
 			_context.setDispositivosInternos(getAssociatedPosition(), true);
 
@@ -61,11 +64,9 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 			_context.decrementarNumPasteles();
 			//se ha recogido el bizcocho del fin de la lista
 			_context.setDispositivosInternos(getAssociatedPosition(), false);
-
-			pauseJoy2();
-			guardedJoy2();
+			setThreadState(ThreadState.ACABADO);
 		}
-		setThreadState(ThreadState.ACABADO);
+		
 	}
 
 	/**
@@ -175,15 +176,13 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 	}
 
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
-		notifyJoy2(machine);
+	public void notifyNoSyncJoy2() {
+		notifyJoy2();
 	}
 
-	public synchronized void notifyJoy2(String machine) {
-		if(machine.equals(MachineNames.DISPENSADORA.getName())){
+	public synchronized void notifyJoy2() {
 			_joy2 = true;
 			notifyAll();
-		}
 	}
 
 	public synchronized void pauseJoy2() {

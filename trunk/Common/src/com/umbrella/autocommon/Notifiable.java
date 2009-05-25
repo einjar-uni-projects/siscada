@@ -7,6 +7,6 @@ public interface Notifiable {
 	
 	/*Debe invocar a un metodo sincronizado*/
 	public void notifyNoSyncJoy(NotificableSignal signal);
-	public void notifyNoSyncJoy2(String machine);
+	public void notifyNoSyncJoy2();
 
 }

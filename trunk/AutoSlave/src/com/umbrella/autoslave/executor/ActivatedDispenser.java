@@ -58,61 +58,66 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 	public synchronized double getPosition() {
 		return _position;
 	}
-	
+
 	@Override
 	public void run(){
-		//while(!_context.isApagado()){
-		while(true){
-			setThreadState(ThreadState.EJECUTANDO);
-			
-			while(!_threadState.equals(ThreadState.ACABADO)){
-				if(_threadState.equals(ThreadState.ESPERANDO)) 
-					if(_remainderCakes>0) setThreadState(ThreadState.EJECUTANDO);
-				
-				while(_threadState.equals(ThreadState.EJECUTANDO)){
-					/*
-					 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
-					 * el �ltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
-					 */
-	
-					// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
-					pauseJoy();
-					guardedJoy();
-	System.out.println("despierta del wait");
-					/*
-					 * SE SUPONE Q ESTE IF ES INNECESARIO
-					 * si en la posicion donde esta la dispensadora no hay bizcocho
-					 * &&
-					 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
-					 */
-					if(getSpaceCounter()>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
-	System.out.println("entra en el if de la dispensadora de si tengo espacio");					
-						_context.setDispositivosInternos(getAssociatedPosition(), true);
-						/*
-						 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
-						 * se pone la posicion de la cinta inicial como ocupada
-						 */
-						_remainderCakes--;
-						_context.incrementarNumPasteles();
-						_context.get_listaPasteles().add(new Cake());
-						_context.setDispositivosInternos(getAssociatedPosition(), false);
-						if(_remainderCakes==0){
-							setThreadState(ThreadState.ESPERANDO);
-						}
-					}else{
-						// aqui no tendria q entrar nunca
-						System.err.println("Error en la ejecucion del hilo de DsipensadoraActivada");
-					}
-				} 
-			}
-			_context.setRemainderCakes(_remainderCakes);
+		while(!_context.isFIN()){
 			pauseJoy2();
 			guardedJoy2();
+			if(!_context.isApagado()){
+				if(getSpaceCounter()>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
+
+					setThreadState(ThreadState.EJECUTANDO);
+
+					while(!_threadState.equals(ThreadState.ACABADO)){
+						if(_threadState.equals(ThreadState.ESPERANDO)) 
+							if(_remainderCakes>0) setThreadState(ThreadState.EJECUTANDO);
+
+						while(_threadState.equals(ThreadState.EJECUTANDO)){
+							/*
+							 * debe comprobar que debajo de la dispensadora no hay pastel, se comprueba que entre 
+							 * el �ltimo pastel y la posicion actual hay un espacio como minimo el solicitado  
+							 */
+
+							// se queda esperando a la se�al de reloj, el reloj cada vez q hace un CLICK hace un notifyAll
+							pauseJoy();
+							guardedJoy();
+System.out.println("despierta del wait - DISPENSADORA");
+							/*
+							 * SE SUPONE Q ESTE IF ES INNECESARIO
+							 * si en la posicion donde esta la dispensadora no hay bizcocho
+							 * &&
+							 * el espacio que hay entre los bizchocos es igual o superior al que yo he dejado
+							 */
+
+System.out.println("entra en el if de la dispensadora de si tengo espacio  - DISPENSADORA");					
+							_context.setDispositivosInternos(getAssociatedPosition(), true);
+							/*
+							 * se pone un bizcocho, se cambia el estado actual y se inicializa el contador de espacio
+							 * se pone la posicion de la cinta inicial como ocupada
+							 */
+							_remainderCakes--;
+							_context.incrementarNumPasteles();
+							_context.get_listaPasteles().add(new Cake());
+							_context.setDispositivosInternos(getAssociatedPosition(), false);
+							if(_remainderCakes==0){
+								setThreadState(ThreadState.ESPERANDO);
+							}
+
+							/*else{
+						// aqui no tendria q entrar nunca
+						System.err.println("Error en la ejecucion del hilo de DsipensadoraActivada");
+					}*/
+						} 
+					}
+					_context.setRemainderCakes(_remainderCakes);
+				}
+			}
 		}
 		//setThreadState(ThreadState.ACABADO);
 	}
-	
-	
+
+
 	/**
 	 * @param position la posicion en la cinta
 	 * @param associatedPosition el numero que ocupa en la cadena de 16 bits
@@ -247,15 +252,13 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
-		notifyJoy2(machine);
+	public void notifyNoSyncJoy2() {
+		notifyJoy2();
 	}
 
-	public synchronized void notifyJoy2(String machine) {
-		if(machine.equals(MachineNames.DISPENSADORA.getName())){
+	public synchronized void notifyJoy2() {
 			_joy2 = true;
 			notifyAll();
-		}
 	}
 
 	public synchronized void pauseJoy2() {

@@ -46,29 +46,29 @@ public class TimeMachine extends Thread implements Notifiable {
 
 	@Override
 	public void run(){
-		while(!context.isApagado()){
-		setThreadState(ThreadState.EJECUTANDO);
-		context.setDispositivosInternos(getAssociatedPosition(), true);
-		double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
-		while(((System.currentTimeMillis()-tiempoActual)*1000)<this._executionTime){
-			/*
-			 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
-			 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
-			 *  
-			 *  da informacion false entre el verdadero tiempo de ejecucion de la maquina dispensadora 
-			 *  y el click en el que se ejecuta pero nos da = porq solo nos interesa en el refresco
-			 *  de la aplicaccion.
-			 */
-			pauseJoy();
-			guardedJoy();
+		while(!context.isFIN()){
+			pauseJoy2();
+			guardedJoy2();
+			
+			setThreadState(ThreadState.EJECUTANDO);
+			context.setDispositivosInternos(getAssociatedPosition(), true);
+			double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
+			while(((System.currentTimeMillis()-tiempoActual)*1000)<this._executionTime){
+				/*
+				 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
+				 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
+				 *  
+				 *  da informacion false entre el verdadero tiempo de ejecucion de la maquina dispensadora 
+				 *  y el click en el que se ejecuta pero nos da = porq solo nos interesa en el refresco
+				 *  de la aplicaccion.
+				 */
+				pauseJoy();
+				guardedJoy();
+			}
+			context.setDispositivosInternos(getAssociatedPosition(), false);
+			//se ha echado el caramelo en el bizcocho	
+			setThreadState(ThreadState.ACABADO);
 		}
-		context.setDispositivosInternos(getAssociatedPosition(), false);
-		//se ha echado el caramelo en el bizcocho	
-		setThreadState(ThreadState.ACABADO);
-		
-		pauseJoy2();
-		guardedJoy2();
-	}
 	}
 	
 	/**
@@ -159,15 +159,13 @@ public class TimeMachine extends Thread implements Notifiable {
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
-		notifyJoy2(machine);
+	public void notifyNoSyncJoy2() {
+		notifyJoy2();
 	}
 
-	public synchronized void notifyJoy2(String machine) {
-		if(machine.equals(MachineNames.DISPENSADORA.getName())){
+	public synchronized void notifyJoy2() {
 			_joy2 = true;
 			notifyAll();
-		}
 	}
 
 	public synchronized void pauseJoy2() {

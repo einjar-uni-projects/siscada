@@ -47,7 +47,6 @@ public class Slave3 implements Notifiable{
 
 	public  double porcentajeFallos=0.03;
 	private boolean _joy = true;
-	private Notifiable[] _notificable;
 
 	public Slave3(){
 		
@@ -78,11 +77,6 @@ public class Slave3 implements Notifiable{
 			_selladora=new TimeMachine(configuracion.getSelladora(), configuracion.getPosSelladora(),
 					configuracion.getPosicionAsociada(MachineNames.SELLADO));
 
-			_notificable=new Notifiable[4];
-			this.setNotificable(0, _calidad);
-			this.setNotificable(1, _selladora);
-			this.setNotificable(2, _salBlister);
-			this.setNotificable(3, _moverCinta);
 			
 			try {
  				pfmodel = PropertiesFile.getInstance();
@@ -196,14 +190,14 @@ public class Slave3 implements Notifiable{
 								}
 								if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 									//_moverCinta.run();
-									if(_notificable[3] != null)
-										getNotificabe(3).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
+									if(_moverCinta != null)
+										_moverCinta.notifyNoSyncJoy2();
 								}else{
 									seEnciendeSensor();
 									if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
 										//_calidad.run();
-										if(_notificable[0] != null)
-											getNotificabe(0).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
+										if(_calidad != null)
+											_calidad.notifyNoSyncJoy2();
 										if(Math.random()<configuracion.getPorcentajeFallos()){
 											Vector<Integer> vectorAux=new Vector<Integer>();
 											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
@@ -237,16 +231,16 @@ public class Slave3 implements Notifiable{
 									}
 									if(puedoUsar(MachineNames.SELLADO)){
 										//_selladora.run();
-										if(_notificable[1] != null)
-											getNotificabe(1).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
+										if(_selladora != null)
+											_selladora.notifyNoSyncJoy2();
 									}
 								}
 
 							}
 							if(puedoUsar(MachineNames.FIN_3)){
 								//_salBlister.start();
-								if(_notificable[2] != null)
-									getNotificabe(2).notifyNoSyncJoy2(MachineNames.FIN_1.getName());
+								if(_salBlister != null)
+									_salBlister.notifyNoSyncJoy2();
 							}							
 							/*
 							 * Aqui hay q repasar todos los sensores
@@ -402,7 +396,7 @@ public class Slave3 implements Notifiable{
 	}
 	
 	@Override
-	public void notifyNoSyncJoy2(String machine) {
+	public void notifyNoSyncJoy2() {
 	}
 
 	public synchronized void notifyJoy2() {
@@ -417,7 +411,7 @@ public class Slave3 implements Notifiable{
 	private void actualizarContadorAutomata(){
 		
 		contexto.resetContadorAutomata3();
-		LinkedList<Blister> lista=new LinkedList<Blister>();
+		LinkedList<Blister> lista=contexto.get_listaBlister();
 		for(int i=0;i<lista.size();i++){
 			double pos=lista.get(i).get_posicion();
 			if( pos<(configuracion.getPosInicioAut3()+configuracion.getSizeBlister()/2) ){
@@ -436,11 +430,4 @@ public class Slave3 implements Notifiable{
 		}
 	}
 	
-
-	public void setNotificable( int pos, Notifiable notificable){
-    	_notificable[pos] = notificable;
-    }
-	private Notifiable getNotificabe(int pos){
-		return _notificable[pos];
-	}
 }
