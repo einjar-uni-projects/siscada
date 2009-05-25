@@ -67,7 +67,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 			pauseJoy2();
 			guardedJoy2();
 			if(!_context.isApagado()){
-				if(getSpaceCounter()>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
+				if((getSpaceCounter()-_configuration.getPosBizc())>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
 
 					setThreadState(ThreadState.EJECUTANDO);
 
@@ -100,7 +100,7 @@ if(debug) System.out.println("entra en el if de la dispensadora de si tengo espa
 							 */
 							_remainderCakes--;
 							_context.incrementarNumPasteles();
-							_context.get_listaPasteles().add(new Cake());
+							_context.addListaPastel(new Cake());
 							_context.setDispositivosInternos(getAssociatedPosition(), false);
 							if(_remainderCakes==0){
 								setThreadState(ThreadState.ESPERANDO);

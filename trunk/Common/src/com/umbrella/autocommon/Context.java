@@ -185,10 +185,24 @@ public class Context implements Serializable{
 		return _listaPasteles;
 	}
 
+	public synchronized void addListaPastel(Cake cake){
+		_listaPasteles.add(cake);
+	}
+	public synchronized void removeListaPastel(int cake){
+		_listaPasteles.remove(cake);
+	}
+	
 	public synchronized LinkedList<Blister> get_listaBlister() {
 		return _listaBlister;
 	}
+	
+	public synchronized void addListaBlister(Blister blister){
+		_listaBlister.add(blister);
+	}
 
+	public synchronized void removeListaBlister(int blister){
+		_listaBlister.remove(blister);
+	}
 	public synchronized boolean isInterferencia() {
 		return interferencia;
 	}
