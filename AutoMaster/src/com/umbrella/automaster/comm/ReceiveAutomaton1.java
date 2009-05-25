@@ -93,7 +93,6 @@ public class ReceiveAutomaton1 extends Thread {
 		} while (msg != null);
 		Context context = _masterContext.get_contextoAut1();
 		if(context != null){
-			System.err.println("<<<<<<<<<"+_configuration);
 			if (context.getDispositivosInternos(
 					_configuration.getPosicionAsociada(MachineNames.FIN_1))
 					&& _masterContext.get_contextoRobot1().getEstadoInterno()
