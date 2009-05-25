@@ -77,7 +77,7 @@ public class Slave1 implements Notifiable {
 					configuracion.getPosicionAsociada(MachineNames.CHOCOLATE));
 
 			contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
-			contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+			contexto.rellenarChocolate(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 
 			_moverCinta.start();
 			_salPastel.start();
@@ -188,13 +188,14 @@ System.out.println("moverCinta  - SLAVE 1");
 							System.out.println("_moverCinta = null - SLAVE 1");							
 					}else{
 						//TODO q datos tengo
-						System.out.println("seEnciendeSendor=" +seEnciendeSensor());
+						System.out.println("seEnciendeSensor=" +seEnciendeSensor());
 						System.out.println("hayHiloBloqueante()=" +hayHiloBloqueante());
 						System.out.println("contexto.isInterferencia()=" +contexto.isInterferencia());
 						
 						
 						
 						if(puedoUsar(MachineNames.CHOCOLATE)){
+System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, cantidad = " + contexto.getCapacidadChocolate());
 							if(contexto.getCapacidadChocolate()>0){
 								//_chocolate.start();
 								if(_chocolate != null)
@@ -324,8 +325,10 @@ System.out.println("llega 5 - SLAVE 1");
 	 */
 	private synchronized  boolean ejecutandoAlgo(MachineNames nombre){
 		boolean salida=false;
-		if(nombre.equals(MachineNames.DISPENSADORA))
+		/*
+		if(nombre.equals(MachineNames.DISPENSADORA)) 
 			if(_dispensadora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
+			*/
 		if(nombre.equals(MachineNames.CHOCOLATE))
 			if(_chocolate.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(MachineNames.CARAMELO))
@@ -348,7 +351,10 @@ System.out.println("llega 5 - SLAVE 1");
 		if(tipo.equals(MachineNames.CHOCOLATE))
 			if(!ejecutandoAlgo(MachineNames.CHOCOLATE) && 
 					contexto.activaSensor(configuracion, _chocolate.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CHOCOLATE))) salida=true;
+						!contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _chocolate.getPosition())).is_chocolate())
+							salida=true;
+		/*&&
+		!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CHOCOLATE))) salida=true;*/
 		if(tipo.equals(MachineNames.CARAMELO))
 			if(!ejecutandoAlgo(MachineNames.CARAMELO) && 
 					contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 &&
@@ -415,32 +421,4 @@ System.out.println("llega 5 - SLAVE 1");
 
 	public synchronized void pauseJoy2() {
 	}
-
-	/**
-	 * repasa la linkedlist de pasteles y los pone en las posiciones del contador
-	 * WTF À?
-	 */
-	/*private void actualizarContadorAutomata(){
-		
-		contexto.resetContadorAutomata1();
-		LinkedList lista = new LinkedList();
-		for(int i=0;i<lista.size();i++){
-			double pos=lista.get(i).get_posicion();
-			if( pos<(configuracion.getPosBizc()+configuracion.getSizeBizcocho()/2) ){
-				contexto.incrementarContadorAutomata1(0);
-			}else if(pos<(configuracion.getPosChoc()-configuracion.getSizeBizcocho()/2)){
-				contexto.incrementarContadorAutomata1(1);
-			}else if(pos<(configuracion.getPosChoc()+configuracion.getSizeBizcocho()/2)){
-				contexto.incrementarContadorAutomata1(2);
-			}else if(pos<(configuracion.getPosCaram()-configuracion.getSizeBizcocho()/2)){
-				contexto.incrementarContadorAutomata1(3);
-			}else if(pos<(configuracion.getPosCaram()+configuracion.getSizeBizcocho()/2)){
-				contexto.incrementarContadorAutomata1(4);
-			}else if(pos<(configuracion.getPosFinAut1()-configuracion.getSizeBizcocho()/2)){
-				contexto.incrementarContadorAutomata1(5);
-			}else if(pos<(configuracion.getPosFinAut1()+configuracion.getSizeBizcocho()/2)){
-				contexto.incrementarContadorAutomata1(6);
-			}
-		}
-	}*/
 }
