@@ -307,7 +307,7 @@ public class Slave2 implements Notifiable {
 			}
 		}
 		if(min>(configuracion.getSizeBlister() + configuracion.getSizeBlister()/2)) 
-			contexto.get_listaBlister().add(new Blister());
+			contexto.addListaBlister(new Blister());
 	}
 	
 	public synchronized void guardedJoy() {

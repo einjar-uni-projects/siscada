@@ -105,8 +105,7 @@ public class ReceiveAutomaton3 extends Thread {
 
 	private boolean valido() {
 		boolean sal = false;
-		LinkedList<Blister> list = _masterContext.get_contextoAut3()
-				.get_listaBlister();
+		LinkedList<Blister> list = _masterContext.get_contextoAut3().get_listaBlister();
 		double max = 0;
 		int pos = 0;
 		for (int i = 0; i < list.size(); i++) {
