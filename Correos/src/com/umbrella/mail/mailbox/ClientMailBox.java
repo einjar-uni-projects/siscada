@@ -14,6 +14,8 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import src.ConnectionState;
+
 import com.umbrella.mail.message.MessageInterface;
 
 /**
@@ -24,10 +26,13 @@ public class ClientMailBox {
 
 	private QueueInterface _inputQueue;
 	private QueueInterface _outputQueue;
+	private QueueInterface _inputQueueKA;
+	private QueueInterface _outputQueueKA;
 	private final String _queueServerIp;
 	private final int _queueServerPort;
 	private final String _inputQueueS;
 	private final String _outputQueueS;
+	private KeepAliveThread _keepAliveThread  = null;
 
 	/**
 	 * Constructor de MailBox
@@ -69,6 +74,20 @@ public class ClientMailBox {
 				_outputQueue = (QueueInterface) Naming.lookup("rmi://"
 						+ _queueServerIp + ":" + _queueServerPort + "/"
 						+ _outputQueueS);
+				//Se crean los buzones de keepAlive
+				_inputQueueKA = (QueueInterface) Naming.lookup("rmi://"
+						+ _queueServerIp + ":" + _queueServerPort + "/"
+						+ _inputQueueS+ServerMailBox._keepAlive);
+				_outputQueueKA = (QueueInterface) Naming.lookup("rmi://"
+						+ _queueServerIp + ":" + _queueServerPort + "/"
+						+ _outputQueueS+ServerMailBox._keepAlive);
+				
+				//Creacion del hilo de keepAlive
+				_keepAliveThread = new KeepAliveThread(/*slave*/false,_inputQueueKA, _outputQueueKA);
+		        
+				//Inicio del hilo de keepAlive
+		        //TODO this._keepAliveThread.start();
+				
 				done = true;
 				System.out.println("Conectado con el host: " + _queueServerIp
 						+ ":" + _queueServerPort);
