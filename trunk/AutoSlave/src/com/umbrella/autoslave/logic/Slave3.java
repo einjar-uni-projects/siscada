@@ -77,16 +77,20 @@ public class Slave3 implements Notifiable{
 			_selladora=new TimeMachine(configuracion.getSelladora(), configuracion.getPosSelladora(),
 					configuracion.getPosicionAsociada(MachineNames.SELLADO));
 
+			_moverCinta.start();
+			_salBlister.start();
+			_calidad.start();
+			_selladora.start();
 			
 			try {
  				pfmodel = PropertiesFile.getInstance();
  				PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
- 			} catch (PropertyException e1) {
- 				// TODO Auto-generated catch block
- 				e1.printStackTrace();
- 			}
- 			PropertiesFileHandler.getInstance().writeFile();
- 			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveAU3Name, ServerMailBox._sendAU3Name);
+			} catch (PropertyException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			PropertiesFileHandler.getInstance().writeFile();
+			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveAU3Name, ServerMailBox._sendAU3Name);
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
@@ -94,183 +98,178 @@ public class Slave3 implements Notifiable{
 	}
 	public void execute() {
 
-		
-			long cicloAct=_clock.getClock();
-			boolean primeraVez=true;
+		boolean primeraVez=true;
 
-			Blister blisterAuxiliar=new Blister();
+		Blister blisterAuxiliar=new Blister();
 
-			while(!contexto.isFIN()){
-				if(cicloAct<_clock.getClock()){
-					cicloAct=_clock.getClock();
-					/*
-					 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
-					 */
+		while(!contexto.isFIN()){
+			pauseJoy();
+			guardedJoy();
+			/*
+			 * en cada ciclo de reloj, si aun estoy en el ciclo de reloj me quedo aqui
+			 */
 
-					/*
-					 * se intenta leer si llega algun mensaje que nos saque del estado apagado
-					 */
-					MessageInterface mensaje=null;
+			/*
+			 * se intenta leer si llega algun mensaje que nos saque del estado apagado
+			 */
+			MessageInterface mensaje=null;
 
 
-					do{
-						try {
-							mensaje =_buzon.receive();
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+			do{
+				try {
+					mensaje =_buzon.receive();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(mensaje!=null){
+					switch (mensaje.getIdentifier()) {
+					case FINCINTALIBRE:							
+						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
+						break;
+					case ACTUALIZARCONFIGURACION: 						
+						configuracion=(Configuration)mensaje.getObject();
+						contexto.setApagado(false);
+						break;
+					case START:
+						contexto=Context.reset("pastel");
+						contexto.setApagado(false);
+						break;
+					case FININTERFERENCIA:
+						contexto.setInterferencia(false);
+						break;
+					case INTERFERENCIA: 				
+						contexto.setInterferencia(true);
+						break;
+					case PARADA:
+						contexto.setParadaCorrecta(true);
+						break;
+					case PARADAEMERGENCIA:
+						contexto.setApagado(true);
+						break;
+					case PRODUCTORECOGIDO:
+						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
+						break;
+					case RESET:
+						if(contexto.isApagado() || contexto.isFallo()){
+							contexto=Context.reset("blister");
+							contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+							contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 						}
-						if(mensaje!=null){
-							switch (mensaje.getIdentifier()) {
-							case FINCINTALIBRE:							
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
-								break;
-							case ACTUALIZARCONFIGURACION: 						
-								configuracion=(Configuration)mensaje.getObject();
-								contexto.setApagado(false);
-								break;
-							case START:
-								contexto=Context.reset("pastel");
-								contexto.setApagado(false);
-								break;
-							case FININTERFERENCIA:
-								contexto.setInterferencia(false);
-								break;
-							case INTERFERENCIA: 				
-								contexto.setInterferencia(true);
-								break;
-							case PARADA:
-								contexto.setParadaCorrecta(true);
-								break;
-							case PARADAEMERGENCIA:
-								contexto.setApagado(true);
-								break;
-							case PRODUCTORECOGIDO:
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
-								break;
-							case RESET:
-								if(contexto.isApagado() || contexto.isFallo()){
-									contexto=Context.reset("pastel");
-									contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
-									contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
-								}
-								break;
-							case PARADAFALLO:
-								contexto.setFallo(true);
-								break;
-							case BLISTERCOMPLETO:
-								contexto.setBlisterListoInicioCinta3(true);
-								break;
-							}
-						}
-						
-						
-					}while(mensaje!=null);
-
-					if(contexto.isParadaCorrecta()){
-						if(contexto.get_listaBlister().size()==0) contexto.setApagado(true);
+						break;
+					case PARADAFALLO:
+						contexto.setFallo(true);
+						break;
+					case BLISTERCOMPLETO:
+						contexto.setBlisterListoInicioCinta3(true);
+						break;
 					}
-					
-					if(!contexto.isFallo()){
-						if(!contexto.isApagado()){
-							/*
-							 * se arranca el automata cambiando el estado, 
-							 * lo unico q hace es cargar los valores iniciales 
-							 */
-							if(primeraVez){
-								//((TurnOff) estado).transitar();
-								primeraVez=false;
-							}else{
-								/*
-								 * si recibo el mensaje de blister listo y tengo espacio suficiente
-								 */
-								if(contexto.isBlisterListoInicioCinta3() && tengoEspacio()){
-									contexto.addListaBlister(blisterAuxiliar.enCinta3());
-									//envio el mensaje de blister colocado, mesa libre
-								}
-								if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
-									//_moverCinta.run();
-									if(_moverCinta != null)
-										_moverCinta.notifyNoSyncJoy2();
-								}else{
-									seEnciendeSensor();
-									if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
-										//_calidad.run();
-										if(_calidad != null)
-											_calidad.notifyNoSyncJoy2();
-										if(Math.random()<configuracion.getPorcentajeFallos()){
-											Vector<Integer> vectorAux=new Vector<Integer>();
-											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
-											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
-											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3));
-											vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4));
-											int aux2=(int)(Math.random()*4);
-											int posAux=vectorAux.get(aux2);
+				}
+
+
+			}while(mensaje!=null);
+
+			if(contexto.isParadaCorrecta()){
+				if(contexto.get_listaBlister().size()==0) contexto.setApagado(true);
+			}
+
+			if(!contexto.isFallo()){
+				if(!contexto.isApagado()){
+					/*
+					 * se arranca el automata cambiando el estado, 
+					 * lo unico q hace es cargar los valores iniciales 
+					 */
+					if(primeraVez){
+						//((TurnOff) estado).transitar();
+						primeraVez=false;
+					}else{
+						/*
+						 * si recibo el mensaje de blister listo y tengo espacio suficiente
+						 */
+						if(contexto.isBlisterListoInicioCinta3() && tengoEspacio()){
+							contexto.addListaBlister(blisterAuxiliar.enCinta3());
+							//envio el mensaje de blister colocado, mesa libre
+						}
+						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
+							//_moverCinta.run();
+							if(_moverCinta != null)
+								_moverCinta.notifyNoSyncJoy2();
+						}else{
+							seEnciendeSensor();
+							if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
+								//_calidad.run();
+								if(_calidad != null)
+									_calidad.notifyNoSyncJoy2();
+								if(Math.random()<configuracion.getPorcentajeFallos()){
+									Vector<Integer> vectorAux=new Vector<Integer>();
+									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
+									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
+									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3));
+									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4));
+									int aux2=(int)(Math.random()*4);
+									int posAux=vectorAux.get(aux2);
+									vectorAux.remove(aux2);
+									contexto.setDispositivosInternos(posAux, false);
+									if(Math.random()<0.5){
+										aux2=(int)(Math.random()*3);
+										posAux=vectorAux.get(aux2);
+										vectorAux.remove(aux2);
+										contexto.setDispositivosInternos(posAux, false);
+										if(Math.random()<0.25){
+											aux2=(int)(Math.random()*2);
+											posAux=vectorAux.get(aux2);
 											vectorAux.remove(aux2);
 											contexto.setDispositivosInternos(posAux, false);
-											if(Math.random()<0.5){
+											if(Math.random()<0.125){
 												aux2=(int)(Math.random()*3);
 												posAux=vectorAux.get(aux2);
 												vectorAux.remove(aux2);
 												contexto.setDispositivosInternos(posAux, false);
-												if(Math.random()<0.25){
-													aux2=(int)(Math.random()*2);
-													posAux=vectorAux.get(aux2);
-													vectorAux.remove(aux2);
-													contexto.setDispositivosInternos(posAux, false);
-													if(Math.random()<0.125){
-														aux2=(int)(Math.random()*3);
-														posAux=vectorAux.get(aux2);
-														vectorAux.remove(aux2);
-														contexto.setDispositivosInternos(posAux, false);
-													}
-												}
 											}
-											for(int i=0;i<vectorAux.size();i++)contexto.setDispositivosInternos(vectorAux.get(i), true);
 										}
 									}
-									if(puedoUsar(MachineNames.SELLADO)){
-										//_selladora.run();
-										if(_selladora != null)
-											_selladora.notifyNoSyncJoy2();
-									}
+									for(int i=0;i<vectorAux.size();i++)contexto.setDispositivosInternos(vectorAux.get(i), true);
 								}
-
 							}
-							if(puedoUsar(MachineNames.FIN_3)){
-								//_salBlister.start();
-								if(_salBlister != null)
-									_salBlister.notifyNoSyncJoy2();
-							}							
-							/*
-							 * Aqui hay q repasar todos los sensores
-							 */
-							/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
-							for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
-						}else{
-							primeraVez=true;
+							if(puedoUsar(MachineNames.SELLADO)){
+								//_selladora.run();
+								if(_selladora != null)
+									_selladora.notifyNoSyncJoy2();
+							}
 						}
 
-					} // fin del if(!contexto.isfallo)
-
-
-					// envia el mensaje de contexto
- 					DefaultMessage mensajeSend=new DefaultMessage();
- 					mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
- 					mensajeSend.setObject(contexto);
- 		 			_buzon.send(mensajeSend);
+					}
+					if(puedoUsar(MachineNames.FIN_3)){
+						//_salBlister.start();
+						if(_salBlister != null)
+							_salBlister.notifyNoSyncJoy2();
+					}							
+					/*
+					 * Aqui hay q repasar todos los sensores
+					 */
+					/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
+					for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
+				}else{
+					primeraVez=true;
 				}
 
-			}
-			/*
-			 * se matan los hilos
-			 */
-			_moverCinta=null;
-			_selladora=null;
-			_salBlister=null;
-			_calidad=null;
+			} // fin del if(!contexto.isfallo)
 
-		
+
+			// envia el mensaje de contexto
+			DefaultMessage mensajeSend=new DefaultMessage();
+			mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+			mensajeSend.setObject(contexto);
+			_buzon.send(mensajeSend);
+		}
+
+		/*
+		 * se matan los hilos
+		 */
+		_moverCinta=null;
+		_selladora=null;
+		_salBlister=null;
+		_calidad=null;		
 	}
 	
 	/*

@@ -46,7 +46,8 @@ public class Context implements Serializable{
 	
 	//Configuracion configuracion=Configuracion.getInstance();
 	
-	private int pastelesRestantes = 50;
+	private int numPasteles=10;
+	private int pastelesRestantes = numPasteles;
 	private boolean blisterListoInicioCinta3=false;
 	
 	private int capacidadCaramelo = 50;
@@ -59,7 +60,7 @@ public class Context implements Serializable{
 	/*
 	 * numero de pasteles en la cinta, no sirve para nada tecnicamente solo da informacion
 	 */
-	private int numPasteles=50;
+	
 	
 	private int contadorAutomata1[]= new int[7];
 	private int contadorAutomata2[]= new int[5];
@@ -133,7 +134,7 @@ public class Context implements Serializable{
 		return numPasteles;
 	}
 
-	private synchronized void setNumPasteles(int numPasteles) {
+	public synchronized void setNumPasteles(int numPasteles) {
 		this.numPasteles=numPasteles;
 	}
 	

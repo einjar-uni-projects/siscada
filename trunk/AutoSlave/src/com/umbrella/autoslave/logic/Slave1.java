@@ -45,7 +45,8 @@ public class Slave1 implements Notifiable {
 	PropertiesFile pfmodel;
 	private boolean _joy = true;
 
-	
+//TODO propiom quitar antes de entregar
+	private boolean debug=false;
 	/**
 	 * @param args
 	 */
@@ -121,6 +122,10 @@ public class Slave1 implements Notifiable {
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						configuracion=(Configuration)mensaje.getObject();
+						contexto.setNumPasteles(configuracion.getCapacidadPasteles());
+						contexto.setRemainderCakes(configuracion.getCapacidadPasteles());
+						contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
+						contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 						contexto.setApagado(false);
 						break;
 					case START:
@@ -155,6 +160,8 @@ public class Slave1 implements Notifiable {
 					case RESET:
 						if(contexto.isApagado() || contexto.isFallo()){
 							contexto=Context.reset("pastel");
+							contexto.setNumPasteles(configuracion.getCapacidadPasteles());
+							contexto.setRemainderCakes(configuracion.getCapacidadPasteles());
 							contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
 							contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 						}
@@ -172,15 +179,15 @@ public class Slave1 implements Notifiable {
 			}
 
 			if(!contexto.isFallo()){
-System.out.println("llega 1  - SLAVE 1");
+if(debug) System.out.println("llega 1  - SLAVE 1");
 				if(!contexto.isApagado()){
-System.out.println("llega 2 - SLAVE 1");
+if(debug) System.out.println("llega 2 - SLAVE 1");
 					/*
 					 * se coordina y ejecutan los hilos de: movercinta, DispensadoraAutomatica, MaquinaCaramelo, MaquinaChocolate, 
 					 * 		moverCinta, salidaPastel
 					 */
 					if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
-System.out.println("moverCinta  - SLAVE 1");
+if(debug) System.out.println("moverCinta  - SLAVE 1");
 						//_moverCinta.start();
 						if(_moverCinta != null)
 							_moverCinta.notifyNoSyncJoy2();
@@ -195,7 +202,7 @@ System.out.println("moverCinta  - SLAVE 1");
 						
 						
 						if(puedoUsar(MachineNames.CHOCOLATE)){
-System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, cantidad = " + contexto.getCapacidadChocolate());
+if(debug) System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, cantidad = " + contexto.getCapacidadChocolate());
 							if(contexto.getCapacidadChocolate()>0){
 								//_chocolate.start();
 								if(_chocolate != null)
@@ -234,13 +241,13 @@ System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, cantidad = " + 
 					//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
 					// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
 					if(!contexto.isParadaCorrecta()){
-System.out.println("si no es parada correcta - SLAVE 1");			
+if(debug) System.out.println("si no es parada correcta - SLAVE 1");			
 						if(_dispensadora != null)
 							_dispensadora.notifyNoSyncJoy2();
 						//_dispensadora.start();
 					}
 					if(_dispensadora.getRemainderCakes()==0){
-System.out.println("si tengo 0 pasteles restantes - SLAVE 1");						
+if(debug) System.out.println("si tengo 0 pasteles restantes - SLAVE 1");						
 						DefaultMessage mensajeSend= new DefaultMessage();
 						mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
 						mensajeSend.getParameters().add(MachineNames.DISPENSADORA.getName()); 									
@@ -254,7 +261,7 @@ System.out.println("si tengo 0 pasteles restantes - SLAVE 1");
 					
 				//	actualizarContadorAutomata();
 					
-System.out.println("llega 5 - SLAVE 1");
+if(debug) System.out.println("llega 5 - SLAVE 1");
 					// envia el mensaje de contexto
 					DefaultMessage mensajeSend=new DefaultMessage();
 					mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
@@ -309,8 +316,7 @@ System.out.println("llega 5 - SLAVE 1");
 		}else{
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CHOCOLATE), false);
 		}
-		if(contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 && 
-				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))){
+		if(contexto.activaSensor(configuracion, _salPastel.getPosition())>=0){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), true);
 			salida=true;
 		}else{
@@ -361,13 +367,13 @@ System.out.println("llega 5 - SLAVE 1");
 		if(tipo.equals(MachineNames.CARAMELO)){
 			if(!ejecutandoAlgo(MachineNames.CARAMELO) && 
 					contexto.activaSensor(configuracion, _caramelo.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CARAMELO))) 
+						!contexto.get_listaPasteles().get(contexto.activaSensor(configuracion, _caramelo.getPosition())).is_caramelo()) 
 				salida=true;
 		}
 		if(tipo.equals(MachineNames.FIN_1)){
 			if(!ejecutandoAlgo(MachineNames.FIN_1) && 
 					contexto.activaSensor(configuracion, _salPastel.getPosition())>=0 &&
-					!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))) 
+						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_1))) 
 				salida=true;
 		}
 		return salida;
