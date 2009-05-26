@@ -26,7 +26,7 @@ public class Postmaster extends Thread {
 		PropertiesFile pfmodel = PropertiesFile.getInstance();
 		PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 		PropertiesFileHandler.getInstance().writeFile();
-		_clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveSCADAName, ServerMailBox._sendSCADAName);
+		_clientMailBox = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveSCADAName, ServerMailBox._sendSCADAName, true);
 		llmi = new LinkedList<MessageInterface>();
 		_no_end = true;
 	}
