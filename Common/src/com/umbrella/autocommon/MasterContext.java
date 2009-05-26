@@ -120,10 +120,11 @@ public class MasterContext implements Serializable{
 		return contadorPasteles;
 	}
 
-	public void resetContador() {
+	public synchronized void resetContador() {
 		contadorPasteles=0;
 	}
-	public void incrementarContador() {
+	
+	public synchronized void incrementarContador() {
 		contadorPasteles++;
 		contadorPasteles=contadorPasteles%5; // xq van del 0 al 4 ambos inlcuidos
 	}
@@ -200,6 +201,4 @@ public class MasterContext implements Serializable{
 	public synchronized void set_contextoRobot2(ContextoRobot robot2) {
 		_contextoRobot2 = robot2;
 	}
-	
-	
 }

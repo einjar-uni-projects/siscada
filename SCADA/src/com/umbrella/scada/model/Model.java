@@ -72,6 +72,9 @@ public class Model {
 	private final ModelElementAtribute<Integer> _au2BlistersPos5 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS5, new Integer(0));
 	private final ModelElementAtribute<Boolean> _au2State = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU2_STATE, new Boolean(false));
 	
+	/*Atributos de la mesa*/
+	private final ModelElementAtribute<Integer> _tableContent = new ModelElementAtribute<Integer>(TransferBufferKeys.TABLE_CONTENT, new Integer(0));
+	
 	/*Atributos del automata 3*/
 	private final ModelElementAtribute<Double> _au3ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU3_CONVEYOR_BELT_SIZE,new Double(10));
 	private final ModelElementAtribute<Double> _au3ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED,new Double(10));
@@ -130,6 +133,8 @@ public class Model {
 		_observable.addChange(_au2BlistersPos4.get_tbk(), _au2BlistersPos4.get_value());
 		_observable.addChange(_au2BlistersPos5.get_tbk(), _au2BlistersPos5.get_value());
 		_observable.addChange(_au2State.get_tbk(), _au2State.get_value());
+		
+		_observable.addChange(_tableContent.get_tbk(), _tableContent.get_value());
 		
 		_observable.addChange(_au3ConveyorBeltSize.get_tbk(), _au3ConveyorBeltSize.get_value());
 		_observable.addChange(_au3ConveyorBeltSpeed.get_tbk(), _au3ConveyorBeltSpeed.get_value());
@@ -340,6 +345,12 @@ public class Model {
 	public void set_au2BlistersPos5(int blisters){
 		_au2BlistersPos5.set_value(blisters);
 		_observable.addChange(_au2BlistersPos5.get_tbk(), _au2BlistersPos5.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_tableContent(int content){
+		_tableContent.set_value(content);
+		_observable.addChange(_tableContent.get_tbk(), _tableContent.get_value());
 		_modelChanges = true;
 	}
 	

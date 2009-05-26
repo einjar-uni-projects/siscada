@@ -28,6 +28,7 @@ public class PaintElementTable extends PaintElement {
 	@Override
 	public void paint(Graphics g) {
 		g.drawImage(_loader.get_table(), _posX, _posY, _maxX, _maxY, null);
+		g.drawChars((""+_model.get_tableContent()).toCharArray(), 0, 1, _posX, _posY);
 
 	}
 
