@@ -49,7 +49,7 @@ public class Robot1 implements Notifiable{
 			e1.printStackTrace();
 		}
 		PropertiesFileHandler.getInstance().writeFile();
-		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR1Name, ServerMailBox._sendR1Name);
+		_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveR1Name, ServerMailBox._sendR1Name, true);
 
 		//_buzon=new ClientMailBox(host,puerto,"EntradaRobot1","SalidaRobot1");
 

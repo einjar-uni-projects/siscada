@@ -89,7 +89,7 @@ public class Slave3 implements Notifiable{
 				e1.printStackTrace();
 			}
 			PropertiesFileHandler.getInstance().writeFile();
-			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveAU3Name, ServerMailBox._sendAU3Name);
+			_buzon = new ClientMailBox(pfmodel.getMasterAutIP(), pfmodel.getMasterAutPort(), ServerMailBox._reciveAU3Name, ServerMailBox._sendAU3Name, true);
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
