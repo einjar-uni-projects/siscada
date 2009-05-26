@@ -37,6 +37,11 @@ public class PaintElementBlister extends PaintElement {
 			numBlisters = (""+blisters[0]).toCharArray();
 			g.drawChars(numBlisters, 0, numBlisters.length, _posX+15, _posY+80);
 		}*/
+		if(blisters[0] > 0){
+			g.drawImage(_loader.get_blisterEstampado(), _posX+75, _posY, _maxX, _maxY, null);
+			numBlisters = (""+blisters[0]).toCharArray();
+			g.drawChars(numBlisters, 0, numBlisters.length, _posX+_maxX/2+75, _posY+80);
+		}
 		if(blisters[1] > 0){
 			g.drawImage(_loader.get_blisterEstampado(), _posX+75, _posY, _maxX, _maxY, null);
 			numBlisters = (""+blisters[1]).toCharArray();
@@ -44,7 +49,7 @@ public class PaintElementBlister extends PaintElement {
 		}
 		if(blisters[2] > 0){
 			g.drawImage(_loader.get_blisterEstampado(), _posX+152, _posY, _maxX, _maxY, null);
-			numBlisters = (""+blisters[0]).toCharArray();
+			numBlisters = (""+blisters[2]).toCharArray();
 			g.drawChars(numBlisters, 0, numBlisters.length, _posX+_maxX/2+152, _posY+80);
 		}
 		if(blisters[3] > 0){

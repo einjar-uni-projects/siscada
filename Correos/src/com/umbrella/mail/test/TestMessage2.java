@@ -11,8 +11,8 @@ package com.umbrella.mail.test;
 
 import java.util.Vector;
 
-import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
+import com.umbrella.mail.message.MessageInterface;
 
 /**
  *

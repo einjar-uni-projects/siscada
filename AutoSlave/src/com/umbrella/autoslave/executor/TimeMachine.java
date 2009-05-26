@@ -3,8 +3,6 @@ package com.umbrella.autoslave.executor;
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notifiable;
-import com.umbrella.autocommon.Notifiable.NotificableSignal;
-import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.ThreadState;
 
 

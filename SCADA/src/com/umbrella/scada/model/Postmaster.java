@@ -88,6 +88,12 @@ public class Postmaster extends Thread {
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						af.executeAction(ActionKey.AU1_CAKES_POS, params);
 						break;
+					case AU2_BLISTER_POS:
+						params = new ActionParams();
+						ape = ActionParamsEnum.AU2_BLISTER_POS;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						af.executeAction(ActionKey.AU2_BLISTER_POS, params);
+						break;
 					case ROBOT_SET_CONTENT:
 						params = new ActionParams();
 						ape = ActionParamsEnum.ROBOT_CONTENT;

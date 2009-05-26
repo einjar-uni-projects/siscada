@@ -77,6 +77,11 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case AU2_BLISTER_POS:
+			ret = new ActUpdateAu2BlistersPos();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
 		case UPDATE_ROBOT_CONTENT:
 			ret = new ActUpdateRobotContent();
 			if(!ret.insertParam(params))

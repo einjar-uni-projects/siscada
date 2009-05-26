@@ -1,8 +1,6 @@
 package com.umbrella.autoslave.logic;
 
 import java.rmi.RemoteException;
-import java.util.LinkedList;
-import java.util.Vector;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
@@ -17,12 +15,11 @@ import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
-import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
+import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.MachineNames;
-import com.umbrella.utils.Cake;
 import com.umbrella.utils.ThreadState;
 
 
