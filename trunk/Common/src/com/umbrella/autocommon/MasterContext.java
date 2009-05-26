@@ -52,8 +52,8 @@ public class MasterContext implements Serializable{
 		_contextoAut1=Context.getInstance("pastel");
 		_contextoAut2=Context.getInstance("blister");
 		_contextoAut3=Context.getInstance("blister");
-		_contextoRobot1=ContextoRobot.getInstance();
-		_contextoRobot2=ContextoRobot.getInstance();
+		_contextoRobot1=new ContextoRobot();
+		_contextoRobot2=new ContextoRobot();
 	}
 	
 	public synchronized static MasterContext getInstance(){
