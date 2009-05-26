@@ -69,15 +69,17 @@ public class ReceiveRobot1 extends Thread {
 										_configutarion
 												.getPosicionAsociada(MachineNames.FIN_1),
 										false);
-					} else {
+					} else if (producto.equals("blister")) {
 						// un blister de la cinta 2
-						_masterContext
-								.get_contextoAut2()
+						_masterContext.get_contextoAut2()
 								.setDispositivosInternos(
 										_configutarion
 												.getPosicionAsociada(MachineNames.FIN_2),
 										false);
 					}
+					
+					// TODO Falta para paquetes
+					
 					break;
 				case FININTERFERENCIA:
 					String cinta2 = msg.getParameters().get(1);
@@ -106,18 +108,43 @@ public class ReceiveRobot1 extends Thread {
 										true);
 						_masterContext.setBlisterColocado(true);
 						_masterContext.resetContador();
+						
+						// Se notifican el blister de la mesa
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.TABLE_CONTENT);
+						dm.setObject(1);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageSCADA(dm);
+						
 					} else if (colocado.equals("pastel")) {
 						// pongo un pastel
 						_masterContext.incrementarContador();
+						
+						// Se notifican el blister y los pasteles de la mesa
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.TABLE_CONTENT);
+						dm.setObject(_masterContext.getContador()+1);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageSCADA(dm);
+						
 					} else { // blisterCompleto
-						_masterContext
+						// TODO Se asume que son 4
+						// TODO enviar mensaje al aut—mata 3, no vale con cambiar su contexto
+						/*_masterContext
 								.get_contextoAut3()
 								.setDispositivosInternos(
 										_configutarion
 												.getPosicionAsociada(MachineNames.INICIO),
-										false);
+										false);*/
 						_masterContext.setBlisterColocado(false);
 						_masterContext.resetContador();
+						
+						// Se notifica la mesa vacia
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.TABLE_CONTENT);
+						dm.setObject(0);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageSCADA(dm);
 					}
 
 					break;

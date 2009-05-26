@@ -173,11 +173,10 @@ public class Robot1 implements Notifiable{
 							_buzon.send(send);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_2)){
-						//cogo el blister
+						//cojo el blister
 						/*
 						 * envia el mensaje de blister recogido
 						 */
-						//cogo el pastel
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*1000)){
 							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_3);
 							_contexto.setPastel(false);

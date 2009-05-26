@@ -16,7 +16,8 @@ public enum TransferBufferKeys {
 			Integer.class), AU2_BLISTERS_POS1(
 					Integer.class), AU2_BLISTERS_POS2(Integer.class), AU2_BLISTERS_POS3(
 							Integer.class), AU2_BLISTERS_POS4(Integer.class), AU2_BLISTERS_POS5(
-							Integer.class), AU1_STATE(Boolean.class), AU2_STATE(Boolean.class), AU3_STATE(
+							Integer.class), TABLE_CONTENT(
+									Integer.class), AU1_STATE(Boolean.class), AU2_STATE(Boolean.class), AU3_STATE(
 			Boolean.class), RB1_STATE(Boolean.class), RB2_STATE(Boolean.class), GEN_IP(
 			String.class), GEN_PORT(Integer.class), RB1_CONTENT(Integer.class),
 			RB2_CONTENT(Integer.class);

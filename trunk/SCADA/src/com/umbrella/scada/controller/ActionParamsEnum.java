@@ -11,10 +11,11 @@ public enum ActionParamsEnum {
 	SIZE(Integer.class),
 	CAKE_QUANTITY(Integer.class),
 	CHOCOLAT_QUANTITY(Integer.class),
-	CARAMEL_QUANTITY(Integer.class), 
+	CARAMEL_QUANTITY(Integer.class),
 	CAKE_DEPOT(Integer.class), 
 	AU1_CAKES_POS(ArrayList.class), 
 	AU2_BLISTER_POS(ArrayList.class),
+	TABLE_CONTENT(Integer.class),
 	ROBOT_CONTENT(Integer.class), 
 	CONFIGURATION(Configuration.class);
 	

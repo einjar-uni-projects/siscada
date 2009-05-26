@@ -26,6 +26,7 @@ public class MainFrameModel implements Updatable {
 	private int[] _pasteles = new int[7];
 	private int[] _blisters = new int[5];
 	private int[] _paquetes = new int[5];
+	private int _tableContent;
 	
 	private double _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
 	
@@ -215,6 +216,11 @@ public class MainFrameModel implements Updatable {
 		case AU2_STATE:
 			synchronized (_cerrojos[TransferBufferKeys.AU2_STATE.ordinal()]) {
 				_statesAutRob[1] = (Boolean) o;
+			}
+			break;
+		case TABLE_CONTENT:
+			synchronized (_cerrojos[TransferBufferKeys.TABLE_CONTENT.ordinal()]) {
+				_tableContent = (Integer) o;
 			}
 			break;
 		case AU3_CONVEYOR_BELT_SIZE:
@@ -472,6 +478,12 @@ public class MainFrameModel implements Updatable {
 	public int get_rb2Content() {
 		synchronized (_cerrojos[TransferBufferKeys.RB2_CONTENT.ordinal()]) {
 			return _rb2Content;
+		}
+	}
+	
+	public int get_tableContent() {
+		synchronized (_cerrojos[TransferBufferKeys.TABLE_CONTENT.ordinal()]) {
+			return _tableContent;
 		}
 	}
 
