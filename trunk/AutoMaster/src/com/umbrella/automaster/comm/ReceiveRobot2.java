@@ -76,7 +76,7 @@ public class ReceiveRobot2 extends Thread {
 					}else
 						dm.setObject(0);
 					
-					dm.getParameters().add("RB1");
+					dm.getParameters().add("RB2");
 					_postmaster.sendMessageSCADA(dm);
 					
 					break;

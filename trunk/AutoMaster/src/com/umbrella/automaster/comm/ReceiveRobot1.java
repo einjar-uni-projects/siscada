@@ -129,6 +129,13 @@ public class ReceiveRobot1 extends Thread {
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageSCADA(dm);
 						
+						// Se pide al robot que lo desplace hasta el aut—mata 3 si ya est‡n todos
+						if(_masterContext.getContador() >= 4){
+							MessageInterface mensajeSend = new DefaultMessage();
+							mensajeSend.setIdentifier(MSGOntology.BLISTERCOMPLETO);
+							_postmaster.sendMessageRB1(mensajeSend);
+						}
+						
 					} else { // blisterCompleto
 						// TODO Se asume que son 4
 						// TODO enviar mensaje al autï¿½mata 3, no vale con cambiar su contexto
@@ -147,6 +154,13 @@ public class ReceiveRobot1 extends Thread {
 						dm.setObject(0);
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageSCADA(dm);
+						
+						// Se env’a un blister al aut—mata 3
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.BLISTERCOMPLETO);
+						//dm.setObject(0);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageAU3(dm);
 					}
 
 					break;
