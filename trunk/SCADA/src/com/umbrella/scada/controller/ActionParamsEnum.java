@@ -14,6 +14,7 @@ public enum ActionParamsEnum {
 	CARAMEL_QUANTITY(Integer.class), 
 	CAKE_DEPOT(Integer.class), 
 	AU1_CAKES_POS(ArrayList.class), 
+	AU2_BLISTER_POS(ArrayList.class),
 	ROBOT_CONTENT(Integer.class), 
 	CONFIGURATION(Configuration.class);
 	

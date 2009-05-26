@@ -187,6 +187,31 @@ public class MainFrameModel implements Updatable {
 
 			}
 			break;
+		case AU2_BLISTERS_POS1:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS1.ordinal()]) {
+				_blisters[0] = (Integer) o;
+			}
+			break;
+		case AU2_BLISTERS_POS2:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS2.ordinal()]) {
+				_blisters[1] = (Integer) o;
+			}
+			break;
+		case AU2_BLISTERS_POS3:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS3.ordinal()]) {
+				_blisters[2] = (Integer) o;
+			}
+			break;
+		case AU2_BLISTERS_POS4:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS4.ordinal()]) {
+				_blisters[3] = (Integer) o;
+			}
+			break;
+		case AU2_BLISTERS_POS5:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS5.ordinal()]) {
+				_blisters[4] = (Integer) o;
+			}
+			break;
 		case AU2_STATE:
 			synchronized (_cerrojos[TransferBufferKeys.AU2_STATE.ordinal()]) {
 				_statesAutRob[1] = (Boolean) o;

@@ -5,17 +5,16 @@ import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.Notifiable;
-import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.autoslave.executor.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
-import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
+import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
-import com.umbrella.utils.RobotStates;
 import com.umbrella.utils.MachineNames;
+import com.umbrella.utils.RobotStates;
 
 /*
  * este robot tiene el estado reposo, el estado voy por blister y voy por pastel

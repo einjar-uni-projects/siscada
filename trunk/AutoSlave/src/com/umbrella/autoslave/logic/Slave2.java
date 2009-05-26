@@ -1,13 +1,11 @@
 package com.umbrella.autoslave.logic;
 
 import java.rmi.RemoteException;
-import java.util.LinkedList;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.Notifiable;
-import com.umbrella.autocommon.Notifiable.NotificableSignal;
 import com.umbrella.autoslave.executor.ConveyorBeltExit;
 import com.umbrella.autoslave.executor.InstantaneousMachine;
 import com.umbrella.autoslave.executor.MoveConveyorBelt;
@@ -16,8 +14,8 @@ import com.umbrella.autoslave.executor.TurnOff;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
 import com.umbrella.mail.message.DefaultMessage;
-import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.message.MSGOntology;
+import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertiesFileHandler;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
@@ -355,7 +353,7 @@ public class Slave2 implements Notifiable {
 	/**
 	 * repasa la linkedlist de blisteres y los pone en las posiciones del contador
 	 */
-	private void actualizarContadorAutomata(){
+	/*private void actualizarContadorAutomata(){
 		
 		contexto.resetContadorAutomata2();
 		LinkedList<Blister> lista=new LinkedList<Blister>();
@@ -373,6 +371,6 @@ public class Slave2 implements Notifiable {
 				contexto.incrementarContadorAutomata2(4);
 			}
 		}
-	}
+	}*/
 
 }

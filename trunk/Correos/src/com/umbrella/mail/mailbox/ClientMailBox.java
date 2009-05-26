@@ -14,8 +14,6 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import src.ConnectionState;
-
 import com.umbrella.mail.message.MessageInterface;
 
 /**

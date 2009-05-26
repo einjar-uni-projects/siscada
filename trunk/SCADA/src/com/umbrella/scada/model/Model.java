@@ -65,6 +65,11 @@ public class Model {
 	private final ModelElementAtribute<Double> _au2ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU2_CONVEYOR_BELT_SIZE,new Double(10));
 	private final ModelElementAtribute<Double> _au2ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU2_CONVEYOR_BELT_SPEED,new Double(20));
 	private final ModelElementAtribute<Integer> _au2VacuumSealingMachine = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_VACUUM_SEALING_MACHINE, new Integer(5));
+	private final ModelElementAtribute<Integer> _au2BlistersPos1 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS1, new Integer(0));
+	private final ModelElementAtribute<Integer> _au2BlistersPos2 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS2, new Integer(0));
+	private final ModelElementAtribute<Integer> _au2BlistersPos3 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS3, new Integer(0));
+	private final ModelElementAtribute<Integer> _au2BlistersPos4 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS4, new Integer(0));
+	private final ModelElementAtribute<Integer> _au2BlistersPos5 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS5, new Integer(0));
 	private final ModelElementAtribute<Boolean> _au2State = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU2_STATE, new Boolean(false));
 	
 	/*Atributos del automata 3*/
@@ -119,6 +124,11 @@ public class Model {
 		_observable.addChange(_au2ConveyorBeltSize.get_tbk(), _au2ConveyorBeltSize.get_value());
 		_observable.addChange(_au2ConveyorBeltSpeed.get_tbk(), _au2ConveyorBeltSpeed.get_value());
 		_observable.addChange(_au2VacuumSealingMachine.get_tbk(), _au2VacuumSealingMachine.get_value());
+		_observable.addChange(_au2BlistersPos1.get_tbk(), _au2BlistersPos1.get_value());
+		_observable.addChange(_au2BlistersPos2.get_tbk(), _au2BlistersPos2.get_value());
+		_observable.addChange(_au2BlistersPos3.get_tbk(), _au2BlistersPos3.get_value());
+		_observable.addChange(_au2BlistersPos4.get_tbk(), _au2BlistersPos4.get_value());
+		_observable.addChange(_au2BlistersPos5.get_tbk(), _au2BlistersPos5.get_value());
 		_observable.addChange(_au2State.get_tbk(), _au2State.get_value());
 		
 		_observable.addChange(_au3ConveyorBeltSize.get_tbk(), _au3ConveyorBeltSize.get_value());
@@ -300,6 +310,36 @@ public class Model {
 	public void set_au2VacuumSealingMachine(int vacuumSealingMachine) {
 		_au2VacuumSealingMachine.set_value(vacuumSealingMachine);
 		_observable.addChange(_au2VacuumSealingMachine.get_tbk(), _au2VacuumSealingMachine.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2BlistersPos1(int blisters){
+		_au2BlistersPos1.set_value(blisters);
+		_observable.addChange(_au2BlistersPos1.get_tbk(), _au2BlistersPos1.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2BlistersPos2(int blisters){
+		_au2BlistersPos2.set_value(blisters);
+		_observable.addChange(_au2BlistersPos2.get_tbk(), _au2BlistersPos2.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2BlistersPos3(int blisters){
+		_au2BlistersPos3.set_value(blisters);
+		_observable.addChange(_au2BlistersPos3.get_tbk(), _au2BlistersPos3.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2BlistersPos4(int blisters){
+		_au2BlistersPos4.set_value(blisters);
+		_observable.addChange(_au2BlistersPos4.get_tbk(), _au2BlistersPos4.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2BlistersPos5(int blisters){
+		_au2BlistersPos5.set_value(blisters);
+		_observable.addChange(_au2BlistersPos5.get_tbk(), _au2BlistersPos5.get_value());
 		_modelChanges = true;
 	}
 	

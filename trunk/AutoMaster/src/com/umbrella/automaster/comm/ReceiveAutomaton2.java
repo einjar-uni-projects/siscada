@@ -62,7 +62,7 @@ public class ReceiveAutomaton2 extends Thread {
 					dm.getParameters().add("AU2");
 					_postmaster.sendMessageSCADA(dm);
 					
-					// Se notifican los pasteles en la cinta
+					// Se notifican los blisters en la cinta
 					dm = new DefaultMessage();
 					dm.setIdentifier(MSGOntology.AU2_BLISTER_POS);
 					dm.setObject(getListaBlisters(con_update_context.get_listaBlister()));
@@ -108,19 +108,14 @@ public class ReceiveAutomaton2 extends Thread {
 			double pos=lista.get(i).get_posicion();
 			if( pos<(_configuration.getPosTroqueladora()+_configuration.getSizeBlister()/2) ){
 				salida.set(0, salida.get(0)+1);
-				System.err.println("caca1");
 			}else if(pos<(_configuration.getPosCortadora()-_configuration.getSizeBlister()/2)){
 				salida.set(1, salida.get(1)+1);
-				System.err.println("caca2");
 			}else if(pos<(_configuration.getPosCortadora()+_configuration.getSizeBlister()/2)){
 				salida.set(2, salida.get(2)+1);
-				System.err.println("caca3");
 			}else if(pos<(_configuration.getPosFinAut2()-_configuration.getSizeBlister()/2)){
 				salida.set(3, salida.get(3)+1);
-				System.err.println("caca4");
 			}else if(pos<(_configuration.getPosFinAut2()+_configuration.getSizeBlister()/2)){
 				salida.set(4, salida.get(4)+1);
-				System.err.println("caca5");
 			}
 		}
 		return salida;
