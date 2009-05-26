@@ -23,7 +23,7 @@ import com.umbrella.utils.RobotStates;
 public class Robot2  implements Notifiable{
 
 	private Configuration _configuracion= Configuration.getInstance();
-	private ContextoRobot _contexto= ContextoRobot.getInstance();
+	private ContextoRobot _contexto= new ContextoRobot();
 
 	private Clock _clock;
 	private boolean _joy = true;
@@ -76,7 +76,7 @@ public class Robot2  implements Notifiable{
 						_contexto.setApagado(false);
 						break;
 					case START:
-						_contexto=_contexto.reset();
+						_contexto=new ContextoRobot();
 						_contexto.setApagado(false);
 						break;
 					case PARADA:
@@ -89,7 +89,7 @@ public class Robot2  implements Notifiable{
 						_contexto.setValido(false);//blister que no pasa el control de calidad
 						break;
 					case RESET:
-						_contexto=_contexto.reset();
+						_contexto=new ContextoRobot();
 						break;
 					case PARADAFALLO:
 						_contexto.setFallo(true);
@@ -113,7 +113,8 @@ public class Robot2  implements Notifiable{
 					//posicion 3 es la caja de no validos
 					_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 					if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO)){
-						_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
+						// TODO Solo debe ir a la posici—n 1 si es necesario, sino genera interferencia
+						/*_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);*/
 						_contexto.setTiempo(System.currentTimeMillis());
 						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 					}

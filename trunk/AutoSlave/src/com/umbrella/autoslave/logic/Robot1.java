@@ -22,7 +22,7 @@ import com.umbrella.utils.RobotStates;
 public class Robot1 implements Notifiable{
 
 	private Configuration _configuracion= Configuration.getInstance();
-	private ContextoRobot _contexto= ContextoRobot.getInstance();
+	private ContextoRobot _contexto= new ContextoRobot();
 
 	private Clock _clock;
 	private boolean _joy = true;
@@ -83,7 +83,7 @@ public class Robot1 implements Notifiable{
 						_contexto.setApagado(false);
 						break;
 					case START:
-						_contexto=_contexto.reset();
+						_contexto=new ContextoRobot();
 						_contexto.setApagado(false);
 						break;
 					case PARADA:
@@ -99,7 +99,7 @@ public class Robot1 implements Notifiable{
 						_contexto.setBlisterListo(true);
 						break;
 					case RESET:
-						_contexto=_contexto.reset();
+						_contexto=new ContextoRobot();
 						break;
 					case PARADAFALLO:
 						_contexto.setFallo(true);
