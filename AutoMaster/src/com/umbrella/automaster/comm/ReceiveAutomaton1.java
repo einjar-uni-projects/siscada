@@ -97,12 +97,12 @@ public class ReceiveAutomaton1 extends Thread {
 					_configuration.getPosicionAsociada(MachineNames.FIN_1))
 					&& _masterContext.get_contextoRobot1().getEstadoInterno()
 							.equals(RobotStates.REPOSO)
-					&& _masterContext.getContador() < 4) {
+					&& _masterContext.getContador() < 4 && _masterContext.isBlisterColocado()) {
 				/*
 				 * el estado interno del aut1 me dice q tiene el fin de la cinta
-				 * ocupado envio el mensaje al robot 1 si esta en modo reposo y
+				 * ocupado envio el mensaje al robot 1 si esta en modo reposo,
 				 * tengo un blister con posicion libre, es decir el contador es
-				 * menor que 4
+				 * menor que 4 y ya hay un blister en la cinta
 				 */
 				MessageInterface mensajeSend = new DefaultMessage();
 				mensajeSend.setIdentifier(MSGOntology.PASTELLISTO);

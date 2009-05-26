@@ -2,6 +2,7 @@ package com.umbrella.automaster.comm;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.umbrella.autocommon.Configuration;
@@ -23,13 +24,13 @@ public class ReceiveAutomaton3 extends Thread {
 
 	Postmaster _postmaster;
 	MasterContext _masterContext;
-	Configuration _configutarion;
+	Configuration _configuration;
 
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
 			_masterContext = MasterContext.getInstance();
-			_configutarion = Configuration.getInstance();
+			_configuration = Configuration.getInstance();
 		} catch (RemoteException e1) {
 			// TODO: handle exception
 		} catch (MalformedURLException e2) {
@@ -58,6 +59,14 @@ public class ReceiveAutomaton3 extends Thread {
 					dm.setObject(!con_update_context.isApagado());
 					dm.getParameters().add("AU3");
 					_postmaster.sendMessageSCADA(dm);
+					
+					// Se notifican los paquetes en la cinta
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.AU3_PACKAGE_POS);
+					dm.setObject(getPackageList(con_update_context.get_listaBlister()));
+					dm.getParameters().add("AU3");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				}
 			}
@@ -73,7 +82,7 @@ public class ReceiveAutomaton3 extends Thread {
 			 * si el estado interno nos dice que hay un blister completo listo
 			 * al inicio de la cinta
 			 */
-			if (context.getDispositivosInternos(_configutarion
+			if (context.getDispositivosInternos(_configuration
 					.getPosicionAsociada(MachineNames.INICIO))
 					&& _masterContext.getContador() == 4) {
 
@@ -89,7 +98,7 @@ public class ReceiveAutomaton3 extends Thread {
 			 * sellado al final de la cinta
 			 */
 			if (context.getDispositivosInternos(
-					_configutarion.getPosicionAsociada(MachineNames.FIN_3))) {
+					_configuration.getPosicionAsociada(MachineNames.FIN_3))) {
 				MessageInterface mensajeSend = new DefaultMessage();
 				if (valido()) {
 					mensajeSend.setIdentifier(MSGOntology.BLISTERVALIDO);
@@ -117,4 +126,31 @@ public class ReceiveAutomaton3 extends Thread {
 		sal = list.get(pos).getCalidad()[0];
 		return sal;
 	}
+	
+	private synchronized ArrayList<Integer> getPackageList(LinkedList<Blister> lista) {
+
+		ArrayList<Integer> salida = new ArrayList<Integer>(5);
+		for (int i = 0; i < 5; i++) {
+			salida.add(i, 0);
+		}
+		
+		for(int i=0;i<lista.size();i++){
+			double pos=lista.get(i).get_posicion();
+			if( pos<(_configuration.getPosCalidad()-_configuration.getSizeBlister()/2) ){
+				salida.set(0, salida.get(0)+1);
+			}if( pos<(_configuration.getPosCalidad()+_configuration.getSizeBlister()/2) ){
+				salida.set(1, salida.get(1)+1);
+			/*}else if(pos<(_configuration.getPosSelladora()-_configuration.getSizeBlister()/2)){
+				salida.set(2, salida.get(2)+1);*/
+			}else if(pos<(_configuration.getPosSelladora()+_configuration.getSizeBlister()/2)){
+				salida.set(2, salida.get(2)+1);
+			}else if(pos<(_configuration.getPosFinAut3()-_configuration.getSizeBlister()/2)){
+				salida.set(3, salida.get(3)+1);
+			}else if(pos<(_configuration.getPosFinAut3()+_configuration.getSizeBlister()/2)){
+				salida.set(4, salida.get(4)+1);
+			}
+		}
+		return salida;
+	}
+	
 }

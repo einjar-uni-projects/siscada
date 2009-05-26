@@ -125,9 +125,12 @@ public class Robot1 implements Notifiable{
 						 * si recibe un mensaje de recoger pastel pues pasa al estado: CAMINOPOSICION_1 y coge el tiempo
 						 * si recibe un mensaje de moverblistercompleto pues pasa al estado: DESPLAZARBLISTERCOMPLETO y coge el tiempo
 						 */
-						if(_contexto.isBlisterListo()) _contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_2);
-						if(_contexto.isPastelListo()) _contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
-						if(_contexto.isBlisterCompletoListo()) _contexto.setEstadoInterno(RobotStates.DESPLAZARBLISTERCOMPLETO);
+						if(_contexto.isBlisterListo())
+							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_2);
+						if(_contexto.isPastelListo())
+							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
+						if(_contexto.isBlisterCompletoListo())
+							_contexto.setEstadoInterno(RobotStates.DESPLAZARBLISTERCOMPLETO);
 
 						_contexto.setTiempo(System.currentTimeMillis());
 						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
@@ -188,7 +191,7 @@ public class Robot1 implements Notifiable{
 							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 							send.getParameters().add("blister");
 							_buzon.send(send);
-							_contexto.setPastelListo(false);
+							_contexto.setBlisterListo(false);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
 						// controlar interferencias, mejor lo hace el maestro

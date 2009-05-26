@@ -15,6 +15,7 @@ public enum ActionParamsEnum {
 	CAKE_DEPOT(Integer.class), 
 	AU1_CAKES_POS(ArrayList.class), 
 	AU2_BLISTER_POS(ArrayList.class),
+	AU3_PACKAGE_POS(ArrayList.class),
 	TABLE_CONTENT(Integer.class),
 	ROBOT_CONTENT(Integer.class), 
 	CONFIGURATION(Configuration.class);

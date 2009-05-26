@@ -82,6 +82,11 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case AU3_PACKAGE_POS:
+			ret = new ActUpdateAu3PackagePos();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
 		case TABLE_CONTENT:
 			ret = new ActUpdateTableContent();
 			if(!ret.insertParam(params))

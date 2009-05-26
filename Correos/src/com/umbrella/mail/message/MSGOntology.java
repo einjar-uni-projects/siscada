@@ -35,6 +35,7 @@ public enum MSGOntology {
 	CAKE_DEPOT("CakeDepot",0),
 	AU1_CAKES_POS("Au1CakesPos",0),
 	AU2_BLISTER_POS("Au2BlisterPos",0),
+	AU3_PACKAGE_POS("Au3PackagePos",0),
 	TABLE_CONTENT("TableContent",0),
 	ROBOT_SET_CONTENT("RobotSetContent",0)
 	; 

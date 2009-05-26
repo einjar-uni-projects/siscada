@@ -406,7 +406,7 @@ public class Slave3 implements Notifiable{
 	/**
 	 * repasa la linkedlist de blisteres y los pone en las posiciones del contador
 	 */
-	private void actualizarContadorAutomata(){
+	/*private void actualizarContadorAutomata(){
 		
 		contexto.resetContadorAutomata3();
 		LinkedList<Blister> lista=contexto.get_listaBlister();
@@ -426,6 +426,6 @@ public class Slave3 implements Notifiable{
 				contexto.incrementarContadorAutomata3(5);
 			}
 		}
-	}
+	}*/
 	
 }
