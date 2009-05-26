@@ -31,6 +31,7 @@ public class ClientMailBox {
 	private final String _inputQueueS;
 	private final String _outputQueueS;
 	private KeepAliveThread _keepAliveThread  = null;
+	private final boolean _slave;
 
 	/**
 	 * Constructor de MailBox
@@ -51,11 +52,12 @@ public class ClientMailBox {
 	 *             No se ha podido obtener la cola del servidor de colas
 	 */
 	public ClientMailBox(String queueServerIp, int queueServerPort,
-			String inputQueue, String outputQueue) {
+			String inputQueue, String outputQueue, boolean slave) {
 		_queueServerIp = queueServerIp;
 		_queueServerPort = queueServerPort;
 		_inputQueueS = inputQueue;
 		_outputQueueS = outputQueue;
+		_slave = slave;
 		connect();
 	}
 
@@ -81,10 +83,10 @@ public class ClientMailBox {
 						+ _outputQueueS+ServerMailBox._keepAlive);
 				
 				//Creacion del hilo de keepAlive
-				_keepAliveThread = new KeepAliveThread(/*slave*/false,_inputQueueKA, _outputQueueKA);
+				_keepAliveThread = new KeepAliveThread(_slave,_inputQueueKA, _outputQueueKA, _outputQueueS);
 		        
 				//Inicio del hilo de keepAlive
-		        //TODO this._keepAliveThread.start();
+		        this._keepAliveThread.start();
 				
 				done = true;
 				System.out.println("Conectado con el host: " + _queueServerIp
@@ -168,7 +170,8 @@ public class ClientMailBox {
 	}
 
 	public boolean getState() {
-		// TODO Auto-generated method stub
-		return true;
+		//TODO si esto no se muestra chungo no se controla el estado de la conexión
+		System.out.println("Se tiene que llamar a esto");
+		return _keepAliveThread.get_State();
 	}
 }
