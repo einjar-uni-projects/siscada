@@ -277,9 +277,12 @@ public class Slave3 implements Notifiable{
 	 */
 	private synchronized boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_selladora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
+		if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO))
+			hay=true;
+		else if(_selladora.getThreadState().equals(ThreadState.EJECUTANDO))
+			hay=true;
+		else if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO))
+			hay=true;
 		return hay;
 	}
 	
