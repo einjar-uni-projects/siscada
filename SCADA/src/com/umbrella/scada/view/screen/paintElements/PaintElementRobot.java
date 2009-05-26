@@ -33,10 +33,10 @@ public class PaintElementRobot extends PaintElement {
 		case 0:
 			g.drawImage(_loader.get_robot(), _posX, _posY, _maxX, _maxY, null);
 			break;
-		case 1:
+		case 2:
 			g.drawImage(_loader.get_robotBlister(), _posX, _posY, _maxX, _maxY, null);
 			break;
-		case 2:
+		case 1:
 			g.drawImage(_loader.get_robotTarta(), _posX, _posY, _maxX, _maxY, null);
 			break;
 		case 3:
