@@ -17,6 +17,12 @@ import com.umbrella.mail.utils.properties.PropertyException;
 
 public class LaunchAutMaster {
 	public static boolean debug = false;
+	public static boolean debugSlav1 = false;
+	public static boolean debugSlav2 = false;
+	public static boolean debugSlav3 = false;
+	public static boolean debugRobo1 = false;
+	public static boolean debugRobo2 = false;
+	public static boolean debugSCADA = false;
 	private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
 	
@@ -25,8 +31,19 @@ public class LaunchAutMaster {
 	 * @throws PropertyException 
 	 */
 	public static void main(String[] args) throws Exception {
-		if(args.length > 0)
-			debug = true;
+		if(args.length > 0){
+			if(args.length == 6){
+				debugSlav1 = Boolean.parseBoolean(args[0]);
+				debugSlav2 = Boolean.parseBoolean(args[1]);
+				debugSlav3 = Boolean.parseBoolean(args[2]);
+				debugRobo1 = Boolean.parseBoolean(args[3]);
+				debugRobo2 = Boolean.parseBoolean(args[4]);
+				debugSCADA = Boolean.parseBoolean(args[4]);
+				System.out.println(debugSlav1+" "+ debugSlav2+" "+ debugSlav3+" "+ debugRobo1+" "+ debugRobo2+" "+debugSCADA);
+			}else{
+				debug = true;
+			}
+		}
 		System.out.println(InetAddress.getLocalHost().getHostAddress());
 		new LaunchAutMaster();
 	}

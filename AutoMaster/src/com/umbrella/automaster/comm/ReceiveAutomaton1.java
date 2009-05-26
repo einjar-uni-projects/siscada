@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.MasterContext;
+import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
@@ -49,7 +50,8 @@ public class ReceiveAutomaton1 extends Thread {
 			msg = _postmaster.reciveMessageAU1();
 			
 			if (msg != null) {
-				System.out.println("AU1 Recive: " + msg.getIdentifier());
+				if(LaunchAutMaster.debugSlav1)
+					System.out.println("AU1 Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()) {
 				case AVISARUNFALLO:
 					String emptyMachine = msg.getParameters().get(0);
