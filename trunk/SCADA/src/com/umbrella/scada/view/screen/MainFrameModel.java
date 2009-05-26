@@ -371,20 +371,10 @@ public class MainFrameModel implements Updatable {
 	}
 
 	public int[] get_blisters() {
-		/*_blisters[0] = 4;
-		_blisters[1] = 1;
-		_blisters[2] = 10;
-		_blisters[3] = 100;
-		_blisters[4] = 4;*/
 		return _blisters;
 	}
 
 	public int[] get_paquetes() {
-		_paquetes[0] = 6;
-		_paquetes[1] = 6;
-		_paquetes[2] = 6;
-		_paquetes[3] = 6;
-		_paquetes[4] = 1;
 		return _paquetes;
 	}
 

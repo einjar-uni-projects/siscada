@@ -78,15 +78,17 @@ public class ReceiveAutomaton2 extends Thread {
 		/*
 		 * el estado interno del aut2 me dice q tiene el fin de la cinta ocupado
 		 * y el inicio de la cinta 3 esta libre envio el mensaje al robot 1 si
-		 * esta en modo reposo de blisterlisto
+		 * esta en modo reposo de blisterlisto y no hay blisteres en la mesa
 		 */
 		Context context = _masterContext.get_contextoAut2();
 		ContextoRobot contextr1 = _masterContext.get_contextoRobot1();
 		Context contexta3 = _masterContext.get_contextoAut3();
+		
 		if (context != null && contextr1 != null && contexta3 != null) {
 			if (context.getDispositivosInternos(_configuration.getPosicionAsociada(MachineNames.FIN_3))
 					&& contextr1.getEstadoInterno().equals(RobotStates.REPOSO)
-					&& !contexta3.getDispositivosInternos(_configuration.getPosicionAsociada(MachineNames.INICIO))) {
+					&& !_masterContext.isBlisterColocado()
+					/* Sobra porque va contra la mesa&& !contexta3.getDispositivosInternos(_configuration.getPosicionAsociada(MachineNames.INICIO))*/) {
 				MessageInterface mensajeSend = new DefaultMessage();
 				mensajeSend.setIdentifier(MSGOntology.BLISTERLISTO);
 				_postmaster.sendMessageRB1(mensajeSend);

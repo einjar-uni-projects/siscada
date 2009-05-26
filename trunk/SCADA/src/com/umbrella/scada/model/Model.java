@@ -78,6 +78,11 @@ public class Model {
 	/*Atributos del automata 3*/
 	private final ModelElementAtribute<Double> _au3ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU3_CONVEYOR_BELT_SIZE,new Double(10));
 	private final ModelElementAtribute<Double> _au3ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU3_CONVEYOR_BELT_SPEED,new Double(10));
+	private final ModelElementAtribute<Integer> _au3PackagePos1 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS1, new Integer(0));
+	private final ModelElementAtribute<Integer> _au3PackagePos2 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS2, new Integer(0));
+	private final ModelElementAtribute<Integer> _au3PackagePos3 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS3, new Integer(0));
+	private final ModelElementAtribute<Integer> _au3PackagePos4 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS4, new Integer(0));
+	private final ModelElementAtribute<Integer> _au3PackagePos5 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS5, new Integer(0));
 	private final ModelElementAtribute<Boolean> _au3State = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU3_STATE, new Boolean(false));
 	
 	/*Atributos del robot1*/
@@ -138,6 +143,11 @@ public class Model {
 		
 		_observable.addChange(_au3ConveyorBeltSize.get_tbk(), _au3ConveyorBeltSize.get_value());
 		_observable.addChange(_au3ConveyorBeltSpeed.get_tbk(), _au3ConveyorBeltSpeed.get_value());
+		_observable.addChange(_au3PackagePos1.get_tbk(), _au3PackagePos1.get_value());
+		_observable.addChange(_au3PackagePos2.get_tbk(), _au3PackagePos2.get_value());
+		_observable.addChange(_au3PackagePos3.get_tbk(), _au3PackagePos3.get_value());
+		_observable.addChange(_au3PackagePos4.get_tbk(), _au3PackagePos4.get_value());
+		_observable.addChange(_au3PackagePos5.get_tbk(), _au3PackagePos5.get_value());
 		_observable.addChange(_au3State.get_tbk(), _au3State.get_value());
 		
 		_observable.addChange(_genBlisterSize.get_tbk(), _genBlisterSize.get_value());
@@ -363,6 +373,36 @@ public class Model {
 	public void set_au3ConveyorBeltSpeed(double conveyorBeltSpeed) {
 		_au3ConveyorBeltSpeed.set_value(conveyorBeltSpeed);
 		_observable.addChange(_au3ConveyorBeltSpeed.get_tbk(), _au3ConveyorBeltSpeed.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3PackagePos1(int pack){
+		_au3PackagePos1.set_value(pack);
+		_observable.addChange(_au3PackagePos1.get_tbk(), _au3PackagePos1.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3PackagePos2(int pack){
+		_au3PackagePos2.set_value(pack);
+		_observable.addChange(_au3PackagePos2.get_tbk(), _au3PackagePos2.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3PackagePos3(int pack){
+		_au3PackagePos3.set_value(pack);
+		_observable.addChange(_au3PackagePos3.get_tbk(), _au3PackagePos3.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3PackagePos4(int pack){
+		_au3PackagePos4.set_value(pack);
+		_observable.addChange(_au3PackagePos4.get_tbk(), _au3PackagePos4.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3PackagePos5(int pack){
+		_au3PackagePos5.set_value(pack);
+		_observable.addChange(_au3PackagePos5.get_tbk(), _au3PackagePos5.get_value());
 		_modelChanges = true;
 	}
 	
