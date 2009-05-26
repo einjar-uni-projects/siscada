@@ -29,7 +29,7 @@ public class ContextoRobot implements Serializable {
 	private boolean paradaCorrecta=false; //sirve para hacer bien la parada
 	private boolean fallo=false;
 	
-	private static ContextoRobot Instancia = null;
+	/*private static ContextoRobot Instancia = null;
 	
 	private ContextoRobot(){
 		
@@ -38,7 +38,7 @@ public class ContextoRobot implements Serializable {
 	public static synchronized ContextoRobot getInstance() {
 		if(Instancia==null) Instancia=new ContextoRobot();
 		return Instancia;
-	}
+	}*/
 	
 	public synchronized boolean isFIN() {
 		return FIN;
@@ -138,9 +138,9 @@ public class ContextoRobot implements Serializable {
 		this.fallo = fallo;
 	}
 	
-	public synchronized ContextoRobot reset(){
+	/*public synchronized ContextoRobot reset(){
 		Instancia=new ContextoRobot();
 		return Instancia;
 		
-	}
+	}*/
 }
