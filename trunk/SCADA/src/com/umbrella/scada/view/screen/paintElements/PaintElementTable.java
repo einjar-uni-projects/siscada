@@ -28,7 +28,24 @@ public class PaintElementTable extends PaintElement {
 	@Override
 	public void paint(Graphics g) {
 		g.drawImage(_loader.get_table(), _posX, _posY, _maxX, _maxY, null);
-		g.drawChars((""+_model.get_tableContent()).toCharArray(), 0, 1, _posX, _posY);
+		switch(_model.get_tableContent()){
+		case 1:
+			g.drawImage(_loader.get_blisterCortado(),_posX+20,_posY-10,75,70,null);
+			break;
+		case 2:
+			g.drawImage(_loader.get_blister1Tarta(),_posX+20,_posY-10,75,70,null);
+			break;
+		case 3:
+			g.drawImage(_loader.get_blister2Tarta(),_posX+20,_posY-10,75,70,null);
+			break;
+		case 4:
+			g.drawImage(_loader.get_blister3Tarta(),_posX+20,_posY-10,75,70,null);
+			break;
+		case 5:
+			g.drawImage(_loader.get_blister4Tarta(),_posX+20,_posY-10,75,70,null);
+			break;
+		}
+		//g.drawChars((""+_model.get_tableContent()).toCharArray(), 0, 1, _posX, _posY);
 
 	}
 
