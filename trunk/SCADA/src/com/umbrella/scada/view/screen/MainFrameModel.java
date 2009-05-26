@@ -235,6 +235,31 @@ public class MainFrameModel implements Updatable {
 				_cbPackageSpeed = ((Double)o).doubleValue();
 			}
 			break;
+		case AU3_PACKAGE_POS1:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS1.ordinal()]) {
+				_paquetes[0] = (Integer) o;
+			}
+			break;
+		case AU3_PACKAGE_POS2:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS2.ordinal()]) {
+				_paquetes[1] = (Integer) o;
+			}
+			break;
+		case AU3_PACKAGE_POS3:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS3.ordinal()]) {
+				_paquetes[2] = (Integer) o;
+			}
+			break;
+		case AU3_PACKAGE_POS4:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS4.ordinal()]) {
+				_paquetes[3] = (Integer) o;
+			}
+			break;
+		case AU3_PACKAGE_POS5:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS5.ordinal()]) {
+				_paquetes[4] = (Integer) o;
+			}
+			break;
 		case AU3_STATE:
 			synchronized (_cerrojos[TransferBufferKeys.AU3_STATE.ordinal()]) {
 				_statesAutRob[2] = (Boolean) o;
