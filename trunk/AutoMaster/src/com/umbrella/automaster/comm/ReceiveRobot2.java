@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.MasterContext;
+import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
@@ -44,7 +45,8 @@ public class ReceiveRobot2 extends Thread {
 		do {
 			msg = _postmaster.reciveMessageRB2();
 			if (msg != null) {
-				System.out.println("RB2 Recive: " + msg.getIdentifier());
+				if(LaunchAutMaster.debugRobo2)
+					System.out.println("RB2 Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()) {
 				case INTERFERENCIA:
 					// envio a la cinta 3

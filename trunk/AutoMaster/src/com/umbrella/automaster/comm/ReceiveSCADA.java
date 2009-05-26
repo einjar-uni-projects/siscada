@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.MasterContext;
+import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;
@@ -45,7 +46,8 @@ public class ReceiveSCADA extends Thread {
 		do {
 			msg = _postmaster.reciveMessageSCADA();
 			if (msg != null) {
-				System.out.println("SCADA Recive: " + msg.getIdentifier());
+				if(LaunchAutMaster.debugSCADA)
+					System.out.println("SCADA Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()){
 				case START:
 					Configuration conf = Maestro.getInstance()

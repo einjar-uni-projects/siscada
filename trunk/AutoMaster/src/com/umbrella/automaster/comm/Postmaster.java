@@ -3,6 +3,7 @@ package com.umbrella.automaster.comm;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
+import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.automaster.model.PropertiesFile;
 import com.umbrella.mail.mailbox.ClientMailBox;
 import com.umbrella.mail.mailbox.ServerMailBox;
@@ -73,32 +74,38 @@ public class Postmaster{
 	}
 	
 	public boolean sendMessageSCADA(MessageInterface message){
-		System.out.println("Send: "+message);
+		if(LaunchAutMaster.debugSCADA)
+			System.out.println("Send: "+message);
 		return _SCADAmessageConsulter.send(message);
 	}
 	
 	public boolean sendMessageAU1(MessageInterface message){
-		System.out.println("Send: "+message);
+		if(LaunchAutMaster.debugSlav1)
+			System.out.println("Send: "+message);
 		return _AU1messageConsulter.send(message);
 	}
 	
 	public boolean sendMessageAU2(MessageInterface message){
-		System.out.println("Send: "+message);
+		if(LaunchAutMaster.debugSlav2)
+			System.out.println("Send: "+message);
 		return _AU2messageConsulter.send(message);
 	}
 	
 	public boolean sendMessageAU3(MessageInterface message){
-		System.out.println("Send: "+message);
+		if(LaunchAutMaster.debugSlav3)
+			System.out.println("Send: "+message);
 		return _AU3AmessageConsulter.send(message);
 	}
 	
 	public boolean sendMessageRB1(MessageInterface message){
-		System.out.println("Send: "+message);
+		if(LaunchAutMaster.debugRobo1)
+			System.out.println("Send: "+message);
 		return _RB1messageConsulter.send(message);
 	}
 	
 	public boolean sendMessageRB2(MessageInterface message){
-		System.out.println("Send: "+message);
+		if(LaunchAutMaster.debugRobo1)
+			System.out.println("Send: "+message);
 		return _RB2messageConsulter.send(message);
 	}
 	

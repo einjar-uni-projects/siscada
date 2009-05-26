@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import com.umbrella.autocommon.Configuration;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.MasterContext;
+import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
@@ -46,7 +47,8 @@ public class ReceiveRobot1 extends Thread {
 			msg = _postmaster.reciveMessageRB1();
 			
 			if (msg != null) {
-				System.out.println("RB1 Recive: " + msg.getIdentifier());
+				if(LaunchAutMaster.debugRobo1)
+					System.out.println("RB1 Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()) {
 				case INTERFERENCIA:
 					String cinta = msg.getParameters().get(1);
@@ -129,7 +131,7 @@ public class ReceiveRobot1 extends Thread {
 						
 					} else { // blisterCompleto
 						// TODO Se asume que son 4
-						// TODO enviar mensaje al aut—mata 3, no vale con cambiar su contexto
+						// TODO enviar mensaje al autï¿½mata 3, no vale con cambiar su contexto
 						/*_masterContext
 								.get_contextoAut3()
 								.setDispositivosInternos(
