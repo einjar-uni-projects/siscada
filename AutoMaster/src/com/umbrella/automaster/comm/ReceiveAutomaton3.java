@@ -114,7 +114,7 @@ public class ReceiveAutomaton3 extends Thread {
 				} else {
 					mensajeSend.setIdentifier(MSGOntology.BLISTERNOVALIDO);
 				}
-				_postmaster.sendMessageRB1(mensajeSend);
+				_postmaster.sendMessageRB2(mensajeSend);
 			}
 		}else{
 			System.out.println("Context is null!!! AU3");

@@ -90,7 +90,7 @@ public class ReceiveRobot2 extends Thread {
 				case BLISTERALMACENADO:
 					boolean good = (Boolean)msg.getObject();
 					_masterContext.incrementarProducidos(good);
-					
+
 					// envia el mensaje a SCADA informando
 					dm = new DefaultMessage();
 					if(good){
@@ -102,7 +102,7 @@ public class ReceiveRobot2 extends Thread {
 					}
 					
 					dm.getParameters().add("RB2");
-					_postmaster.sendMessageAU3(dm);
+					_postmaster.sendMessageSCADA(dm);
 					break;
 				}
 			}
