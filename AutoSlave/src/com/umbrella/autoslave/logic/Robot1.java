@@ -58,16 +58,16 @@ public class Robot1 implements Notifiable{
 	public void execute() {
 		// TODO Auto-generated method stub
 		while(!_contexto.isFIN()){
-			System.out.println("antes de dormir");
+			//TODO System.out.println("antes de dormir");
 			pauseJoy();
 			guardedJoy();
-			System.out.println("despues de dormir");
+			//TODO System.out.println("despues de dormir");
 			MessageInterface mensaje=null;
 			do{
 				try {
-					System.out.println("antes de recibir");
+					//System.out.println("antes de recibir");
 					mensaje=_buzon.receive();
-					System.out.println("despues de recibir");
+					//System.out.println("despues de recibir");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -196,7 +196,7 @@ public class Robot1 implements Notifiable{
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
 						// controlar interferencias, mejor lo hace el maestro
-						// TODO falta la interferencia con el aut—mata 3
+						// TODO falta la interferencia con el autï¿½mata 3
 						if(_contexto.isPastel()){
 							if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() +_configuracion.getInterferencia()/2)*1000)){
 								/*
