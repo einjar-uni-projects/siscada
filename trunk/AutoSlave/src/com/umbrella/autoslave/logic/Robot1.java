@@ -27,15 +27,13 @@ public class Robot1 implements Notifiable{
 	private Clock _clock;
 	private boolean _joy = true;
 	
-	
 	private ClientMailBox _buzon;
 
 	private PropertiesFile pfmodel;
 
 	/**
 	 * @param args
-	 */
-	
+	 */	
 	public Robot1(){
 		_clock=Clock.getInstance();
 		_clock.start();
@@ -133,7 +131,8 @@ public class Robot1 implements Notifiable{
 							_contexto.setEstadoInterno(RobotStates.DESPLAZARBLISTERCOMPLETO);
 
 						_contexto.setTiempo(System.currentTimeMillis());
-						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
+						//_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
+						_contexto.setDiffTiempo(0);
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_1)){
 						// controlar interferencias, mejor lo hace el maestro
 						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() -_configuracion.getInterferencia()/2)*1000)){
@@ -163,7 +162,6 @@ public class Robot1 implements Notifiable{
 							_contexto.setPastelListo(false);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_2)){
-						// controlar interferencias, mejor lo hace el maestro
 						if(  _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
 							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_2);
 							/*
@@ -221,7 +219,7 @@ public class Robot1 implements Notifiable{
 								send.getParameters().add(MachineNames.CINTA_2.getDescripcion());
 								_buzon.send(send);
 							}
-							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2)){
+							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2*1000)){
 								_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_3);
 							}
 						}
