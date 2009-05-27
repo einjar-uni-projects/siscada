@@ -140,21 +140,16 @@ public class ReceiveAutomaton3 extends Thread {
 			double pos=lista.get(i).get_posicion();
 			if( pos<(_configuration.getPosCalidad()-_configuration.getSizeBlister()/2) ){
 				salida.set(0, salida.get(0)+1);
-System.err.println("caca1 "+pos);
 			}if( pos<(_configuration.getPosCalidad()+_configuration.getSizeBlister()/2) ){
 				salida.set(1, salida.get(1)+1);
-System.err.println("caca2 "+pos);
 			/*}else if(pos<(_configuration.getPosSelladora()-_configuration.getSizeBlister()/2)){
 				salida.set(2, salida.get(2)+1);*/
 			}else if(pos<(_configuration.getPosSelladora()+_configuration.getSizeBlister()/2)){
 				salida.set(2, salida.get(2)+1);
-System.err.println("caca3 "+pos);
 			}else if(pos<(_configuration.getPosFinAut3()-_configuration.getSizeBlister()/2)){
 				salida.set(3, salida.get(3)+1);
-System.err.println("caca4 "+pos);
 			}else if(pos<(_configuration.getPosFinAut3()+_configuration.getSizeBlister()/2)){
 				salida.set(4, salida.get(4)+1);
-System.err.println("caca5 "+pos);
 			}
 		}
 		return salida;
