@@ -212,6 +212,14 @@ public class Slave3 implements Notifiable{
 								int posicionBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
 								if(_calidad != null)
 									_calidad.notifyNoSyncJoy2();
+								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1), true);
+								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2), true);
+								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3), true);
+								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4), true);
+								contexto.get_listaBlister().get(posicionBlister).setCalidad(1, true);
+								contexto.get_listaBlister().get(posicionBlister).setCalidad(2, true);
+								contexto.get_listaBlister().get(posicionBlister).setCalidad(3, true);
+								contexto.get_listaBlister().get(posicionBlister).setCalidad(4, true);
 								if(Math.random()<configuracion.getPorcentajeFallos()){
 									contexto.get_listaBlister().get(posicionBlister).setCalidad(0, false);
 									Vector<Integer> vectorAux=new Vector<Integer>();
@@ -219,29 +227,29 @@ public class Slave3 implements Notifiable{
 									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
 									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3));
 									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4));
-									int aux2=(int)(Math.random()*4);
-									int posAux=vectorAux.get(aux2);
-									vectorAux.remove(aux2);
-									contexto.setDispositivosInternos(posAux, false);
-									contexto.get_listaBlister().get(posicionBlister).setCalidad(posAux, false);
+									int posVector=(int)(Math.random()*4);
+									int posAsociadaReal=vectorAux.get(posVector);
+									vectorAux.remove(posVector);
+									contexto.setDispositivosInternos(posAsociadaReal, false);
+									contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
 									if(Math.random()<0.5){
-										aux2=(int)(Math.random()*3);
-										posAux=vectorAux.get(aux2);
-										contexto.get_listaBlister().get(posicionBlister).setCalidad(aux2, false);
-										vectorAux.remove(aux2);
-										contexto.setDispositivosInternos(posAux, false);
+										posVector=(int)(Math.random()*3);
+										posAsociadaReal=vectorAux.get(posVector);
+										contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+										vectorAux.remove(posVector);
+										contexto.setDispositivosInternos(posAsociadaReal, false);
 										if(Math.random()<0.25){
-											aux2=(int)(Math.random()*2);
-											posAux=vectorAux.get(aux2);
-											contexto.get_listaBlister().get(posicionBlister).setCalidad(aux2, false);
-											vectorAux.remove(aux2);
-											contexto.setDispositivosInternos(posAux, false);
+											posVector=(int)(Math.random()*2);
+											posAsociadaReal=vectorAux.get(posVector);
+											contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+											vectorAux.remove(posVector);
+											contexto.setDispositivosInternos(posAsociadaReal, false);
 											if(Math.random()<0.125){
-												aux2=(int)(Math.random()*3);
-												posAux=vectorAux.get(aux2);
-												contexto.get_listaBlister().get(posicionBlister).setCalidad(aux2, false);
-												vectorAux.remove(aux2);
-												contexto.setDispositivosInternos(posAux, false);
+												posVector=(int)(Math.random()*3);
+												posAsociadaReal=vectorAux.get(posVector);
+												contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+												vectorAux.remove(posVector);
+												contexto.setDispositivosInternos(posAsociadaReal, false);
 											}
 										}
 									}
