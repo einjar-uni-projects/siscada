@@ -40,6 +40,7 @@ public class ReportViewer extends JFrame {
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setContentPane(getJContentPane());
 		this.setTitle("ReportsViewer");
+		setReportAreaText();
 	}
 
 	/**
@@ -125,6 +126,12 @@ public class ReportViewer extends JFrame {
 				System.err.println("Imposible guardar fichero");
 			}
 	    }
+	}
+	
+	private void setReportAreaText() {
+		MainFrameModel model = MainFrameModel.getInstance();
+		String text = "INFORME NÚMERO DE PRODUCTOS\n\tParciales:\n\t\tCorrectos: "+model.get_goodPackages()+"\n\t\tIncorrectos: "+model.get_badPackages()+"\n\tTotales:\n\t\tCorrectos: "+model.get_goodPackagesTotal()+"\n\t\tIncorrectos: "+model.get_badPackagesTotal();
+		reportArea.setText(text);
 	}
 
 }
