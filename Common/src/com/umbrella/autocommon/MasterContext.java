@@ -61,7 +61,7 @@ public class MasterContext implements Serializable{
 		return INSTANCE;
 	}
 	
-	public void incrementarProducicos(boolean bien){
+	public synchronized void incrementarProducidos(boolean bien){
 		if(bien) {
 			bienProducidos++;
 			bienProducidosTotal++;

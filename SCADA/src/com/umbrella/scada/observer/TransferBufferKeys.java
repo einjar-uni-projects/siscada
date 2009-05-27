@@ -23,7 +23,7 @@ public enum TransferBufferKeys {
 			Boolean.class), AU3_STATE(Boolean.class), AU3_MOVE(Boolean.class), RB1_STATE(
 			Boolean.class), RB2_STATE(Boolean.class), GEN_IP(String.class), GEN_PORT(
 			Integer.class), RB1_CONTENT(Integer.class), RB2_CONTENT(
-			Integer.class);
+			Integer.class), GOOD_PACKAGES(Integer.class), BAD_PACKAGES(Integer.class);
 
 	private final Class _class;
 

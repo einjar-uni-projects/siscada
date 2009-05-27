@@ -19,7 +19,9 @@ public enum ActionParamsEnum {
 	TABLE_CONTENT(Integer.class),
 	ROBOT_CONTENT(Integer.class), 
 	CONFIGURATION(Configuration.class),
-	CONVEYOR_BELT_MOVE(Boolean.class);
+	CONVEYOR_BELT_MOVE(Boolean.class),
+	GOOD_PACKAGES(Boolean.class),
+	NUMBER_PACKAGES(Integer.class);
 	
 	private Class _enclosedClass;
 

@@ -142,7 +142,6 @@ public class Slave1 implements Notifiable {
 						contexto.setApagado(true);
 						break;
 					case PRODUCTORECOGIDO:
-						//contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
 						deleteLastCake();
 						break;
 					case RELLENARMAQUINA:

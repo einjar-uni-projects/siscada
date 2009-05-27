@@ -70,23 +70,14 @@ public class ReceiveRobot1 extends Thread {
 						dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageAU1(dm);
-						/*_masterContext
-								.get_contextoAut1()
-								.setDispositivosInternos(
-										_configutarion
-												.getPosicionAsociada(MachineNames.FIN_1),
-										false);*/
+
 					} else if (producto.equals("blister")) {
 						// se env’a un mensaje al AU2 para que elimine el blister
 						dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageAU2(dm);
-						/*_masterContext.get_contextoAut2()
-								.setDispositivosInternos(
-										_configutarion
-												.getPosicionAsociada(MachineNames.FIN_2),
-										false);*/
+
 					}else { // blisterCompleto
 						// TODO Se asume que son 4
 						_masterContext.setBlisterColocado(false);

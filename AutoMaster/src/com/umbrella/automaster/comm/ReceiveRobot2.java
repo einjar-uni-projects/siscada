@@ -81,17 +81,28 @@ public class ReceiveRobot2 extends Thread {
 					
 					break;
 				case PRODUCTORECOGIDO:
-					// se envia un mensaje a la cinta 3 de PRODUCTORECOGIDO, el
-					// mismo mensaje que le llega
-					_postmaster.sendMessageAU3(msg);
+					// se env’a un mensaje al AU3 para que elimine el pastel
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
+					dm.getParameters().add("RB2");
+					_postmaster.sendMessageAU3(dm);
 					break;
 				case BLISTERALMACENADO:
+					boolean good = (Boolean)msg.getObject();
+					_masterContext.incrementarProducidos(good);
+					
 					// envia el mensaje a SCADA informando
-					if (msg.getParameters().get(0).equalsIgnoreCase("true")) {
-						// el blister que se almaceno era valido
-					} else {
-						// el blister que se almaceno era no valido
+					dm = new DefaultMessage();
+					if(good){
+						dm.setIdentifier(MSGOntology.NUM_GOOD_PACKAGES);
+						dm.setObject(_masterContext.getBienProducidos());
+					}else{
+						dm.setIdentifier(MSGOntology.NUM_BAD_PACKAGES);
+						dm.setObject(_masterContext.getMalProducidos());
 					}
+					
+					dm.getParameters().add("RB2");
+					_postmaster.sendMessageAU3(dm);
 					break;
 				}
 			}

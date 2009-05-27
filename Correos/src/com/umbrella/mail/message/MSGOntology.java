@@ -44,8 +44,9 @@ public enum MSGOntology {
 	CONVEYOR_BELT_2_SIZE("ConveyorBelt2Size",0),
 	CONVEYOR_BELT_3_SPEED("ConveyorBelt3Speed",0),
 	CONVEYOR_BELT_3_SIZE("ConveyorBelt3Size",0),
-	CONVEYOR_BELT_MOVE("ConveyorBeltMove",0)
-	; 
+	CONVEYOR_BELT_MOVE("ConveyorBeltMove",0),
+	NUM_GOOD_PACKAGES("NumGoodPackages",0),
+	NUM_BAD_PACKAGES("NumGoodPackages",0); 
 	
 	
 	private final String name;
