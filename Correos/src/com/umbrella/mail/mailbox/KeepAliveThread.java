@@ -44,19 +44,20 @@ public class KeepAliveThread extends Thread {
 		_recName = recName;
 	}
 
-	private void receiveKeepAlive() {
-		while (true) {
+	private synchronized void receiveKeepAlive() {
+		boolean no_end = true;
+		while (no_end) {
 			try {
-				// Esperar 1000 mseg
+				// Esperar 500 mseg
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} catch (InterruptedException ex) {
 					Logger.getLogger(KeepAliveThread.class.getName()).log(
 							Level.SEVERE, null, ex);
 				}
 
 				// Se no recibe mensaje de keepAlive
-				if (_outputQueueKA.unqueueMessage() == null) {
+				if (reciveMsg()== null) {
 					//System.out.println("No recibo keepalive");
 
 					// Si el stado de la conexion era true, se actualiza, y
@@ -76,40 +77,52 @@ public class KeepAliveThread extends Thread {
 					}
 				}
 			} catch (RemoteException ex) {
-				Logger.getLogger(KeepAliveThread.class.getName()).log(
-						Level.SEVERE, null, ex);
+				no_end = false;
+				//Logger.getLogger(KeepAliveThread.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
+		System.out.println("Se finaliza el hilo a la espera de nueva conexión");
 
 	}
 
-	private void sendKeepAlive() {
+	private synchronized MessageInterface reciveMsg() throws RemoteException {
+		return _outputQueueKA.unqueueMessage();
+	}
+
+	private  void sendKeepAlive() {
 
 		MessageInterface syncMessage = new KeepAliveMessage();
 
 		//System.out.println("Actua como esclavo");
 
 		// Actua como esclavo, ha de enviar mensajes keepAlive
-		while (true) {
+		boolean no_end = true;
+		while (no_end) {
 			try {
 
 				// Esperar timeout
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} catch (InterruptedException ex) {
 					Logger.getLogger(KeepAliveThread.class.getName()).log(
 							Level.SEVERE, null, ex);
 				}
 
-				// Enviar mensaje de timeout
-				_keepAliveQueue.queueMessage(syncMessage);
-				//System.out.println("Enviado keepAlive");
+				send(syncMessage);
 
 			} catch (RemoteException ex) {
-				System.out.println("PETERLS");
+				no_end = false;
+				//System.out.println("PETERLS");
 			}
 		}
+		System.out.println("Se finaliza el hilo a la espera de nueva conexión");
 
+	}
+
+	private synchronized void send(MessageInterface syncMessage) throws RemoteException {
+		// Enviar mensaje de timeout
+		_keepAliveQueue.queueMessage(syncMessage);
+		//System.out.println("Enviado keepAlive");
 	}
 
 	@Override
