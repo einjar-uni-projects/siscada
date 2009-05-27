@@ -47,6 +47,8 @@ public class Model {
 	private final ModelElementAtribute<Integer> _genPort = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_PORT, new Integer(9003));
 	private final ModelElementAtribute<Integer> _numGoodPackages = new ModelElementAtribute<Integer>(TransferBufferKeys.GOOD_PACKAGES, new Integer(0));
 	private final ModelElementAtribute<Integer> _numBadPackages = new ModelElementAtribute<Integer>(TransferBufferKeys.BAD_PACKAGES, new Integer(0));
+	private final ModelElementAtribute<Integer> _numGoodPackagesTotal = new ModelElementAtribute<Integer>(TransferBufferKeys.GOOD_PACKAGES_TOTAL, new Integer(0));
+	private final ModelElementAtribute<Integer> _numBadPackagesTotal = new ModelElementAtribute<Integer>(TransferBufferKeys.BAD_PACKAGES_TOTAL, new Integer(0));
 
 	/*Atributos del automata 1*/
 	private final ModelElementAtribute<Double> _au1ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE,new Double(10));
@@ -122,6 +124,8 @@ public class Model {
 	private void updateAll() {
 		_observable.addChange(_numGoodPackages.get_tbk(), _numGoodPackages.get_value());
 		_observable.addChange(_numBadPackages.get_tbk(), _numBadPackages.get_value());
+		_observable.addChange(_numGoodPackagesTotal.get_tbk(), _numGoodPackagesTotal.get_value());
+		_observable.addChange(_numBadPackagesTotal.get_tbk(), _numBadPackagesTotal.get_value());
 		
 		_observable.addChange(_au1CakeDepot.get_tbk(), _au1CakeDepot.get_value());
 		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
@@ -201,6 +205,18 @@ public class Model {
 	public void set_numBadPackages(int packages){
 		_numBadPackages.set_value(packages);
 		_observable.addChange(_numBadPackages.get_tbk(), _numBadPackages.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_numGoodPackagesTotal(int packages){
+		_numGoodPackagesTotal.set_value(packages);
+		_observable.addChange(_numGoodPackagesTotal.get_tbk(), _numGoodPackagesTotal.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_numBadPackagesTotal(int packages){
+		_numBadPackagesTotal.set_value(packages);
+		_observable.addChange(_numBadPackagesTotal.get_tbk(), _numBadPackagesTotal.get_value());
 		_modelChanges = true;
 	}
 	

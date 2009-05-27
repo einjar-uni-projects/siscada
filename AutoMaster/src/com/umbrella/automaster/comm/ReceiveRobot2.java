@@ -96,13 +96,28 @@ public class ReceiveRobot2 extends Thread {
 					if(good){
 						dm.setIdentifier(MSGOntology.NUM_GOOD_PACKAGES);
 						dm.setObject(_masterContext.getBienProducidos());
+						dm.getParameters().add("PARCIAL");
+						_postmaster.sendMessageSCADA(dm);
+						
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.NUM_GOOD_PACKAGES);
+						dm.setObject(_masterContext.getBienProducidosTotal());
+						dm.getParameters().add("TOTAL");
+						_postmaster.sendMessageSCADA(dm);
+						
 					}else{
 						dm.setIdentifier(MSGOntology.NUM_BAD_PACKAGES);
 						dm.setObject(_masterContext.getMalProducidos());
+						dm.getParameters().add("PARCIAL");
+						_postmaster.sendMessageSCADA(dm);
+						
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.NUM_BAD_PACKAGES);
+						dm.setObject(_masterContext.getMalProducidosTotal());
+						dm.getParameters().add("TOTAL");
+						_postmaster.sendMessageSCADA(dm);
 					}
 					
-					dm.getParameters().add("RB2");
-					_postmaster.sendMessageSCADA(dm);
 					break;
 				}
 			}
