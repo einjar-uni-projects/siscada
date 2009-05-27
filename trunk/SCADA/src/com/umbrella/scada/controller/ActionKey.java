@@ -3,6 +3,7 @@ package com.umbrella.scada.controller;
 public enum ActionKey {
 	START,
 	STOP, 
+	EMERGENCY_STOP,
 	UPDATE_STATE,
 	UPDATE_CAKE_CONVEYOR_BELT,
 	UPDATE_BLISTER_CONVEYOR_BELT,

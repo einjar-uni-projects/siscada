@@ -37,6 +37,9 @@ public class ActionFactoryProvider implements ActionFactory {
 		case STOP:
 			ret = new ActStop();
 			break;
+		case EMERGENCY_STOP:
+			ret = new ActEmergencyStop();
+			break;
 		case UPDATE_STATE:
 			ret = new ActUpdateState();
 			if(!ret.insertParam(params))
