@@ -98,7 +98,6 @@ public class Slave3 implements Notifiable{
 	public void execute() {
 
 		boolean primeraVez=true;
-
 		Blister blisterAuxiliar=new Blister();
 
 		while(!contexto.isFIN()){
@@ -296,10 +295,12 @@ public class Slave3 implements Notifiable{
 			salida=true;
 		}
 		*/
+		
 		if(contexto.activaSensor(configuracion, _selladora.getPosition())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SENSOR_SELLADORA))){
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_SELLADORA), true);
 			salida=true;
+
 		}
 		if(contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 && 
 				!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.FIN_3))){
@@ -324,17 +325,18 @@ public class Slave3 implements Notifiable{
 	
 	private synchronized boolean puedoUsar(MachineNames tipo){
 		boolean salida=false;
+
 		if(tipo.equals(MachineNames.CONTROL_CALIDAD))
 			if(!ejecutandoAlgo(MachineNames.CONTROL_CALIDAD) && 
-					contexto.activaSensor(configuracion, _calidad.getPosition())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD)))
-				salida=true;
-		
+					contexto.activaSensor(configuracion, _calidad.getPosition())>=0)
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _calidad.getPosition())).passTest())
+					salida=true;
+	
 		if(tipo.equals(MachineNames.SELLADO))
 			if(!ejecutandoAlgo(MachineNames.SELLADO) && 
-					contexto.activaSensor(configuracion, _selladora.getPosition())>=0 &&
-						!contexto.getEstadoAnterior(configuracion.getPosicionAsociada(MachineNames.SELLADO)))
-				salida=true;
+					contexto.activaSensor(configuracion, _selladora.getPosition())>=0 )
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _selladora.getPosition())).is_sellado())
+					salida=true;
 		if(tipo.equals(MachineNames.FIN_3))
 			if(!ejecutandoAlgo(MachineNames.FIN_3) && 
 					contexto.activaSensor(configuracion, _salBlister.getPosition())>=0 &&

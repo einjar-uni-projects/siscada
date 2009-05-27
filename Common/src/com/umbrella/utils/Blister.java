@@ -77,6 +77,9 @@ public class Blister implements Serializable{
 	public synchronized boolean[] getCalidad() {
 		return calidad;
 	}
+	public synchronized boolean passTest() {
+		return calidad[0];
+	}
 
 	public synchronized void setCalidad(int pos, boolean valor) {
 		this.calidad[pos] = valor;

@@ -120,7 +120,7 @@ public class Configuration implements Serializable {
 	
 	private double posInicioAut3=sizeBlister/2;
 	private double posCalidad=sizeCintaAut3*1/3;
-	private double posSelladora=sizeCintaAut3*2/3;
+	private double posSelladora=posCalidad+sizeBlister;
 	
 	/*
 	 * posicion donde se encuentra el fin de la cinta y se espera a que se recoja, medido en CM
