@@ -14,6 +14,9 @@ import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
+import com.umbrella.scada.view.localization.LocalizationResources;
+import com.umbrella.scada.view.localization.LocalizatorIDs;
+
 public class ReportViewer extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -130,7 +133,11 @@ public class ReportViewer extends JFrame {
 	
 	private void setReportAreaText() {
 		MainFrameModel model = MainFrameModel.getInstance();
-		String text = "INFORME NÚMERO DE PRODUCTOS\n\tParciales:\n\t\tCorrectos: "+model.get_goodPackages()+"\n\t\tIncorrectos: "+model.get_badPackages()+"\n\tTotales:\n\t\tCorrectos: "+model.get_goodPackagesTotal()+"\n\t\tIncorrectos: "+model.get_badPackagesTotal();
+		String text;
+		if(model.get_selectedLanguage() == LocalizationResources.LanguageIDs.SPANISHLOCALE)
+			text = "INFORME NÚMERO DE PRODUCTOS\n\tParciales:\n\t\tCorrectos: "+model.get_goodPackages()+"\n\t\tIncorrectos: "+model.get_badPackages()+"\n\tTotales:\n\t\tCorrectos: "+model.get_goodPackagesTotal()+"\n\t\tIncorrectos: "+model.get_badPackagesTotal();
+		else
+			text = "NUMBER OF PRODUCTS REPORT\n\tParcial:\n\t\tCorrect: "+model.get_goodPackages()+"\n\t\tWrong: "+model.get_badPackages()+"\n\tTotal:\n\t\tCorrect: "+model.get_goodPackagesTotal()+"\n\t\tWrong: "+model.get_badPackagesTotal();
 		reportArea.setText(text);
 	}
 
