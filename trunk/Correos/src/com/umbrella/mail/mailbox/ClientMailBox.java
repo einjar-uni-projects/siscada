@@ -140,7 +140,7 @@ public class ClientMailBox {
 	 * 
 	 * @return the head of this queue, or null if this queue is empty.
 	 */
-	public MessageInterface receiveBlocking() {
+	public synchronized MessageInterface receiveBlocking() {
 		MessageInterface returnMessage = null;
 		do {
 			try {

@@ -187,11 +187,14 @@ if(debug) System.out.println("llega 2 - SLAVE 1");
 					if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 if(debug) System.out.println("moverCinta  - SLAVE 1");
 						//_moverCinta.start();
-						if(_moverCinta != null)
+						if(_moverCinta != null){
 							_moverCinta.notifyNoSyncJoy2();
+							contexto.setMoviendoCinta(true);
+						}
 						else
 							System.out.println("_moverCinta = null - SLAVE 1");							
 					}else{
+						contexto.setMoviendoCinta(false);
 						//TODO q datos tengo
 						System.out.println("seEnciendeSensor=" +seEnciendeSensor());
 						System.out.println("hayHiloBloqueante()=" +hayHiloBloqueante());

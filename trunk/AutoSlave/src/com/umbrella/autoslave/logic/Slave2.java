@@ -167,9 +167,12 @@ public class Slave2 implements Notifiable {
 						hayEspacio();
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 							//_moverCinta.run();
-							if(_moverCinta != null)
+							if(_moverCinta != null){
 								_moverCinta.notifyNoSyncJoy2();
+								contexto.setMoviendoCinta(true);
+							}
 						}else{
+							contexto.setMoviendoCinta(false);
 							seEnciendeSensor();
 
 							if(puedoUsar(MachineNames.CORTADORA) ){

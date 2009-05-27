@@ -33,6 +33,8 @@ public class MainFrameModel implements Updatable {
 	private int _cakeDepot;
 	
 	private int _rb1Content, _rb2Content;
+	
+	private boolean _au1Move, _au2Move, _au3Move;
 
 	// ACTIONS
 
@@ -330,6 +332,21 @@ public class MainFrameModel implements Updatable {
 				_rb2Content = ((Integer)o).intValue();
 			}
 			break;
+		case AU1_MOVE:
+			synchronized (_cerrojos[TransferBufferKeys.AU1_MOVE.ordinal()]) {
+				_au1Move = ((Boolean)o).booleanValue();
+			}
+			break;
+		case AU2_MOVE:
+			synchronized (_cerrojos[TransferBufferKeys.AU2_MOVE.ordinal()]) {
+				_au2Move = ((Boolean)o).booleanValue();
+			}
+			break;
+		case AU3_MOVE:
+			synchronized (_cerrojos[TransferBufferKeys.AU3_MOVE.ordinal()]) {
+				_au3Move = ((Boolean)o).booleanValue();
+			}
+			break;
 
 		default:
 			break;
@@ -394,13 +411,49 @@ public class MainFrameModel implements Updatable {
 
 		return ret;
 	}
-
+	
 	public int[] get_blisters() {
-		return _blisters;
-	}
+		int[] ret = new int[_blisters.length];
 
+		synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS1.ordinal()]) {
+			ret[0] = _blisters[0];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS2.ordinal()]) {
+			ret[1] = _blisters[1];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS3.ordinal()]) {
+			ret[2] = _blisters[2];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS4.ordinal()]) {
+			ret[3] = _blisters[3];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU2_BLISTERS_POS5.ordinal()]) {
+			ret[4] = _blisters[4];
+		}
+
+		return ret;
+	}
+	
 	public int[] get_paquetes() {
-		return _paquetes;
+		int[] ret = new int[_paquetes.length];
+
+		synchronized (_cerrojos[TransferBufferKeys.AU3_PACKAGE_POS1.ordinal()]) {
+			ret[0] = _paquetes[0];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU3_PACKAGE_POS2.ordinal()]) {
+			ret[1] = _paquetes[1];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU3_PACKAGE_POS3.ordinal()]) {
+			ret[2] = _paquetes[2];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU3_PACKAGE_POS4.ordinal()]) {
+			ret[3] = _paquetes[3];
+		}
+		synchronized (_cerrojos[TransferBufferKeys.AU3_PACKAGE_POS5.ordinal()]) {
+			ret[4] = _paquetes[4];
+		}
+
+		return ret;
 	}
 
 	public boolean isStarted(ElementsGroupModelEnum egme) {
@@ -499,6 +552,24 @@ public class MainFrameModel implements Updatable {
 	public int get_tableContent() {
 		synchronized (_cerrojos[TransferBufferKeys.TABLE_CONTENT.ordinal()]) {
 			return _tableContent;
+		}
+	}
+
+	public boolean is_au1Move() {
+		synchronized (_cerrojos[TransferBufferKeys.AU1_MOVE.ordinal()]) {
+			return _au1Move;
+		}
+	}
+
+	public boolean is_au2Move() {
+		synchronized (_cerrojos[TransferBufferKeys.AU2_MOVE.ordinal()]) {
+			return _au2Move;
+		}
+	}
+
+	public boolean is_au3Move() {
+		synchronized (_cerrojos[TransferBufferKeys.AU3_MOVE.ordinal()]) {
+			return _au3Move;
 		}
 	}
 

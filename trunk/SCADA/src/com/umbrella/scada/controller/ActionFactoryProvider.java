@@ -107,6 +107,12 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case CONVEYOR_BELT_MOVE:
+			ret = new ActUpdateConveyorBeltMove();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
+			
 		default:
 			ret = new ActNull();
 			break;

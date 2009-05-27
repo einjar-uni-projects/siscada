@@ -43,7 +43,8 @@ public enum MSGOntology {
 	CONVEYOR_BELT_2_SPEED("ConveyorBelt2Speed",0),
 	CONVEYOR_BELT_2_SIZE("ConveyorBelt2Size",0),
 	CONVEYOR_BELT_3_SPEED("ConveyorBelt3Speed",0),
-	CONVEYOR_BELT_3_SIZE("ConveyorBelt3Size",0)
+	CONVEYOR_BELT_3_SIZE("ConveyorBelt3Size",0),
+	CONVEYOR_BELT_MOVE("ConveyorBeltMove",0)
 	; 
 	
 	

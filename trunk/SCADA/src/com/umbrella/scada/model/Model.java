@@ -60,6 +60,8 @@ public class Model {
 	private final ModelElementAtribute<Integer> _au1CakesPos6 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CAKES_POS6, new Integer(0));
 	private final ModelElementAtribute<Integer> _au1CakesPos7 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CAKES_POS7, new Integer(0));
 	private final ModelElementAtribute<Boolean> _au1State = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU1_STATE, new Boolean(false));
+	private final ModelElementAtribute<Boolean> _au1Move = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU1_MOVE, new Boolean(false));
+	
 	
 	/*Atributos del automata 2*/
 	private final ModelElementAtribute<Double> _au2ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU2_CONVEYOR_BELT_SIZE,new Double(10));
@@ -71,6 +73,7 @@ public class Model {
 	private final ModelElementAtribute<Integer> _au2BlistersPos4 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS4, new Integer(0));
 	private final ModelElementAtribute<Integer> _au2BlistersPos5 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU2_BLISTERS_POS5, new Integer(0));
 	private final ModelElementAtribute<Boolean> _au2State = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU2_STATE, new Boolean(false));
+	private final ModelElementAtribute<Boolean> _au2Move = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU2_MOVE, new Boolean(false));
 	
 	/*Atributos de la mesa*/
 	private final ModelElementAtribute<Integer> _tableContent = new ModelElementAtribute<Integer>(TransferBufferKeys.TABLE_CONTENT, new Integer(0));
@@ -84,6 +87,7 @@ public class Model {
 	private final ModelElementAtribute<Integer> _au3PackagePos4 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS4, new Integer(0));
 	private final ModelElementAtribute<Integer> _au3PackagePos5 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU3_PACKAGE_POS5, new Integer(0));
 	private final ModelElementAtribute<Boolean> _au3State = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU3_STATE, new Boolean(false));
+	private final ModelElementAtribute<Boolean> _au3Move = new ModelElementAtribute<Boolean>(TransferBufferKeys.AU3_MOVE, new Boolean(false));
 	
 	/*Atributos del robot1*/
 	private final ModelElementAtribute<Integer> _rb1BlisterDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.RB1_BLISTER_DELAY, new Integer(5));
@@ -127,6 +131,7 @@ public class Model {
 		_observable.addChange(_au1CakesPos6.get_tbk(), _au1CakesPos6.get_value());
 		_observable.addChange(_au1CakesPos7.get_tbk(), _au1CakesPos7.get_value());
 		_observable.addChange(_au1State.get_tbk(), _au1State.get_value());
+		_observable.addChange(_au1Move.get_tbk(), _au1Move.get_value());
 		
 		
 		_observable.addChange(_au2ConveyorBeltSize.get_tbk(), _au2ConveyorBeltSize.get_value());
@@ -138,6 +143,7 @@ public class Model {
 		_observable.addChange(_au2BlistersPos4.get_tbk(), _au2BlistersPos4.get_value());
 		_observable.addChange(_au2BlistersPos5.get_tbk(), _au2BlistersPos5.get_value());
 		_observable.addChange(_au2State.get_tbk(), _au2State.get_value());
+		_observable.addChange(_au2Move.get_tbk(), _au2Move.get_value());
 		
 		_observable.addChange(_tableContent.get_tbk(), _tableContent.get_value());
 		
@@ -149,6 +155,7 @@ public class Model {
 		_observable.addChange(_au3PackagePos4.get_tbk(), _au3PackagePos4.get_value());
 		_observable.addChange(_au3PackagePos5.get_tbk(), _au3PackagePos5.get_value());
 		_observable.addChange(_au3State.get_tbk(), _au3State.get_value());
+		_observable.addChange(_au3Move.get_tbk(), _au3Move.get_value());
 		
 		_observable.addChange(_genBlisterSize.get_tbk(), _genBlisterSize.get_value());
 		_observable.addChange(_genCakeSize.get_tbk(), _genCakeSize.get_value());
@@ -403,6 +410,24 @@ public class Model {
 	public void set_au3PackagePos5(int pack){
 		_au3PackagePos5.set_value(pack);
 		_observable.addChange(_au3PackagePos5.get_tbk(), _au3PackagePos5.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au1Move(boolean move) {
+		_au1Move.set_value(move);
+		_observable.addChange(_au1Move.get_tbk(), _au1Move.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au2Move(boolean move) {
+		_au2Move.set_value(move);
+		_observable.addChange(_au2Move.get_tbk(), _au2Move.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_au3Move(boolean move) {
+		_au3Move.set_value(move);
+		_observable.addChange(_au3Move.get_tbk(), _au3Move.get_value());
 		_modelChanges = true;
 	}
 	

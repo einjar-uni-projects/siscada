@@ -58,7 +58,7 @@ public class PaintElementBlisterPasteles extends PaintElement {
 		dx += 75;
 		if(paquetes[4] > 0){
 			g.drawImage(_loader.get_blister4Tarta(), _posX+dx, _posY, _maxX, _maxY, null);
-			numPaquetes = (""+paquetes[3]).toCharArray();
+			numPaquetes = (""+paquetes[4]).toCharArray();
 			g.drawChars(numPaquetes, 0, numPaquetes.length, _posX+dx+(_maxX/2), _posY);
 		}	
 	}

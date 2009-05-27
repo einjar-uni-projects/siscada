@@ -120,6 +120,14 @@ public class Postmaster extends Thread {
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						af.executeAction(ActionKey.UPDATE_CONFIGURATION, params);
 						break;
+					case CONVEYOR_BELT_MOVE:
+						params = new ActionParams();
+						ape = ActionParamsEnum.CONVEYOR_BELT_MOVE;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						ape = ActionParamsEnum.MACHINE;
+						params.setParam(ape, ape.getEnclosedClass(), msg.getParameters().get(0));
+						af.executeAction(ActionKey.CONVEYOR_BELT_MOVE, params);
+						break;	
 				}
 				
 			} catch (Exception e) {

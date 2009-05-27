@@ -37,7 +37,7 @@ public class ConjuntoCintaBlister extends ElementsGroup {
 
 	@Override
 	public void paint(Graphics g) {
-		_cinta.setOn(_model.is_cintaBlister());
+		_cinta.setOn(_model.is_au2Move());
 		super.paint(g);
 	}
 }

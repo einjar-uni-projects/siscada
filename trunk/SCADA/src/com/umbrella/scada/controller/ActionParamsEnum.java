@@ -18,7 +18,8 @@ public enum ActionParamsEnum {
 	AU3_PACKAGE_POS(ArrayList.class),
 	TABLE_CONTENT(Integer.class),
 	ROBOT_CONTENT(Integer.class), 
-	CONFIGURATION(Configuration.class);
+	CONFIGURATION(Configuration.class),
+	CONVEYOR_BELT_MOVE(Boolean.class);
 	
 	private Class _enclosedClass;
 

@@ -71,6 +71,13 @@ public class ReceiveAutomaton2 extends Thread {
 					dm.getParameters().add("AU2");
 					_postmaster.sendMessageSCADA(dm);
 					
+					// Se notifica el movimiento de la cinta
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.CONVEYOR_BELT_MOVE);
+					dm.setObject(con_update_context.isMoviendoCinta());
+					dm.getParameters().add("AU2");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				}
 			}
