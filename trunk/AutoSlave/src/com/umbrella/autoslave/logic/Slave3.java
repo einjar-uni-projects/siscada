@@ -146,7 +146,7 @@ public class Slave3 implements Notifiable{
 						contexto.setApagado(true);
 						break;
 					case PRODUCTORECOGIDO:
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_3), false);
+						deleteLastPackage();
 						break;
 					case RESET:
 						if(contexto.isApagado() || contexto.isFallo()){
@@ -412,29 +412,14 @@ public class Slave3 implements Notifiable{
 	public synchronized void pauseJoy2() {
 	}
 
-	/**
-	 * repasa la linkedlist de blisteres y los pone en las posiciones del contador
-	 */
-	/*private void actualizarContadorAutomata(){
-		
-		contexto.resetContadorAutomata3();
-		LinkedList<Blister> lista=contexto.get_listaBlister();
-		for(int i=0;i<lista.size();i++){
-			double pos=lista.get(i).get_posicion();
-			if( pos<(configuracion.getPosInicioAut3()+configuracion.getSizeBlister()/2) ){
-				contexto.incrementarContadorAutomata3(0);
-			}else if(pos<(configuracion.getPosCalidad()+configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata3(1);
-			}else if(pos<(configuracion.getPosSelladora()-configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata3(2);
-			}else if(pos<(configuracion.getPosSelladora()+configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata3(3);
-			}else if(pos<(configuracion.getPosFinAut3()-configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata3(4);
-			}else if(pos<(configuracion.getPosFinAut3()+configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata3(5);
+	private void deleteLastPackage(){
+		boolean eliminado = false;
+		for(int i=0; !eliminado && i<contexto.get_listaBlister().size();i++){
+			if(contexto.get_listaBlister().get(i).get_posicion()>=(configuracion.getPosFinAut3()-configuracion.getErrorSensor())){
+				contexto.get_listaBlister().remove(i);
+				eliminado = true;
 			}
 		}
-	}*/
+	}
 	
 }

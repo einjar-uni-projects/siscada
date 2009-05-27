@@ -45,6 +45,8 @@ public class Model {
 	private final ModelElementAtribute<Double> _genBlisterSize = new ModelElementAtribute<Double>(TransferBufferKeys.GEN_BLISTER_SIZE, new Double(_genCakeSize.get_value().doubleValue()*2+0.1));
 	private final ModelElementAtribute<String> _genIP = new ModelElementAtribute<String>(TransferBufferKeys.GEN_IP, new String("localhost"));
 	private final ModelElementAtribute<Integer> _genPort = new ModelElementAtribute<Integer>(TransferBufferKeys.GEN_PORT, new Integer(9003));
+	private final ModelElementAtribute<Integer> _numGoodPackages = new ModelElementAtribute<Integer>(TransferBufferKeys.GOOD_PACKAGES, new Integer(0));
+	private final ModelElementAtribute<Integer> _numBadPackages = new ModelElementAtribute<Integer>(TransferBufferKeys.BAD_PACKAGES, new Integer(0));
 
 	/*Atributos del automata 1*/
 	private final ModelElementAtribute<Double> _au1ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE,new Double(10));
@@ -118,6 +120,9 @@ public class Model {
 	}
 	
 	private void updateAll() {
+		_observable.addChange(_numGoodPackages.get_tbk(), _numGoodPackages.get_value());
+		_observable.addChange(_numBadPackages.get_tbk(), _numBadPackages.get_value());
+		
 		_observable.addChange(_au1CakeDepot.get_tbk(), _au1CakeDepot.get_value());
 		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
 		_observable.addChange(_au1CaramelValveDelay.get_tbk(), _au1CaramelValveDelay.get_value());
@@ -185,6 +190,18 @@ public class Model {
 	
 	public String get_genIP(){
 		return _genIP.get_value();
+	}
+	
+	public void set_numGoodPackages(int packages){
+		_numGoodPackages.set_value(packages);
+		_observable.addChange(_numGoodPackages.get_tbk(), _numGoodPackages.get_value());
+		_modelChanges = true;
+	}
+	
+	public void set_numBadPackages(int packages){
+		_numBadPackages.set_value(packages);
+		_observable.addChange(_numBadPackages.get_tbk(), _numBadPackages.get_value());
+		_modelChanges = true;
 	}
 	
 	public void set_rb2Content(int value){

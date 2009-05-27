@@ -127,7 +127,23 @@ public class Postmaster extends Thread {
 						ape = ActionParamsEnum.MACHINE;
 						params.setParam(ape, ape.getEnclosedClass(), msg.getParameters().get(0));
 						af.executeAction(ActionKey.CONVEYOR_BELT_MOVE, params);
-						break;	
+						break;
+					case NUM_GOOD_PACKAGES:
+						params = new ActionParams();
+						ape = ActionParamsEnum.NUMBER_PACKAGES;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						ape = ActionParamsEnum.GOOD_PACKAGES;
+						params.setParam(ape,ape.getEnclosedClass(), true);
+						af.executeAction(ActionKey.NUMBER_PACKAGES, params);
+						break;
+					case NUM_BAD_PACKAGES:
+						params = new ActionParams();
+						ape = ActionParamsEnum.NUMBER_PACKAGES;
+						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
+						ape = ActionParamsEnum.GOOD_PACKAGES;
+						params.setParam(ape,ape.getEnclosedClass(), false);
+						af.executeAction(ActionKey.NUMBER_PACKAGES, params);
+						break;
 				}
 				
 			} catch (Exception e) {

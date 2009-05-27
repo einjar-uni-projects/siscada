@@ -112,6 +112,11 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case NUMBER_PACKAGES:
+			ret = new ActUpdateNumberPackages();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
 			
 		default:
 			ret = new ActNull();

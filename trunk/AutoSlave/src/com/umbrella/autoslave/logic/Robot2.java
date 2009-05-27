@@ -87,6 +87,7 @@ public class Robot2  implements Notifiable{
 						break;
 					case BLISTERNOVALIDO:
 						_contexto.setValido(false);//blister que no pasa el control de calidad
+						_contexto.setBlisterCompletoListo(true);
 						break;
 					case RESET:
 						_contexto=new ContextoRobot();
@@ -96,6 +97,7 @@ public class Robot2  implements Notifiable{
 						break;
 					case BLISTERVALIDO:
 						_contexto.setValido(true);//blister que pasa el control de calidad
+						_contexto.setBlisterCompletoListo(true);
 						break;
 					}
 				}
@@ -114,7 +116,8 @@ public class Robot2  implements Notifiable{
 					_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 					if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO)){
 						// TODO Solo debe ir a la posici—n 1 si es necesario, sino genera interferencia
-						/*_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);*/
+						if(_contexto.isBlisterCompletoListo())
+							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
 						_contexto.setTiempo(System.currentTimeMillis());
 						_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 					}
@@ -146,15 +149,14 @@ public class Robot2  implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
-							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
+							send.getParameters().add(MachineNames.ROBOT_2.getDescripcion());
 							send.getParameters().add("blisterCompleto");
 							_buzon.send(send);
-							_contexto.setPastelListo(false);
-							_contexto.setPastel(false);
+							_contexto.setBlisterCompletoListo(false);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_2)){
 						if(!_contexto.isPastel() && (_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
-							_contexto.setPastel(true);
+							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_2);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_2)){
 						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*2*1000)){
@@ -163,14 +165,14 @@ public class Robot2  implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.BLISTERALMACENADO);
-							send.getParameters().add("true");
+							send.setObject(true);
 							_buzon.send(send);
 							_contexto.setEstadoInterno(RobotStates.REPOSO);
 						}
 
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
 						if(!_contexto.isPastel() && (_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
-							_contexto.setPastel(true);
+							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_3);
 						}
 
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_3)){
@@ -180,7 +182,7 @@ public class Robot2  implements Notifiable{
 							 */
 							MessageInterface send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.BLISTERALMACENADO);
-							send.getParameters().add("false");
+							send.setObject(false);
 							_buzon.send(send);
 							_contexto.setEstadoInterno(RobotStates.REPOSO);
 						}

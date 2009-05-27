@@ -21,7 +21,13 @@ public class ConjuntoRobot2 extends ElementsGroup {
 	
 	@Override
 	public void paint(Graphics g) {
+		MainFrameModel model = MainFrameModel.getInstance();
+		String good = ""+model.get_goodPackages();
+		String bad = ""+model.get_badPackages();
+		
 		_robot.setState(_model.get_rb2Content());
 		super.paint(g);
+		g.drawChars(good.toCharArray(), 0, good.length(), _posX, _posY-50);
+		g.drawChars(bad.toCharArray(), 0, bad.length(), _posX+30, _posY-50);
 	}
 }
