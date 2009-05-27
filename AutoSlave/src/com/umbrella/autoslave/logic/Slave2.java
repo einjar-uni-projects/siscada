@@ -152,6 +152,13 @@ public class Slave2 implements Notifiable {
 			if(contexto.isParadaCorrecta()){
 				//se para directamente porque no se controla
 				contexto.setApagado(true);
+				contexto.setMoviendoCinta(false);
+				
+				// envia el mensaje de contexto
+				DefaultMessage mensajeSend=new DefaultMessage();
+				mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+				mensajeSend.setObject(contexto);
+				_buzon.send(mensajeSend);
 			}
 
 			if(!contexto.isFallo()){

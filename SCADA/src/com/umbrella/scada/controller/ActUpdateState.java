@@ -15,23 +15,18 @@ public class ActUpdateState implements Action {
 		switch (_machine) {
 		case 0:
 			m.set_au1State(_state);
-			System.out.println("0: "+_state);
 			break;
 		case 1:
 			m.set_au2State(_state);
-			System.out.println("1: "+_state);
 			break;
 		case 2:
 			m.set_au3State(_state);
-			System.out.println("2: "+_state);
 			break;
 		case 3:
 			m.set_rb1State(_state);
-			System.out.println("3: "+_state);
 			break;
 		case 4:
 			m.set_rb2State(_state);
-			System.out.println("4: "+_state);
 			break;
 
 		default:
