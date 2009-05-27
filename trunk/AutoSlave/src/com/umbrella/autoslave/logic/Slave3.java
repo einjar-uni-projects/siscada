@@ -356,7 +356,8 @@ public class Slave3 implements Notifiable{
 		if(tipo.equals(MachineNames.SELLADO))
 			if(!ejecutandoAlgo(MachineNames.SELLADO) && 
 					contexto.activaSensor(configuracion, _selladora.getPosition())>=0 )
-				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _selladora.getPosition())).is_sellado())
+				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _selladora.getPosition())).is_sellado() && 
+						contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _selladora.getPosition())).getCalidad()[0])
 					salida=true;
 		if(tipo.equals(MachineNames.FIN_3))
 			if(!ejecutandoAlgo(MachineNames.FIN_3) && 
