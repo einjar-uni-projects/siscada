@@ -124,6 +124,7 @@ public class Slave1 implements Notifiable {
 						contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
 						contexto.rellenarChocolate(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
 						contexto.setApagado(false);
+						contexto.setParadaCorrecta(false);
 						break;
 					case START:
 						contexto=Context.reset("pastel");
