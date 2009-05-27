@@ -190,7 +190,6 @@ public class Slave3 implements Notifiable{
 							//envio el mensaje de blister colocado, mesa libre
 						}
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
-							//_moverCinta.run();
 							if(_moverCinta != null){
 								_moverCinta.notifyNoSyncJoy2();
 								contexto.setMoviendoCinta(true);
@@ -230,7 +229,8 @@ public class Slave3 implements Notifiable{
 											}
 										}
 									}
-									for(int i=0;i<vectorAux.size();i++)contexto.setDispositivosInternos(vectorAux.get(i), true);
+									for(int i=0;i<vectorAux.size();i++)
+										contexto.setDispositivosInternos(vectorAux.get(i), true);
 								}
 							}
 							if(puedoUsar(MachineNames.SELLADO)){
@@ -242,15 +242,15 @@ public class Slave3 implements Notifiable{
 
 					}
 					if(puedoUsar(MachineNames.FIN_3)){
-						//_salBlister.start();
 						if(_salBlister != null)
 							_salBlister.notifyNoSyncJoy2();
-					}							
+					}
 					/*
 					 * Aqui hay q repasar todos los sensores
 					 */
 					/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
-					for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
+					for(int i=0;i<contexto.getEstadoAnterior().length;i++)
+						contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
 				}else{
 					primeraVez=true;
 				}

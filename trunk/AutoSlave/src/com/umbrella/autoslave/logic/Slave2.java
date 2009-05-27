@@ -166,7 +166,6 @@ public class Slave2 implements Notifiable {
 					}else{
 						hayEspacio();
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
-							//_moverCinta.run();
 							if(_moverCinta != null){
 								_moverCinta.notifyNoSyncJoy2();
 								contexto.setMoviendoCinta(true);
@@ -191,12 +190,12 @@ public class Slave2 implements Notifiable {
 					}
 
 					if(puedoUsar(MachineNames.FIN_2)){
-						//_salBlister.start();
 						if(_salBlister != null)
 							_salBlister.notifyNoSyncJoy2();
 					}
 					/* esto del estado anterior sirve para saber como estaba el sensor en el estado anterior*/
-					for(int i=0;i<contexto.getEstadoAnterior().length;i++) contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
+					for(int i=0;i<contexto.getEstadoAnterior().length;i++)
+						contexto.setEstadoAnterior(i,contexto.getDispositivosInternos(i));
 					apagarSensores();
 				}
 
