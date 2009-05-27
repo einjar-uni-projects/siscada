@@ -140,9 +140,9 @@ public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 	public ActionParams getNewAttributes() {
 		ActionParams params = new ActionParams();
 		if(newSpeedText.getText().length() != 0)
-			params.setParam(ActionParamsEnum.SPEED, ActionParamsEnum.SPEED.getEnclosedClass(), Integer.parseInt(newSpeedText.getText()));
+			params.setParam(ActionParamsEnum.SPEED, ActionParamsEnum.SPEED.getEnclosedClass(), Double.parseDouble(newSpeedText.getText()));
 		if(newSizeText.getText().length() != 0)
-			params.setParam(ActionParamsEnum.SIZE, ActionParamsEnum.SIZE.getEnclosedClass(), Integer.parseInt(newSizeText.getText()));
+			params.setParam(ActionParamsEnum.SIZE, ActionParamsEnum.SIZE.getEnclosedClass(), Double.parseDouble(newSizeText.getText()));
 		return params;
 	}
 
