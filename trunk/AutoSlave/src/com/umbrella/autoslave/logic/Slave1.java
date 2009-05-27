@@ -141,6 +141,13 @@ public class Slave1 implements Notifiable {
 						break;
 					case PARADAEMERGENCIA:
 						contexto.setApagado(true);
+						contexto.setMoviendoCinta(false);
+						
+						// envia el mensaje de contexto
+						DefaultMessage mensajeSend=new DefaultMessage();
+						mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+						mensajeSend.setObject(contexto);
+						_buzon.send(mensajeSend);
 						break;
 					case PRODUCTORECOGIDO:
 						deleteLastCake();
