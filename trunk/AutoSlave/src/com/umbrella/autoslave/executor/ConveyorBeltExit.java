@@ -59,7 +59,7 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 				//comprobar el estado de la cinta
 				finCintaLibre=endEmptyConveyorBelt(_type);
 			}
-			_context.decrementarNumPasteles();
+			_context.decrementarNumPasteles(); // TODO seguro??
 			//se ha recogido el bizcocho del fin de la lista
 			_context.setDispositivosInternos(getAssociatedPosition(), false);
 			setThreadState(ThreadState.ACABADO);
@@ -104,11 +104,13 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 	 */
 	private synchronized boolean endEmptyConveyorBelt(String type){
 		boolean libre=true;
-		for(int i=0;i<_context.get_listaPasteles().size();i++){
-			if(type.equals("pastel")){
+		if(type.equals("pastel")){
+			for(int i=0;i<_context.get_listaPasteles().size();i++){
 				if(_context.get_listaPasteles().get(i).get_posicion()>=(getPosition()-_configuration.getErrorSensor()))
 					libre=false;
-			}else{
+			}
+		}else{
+			for(int i=0;i<_context.get_listaBlister().size();i++){
 				if(_context.get_listaBlister().get(i).get_posicion()>=(getPosition()-_configuration.getErrorSensor()))
 					libre=false;
 			}

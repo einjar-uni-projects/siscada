@@ -187,6 +187,7 @@ public class Slave3 implements Notifiable{
 						 */
 						if(contexto.isBlisterListoInicioCinta3() && tengoEspacio()){
 							contexto.addListaBlister(blisterAuxiliar.enCinta3());
+							contexto.setBlisterListoInicioCinta3(false);
 							//envio el mensaje de blister colocado, mesa libre
 						}
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
