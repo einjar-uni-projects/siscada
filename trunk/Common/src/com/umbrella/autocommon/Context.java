@@ -63,6 +63,8 @@ public class Context implements Serializable{
 	
 	private boolean fallo=false;
 	
+	private int _cuadrarPasteles;
+	
 	/*
 	 * numero de pasteles en la cinta, no sirve para nada tecnicamente solo da informacion
 	 */
@@ -342,5 +344,16 @@ public class Context implements Serializable{
 
 	public void setMoviendoCinta(boolean moviendoCinta) {
 		this.moviendoCinta = moviendoCinta;
+	}
+	
+	public void incrementarCuadrarPasteles(){
+		_cuadrarPasteles++;
+		_cuadrarPasteles = _cuadrarPasteles % 4;
+	}
+	
+	public boolean isCuadrarPasteles(){
+		if(_cuadrarPasteles == 0)
+			return true;
+		return false;
 	}
 }

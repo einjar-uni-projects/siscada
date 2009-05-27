@@ -79,6 +79,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 						 */
 						_remainderCakes--;
 						_context.incrementarNumPasteles();
+						_context.incrementarCuadrarPasteles();
 						_context.addListaPastel(new Cake());
 						_context.setDispositivosInternos(getAssociatedPosition(), false);
 						if(_remainderCakes==0){

@@ -256,10 +256,11 @@ if(debug) System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, canti
 					}
 					//no me importa si la cinta se mueve o no, si puede la dispensadora echa un pastel
 					// se pone dentro del while del ciclo de reloj porq solo pone un pastel por click
-					if(!contexto.isParadaCorrecta()){
+					if(!contexto.isParadaCorrecta() || !contexto.isCuadrarPasteles()){
 if(debug) System.out.println("si no es parada correcta - SLAVE 1");			
-						if(_dispensadora != null)
+						if(_dispensadora != null){
 							_dispensadora.notifyNoSyncJoy2();
+						}
 					}
 					if(_dispensadora.getRemainderCakes()==0){
 if(debug) System.out.println("si tengo 0 pasteles restantes - SLAVE 1");						

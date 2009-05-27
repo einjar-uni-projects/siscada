@@ -30,6 +30,8 @@ public class Robot1 implements Notifiable{
 	private ClientMailBox _buzon;
 
 	private PropertiesFile pfmodel;
+	
+	private boolean _mesaOcupada;
 
 	/**
 	 * @param args
@@ -111,8 +113,8 @@ public class Robot1 implements Notifiable{
 			}while(mensaje!=null);
 
 			if(_contexto.isParadaCorrecta()){
-				//se para directamente porque no se controla
-				_contexto.setApagado(true);
+				if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO) && !_mesaOcupada)
+					_contexto.setApagado(true);
 			}
 			if(!_contexto.isFallo()){
 				if(!_contexto.isApagado()){
@@ -225,6 +227,8 @@ public class Robot1 implements Notifiable{
 							}
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_3)){
+						_mesaOcupada = true;
+						
 						//dejo el pastel o blister
 						if(_contexto.isPastel()){
 							if( _contexto.getDiffTiempo() > (_configuracion.getMoverPastel()*2)){
@@ -270,6 +274,7 @@ public class Robot1 implements Notifiable{
 							_buzon.send(send);
 							_contexto.setEstadoInterno(RobotStates.REPOSO);
 							_contexto.setBlisterCompletoListo(false);
+							_mesaOcupada = false;
 						}
 					}
 
