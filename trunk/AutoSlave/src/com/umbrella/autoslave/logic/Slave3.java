@@ -209,9 +209,11 @@ public class Slave3 implements Notifiable{
 							seEnciendeSensor();
 							if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
 								//_calidad.run();
+								int posicionBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
 								if(_calidad != null)
 									_calidad.notifyNoSyncJoy2();
 								if(Math.random()<configuracion.getPorcentajeFallos()){
+									contexto.get_listaBlister().get(posicionBlister).setCalidad(0, false);
 									Vector<Integer> vectorAux=new Vector<Integer>();
 									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
 									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
@@ -221,19 +223,23 @@ public class Slave3 implements Notifiable{
 									int posAux=vectorAux.get(aux2);
 									vectorAux.remove(aux2);
 									contexto.setDispositivosInternos(posAux, false);
+									contexto.get_listaBlister().get(posicionBlister).setCalidad(posAux, false);
 									if(Math.random()<0.5){
 										aux2=(int)(Math.random()*3);
 										posAux=vectorAux.get(aux2);
+										contexto.get_listaBlister().get(posicionBlister).setCalidad(aux2, false);
 										vectorAux.remove(aux2);
 										contexto.setDispositivosInternos(posAux, false);
 										if(Math.random()<0.25){
 											aux2=(int)(Math.random()*2);
 											posAux=vectorAux.get(aux2);
+											contexto.get_listaBlister().get(posicionBlister).setCalidad(aux2, false);
 											vectorAux.remove(aux2);
 											contexto.setDispositivosInternos(posAux, false);
 											if(Math.random()<0.125){
 												aux2=(int)(Math.random()*3);
 												posAux=vectorAux.get(aux2);
+												contexto.get_listaBlister().get(posicionBlister).setCalidad(aux2, false);
 												vectorAux.remove(aux2);
 												contexto.setDispositivosInternos(posAux, false);
 											}
@@ -241,6 +247,8 @@ public class Slave3 implements Notifiable{
 									}
 									for(int i=0;i<vectorAux.size();i++)
 										contexto.setDispositivosInternos(vectorAux.get(i), true);
+								}else{
+									contexto.get_listaBlister().get(posicionBlister).setCalidad(0, true);
 								}
 							}
 							if(puedoUsar(MachineNames.SELLADO)){
