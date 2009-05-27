@@ -119,7 +119,7 @@ public class ClientMailBox {
 	 * @return true if it was possible to add the element to this queue, else
 	 *         false
 	 */
-	public boolean send(MessageInterface message) {
+	public synchronized boolean send(MessageInterface message) {
 		boolean done = false;
 		boolean ret = false;
 
@@ -159,7 +159,7 @@ public class ClientMailBox {
 	 * @return the head of this queue, or null if this queue is empty.
 	 * @throws RemoteException
 	 */
-	public MessageInterface receive() throws RemoteException {
+	public synchronized MessageInterface receive() throws RemoteException {
 		MessageInterface returnMessage = null;
 		try {
 			returnMessage = _inputQueue.unqueueMessage();
@@ -170,8 +170,6 @@ public class ClientMailBox {
 	}
 
 	public boolean getState() {
-		//TODO si esto no se muestra chungo no se controla el estado de la conexión
-		System.out.println("Se tiene que llamar a esto");
 		return _keepAliveThread.get_State();
 	}
 }
