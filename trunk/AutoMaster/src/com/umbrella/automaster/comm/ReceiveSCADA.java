@@ -64,6 +64,17 @@ public class ReceiveSCADA extends Thread {
 					_postmaster.sendMessageRB2(dm);
 					_postmaster.sendMessageSCADA(dm);
 					break;
+				case PARADA:
+					dm.setIdentifier(MSGOntology.PARADA);
+					
+					_postmaster.sendMessageAU1(dm);
+					_postmaster.sendMessageAU2(dm);
+					_postmaster.sendMessageAU3(dm);
+					_postmaster.sendMessageRB1(dm);
+					_postmaster.sendMessageRB2(dm);
+					_postmaster.sendMessageSCADA(dm);
+					break;
+					
 				case CONVEYOR_BELT_1_SIZE:
 					Double size = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut1().isApagado()){

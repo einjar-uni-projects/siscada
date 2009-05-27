@@ -168,7 +168,16 @@ public class Slave3 implements Notifiable{
 			}while(mensaje!=null);
 
 			if(contexto.isParadaCorrecta()){
-				if(contexto.get_listaBlister().size()==0) contexto.setApagado(true);
+				if(contexto.get_listaBlister().size()==0){
+					contexto.setApagado(true);
+					contexto.setMoviendoCinta(false);
+					
+					// envia el mensaje de contexto
+					DefaultMessage mensajeSend=new DefaultMessage();
+					mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					mensajeSend.setObject(contexto);
+					_buzon.send(mensajeSend);
+				}
 			}
 
 			if(!contexto.isFallo()){

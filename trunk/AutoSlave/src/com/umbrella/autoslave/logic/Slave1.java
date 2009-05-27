@@ -171,8 +171,16 @@ public class Slave1 implements Notifiable {
 			}while(mensaje!=null);
 
 			if(contexto.isParadaCorrecta()){
-				if(contexto.get_listaPasteles().size()==0)
+				if(contexto.get_listaPasteles().size()==0){
 					contexto.setApagado(true);
+					contexto.setMoviendoCinta(false);
+					
+					// envia el mensaje de contexto
+					DefaultMessage mensajeSend=new DefaultMessage();
+					mensajeSend.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					mensajeSend.setObject(contexto);
+					_buzon.send(mensajeSend);
+				}
 			}
 
 			if(!contexto.isFallo()){
@@ -255,7 +263,8 @@ if(debug) System.out.println("si tengo 0 pasteles restantes - SLAVE 1");
 					}
 
 
-					for(int i=0;i<16;i++) contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
+					for(int i=0;i<16;i++)
+						contexto.setEstadoAnterior(i, contexto.getDispositivosInternos(i));
 					apagarSensores();
 					
 				//	actualizarContadorAutomata();
