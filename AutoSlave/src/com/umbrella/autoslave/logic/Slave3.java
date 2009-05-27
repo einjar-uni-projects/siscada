@@ -209,55 +209,9 @@ public class Slave3 implements Notifiable{
 							seEnciendeSensor();
 							if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
 								//_calidad.run();
-								int posicionBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
 								if(_calidad != null)
 									_calidad.notifyNoSyncJoy2();
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1), true);
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2), true);
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3), true);
-								contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4), true);
-								contexto.get_listaBlister().get(posicionBlister).setCalidad(1, true);
-								contexto.get_listaBlister().get(posicionBlister).setCalidad(2, true);
-								contexto.get_listaBlister().get(posicionBlister).setCalidad(3, true);
-								contexto.get_listaBlister().get(posicionBlister).setCalidad(4, true);
-								if(Math.random()<configuracion.getPorcentajeFallos()){
-									contexto.get_listaBlister().get(posicionBlister).setCalidad(0, false);
-									Vector<Integer> vectorAux=new Vector<Integer>();
-									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
-									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
-									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3));
-									vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4));
-									int posVector=(int)(Math.random()*4);
-									int posAsociadaReal=vectorAux.get(posVector);
-									vectorAux.remove(posVector);
-									contexto.setDispositivosInternos(posAsociadaReal, false);
-									contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
-									if(Math.random()<0.5){
-										posVector=(int)(Math.random()*3);
-										posAsociadaReal=vectorAux.get(posVector);
-										contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
-										vectorAux.remove(posVector);
-										contexto.setDispositivosInternos(posAsociadaReal, false);
-										if(Math.random()<0.25){
-											posVector=(int)(Math.random()*2);
-											posAsociadaReal=vectorAux.get(posVector);
-											contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
-											vectorAux.remove(posVector);
-											contexto.setDispositivosInternos(posAsociadaReal, false);
-											if(Math.random()<0.125){
-												posVector=(int)(Math.random()*3);
-												posAsociadaReal=vectorAux.get(posVector);
-												contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
-												vectorAux.remove(posVector);
-												contexto.setDispositivosInternos(posAsociadaReal, false);
-											}
-										}
-									}
-									for(int i=0;i<vectorAux.size();i++)
-										contexto.setDispositivosInternos(vectorAux.get(i), true);
-								}else{
-									contexto.get_listaBlister().get(posicionBlister).setCalidad(0, true);
-								}
+								qualityReview();
 							}
 							if(puedoUsar(MachineNames.SELLADO)){
 								//_selladora.run();
@@ -299,6 +253,59 @@ public class Slave3 implements Notifiable{
 		_salBlister=null;
 		_calidad=null;		
 	}
+	/**
+	 * 
+	 */
+	private void qualityReview() {
+		int posicionBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
+		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1), true);
+		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2), true);
+		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3), true);
+		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4), true);
+		contexto.get_listaBlister().get(posicionBlister).setCalidad(1, true);
+		contexto.get_listaBlister().get(posicionBlister).setCalidad(2, true);
+		contexto.get_listaBlister().get(posicionBlister).setCalidad(3, true);
+		contexto.get_listaBlister().get(posicionBlister).setCalidad(4, true);
+		if(Math.random()<configuracion.getPorcentajeFallos()){
+			contexto.get_listaBlister().get(posicionBlister).setCalidad(0, false);
+			Vector<Integer> vectorAux=new Vector<Integer>();
+			vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
+			vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
+			vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3));
+			vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4));
+			int posVector=(int)(Math.random()*4);
+			int posAsociadaReal=vectorAux.get(posVector);
+			vectorAux.remove(posVector);
+			contexto.setDispositivosInternos(posAsociadaReal, false);
+			contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+			if(Math.random()<0.5){
+				posVector=(int)(Math.random()*3);
+				posAsociadaReal=vectorAux.get(posVector);
+				contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+				vectorAux.remove(posVector);
+				contexto.setDispositivosInternos(posAsociadaReal, false);
+				if(Math.random()<0.25){
+					posVector=(int)(Math.random()*2);
+					posAsociadaReal=vectorAux.get(posVector);
+					contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+					vectorAux.remove(posVector);
+					contexto.setDispositivosInternos(posAsociadaReal, false);
+					if(Math.random()<0.125){
+						posVector=(int)(Math.random()*3);
+						posAsociadaReal=vectorAux.get(posVector);
+						contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
+						vectorAux.remove(posVector);
+						contexto.setDispositivosInternos(posAsociadaReal, false);
+					}
+				}
+			}
+			for(int i=0;i<vectorAux.size();i++)
+				contexto.setDispositivosInternos(vectorAux.get(i), true);
+		}else{
+			contexto.get_listaBlister().get(posicionBlister).setCalidad(0, true);
+		}
+	}
+	
 	
 	/*
 	 * Nos dice si algun hilo esta bloqueando al resto, es decir uno de los hilos esta en ejecucion
