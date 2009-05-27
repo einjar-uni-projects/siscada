@@ -69,6 +69,13 @@ public class ReceiveAutomaton3 extends Thread {
 					dm.getParameters().add("AU3");
 					_postmaster.sendMessageSCADA(dm);
 					
+					// Se notifica el movimiento de la cinta
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.CONVEYOR_BELT_MOVE);
+					dm.setObject(con_update_context.isMoviendoCinta());
+					dm.getParameters().add("AU3");
+					_postmaster.sendMessageSCADA(dm);
+					
 					break;
 				}
 			}
@@ -140,7 +147,7 @@ public class ReceiveAutomaton3 extends Thread {
 			double pos=lista.get(i).get_posicion();
 			if( pos<(_configuration.getPosCalidad()-_configuration.getSizeBlister()/2) ){
 				salida.set(0, salida.get(0)+1);
-			}if( pos<(_configuration.getPosCalidad()+_configuration.getSizeBlister()/2) ){
+			}else if( pos<(_configuration.getPosCalidad()+_configuration.getSizeBlister()/2) ){
 				salida.set(1, salida.get(1)+1);
 			/*}else if(pos<(_configuration.getPosSelladora()-_configuration.getSizeBlister()/2)){
 				salida.set(2, salida.get(2)+1);*/

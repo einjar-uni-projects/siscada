@@ -36,7 +36,7 @@ public class ConjuntoCintaPasteles extends ElementsGroup {
 
 	@Override
 	public void paint(Graphics g) {
-		_cinta.setOn(_model.is_cintaPasteles());
+		_cinta.setOn(_model.is_au1Move());
 		super.paint(g);
 	}
 }

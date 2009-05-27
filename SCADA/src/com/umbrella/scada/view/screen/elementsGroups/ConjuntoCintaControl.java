@@ -18,7 +18,7 @@ public class ConjuntoCintaControl extends ElementsGroup {
 
 	private PaintElementCinta _cinta;
 	private PaintElementTable _table;
-	private PaintElementBlisterIni _blister_ini;
+
 	private PaintElementBlisterPasteles _paquetes;
 	private PaintElementQualityBk _qualitybg;
 	private PaintElementQuality _qualityfg;
@@ -38,7 +38,6 @@ public class ConjuntoCintaControl extends ElementsGroup {
 		_paintElements.add(_qualitybg);
 		_paintElements.add(_cinta);
 		_paintElements.add(_table);
-		_paintElements.add(_blister_ini);
 		_paintElements.add(_paquetes);
 		_paintElements.add(_qualityfg);
 		_paintElements.add(_selladora);
@@ -46,7 +45,7 @@ public class ConjuntoCintaControl extends ElementsGroup {
 
 	@Override
 	public void paint(Graphics g) {
-		_cinta.setOn(_model.is_cintaMontaje());
+		_cinta.setOn(_model.is_au3Move());
 		super.paint(g);
 	}
 }

@@ -1,37 +1,29 @@
 package com.umbrella.scada.controller;
 
 import com.umbrella.scada.model.Model;
+import com.umbrella.utils.MachineNames;
 
-public class ActUpdateState implements Action {
+public class ActUpdateConveyorBeltMove implements Action {
 
-	private int _machine = -1;
+	private MachineNames _machine;
 	private boolean _state;
-
+	
 	@Override
 	public ActionResult execute() {
-		System.out.println("Ejecutando ActUpdateState");
 		ActionResult ret = ActionResult.EXECUTE_CORRECT;
 		Model m = Model.getInstance();
 		switch (_machine) {
-		case 0:
-			m.set_au1State(_state);
+		case CINTA_1:
+			m.set_au1Move(_state);
 			System.out.println("0: "+_state);
 			break;
-		case 1:
-			m.set_au2State(_state);
+		case CINTA_2:
+			m.set_au2Move(_state);
 			System.out.println("1: "+_state);
 			break;
-		case 2:
-			m.set_au3State(_state);
+		case CINTA_3:
+			m.set_au3Move(_state);
 			System.out.println("2: "+_state);
-			break;
-		case 3:
-			m.set_rb1State(_state);
-			System.out.println("3: "+_state);
-			break;
-		case 4:
-			m.set_rb2State(_state);
-			System.out.println("4: "+_state);
 			break;
 
 		default:
@@ -47,7 +39,7 @@ public class ActUpdateState implements Action {
 	@Override
 	public boolean insertParam(ActionParams params) {
 		boolean ret = false;
-		ActionParamsEnum ape = ActionParamsEnum.STATE;
+		ActionParamsEnum ape = ActionParamsEnum.CONVEYOR_BELT_MOVE;
 		Boolean state = (Boolean) params.getParam(ape);
 		if (state != null) {
 			_state = state;
@@ -56,19 +48,17 @@ public class ActUpdateState implements Action {
 			if (machine != null) {
 				ret = true;
 				if(machine.compareTo("AU1")==0)
-					_machine = 0;
+					_machine = MachineNames.CINTA_1;
 				else if(machine.compareTo("AU2")==0)
-					_machine = 1;
+					_machine = MachineNames.CINTA_2;
 				else if(machine.compareTo("AU3")==0)
-					_machine = 2;
+					_machine = MachineNames.CINTA_3;
 				else if(machine.compareTo("RB1")==0)
-					_machine = 3;
+					_machine = MachineNames.ROBOT_1;
 				else if(machine.compareTo("RB2")==0)
-					_machine = 4;
+					_machine = MachineNames.ROBOT_2;
 				else
 					ret = false;
-				
-				
 			}
 		}
 		return ret;

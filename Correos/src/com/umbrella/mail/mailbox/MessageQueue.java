@@ -20,7 +20,7 @@ import com.umbrella.mail.message.MessageInterface;
 public class MessageQueue extends java.rmi.server.UnicastRemoteObject implements QueueInterface{
     
     /*Cola de mensajes*/
-    LinkedList<MessageInterface> _messageList;
+    private LinkedList<MessageInterface> _messageList;
     
     /**
      * Creates a new instance of MessageQueue
@@ -35,7 +35,7 @@ public class MessageQueue extends java.rmi.server.UnicastRemoteObject implements
      * @param message mensaje a insertar
      * @return true if it was possible to add the element to this queue, else false
      */
-    public boolean queueMessage (MessageInterface message) throws RemoteException{        
+    public synchronized boolean queueMessage (MessageInterface message) throws RemoteException{        
         return _messageList.offer(message);                
     }
     
@@ -43,7 +43,9 @@ public class MessageQueue extends java.rmi.server.UnicastRemoteObject implements
      * Metodo que extrae un mensaje de la cola
      * @return the head of this queue, or null if this queue is empty.
      */
-    public MessageInterface unqueueMessage() throws RemoteException{
-        return _messageList.poll();                        
+    public synchronized MessageInterface unqueueMessage() throws RemoteException{
+    	//if(_messageList.size() != 0)
+    		return _messageList.poll();
+    	//return null;
     }    
 }

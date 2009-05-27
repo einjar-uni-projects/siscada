@@ -16,6 +16,11 @@ import com.umbrella.utils.Cake;
 
 public class Context implements Serializable{
 
+	/**
+	 * serial_id
+	 */
+	private static final long serialVersionUID = -6601352018085189251L;
+
 	/*
 	 * tipo=pastel o blister
 	 */
@@ -26,6 +31,7 @@ public class Context implements Serializable{
 	
 	private boolean apagado=true;
 	private boolean paradaCorrecta=false; //sirve para hacer bien la parada
+	private boolean moviendoCinta=false;
 	
 	
 	/*
@@ -328,5 +334,13 @@ public class Context implements Serializable{
 	}
 	public synchronized int[] getContadorAutomata3(){
 		return contadorAutomata3;
+	}
+
+	public boolean isMoviendoCinta() {
+		return moviendoCinta;
+	}
+
+	public void setMoviendoCinta(boolean moviendoCinta) {
+		this.moviendoCinta = moviendoCinta;
 	}
 }

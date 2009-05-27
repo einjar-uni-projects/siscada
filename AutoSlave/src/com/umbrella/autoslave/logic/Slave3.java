@@ -191,9 +191,12 @@ public class Slave3 implements Notifiable{
 						}
 						if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 							//_moverCinta.run();
-							if(_moverCinta != null)
+							if(_moverCinta != null){
 								_moverCinta.notifyNoSyncJoy2();
+								contexto.setMoviendoCinta(true);
+							}
 						}else{
+							contexto.setMoviendoCinta(false);
 							seEnciendeSensor();
 							if(puedoUsar(MachineNames.CONTROL_CALIDAD) ){
 								//_calidad.run();
