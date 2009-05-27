@@ -105,7 +105,7 @@ public class Robot2  implements Notifiable{
 			}while(mensaje!=null);
 
 			if(_contexto.isParadaCorrecta()){
-				//se para directamente porque no se controla
+				if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO))
 				_contexto.setApagado(true);
 			}
 
