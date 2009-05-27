@@ -116,6 +116,7 @@ public class Slave2 implements Notifiable {
 					case ACTUALIZARCONFIGURACION: 						
 						configuracion=(Configuration)mensaje.getObject();
 						contexto.setApagado(false);
+						contexto.setParadaCorrecta(false);
 						break;
 					case START:
 						contexto=Context.reset("blister");
