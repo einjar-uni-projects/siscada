@@ -159,6 +159,14 @@ public class ReceiveAutomaton1 extends Thread {
 				mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
 				_postmaster.sendMessageSCADA(mensajeSend);
 			}
+			/* Si est‡ apagado por una parada correcta se env’a el mensaje de parar a los dem‡s aut—matas*/
+			if(context.isApagado() && context.isParadaCorrecta()){
+				dm.setIdentifier(MSGOntology.PARADA);
+				
+				_postmaster.sendMessageAU1(dm);
+				_postmaster.sendMessageAU2(dm);
+				_postmaster.sendMessageRB1(dm);
+			}
 		}else{
 			System.out.println("Context is null!!! AU1");
 		}

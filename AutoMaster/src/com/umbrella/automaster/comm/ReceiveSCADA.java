@@ -68,11 +68,11 @@ public class ReceiveSCADA extends Thread {
 					dm.setIdentifier(MSGOntology.PARADA);
 					
 					_postmaster.sendMessageAU1(dm);
-					_postmaster.sendMessageAU2(dm);
+					/*_postmaster.sendMessageAU2(dm);
 					_postmaster.sendMessageAU3(dm);
 					_postmaster.sendMessageRB1(dm);
 					_postmaster.sendMessageRB2(dm);
-					_postmaster.sendMessageSCADA(dm);
+					_postmaster.sendMessageSCADA(dm);*/
 					break;
 				case PARADAEMERGENCIA:
 					dm.setIdentifier(MSGOntology.PARADAEMERGENCIA);
