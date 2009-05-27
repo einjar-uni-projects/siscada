@@ -118,7 +118,7 @@ public class Slave2 implements Notifiable {
 						contexto.setApagado(false);
 						break;
 					case START:
-						contexto=Context.reset("pastel");
+						contexto=Context.reset("blister");
 						contexto.setApagado(false);
 						break;
 					case FININTERFERENCIA:
@@ -134,13 +134,12 @@ public class Slave2 implements Notifiable {
 						contexto.setApagado(true);
 						break;
 					case PRODUCTORECOGIDO:
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), false);
+						//contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), false);
+						deleteLastBlister();
 						break;
 					case RESET:
 						if(contexto.isApagado() || contexto.isFallo()){
-							contexto=Context.reset("pastel");
-							contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
-							contexto.rellenarCaramelo(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+							contexto=Context.reset("blister");
 						}
 						break;
 					case PARADAFALLO:
@@ -224,9 +223,12 @@ public class Slave2 implements Notifiable {
 	 */
 	private synchronized boolean hayHiloBloqueante(){
 		boolean hay=false;
-		if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_troqueladora.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
-		else if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO)) hay=true;
+		if(_cortadora.getThreadState().equals(ThreadState.EJECUTANDO))
+			hay=true;
+		else if(_troqueladora.getThreadState().equals(ThreadState.EJECUTANDO))
+			hay=true;
+		else if(_salBlister.getThreadState().equals(ThreadState.EJECUTANDO))
+			hay=true;
 		return hay;
 	}
 	
@@ -350,27 +352,16 @@ public class Slave2 implements Notifiable {
 	public synchronized void pauseJoy2() {
 	}
 
-	/**
-	 * repasa la linkedlist de blisteres y los pone en las posiciones del contador
-	 */
-	/*private void actualizarContadorAutomata(){
-		
-		contexto.resetContadorAutomata2();
-		LinkedList<Blister> lista=new LinkedList<Blister>();
-		for(int i=0;i<lista.size();i++){
-			double pos=lista.get(i).get_posicion();
-			if( pos<(configuracion.getPosTroqueladora()) ){
-				contexto.incrementarContadorAutomata2(0);
-			}else if(pos<(configuracion.getPosCortadora()-configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata2(1);
-			}else if(pos<(configuracion.getPosCortadora()+configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata2(2);
-			}else if(pos<(configuracion.getPosFinAut2()-configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata2(3);
-			}else if(pos<(configuracion.getPosFinAut2()+configuracion.getSizeBlister()/2)){
-				contexto.incrementarContadorAutomata2(4);
+	private void deleteLastBlister(){
+		boolean eliminado = false;
+		for(int i=0; !eliminado && i<contexto.get_listaBlister().size();i++){
+			if(contexto.get_listaBlister().get(i).get_posicion()>=(configuracion.getPosFinAut2()-configuracion.getErrorSensor())){
+				contexto.get_listaBlister().remove(i);
+				eliminado = true;
 			}
 		}
-	}*/
+	}
+	
+	
 
 }

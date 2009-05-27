@@ -195,6 +195,7 @@ public class Robot1 implements Notifiable{
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
 						// controlar interferencias, mejor lo hace el maestro
+						// TODO falta la interferencia con el aut—mata 3
 						if(_contexto.isPastel()){
 							if( _contexto.getDiffTiempo() > ((_configuracion.getMoverPastel() +_configuracion.getInterferencia()/2)*1000)){
 								/*
@@ -256,12 +257,20 @@ public class Robot1 implements Notifiable{
 							/*
 							 * envia el mensaje de blister completo colocado en la cinta 3
 							 */
+							
 							MessageInterface send=new DefaultMessage();
+							send.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
+							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
+							send.getParameters().add("blisterCompleto");
+							_buzon.send(send);
+							
+							send=new DefaultMessage();
 							send.setIdentifier(MSGOntology.PRODUCTOCOLOCADO);
 							send.getParameters().add(MachineNames.ROBOT_1.getDescripcion());
 							send.getParameters().add("blisterCompleto");
 							_buzon.send(send);
 							_contexto.setEstadoInterno(RobotStates.REPOSO);
+							_contexto.setBlisterCompletoListo(false);
 						}
 					}
 

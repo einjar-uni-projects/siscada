@@ -142,7 +142,8 @@ public class Slave1 implements Notifiable {
 						contexto.setApagado(true);
 						break;
 					case PRODUCTORECOGIDO:
-						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
+						//contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
+						deleteLastCake();
 						break;
 					case RELLENARMAQUINA:
 						String maquina=mensaje.getParameters().get(0);
@@ -241,7 +242,6 @@ if(debug) System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, canti
 if(debug) System.out.println("si no es parada correcta - SLAVE 1");			
 						if(_dispensadora != null)
 							_dispensadora.notifyNoSyncJoy2();
-						//_dispensadora.start();
 					}
 					if(_dispensadora.getRemainderCakes()==0){
 if(debug) System.out.println("si tengo 0 pasteles restantes - SLAVE 1");						
@@ -430,5 +430,15 @@ if(debug) System.out.println("llega 5 - SLAVE 1");
 	}
 
 	public synchronized void pauseJoy2() {
+	}
+	
+	private void deleteLastCake(){
+		boolean eliminado = false;
+		for(int i=0; !eliminado && i<contexto.get_listaPasteles().size();i++){
+			if(contexto.get_listaPasteles().get(i).get_posicion()>=(configuracion.getPosFinAut1()-configuracion.getErrorSensor())){
+				contexto.get_listaPasteles().remove(i);
+				eliminado = true;
+			}
+		}
 	}
 }
