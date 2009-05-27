@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.MasterContext;
 import com.umbrella.automaster.LaunchAutMaster;
@@ -207,5 +208,14 @@ public class ReceiveRobot1 extends Thread {
 			dm = new DefaultMessage();
 
 		} while (msg != null);
+		
+		ContextoRobot context = _masterContext.get_contextoRobot1();
+		
+		/* Si est‡ apagado por una parada correcta se env’a el mensaje de parar a los dem‡s aut—matas*/
+		if(context.isApagado() && context.isParadaCorrecta()){
+			dm.setIdentifier(MSGOntology.PARADA);
+			
+			_postmaster.sendMessageAU3(dm);
+		}
 	}
 }

@@ -116,6 +116,13 @@ public class ReceiveAutomaton3 extends Thread {
 				}
 				_postmaster.sendMessageRB2(mensajeSend);
 			}
+			
+			/* Si est‡ apagado por una parada correcta se env’a el mensaje de parar a los dem‡s aut—matas*/
+			if(context.isApagado() && context.isParadaCorrecta()){
+				dm.setIdentifier(MSGOntology.PARADA);
+
+				_postmaster.sendMessageRB2(dm);
+			}
 		}else{
 			System.out.println("Context is null!!! AU3");
 		}
