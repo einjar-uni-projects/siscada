@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.MasterConfiguration;
 import com.umbrella.autocommon.MasterContext;
 import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.automaster.logic.Maestro;
@@ -11,6 +12,7 @@ import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;
 import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertyException;
+import com.umbrella.utils.MachineNames;
 
 /**
  * 
@@ -61,6 +63,84 @@ public class ReceiveSCADA extends Thread {
 					_postmaster.sendMessageRB1(dm);
 					_postmaster.sendMessageRB2(dm);
 					_postmaster.sendMessageSCADA(dm);
+					break;
+				case CONVEYOR_BELT_1_SIZE:
+					Double size = (Double)msg.getObject();
+					if(_masterContext.get_contextoAut1().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_1, size);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case CONVEYOR_BELT_2_SIZE:
+					Double size2 = (Double)msg.getObject();
+					if(_masterContext.get_contextoAut2().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_2, size2);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case CONVEYOR_BELT_3_SIZE:
+					Double size3 = (Double)msg.getObject();
+					if(_masterContext.get_contextoAut2().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_3, size3);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case CONVEYOR_BELT_1_SPEED:
+					Double speed = (Double)msg.getObject();
+					if(_masterContext.get_contextoAut1().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_1, speed);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case CONVEYOR_BELT_2_SPEED:
+					Double speed2 = (Double)msg.getObject();
+					if(_masterContext.get_contextoAut2().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_2, speed2);
+System.err.println("cacaaa");
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case CONVEYOR_BELT_3_SPEED:
+					Double speed3 = (Double)msg.getObject();
+					if(_masterContext.get_contextoAut3().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_3, speed3);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
 					break;
 				}
 

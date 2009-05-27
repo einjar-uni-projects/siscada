@@ -11,6 +11,7 @@ import com.umbrella.automaster.comm.ReceiveAutomaton3;
 import com.umbrella.automaster.comm.ReceiveRobot1;
 import com.umbrella.automaster.comm.ReceiveRobot2;
 import com.umbrella.automaster.comm.ReceiveSCADA;
+import com.umbrella.utils.MachineNames;
 
 /*
  * esta clase gestiona los automatas
@@ -145,6 +146,10 @@ public class Maestro implements Notifiable  {
 		 * les dice q es un arranque desde 0
 		 */
 	}
+	
+	private void reiniciarConfiguracionAut(){
+		_general = new Configuration(_configuracion);
+	}
 
 	/*
 	 * Carga los contextos almacenados, se usa para un arranque desde la parada
@@ -161,24 +166,24 @@ public class Maestro implements Notifiable  {
 
 	}
 
-	private int cambiarVelCinta(int cinta, double valor) {
+	public synchronized int cambiarVelCinta(MachineNames cinta, double valor) {
 		int sal = -1;
 		switch (cinta) {
-		case 0:
+		case CINTA_1:
 			// aut 1
 			if (!_contextoMaestro.getEjecutando()[0]) {
 				_configuracion.setVelCintaAut1(valor);
 				sal = 1;
 			}
 			break;
-		case 1:
+		case CINTA_2:
 			// aut 2
 			if (!_contextoMaestro.getEjecutando()[1]) {
 				_configuracion.setVelCintaAut2(valor);
 				sal = 1;
 			}
 			break;
-		case 2:
+		case CINTA_3:
 			// aut 3
 			if (!_contextoMaestro.getEjecutando()[2]) {
 				_configuracion.setVelCintaAut3(valor);
@@ -190,27 +195,28 @@ public class Maestro implements Notifiable  {
 			System.out.println("opcion no valida");
 			break;
 		}
+		reiniciarConfiguracionAut();
 		return sal;
 	}
 
-	private int cambiarTamanyoCinta(int cinta, double valor) {
+	public synchronized int cambiarTamanyoCinta(MachineNames cinta, double valor) {
 		int sal = -1;
 		switch (cinta) {
-		case 0:
+		case CINTA_1:
 			// aut 1
 			if (!_contextoMaestro.getEjecutando()[0]) {
 				_configuracion.setSizeCintaAut1(valor);
 				sal = 1;
 			}
 			break;
-		case 1:
+		case CINTA_2:
 			// aut 2
 			if (!_contextoMaestro.getEjecutando()[1]) {
 				_configuracion.setSizeCintaAut2(valor);
 				sal = 1;
 			}
 			break;
-		case 2:
+		case CINTA_3:
 			// aut 3
 			if (!_contextoMaestro.getEjecutando()[2]) {
 				_configuracion.setSizeCintaAut3(valor);
@@ -222,6 +228,8 @@ public class Maestro implements Notifiable  {
 			System.out.println("opcion no valida");
 			break;
 		}
+		
+		reiniciarConfiguracionAut();
 		return sal;
 	}
 
@@ -366,109 +374,4 @@ public class Maestro implements Notifiable  {
 
 	public synchronized void pauseJoy2() {
 	}
-
-	/*
-	 * Leer todos los mensajes DESPUES actuar en consecuencia
-	 */
-
-	/*
-	 * enviar el estado interno de todos los automatas al scada porque necesita
-	 * conocerlo para reflejarlo en la interfaz
-	 * _contextoAut1.getDispositivosInernos();
-	 * _contextoRobot1.getEstadoInterno();
-	 */
-
-	/*
-	 * acciones:
-	 */
-
-	/*
-	 * el estado interno del aut1 me dice q tiene el fin de la cinta ocupado
-	 * envio el mensaje al robot 1 si esta en modo reposo y tengo un blister con
-	 * posicion libre
-	 */
-
-	/*
-	 * el robot 1 recogio el pastel: envia el mensaje de pastel recogido
-	 */
-
-	/*
-	 * el robot 1 abandona la zona de interf con cinta 1: envia el mensaje de
-	 * fin de interferencia al aut1
-	 */
-
-	/*
-	 * el estado interno del aut2 me dice q tiene el fin de la cinta ocupado y
-	 * el inicio de la cinta 3 esta libre envio el mensaje al robot 1 si esta en
-	 * modo reposo
-	 */
-
-	/*
-	 * si el robot 1 recogio el blister envio el mensaje al aut2 de fin de cinta
-	 * libre
-	 */
-
-	/*
-	 * si el robot 1 avandona la zona de interferencia con el aut2 envio el
-	 * mensaje al aut2 de fin de Interferencia
-	 */
-
-	/*
-	 * si el robot 1 envia el mensaje de blister colocado cambio mi estado
-	 * interno a blistercolocado=true;
-	 */
-
-	/*
-	 * si el robot 1 envia el mensaje de pastel colocado incremento mi contador
-	 * interno de pasteles colocados
-	 */
-
-	/*
-	 * si mi contadorPasteles interno = 4, envio el mensaje de mover blister
-	 * listo al robot1
-	 */
-
-	/*
-	 * Si recibo el mensaje de blister colocado en cinta 3 y mesa libre cambio
-	 * el cont de pasteles a 0 y blistercolocado=false;
-	 */
-
-	/*
-	 * si el contexto del aut 1 me dice q quedan pocos pasteles envio el mensaje
-	 * a SCADA de pocos pasteles
-	 */
-
-	/*
-	 * si recibo el mensaje de rellenar dispensador lo hago
-	 */
-
-	/*
-	 * si recibo el mensaje de modificar un campo lo hago, velocidad, tama�o,
-	 * tiempos
-	 */
-
-	/*
-	 * si el estado interno del aut3 me dice q hay blister listo lo cogo el
-	 * contexto me dice si el ultimo blister paso el control al enviarle el
-	 * mensaje de ir a por el blister tb se le envia esa informacion
-	 */
-
-	/*
-	 * si recibo el mensaje del robot 2 de interferencia se lo reenvio al aut3
-	 */
-
-	/*
-	 * si recibo el mensaje de blister recogido del robot2 se lo comnunico al
-	 * aut3
-	 */
-
-	/*
-	 * si recibo el mensaje del robot 2 de fin de interferencia se lo reenvio al
-	 * aut3
-	 */
-
-	/*
-	 * si recibo el mensaje de blister situado del robot 2 se lo comunico al
-	 * SCADA y cambio mi valor interno
-	 */
 }
