@@ -9,6 +9,7 @@ package com.umbrella.autocommon;
  */
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -465,17 +466,23 @@ public class MasterConfiguration implements Serializable {
 	}
 
 	private MasterConfiguration() {
-		//si el fichero existe, se carga
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(".\\configuracionMaestro.ser"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String rutita = ".\\configuracionMaestro.ser";
+		File ficherito = new File(rutita);
+		if (ficherito.exists()) {
+			//si el fichero existe, se carga
+			this.refresh();
+			
 		}
-		//si el fichero no existe, se guarda
-		this.refresh();
-		//refresh
-		//metodo que cargue las properties del fichero
+		else {
+			//si el fichero no existe, se crea y guarda
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter(".\\configuracionMaestro.ser"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	public void refresh() {
