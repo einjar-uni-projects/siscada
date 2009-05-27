@@ -64,23 +64,41 @@ public class ReceiveRobot1 extends Thread {
 					// primer paraemtro el robot y 2 el producto
 					String producto = msg.getParameters().get(1);
 					if (producto.equals("pastel")) {
-						// se recoge un pastel de la cinta 1
-						_masterContext
+						
+						// se env’a un mensaje al AU1 para que elimine el pastel
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageAU1(dm);
+						/*_masterContext
 								.get_contextoAut1()
 								.setDispositivosInternos(
 										_configutarion
 												.getPosicionAsociada(MachineNames.FIN_1),
-										false);
+										false);*/
 					} else if (producto.equals("blister")) {
-						// un blister de la cinta 2
-						_masterContext.get_contextoAut2()
+						// se env’a un mensaje al AU2 para que elimine el blister
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageAU2(dm);
+						/*_masterContext.get_contextoAut2()
 								.setDispositivosInternos(
 										_configutarion
 												.getPosicionAsociada(MachineNames.FIN_2),
-										false);
+										false);*/
+					}else { // blisterCompleto
+						// TODO Se asume que son 4
+						_masterContext.setBlisterColocado(false);
+						_masterContext.resetContador();
+						
+						// Se notifica la mesa vacia
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.TABLE_CONTENT);
+						dm.setObject(0);
+						dm.getParameters().add("RB1");
+						_postmaster.sendMessageSCADA(dm);
 					}
-					
-					// TODO Falta para paquetes
 					
 					break;
 				case FININTERFERENCIA:
@@ -130,7 +148,8 @@ public class ReceiveRobot1 extends Thread {
 						_postmaster.sendMessageSCADA(dm);
 						
 						// Se pide al robot que lo desplace hasta el aut—mata 3 si ya est‡n todos
-						if(_masterContext.getContador() >= 4){
+						// y sy hay espacio en este
+						if(_masterContext.getContador() >= 4 && !_masterContext.get_contextoAut3().isBlisterListoInicioCinta3()){
 							MessageInterface mensajeSend = new DefaultMessage();
 							mensajeSend.setIdentifier(MSGOntology.BLISTERCOMPLETO);
 							_postmaster.sendMessageRB1(mensajeSend);
@@ -145,15 +164,15 @@ public class ReceiveRobot1 extends Thread {
 										_configutarion
 												.getPosicionAsociada(MachineNames.INICIO),
 										false);*/
-						_masterContext.setBlisterColocado(false);
-						_masterContext.resetContador();
+						/*_masterContext.setBlisterColocado(false);
+						_masterContext.resetContador();*/
 						
 						// Se notifica la mesa vacia
-						dm = new DefaultMessage();
+						/*dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.TABLE_CONTENT);
 						dm.setObject(0);
 						dm.getParameters().add("RB1");
-						_postmaster.sendMessageSCADA(dm);
+						_postmaster.sendMessageSCADA(dm);*/
 						
 						// Se env’a un blister al aut—mata 3
 						dm = new DefaultMessage();
