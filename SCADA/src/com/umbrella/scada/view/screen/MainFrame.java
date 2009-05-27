@@ -196,8 +196,8 @@ public class MainFrame implements UpdatableInterface{
 			_footerPanel.setLayout(new FlowLayout());
 			_footerPanel.add(get_footerInfo(), null);
 			_footerPanel.add(get_initButton(), null);
-			_footerPanel.add(get_pauseButton(), null);
 			_footerPanel.add(get_stopButton(), null);
+			_footerPanel.add(get_pauseButton(), null);
 		}
 		return _footerPanel;
 	}
@@ -248,11 +248,18 @@ public class MainFrame implements UpdatableInterface{
 	private JButton get_pauseButton() {
 		if (_pauseButton == null) {
 			_pauseButton = new JButton();
-			_pauseButton.setText("Pause");
+			_pauseButton.setBackground(Color.RED);
+			_pauseButton.setText("Emergency Stop");
 			_pauseButton.setEnabled(false);
 			_pauseButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-
+					_mainPanel.stopAutRob();
+					ActionResult result = _actionFactory.executeAction(ActionKey.EMERGENCY_STOP, null);
+					if(result == ActionResult.EXECUTE_CORRECT){
+						_initButton.setEnabled(true);
+						_pauseButton.setEnabled(false);
+						_stopButton.setEnabled(false);
+					}
 				}
 			});
 		}
@@ -352,7 +359,7 @@ public class MainFrame implements UpdatableInterface{
 		_spanishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_ES_LANGUAGE, _model.get_selectedLanguage()));
 		_language.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_LANGUAGE, _model.get_selectedLanguage()));
 		_stopButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_STOP, _model.get_selectedLanguage()));
-		_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_PAUSE, _model.get_selectedLanguage()));
+		_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_EMERGENCY_STOP, _model.get_selectedLanguage()));
 		_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
 		_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
 		_scadaMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_SCADA, _model.get_selectedLanguage()));
