@@ -30,7 +30,7 @@ public class Automata2AttributePanel extends AttributePanel {
 	 */
 	public Automata2AttributePanel() {
 		_subPanels = new AttributePanel[1];
-		_subPanels[0] = new PackageConveyorBeltAttributePanel();
+		_subPanels[0] = new BlisterConveyorBeltAttributePanel();
 		
 		initialize();
 	}

@@ -7,8 +7,8 @@ import com.umbrella.autocommon.Configuration;
 public enum ActionParamsEnum {
 	STATE(Boolean.class),
 	MACHINE(String.class),
-	SPEED(Integer.class),
-	SIZE(Integer.class),
+	SPEED(Double.class),
+	SIZE(Double.class),
 	CAKE_QUANTITY(Integer.class),
 	CHOCOLAT_QUANTITY(Integer.class),
 	CARAMEL_QUANTITY(Integer.class),

@@ -204,10 +204,10 @@ public class MasterConfiguration implements Serializable {
     /**
      * @return
      */
-    public static MasterConfiguration getInstance() {
+    /*public static MasterConfiguration getInstance() {
         if (INSTANCE == null) createInstance();
         return INSTANCE;
-    }
+    }*/
 
 	/**
 	 * @return
@@ -458,7 +458,7 @@ public class MasterConfiguration implements Serializable {
 		this._storeBlisterTime = almacenarBlister;
 	}
 
-	public static synchronized MasterConfiguration getINSTANCE() {
+	public static synchronized MasterConfiguration getInstance() {
 		if (INSTANCE==null)
 			INSTANCE=new MasterConfiguration();
 		return INSTANCE;
