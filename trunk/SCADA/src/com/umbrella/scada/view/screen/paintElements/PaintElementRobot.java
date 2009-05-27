@@ -44,7 +44,7 @@ public class PaintElementRobot extends PaintElement {
 			break;
 		case 4:
 			//TODO faltan con 4 tartas
-			g.drawImage(_loader.get_robotTartaDef(), _posX, _posY, _maxX, _maxY, null);
+			g.drawImage(_loader.get_robotTartaCompleta(), _posX, _posY, _maxX, _maxY, null);
 			break;
 		default:
 			g.drawChars("Error".toCharArray(), 0, 5, _posX, _posY);

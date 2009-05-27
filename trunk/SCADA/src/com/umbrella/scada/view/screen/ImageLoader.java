@@ -40,6 +40,7 @@ public class ImageLoader {
 	private Image _robotTarta;
 	private Image _robotBlister;
 	private Image _robotTartaDef;
+	private Image _robotTartaCompleta;
 	private Image _cortadora;
 	private Image _estampadora;
 	private Image _calidadfg;
@@ -83,6 +84,7 @@ public class ImageLoader {
 		_robotTarta = toolkit.getImage("resources/robotTarta.png");
 		_robotBlister = toolkit.getImage("resources/robotBlister.png");
 		_robotTartaDef = toolkit.getImage("resources/robotTartaDef.png");
+		_robotTartaCompleta = toolkit.getImage("resources/robotTartaCompleta.png");
 		_cortadora = toolkit.getImage("resources/cortadora.png");
 		_estampadora = toolkit.getImage("resources/estampadora.png");
 		_calidadfg = toolkit.getImage("resources/calidad2.png");
@@ -112,6 +114,7 @@ public class ImageLoader {
 		tracker.addImage(_robot, getNextNumIncr());
 		tracker.addImage(_robotTarta, getNextNumIncr());
 		tracker.addImage(_robotBlister, getNextNumIncr());
+		tracker.addImage(_robotTartaCompleta, getNextNumIncr());
 		tracker.addImage(_robotTartaDef, getNextNumIncr());
 		tracker.addImage(_cortadora, getNextNumIncr());
 		tracker.addImage(_estampadora, getNextNumIncr());
@@ -368,6 +371,10 @@ public class ImageLoader {
 	 */
 	public Image get_table() {
 		return _table;
+	}
+
+	public Image get_robotTartaCompleta() {
+		return _robotTartaCompleta;
 	}
 	
 }

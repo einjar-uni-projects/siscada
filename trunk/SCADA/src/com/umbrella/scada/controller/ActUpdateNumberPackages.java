@@ -7,6 +7,7 @@ public class ActUpdateNumberPackages implements Action {
 
 	private int _numberPackages;
 	private boolean _goodPackages;
+	private boolean _total;
 	
 	@Override
 	public ActionResult execute() {
@@ -14,9 +15,15 @@ public class ActUpdateNumberPackages implements Action {
 		Model m = Model.getInstance();
 		
 		if(_goodPackages)
-			m.set_numGoodPackages(_numberPackages);
+			if(_total)
+				m.set_numGoodPackagesTotal(_numberPackages);
+			else
+				m.set_numGoodPackages(_numberPackages);
 		else
-			m.set_numBadPackages(_numberPackages);
+			if(_total)
+				m.set_numBadPackagesTotal(_numberPackages);
+			else
+				m.set_numBadPackages(_numberPackages);
 			
 		if(ret == ActionResult.EXECUTE_CORRECT)
 			m.notifyChanges();
@@ -30,11 +37,15 @@ public class ActUpdateNumberPackages implements Action {
 		Integer numberPackages = (Integer) params.getParam(ape);
 		
 		ape = ActionParamsEnum.GOOD_PACKAGES;
-		Boolean goodPaackage = (Boolean) params.getParam(ape);
+		Boolean goodPackage = (Boolean) params.getParam(ape);
+		
+		ape = ActionParamsEnum.TOTAL_PACKAGES;
+		Boolean total = (Boolean) params.getParam(ape);
 
-		if(numberPackages != null && goodPaackage != null){
+		if(numberPackages != null && goodPackage != null && total != null){
 			_numberPackages = numberPackages;
-			_goodPackages = goodPaackage;
+			_goodPackages = goodPackage;
+			_total = total;
 			ret = true;
 		}
 		

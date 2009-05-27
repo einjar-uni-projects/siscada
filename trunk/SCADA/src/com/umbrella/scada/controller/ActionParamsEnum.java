@@ -21,7 +21,8 @@ public enum ActionParamsEnum {
 	CONFIGURATION(Configuration.class),
 	CONVEYOR_BELT_MOVE(Boolean.class),
 	GOOD_PACKAGES(Boolean.class),
-	NUMBER_PACKAGES(Integer.class);
+	NUMBER_PACKAGES(Integer.class),
+	TOTAL_PACKAGES(Boolean.class);
 	
 	private Class _enclosedClass;
 

@@ -36,7 +36,7 @@ public class MainFrameModel implements Updatable {
 	
 	private boolean _au1Move, _au2Move, _au3Move;
 	
-	private int _numGoodPackages, _numBadPackages;
+	private int _numGoodPackages, _numBadPackages, _numGoodPackagesTotal, _numBadPackagesTotal;
 
 	// ACTIONS
 
@@ -359,6 +359,16 @@ public class MainFrameModel implements Updatable {
 				_numBadPackages = ((Integer)o).intValue();
 			}
 			break;
+		case GOOD_PACKAGES_TOTAL:
+			synchronized (_cerrojos[TransferBufferKeys.GOOD_PACKAGES_TOTAL.ordinal()]) {
+				_numGoodPackagesTotal = ((Integer)o).intValue();
+			}
+			break;
+		case BAD_PACKAGES_TOTAL:
+			synchronized (_cerrojos[TransferBufferKeys.BAD_PACKAGES_TOTAL.ordinal()]) {
+				_numBadPackagesTotal = ((Integer)o).intValue();
+			}
+			break;
 
 		default:
 			break;
@@ -594,6 +604,18 @@ public class MainFrameModel implements Updatable {
 	public int get_badPackages() {
 		synchronized (_cerrojos[TransferBufferKeys.BAD_PACKAGES.ordinal()]) {
 			return _numBadPackages;
+		}
+	}
+	
+	public int get_goodPackagesTotal() {
+		synchronized (_cerrojos[TransferBufferKeys.GOOD_PACKAGES_TOTAL.ordinal()]) {
+			return _numGoodPackagesTotal;
+		}
+	}
+	
+	public int get_badPackagesTotal() {
+		synchronized (_cerrojos[TransferBufferKeys.BAD_PACKAGES_TOTAL.ordinal()]) {
+			return _numBadPackagesTotal;
 		}
 	}
 

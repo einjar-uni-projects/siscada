@@ -134,6 +134,11 @@ public class Postmaster extends Thread {
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						ape = ActionParamsEnum.GOOD_PACKAGES;
 						params.setParam(ape,ape.getEnclosedClass(), true);
+						ape = ActionParamsEnum.TOTAL_PACKAGES;
+						if(msg.getParameters().get(0).equalsIgnoreCase("TOTAL"))
+							params.setParam(ape,ape.getEnclosedClass(), true);
+						else
+							params.setParam(ape,ape.getEnclosedClass(), false);
 						af.executeAction(ActionKey.NUMBER_PACKAGES, params);
 						break;
 					case NUM_BAD_PACKAGES:
@@ -142,6 +147,11 @@ public class Postmaster extends Thread {
 						params.setParam(ape,ape.getEnclosedClass(),msg.getObject());
 						ape = ActionParamsEnum.GOOD_PACKAGES;
 						params.setParam(ape,ape.getEnclosedClass(), false);
+						ape = ActionParamsEnum.TOTAL_PACKAGES;
+						if(msg.getParameters().get(0).equalsIgnoreCase("TOTAL"))
+							params.setParam(ape,ape.getEnclosedClass(), true);
+						else
+							params.setParam(ape,ape.getEnclosedClass(), false);
 						af.executeAction(ActionKey.NUMBER_PACKAGES, params);
 						break;
 				}
