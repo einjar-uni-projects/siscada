@@ -31,12 +31,18 @@ public class Blister implements Serializable{
 		set_posicion(posicion);
 		set_contPasteles(0);
 		set_cinta(true);
+		for(int i=0;i<calidad.length;i++){
+			calidad[i]=true;
+		}
 	}
 	
 	public Blister(){
 		set_posicion(configuracion.getSizeBlister()/2);
 		set_contPasteles(0);
 		set_cinta(true);
+		for(int i=0;i<calidad.length;i++){
+			calidad[i]=true;
+		}
 	}
 	public Blister enCinta3(){
 		Blister aux=new Blister();
