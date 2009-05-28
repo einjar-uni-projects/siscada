@@ -15,10 +15,9 @@ public class Launch {
 	}
 	
 	public Launch() {
-		/* TODO CACA */ 
-		MainFrameModel.getInstance().initialize();
+		/* TODO Mirar */
 		Model.getInstance();
-		
+		MainFrameModel.getInstance().initialize();
 		/*new Thread(new ModelLaunch()).start();
 		
 		MainFrameModel.getInstance().initialize();*/

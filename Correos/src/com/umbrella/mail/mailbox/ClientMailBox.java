@@ -60,14 +60,14 @@ public class ClientMailBox {
 		_outputQueueS = outputQueue;
 		_slave = slave;
 		
-		Thread t = new Thread(){
+		/*Thread t = new Thread(){
 			@Override
-			public void run() {
+			public void run() {*/
 				connect();
-			}
+		/*	}
 		};
 		
-		t.start();
+		t.start();*/
 		
 	}
 

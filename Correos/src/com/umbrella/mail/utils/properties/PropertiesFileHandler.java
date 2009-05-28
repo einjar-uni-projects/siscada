@@ -51,8 +51,6 @@ public class PropertiesFileHandler {
 
 	private void existFile() {
 		File g = new File(CONFIG_FOLDER);
-		/*TODO*/ System.out.println(g.getAbsolutePath());/**/
-		/*TODO*/ System.out.println(g.exists());/**/
 		if(g.exists())
 			file= new File(CONFIG_FOLDER+CONFIG_FILE);
 		else
