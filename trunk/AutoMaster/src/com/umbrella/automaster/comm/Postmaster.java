@@ -215,7 +215,7 @@ public class Postmaster {
 					sendMessageRB1(dm);
 					sendMessageRB2(dm);
 					sendMessageSCADA(dm);*/
-System.err.println("<<<<<<<<<<<<<<<<<<<<HOLA>>>>>>>>>>>>>>>>>>>");
+
 					//Actualiza los contextos
 					MasterContext mc = MasterContext.getInstance();
 					dm = new DefaultMessage();
