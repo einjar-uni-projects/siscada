@@ -1,7 +1,6 @@
 package com.umbrella.scada.controller;
 
 import com.umbrella.scada.model.Model;
-import com.umbrella.utils.MachineNames;
 
 public class ActUpdateNumberPackages implements Action {
 

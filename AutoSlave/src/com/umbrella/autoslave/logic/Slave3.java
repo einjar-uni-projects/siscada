@@ -1,7 +1,6 @@
 package com.umbrella.autoslave.logic;
 
 import java.rmi.RemoteException;
-import java.util.LinkedList;
 import java.util.Vector;
 
 import com.umbrella.autocommon.Clock;

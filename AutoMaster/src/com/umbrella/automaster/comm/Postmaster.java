@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.MasterConfiguration;
 import com.umbrella.autocommon.MasterContext;
 import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.automaster.logic.Maestro;
@@ -206,7 +205,7 @@ public class Postmaster {
 				if (not_down) {
 					set_activated(true);
 					System.out
-							.println("Restaurada comunicación arrancando el sistema");
+							.println("\nRestaurada comunicación arrancando el sistema");
 					DefaultMessage dm = new DefaultMessage();
 					/*dm.setIdentifier(MSGOntology.ARRANCARDESDEEMERGENCIA);
 					sendMessageAU1(dm);

@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import com.umbrella.scada.view.screen.ImageLoader;
 import com.umbrella.scada.view.screen.MainFrameModel;
 import com.umbrella.scada.view.screen.MainFrameModel.ElementsGroupModelEnum;
-import com.umbrella.scada.view.screen.paintElements.PaintElementBlisterIni;
 import com.umbrella.scada.view.screen.paintElements.PaintElementBlisterPasteles;
 import com.umbrella.scada.view.screen.paintElements.PaintElementCinta;
 import com.umbrella.scada.view.screen.paintElements.PaintElementQuality;

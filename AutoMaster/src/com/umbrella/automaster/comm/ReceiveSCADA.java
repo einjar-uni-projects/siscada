@@ -4,9 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.MasterConfiguration;
 import com.umbrella.autocommon.MasterContext;
-import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.mail.message.DefaultMessage;
 import com.umbrella.mail.message.MSGOntology;

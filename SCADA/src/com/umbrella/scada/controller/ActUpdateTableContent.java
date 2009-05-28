@@ -1,7 +1,5 @@
 package com.umbrella.scada.controller;
 
-import java.util.ArrayList;
-
 import com.umbrella.scada.model.Model;
 
 public class ActUpdateTableContent implements Action {
