@@ -112,12 +112,12 @@ public class ReceiveRobot1 extends Thread {
 					 */
 					String colocado = msg.getParameters().get(1);
 					if (colocado.equals("blister")) {
-						_masterContext
+						/*_masterContext
 								.get_contextoAut3()
 								.setDispositivosInternos(
 										_configutarion
 												.getPosicionAsociada(MachineNames.INICIO),
-										true);
+										true);*/
 						_masterContext.setBlisterColocado(true);
 						_masterContext.resetContador();
 						
@@ -194,7 +194,7 @@ public class ReceiveRobot1 extends Thread {
 						else
 							dm.setObject(2);
 					}else if(con_update_context.getEstadoInterno() == RobotStates.DESPLAZARBLISTERCOMPLETO){
-						dm.setObject(3);
+						dm.setObject(4);
 					}else
 						dm.setObject(0);
 					
