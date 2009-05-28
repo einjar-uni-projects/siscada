@@ -112,7 +112,8 @@ public class Slave1 implements Notifiable {
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
-					System.out.println(mensaje.getIdentifier());
+					if(debug)
+						System.out.println(mensaje.getIdentifier());
 					switch (mensaje.getIdentifier()) {
 					case FINCINTALIBRE:							
 						contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_1), false);
@@ -206,7 +207,6 @@ if(debug) System.out.println("llega 2 - SLAVE 1");
 					 */
 					if(!seEnciendeSensor() && !hayHiloBloqueante() && !contexto.isInterferencia()){
 if(debug) System.out.println("moverCinta  - SLAVE 1");
-						//_moverCinta.start();
 						if(_moverCinta != null){
 							_moverCinta.notifyNoSyncJoy2();
 							contexto.setMoviendoCinta(true);
@@ -215,12 +215,7 @@ if(debug) System.out.println("moverCinta  - SLAVE 1");
 							System.out.println("_moverCinta = null - SLAVE 1");							
 					}else{
 						contexto.setMoviendoCinta(false);
-						//TODO q datos tengo
-						System.out.println("seEnciendeSensor=" +seEnciendeSensor());
-						System.out.println("hayHiloBloqueante()=" +hayHiloBloqueante());
-						System.out.println("contexto.isInterferencia()=" +contexto.isInterferencia());
-						
-						
+
 						
 						if(puedoUsar(MachineNames.CHOCOLATE)){
 if(debug) System.out.println("ejecuta la maquina de chocolate - CHOCOLATE, cantidad = " + contexto.getCapacidadChocolate());

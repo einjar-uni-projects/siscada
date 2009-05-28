@@ -56,24 +56,23 @@ public class Robot1 implements Notifiable{
 		_contexto.setEstadoInterno(RobotStates.REPOSO);
 	}
 	public void execute() {
-		// TODO Auto-generated method stub
 		while(!_contexto.isFIN()){
-			//TODO System.out.println("antes de dormir");
+
 			pauseJoy();
 			guardedJoy();
-			//TODO System.out.println("despues de dormir");
+
 			MessageInterface mensaje=null;
 			do{
 				try {
-					//System.out.println("antes de recibir");
+
 					mensaje=_buzon.receive();
-					//System.out.println("despues de recibir");
+
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
-					System.out.println("recibiendo el mensaje: " + mensaje.getIdentifier());
+					//System.out.println("recibiendo el mensaje: " + mensaje.getIdentifier());
 					switch (mensaje.getIdentifier()) {
 					case ACTUALIZARCONTEXTO:							
 						_contexto=(ContextoRobot)mensaje.getObject();
