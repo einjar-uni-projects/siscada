@@ -92,7 +92,10 @@ public class Automata1AttributePanel extends AttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.CAKE_CONVEYOR_BELT, _model.get_selectedLanguage()));
-		_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+		if(_model.is_cintaPasteles())
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
+		else
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 		for (AttributePanel panel : _subPanels) {
 			panel.updateLanguage();
 		}
@@ -102,6 +105,13 @@ public class Automata1AttributePanel extends AttributePanel {
 	public void refreshData() {
 		for (AttributePanel subPanel : _subPanels) {
 			subPanel.refreshData();
+		}
+		if(_model.is_cintaPasteles()){
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(false);
+		}else{
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(true);
 		}
 	}
 

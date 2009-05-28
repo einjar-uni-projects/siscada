@@ -73,7 +73,10 @@ public class Automata2AttributePanel extends AttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.BLISTER_CONVEYOR_BELT, _model.get_selectedLanguage()));
-		_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+		if(_model.is_cintaPasteles())
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
+		else
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 		for (AttributePanel panel : _subPanels) {
 			panel.updateLanguage();
 		}
@@ -83,6 +86,13 @@ public class Automata2AttributePanel extends AttributePanel {
 	public void refreshData() {
 		for (AttributePanel subPanel : _subPanels) {
 			subPanel.refreshData();
+		}
+		if(_model.is_cintaBlister()){
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(false);
+		}else{
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(true);
 		}
 	}
 

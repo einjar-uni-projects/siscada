@@ -396,7 +396,7 @@ public class MainFrameModel implements Updatable {
 		}
 	}
 
-	public boolean get_brazoMontaje() {
+	public boolean is_brazoMontaje() {
 		synchronized (_cerrojos[TransferBufferKeys.RB1_STATE.ordinal()]) {
 			return _statesAutRob[3];
 		}
