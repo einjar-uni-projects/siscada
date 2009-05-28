@@ -84,7 +84,7 @@ public class ImageLoader {
 		_robotTarta = toolkit.getImage("resources/robotTarta.png");
 		_robotBlister = toolkit.getImage("resources/robotBlister.png");
 		_robotTartaDef = toolkit.getImage("resources/robotTartaDef.png");
-		_robotTartaCompleta = toolkit.getImage("resources/robotTartaCompleta.png");
+		_robotTartaCompleta = toolkit.getImage("resources/robotTartas.png");
 		_cortadora = toolkit.getImage("resources/cortadora.png");
 		_estampadora = toolkit.getImage("resources/estampadora.png");
 		_calidadfg = toolkit.getImage("resources/calidad2.png");
