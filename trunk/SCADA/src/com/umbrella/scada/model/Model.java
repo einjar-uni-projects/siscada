@@ -116,7 +116,7 @@ public class Model {
 		try {
 			new Thread(Postmaster.getInstance()).start();
 		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		updateAll();

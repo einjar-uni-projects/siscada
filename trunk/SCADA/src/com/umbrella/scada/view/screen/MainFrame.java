@@ -444,7 +444,7 @@ public class MainFrame implements UpdatableInterface{
 					try {
 						Thread.sleep(sleep);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+	
 						e.printStackTrace();
 					}
 			}

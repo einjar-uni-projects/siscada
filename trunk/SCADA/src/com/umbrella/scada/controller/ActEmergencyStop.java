@@ -20,7 +20,6 @@ public class ActEmergencyStop implements Action {
 			m.set_numGoodPackages(0);
 			m.set_numBadPackages(0);
 		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;

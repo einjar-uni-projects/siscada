@@ -9,7 +9,7 @@ public class ActNull implements Action {
 
 	@Override
 	public boolean insertParam(ActionParams params) {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 

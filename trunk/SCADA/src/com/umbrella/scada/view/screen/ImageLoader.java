@@ -128,7 +128,7 @@ public class ImageLoader {
 			if(tracker.isErrorAny())
 				System.err.println("Error al cargar los elementos de imagen");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

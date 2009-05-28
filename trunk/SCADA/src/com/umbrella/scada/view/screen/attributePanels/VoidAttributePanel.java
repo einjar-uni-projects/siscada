@@ -52,7 +52,7 @@ public class VoidAttributePanel extends AttributePanel {
 
 	@Override
 	public void notifyError(boolean error) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
