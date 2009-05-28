@@ -58,23 +58,19 @@ public class PropertiesFileHandler {
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private synchronized void loadFile() {
 		try {
-			//TODO System.out.println(file.getAbsolutePath());
 			FileInputStream f = new FileInputStream(file.getAbsolutePath());
 			pc.load(f);
 			f.close();
 			String list = pc.toString().replaceAll(",", "\n");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -97,7 +93,6 @@ public class PropertiesFileHandler {
 	}
 	
 	private String obtainValue(Property value) {
-		// TODO pedir valor por interfaz grafica
 		return value.getValue();
 	}
 
@@ -107,10 +102,8 @@ public class PropertiesFileHandler {
 			pc.store(w, null);
 			w.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
