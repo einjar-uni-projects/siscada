@@ -20,8 +20,9 @@ public class KeepAliveThread extends Thread {
 	private void set_State(boolean state) {
 		synchronized (_mutex) {
 			if(_state != state){
-				Calendar c = Calendar.getInstance();
-				System.out.println(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE)+" "+c.get(Calendar.SECOND)+"."+c.get(Calendar.MILLISECOND)+" Conection: "+_recName+" valor:"+state);
+				System.out.println("Escuchando "+_recName+" "+_state+" - "+state);
+				//Calendar c = Calendar.getInstance();
+				//System.out.println(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE)+" "+c.get(Calendar.SECOND)+"."+c.get(Calendar.MILLISECOND)+" Conection: "+_recName+" valor:"+state);
 			}
 			_state = state;
 		}
@@ -89,7 +90,7 @@ public class KeepAliveThread extends Thread {
 		return _outputQueueKA.unqueueMessage();
 	}
 
-	private  void sendKeepAlive() {
+	private void sendKeepAlive() {
 
 		MessageInterface syncMessage = new KeepAliveMessage();
 

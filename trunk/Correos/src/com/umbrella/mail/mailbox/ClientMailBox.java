@@ -71,7 +71,7 @@ public class ClientMailBox {
 		
 	}
 
-	private void connect() {
+	private synchronized void connect() {
 		int delay = 1000;
 		int inc = 2;
 		int max = 5000;
