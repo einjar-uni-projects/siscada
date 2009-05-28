@@ -133,6 +133,7 @@ public class Slave2 implements Notifiable {
 						break;
 					case PARADAEMERGENCIA:
 						contexto.setApagado(true);
+						contexto.setMoviendoCinta(false);
 						break;
 					case PRODUCTORECOGIDO:
 						//contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.FIN_2), false);

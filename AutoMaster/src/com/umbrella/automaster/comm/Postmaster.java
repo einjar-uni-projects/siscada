@@ -199,6 +199,9 @@ public class Postmaster {
 					sendMessageAU3(dm);
 					sendMessageRB1(dm);
 					sendMessageRB2(dm);
+					
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.PARADAFALLO);
 					sendMessageSCADA(dm);
 				}
 			} else {
