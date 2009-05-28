@@ -50,7 +50,7 @@ public class ReceiveAutomaton1 extends Thread {
 			msg = _postmaster.reciveMessageAU1();
 			
 			if (msg != null) {
-				//if(LaunchAutMaster.debugSlav1)
+				if(LaunchAutMaster.debugSlav1)
 					System.out.println("AU1 Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()) {
 				case AVISARUNFALLO:
