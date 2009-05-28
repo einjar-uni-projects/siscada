@@ -67,10 +67,8 @@ public class Maestro implements Notifiable  {
 	public void execute() {
 		_clock.start();
 		while (!_contextoMaestro.is_FIN()) {
-			//System.out.println("Me duermo"); // TODO quitar
 			pauseJoy();
 			guardedJoy();
-			//System.out.println("Me despierto");
 			_reciveAU1.start();
 			_reciveAU2.start();
 			_reciveRB1.start();
