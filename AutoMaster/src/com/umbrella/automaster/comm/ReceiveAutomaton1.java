@@ -34,11 +34,8 @@ public class ReceiveAutomaton1 extends Thread {
 			_masterContext = MasterContext.getInstance();
 			_configuration = Configuration.getInstance();
 		} catch (RemoteException e1) {
-			// TODO: handle exception
 		} catch (MalformedURLException e2) {
-			// TODO: handle exception
 		} catch (PropertyException e4) {
-			// TODO: handle exception
 		}
 	}
 

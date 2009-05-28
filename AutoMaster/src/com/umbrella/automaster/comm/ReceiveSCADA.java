@@ -32,10 +32,10 @@ public class ReceiveSCADA extends Thread {
 		} catch (PropertyException e4) {
 			// TODO: handle exception
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

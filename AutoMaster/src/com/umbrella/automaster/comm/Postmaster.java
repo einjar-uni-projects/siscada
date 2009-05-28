@@ -145,14 +145,12 @@ public class Postmaster {
 			try {
 				ret = _SCADAmessageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			try {
 				ret = _SCADAmessageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -267,7 +265,6 @@ public class Postmaster {
 			try {
 				ret = _AU1messageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -280,7 +277,6 @@ public class Postmaster {
 			try {
 				ret = _AU2messageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -293,7 +289,6 @@ public class Postmaster {
 			try {
 				ret = _AU3AmessageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -306,7 +301,6 @@ public class Postmaster {
 			try {
 				ret = _RB1messageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -319,7 +313,6 @@ public class Postmaster {
 			try {
 				ret = _RB2messageConsulter.receive();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
