@@ -43,7 +43,7 @@ public class Slave1 implements Notifiable {
 	private boolean _joy = true;
 
 //TODO propiom quitar antes de entregar
-	private boolean debug=false;
+	private boolean debug=true;
 	/**
 	 * @param args
 	 */
@@ -173,6 +173,11 @@ public class Slave1 implements Notifiable {
 						break;
 					case PARADAFALLO:
 						contexto.setFallo(true);
+						break;
+					case ACTUALIZARCONTEXTO:
+						contexto.absorverContexto((Context) mensaje.getObject());
+						contexto.setApagado(false);
+						contexto.setParadaCorrecta(false);
 						break;
 					}
 				}
