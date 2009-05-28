@@ -1,6 +1,7 @@
 package com.umbrella.utils;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 import com.umbrella.autocommon.Configuration;
 
@@ -34,6 +35,7 @@ public class Blister implements Serializable{
 		for(int i=0;i<calidad.length;i++){
 			calidad[i]=true;
 		}
+		qualityReview();
 	}
 	
 	public Blister(){
@@ -43,6 +45,7 @@ public class Blister implements Serializable{
 		for(int i=0;i<calidad.length;i++){
 			calidad[i]=true;
 		}
+		qualityReview();
 	}
 	public Blister enCinta3(){
 		Blister aux=new Blister();
@@ -55,6 +58,7 @@ public class Blister implements Serializable{
 		set_posicion(_posicion);
 		set_contPasteles(pasteles);
 		set_cinta(cinta);
+		qualityReview();
 	}
 	
 	
@@ -117,5 +121,45 @@ public class Blister implements Serializable{
 
 	public synchronized boolean is_cinta() {
 		return _cinta;
+	}
+
+	private void qualityReview() {
+
+		setCalidad(0, true);
+		setCalidad(1, true);
+		setCalidad(2, true);
+		setCalidad(3, true);
+		setCalidad(4, true);
+		if(Math.random()<configuracion.getPorcentajeFallos()){
+			setCalidad(0, false);
+
+			Vector<Integer> vectorAux=new Vector<Integer>();
+			vectorAux.add(1);
+			vectorAux.add(2);
+			vectorAux.add(3);
+			vectorAux.add(4);
+			int posVector=(int)(Math.random()*4);
+			int posReal=vectorAux.get(posVector);
+			vectorAux.remove(posVector);
+			setCalidad(posReal, false);
+			if(Math.random()<0.5){
+				posVector=(int)(Math.random()*3);
+				posReal=vectorAux.get(posVector);
+				setCalidad(posReal, false);
+				vectorAux.remove(posVector);
+				if(Math.random()<0.25){
+					posVector=(int)(Math.random()*2);
+					posReal=vectorAux.get(posVector);
+					setCalidad(posReal, false);
+					vectorAux.remove(posVector);
+					if(Math.random()<0.125){
+						posVector=(int)(Math.random()*3);
+						posReal=vectorAux.get(posVector);
+						setCalidad(posReal, false);
+						vectorAux.remove(posVector);
+					}
+				}
+			}
+		}
 	}
 }
