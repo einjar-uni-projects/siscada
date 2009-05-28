@@ -14,7 +14,7 @@ public class InputSerializable {
 	
 	public void openConfiguracion()  {
 		try {
-			_file = new FileInputStream(".\\configuracion.ser");
+			_file = new FileInputStream("configuracion.ser");
 		} catch (FileNotFoundException e) {
 			System.out.println("NO SE ENCUENTRA EL FICHERO CONFIGURACION PARA LEER");
 		}
@@ -25,20 +25,23 @@ public class InputSerializable {
 		}
 	}
 	
-	public void openConfiguracionMaestro() {
+	public void openConfiguracionMaestro(String file){
+		System.out.println("Abriendo fichero: "+file);
 		try {
-			_file = new FileInputStream(".\\configuracionMaestro.ser");
+			_file = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("NO SE ENCUENTRA EL FICHERO CONFIGURACION MAESTRO PARA LEER");
 		}
 		try {
 			_input = new ObjectInputStream(_file);
 		} catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("ERROR EN LA LECTURA DEL FICHERO CONFIGURACION MAESTRO");
 		}
 	}
 
 	public void close() {
+		System.out.println("  Cerrando el fichero...\n");
 		if (_input != null) {
 			try {
 				_input.close();
@@ -63,6 +66,7 @@ public class InputSerializable {
 	}
 
 	public MasterConfiguration readMasterConfiguration() {
+		System.out.println("  Leyendo configuracion del maestro...");
 		MasterConfiguration conf = null;
 		if (_input!=null) {
 			try {

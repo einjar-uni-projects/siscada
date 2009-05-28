@@ -27,7 +27,12 @@ import com.umbrella.utils.OutputSerializable;
  */
 
 public class MasterConfiguration implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4470747060593431642L;
 
+	private final static String MASTER_FILE = "configuracionMaestro.ser";
 	
 	/*
 	 * El tiempo de reloj realmente me lo tiene q dar el usuario, se tiene q cargar y estaria muy bien leerlo
@@ -460,43 +465,27 @@ public class MasterConfiguration implements Serializable {
 	}
 
 	public static synchronized MasterConfiguration getInstance() {
-		if (INSTANCE==null)
-			INSTANCE=new MasterConfiguration();
+		if (INSTANCE==null){
+			File f = new File(MASTER_FILE);
+			if(f.exists()){
+				InputSerializable is = new InputSerializable();
+				is.openConfiguracionMaestro(MASTER_FILE);
+				INSTANCE = is.readMasterConfiguration();
+				is.close();
+			}else{
+				INSTANCE=new MasterConfiguration();
+				INSTANCE.save();
+			}
+		}
 		return INSTANCE;
 	}
 
-	private MasterConfiguration() {
-		String rutita = ".\\configuracionMaestro.ser";
-		File ficherito = new File(rutita);
-		if (ficherito.exists()) {
-			//si el fichero existe, se carga
-			this.refresh();
-			
-		}
-		else {
-			//si el fichero no existe, se crea y guarda
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(".\\configuracionMaestro.ser"));
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			
-		}
-	}
-	
-	public void refresh() {
-		InputSerializable is = new InputSerializable();
-		is.openConfiguracionMaestro();
-		is.readMasterConfiguration();
-		is.close();
-	}
+	private MasterConfiguration() {}
 
-	//save
-	//guardar en fichero de properties
+	
 	public void save() {
-		OutputSerializable os = new OutputSerializable(this);
-		os.openConfiguracionMaestro();
+		OutputSerializable os = new OutputSerializable();
+		os.openConfiguracionMaestro(MASTER_FILE);
 		os.write(this);
 		os.close();
 	}
