@@ -48,7 +48,7 @@ public class ReceiveSCADA extends Thread {
 		do {
 			msg = _postmaster.reciveMessageSCADA();
 			if (msg != null) {
-				if(LaunchAutMaster.debugSCADA)
+				//if(LaunchAutMaster.debugSCADA)
 					System.out.println("SCADA Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()){
 				case START:

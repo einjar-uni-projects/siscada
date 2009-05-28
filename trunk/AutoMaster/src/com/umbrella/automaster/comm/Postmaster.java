@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.MasterConfiguration;
+import com.umbrella.autocommon.MasterContext;
 import com.umbrella.automaster.LaunchAutMaster;
 import com.umbrella.automaster.logic.Maestro;
 import com.umbrella.automaster.model.PropertiesFile;
@@ -206,15 +208,38 @@ public class Postmaster {
 					System.out
 							.println("Restaurada comunicación arrancando el sistema");
 					DefaultMessage dm = new DefaultMessage();
-					dm.setIdentifier(MSGOntology.ARRANCARDESDEEMERGENCIA);
+					/*dm.setIdentifier(MSGOntology.ARRANCARDESDEEMERGENCIA);
 					sendMessageAU1(dm);
 					sendMessageAU2(dm);
 					sendMessageAU3(dm);
 					sendMessageRB1(dm);
 					sendMessageRB2(dm);
-					sendMessageSCADA(dm);
-
+					sendMessageSCADA(dm);*/
+System.err.println("<<<<<<<<<<<<<<<<<<<<HOLA>>>>>>>>>>>>>>>>>>>");
+					//Actualiza los contextos
+					MasterContext mc = MasterContext.getInstance();
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					dm.setObject(mc.get_contextoAut1());
+					sendMessageAU1(dm);
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					dm.setObject(mc.get_contextoAut2());
+					sendMessageAU2(dm);
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					dm.setObject(mc.get_contextoAut3());
+					sendMessageAU3(dm);
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					dm.setObject(mc.get_contextoRobot1());
+					sendMessageRB1(dm);
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.ACTUALIZARCONTEXTO);
+					dm.setObject(mc.get_contextoRobot2());
+					sendMessageRB2(dm);
 					
+					dm = new DefaultMessage();
 					Configuration conf = Maestro.getInstance()
 							.getConfiguration();
 					dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
