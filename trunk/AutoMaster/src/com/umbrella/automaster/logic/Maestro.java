@@ -233,7 +233,7 @@ public class Maestro implements Notifiable  {
 		return sal;
 	}
 
-	private int cambiarTiempoRobot(int robot, int valor) {
+	public int cambiarTiempoRobot(int robot, int valor) {
 		int sal = -1;
 		switch (robot) {
 		case 0:
@@ -261,6 +261,7 @@ public class Maestro implements Notifiable  {
 			sal = -2;
 			break;
 		}
+		reiniciarConfiguracionAut();
 		return sal;
 	}
 
@@ -292,6 +293,7 @@ public class Maestro implements Notifiable  {
 			sal = -2;
 			break;
 		}
+		reiniciarConfiguracionAut();
 		return sal;
 	}
 
@@ -305,6 +307,7 @@ public class Maestro implements Notifiable  {
 			_configuracion.setSizeBizcocho(valor);
 			sal = 1;
 		}
+		reiniciarConfiguracionAut();
 		return sal;
 	}
 
