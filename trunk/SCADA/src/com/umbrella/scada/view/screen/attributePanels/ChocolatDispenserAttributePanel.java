@@ -1,7 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
 import com.umbrella.scada.controller.ActionParams;
-import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 import com.umbrella.scada.view.localization.LocalizationResources.LanguageIDs;
 

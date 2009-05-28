@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 import com.umbrella.autocommon.Configuration;
-import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.MasterContext;
 import com.umbrella.automaster.LaunchAutMaster;
@@ -66,14 +65,14 @@ public class ReceiveRobot1 extends Thread {
 					String producto = msg.getParameters().get(1);
 					if (producto.equals("pastel")) {
 						
-						// se env’a un mensaje al AU1 para que elimine el pastel
+						// se envï¿½a un mensaje al AU1 para que elimine el pastel
 						dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageAU1(dm);
 
 					} else if (producto.equals("blister")) {
-						// se env’a un mensaje al AU2 para que elimine el blister
+						// se envï¿½a un mensaje al AU2 para que elimine el blister
 						dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.PRODUCTORECOGIDO);
 						dm.getParameters().add("RB1");
@@ -139,7 +138,7 @@ public class ReceiveRobot1 extends Thread {
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageSCADA(dm);
 						
-						// Se pide al robot que lo desplace hasta el aut—mata 3 si ya est‡n todos
+						// Se pide al robot que lo desplace hasta el autï¿½mata 3 si ya estï¿½n todos
 						// y sy hay espacio en este
 						if(_masterContext.getContador() >= 4 && !_masterContext.get_contextoAut3().isBlisterListoInicioCinta3()){
 							MessageInterface mensajeSend = new DefaultMessage();
@@ -166,7 +165,7 @@ public class ReceiveRobot1 extends Thread {
 						dm.getParameters().add("RB1");
 						_postmaster.sendMessageSCADA(dm);*/
 						
-						// Se env’a un blister al aut—mata 3
+						// Se envï¿½a un blister al autï¿½mata 3
 						dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.BLISTERCOMPLETO);
 						//dm.setObject(0);
@@ -211,7 +210,7 @@ public class ReceiveRobot1 extends Thread {
 		
 		ContextoRobot context = _masterContext.get_contextoRobot1();
 		
-		/* Si est‡ apagado por una parada correcta se env’a el mensaje de parar a los dem‡s aut—matas*/
+		/* Si estï¿½ apagado por una parada correcta se envï¿½a el mensaje de parar a los demï¿½s autï¿½matas*/
 		if(context.isApagado() && context.isParadaCorrecta()){
 			dm.setIdentifier(MSGOntology.PARADA);
 			

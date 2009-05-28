@@ -15,7 +15,6 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 import com.umbrella.scada.view.localization.LocalizationResources;
-import com.umbrella.scada.view.localization.LocalizatorIDs;
 
 public class ReportViewer extends JFrame {
 
