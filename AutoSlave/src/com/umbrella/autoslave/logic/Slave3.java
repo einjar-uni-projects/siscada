@@ -45,6 +45,8 @@ public class Slave3 implements Notifiable{
 
 	public  double porcentajeFallos=0.03;
 	private boolean _joy = true;
+	
+	private int _modifyBlister=-1;
 
 	public Slave3(){
 		
@@ -268,7 +270,8 @@ public class Slave3 implements Notifiable{
 	 * 
 	 */
 	private void qualityReview() {
-		int posicionBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
+
+		int posicionBlister=_modifyBlister;
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD), true);
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1), true);
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2), true);
@@ -321,6 +324,7 @@ public class Slave3 implements Notifiable{
 			contexto.get_listaBlister().get(posicionBlister).setCalidad(0, true);
 			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD), true);
 		}
+		_modifyBlister=-1;
 	}
 	
 	
@@ -367,8 +371,10 @@ public class Slave3 implements Notifiable{
 	
 	private synchronized boolean ejecutandoAlgo(MachineNames nombre){
 		boolean salida=false;
+		/*
 		if(nombre.equals(MachineNames.CONTROL_CALIDAD))
 			if(_calidad.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
+		*/
 		if(nombre.equals(MachineNames.SELLADO))
 			if(_selladora.getThreadState().equals(ThreadState.EJECUTANDO)) salida=true;
 		if(nombre.equals(MachineNames.FIN_3))
@@ -378,13 +384,13 @@ public class Slave3 implements Notifiable{
 	
 	private synchronized boolean puedoUsar(MachineNames tipo){
 		boolean salida=false;
-
-		if(tipo.equals(MachineNames.CONTROL_CALIDAD))
+		_modifyBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
+		if(tipo.equals(MachineNames.CONTROL_CALIDAD)){
 			if(!ejecutandoAlgo(MachineNames.CONTROL_CALIDAD) && 
-					contexto.activaSensor(configuracion, _calidad.getPosition())>=0)
-				if(!contexto.get_listaBlister().get(contexto.activaSensor(configuracion, _calidad.getPosition())).passTest())
+					_modifyBlister>=0){
 					salida=true;
-	
+			}
+		}
 		if(tipo.equals(MachineNames.SELLADO))
 			if(!ejecutandoAlgo(MachineNames.SELLADO) && 
 					contexto.activaSensor(configuracion, _selladora.getPosition())>=0 )
