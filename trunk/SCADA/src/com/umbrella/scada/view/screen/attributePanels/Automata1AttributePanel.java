@@ -106,6 +106,7 @@ public class Automata1AttributePanel extends AttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.CAKE_CONVEYOR_BELT, _model.get_selectedLanguage()));
+		_rellenar.setText(_languageResources.getLocal(LocalizatorIDs.REFILL, _model.get_selectedLanguage()));
 		if(_model.is_cintaPasteles())
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
 		else
