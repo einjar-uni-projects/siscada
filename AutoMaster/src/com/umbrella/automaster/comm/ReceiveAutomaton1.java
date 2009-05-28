@@ -73,6 +73,18 @@ public class ReceiveAutomaton1 extends Thread {
 					dm.setObject(con_update_context.getPastelesRestantes());
 					dm.getParameters().add("AU1");
 					_postmaster.sendMessageSCADA(dm);
+					// Se notifica la cantidad de chocolate en la dispensadora
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.CHOCOLAT_DEPOT);
+					dm.setObject(con_update_context.getCapacidadChocolate());
+					dm.getParameters().add("AU1");
+					_postmaster.sendMessageSCADA(dm);
+					// Se notifica la cantidad de caramelo en la dispensadora
+					dm = new DefaultMessage();
+					dm.setIdentifier(MSGOntology.CARAMEL_DEPOT);
+					dm.setObject(con_update_context.getCapacidadCaramelo());
+					dm.getParameters().add("AU1");
+					_postmaster.sendMessageSCADA(dm);
 					
 					// Se notifican los pasteles en la cinta
 					dm = new DefaultMessage();
