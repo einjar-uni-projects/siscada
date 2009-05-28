@@ -56,7 +56,7 @@ public class ReceiveSCADA extends Thread {
 							.getConfiguration();
 					dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
 					dm.setObject(conf);
-
+					_postmaster.isSistemStarted(true);
 					_postmaster.sendMessageAU1(dm);
 					_postmaster.sendMessageAU2(dm);
 					_postmaster.sendMessageAU3(dm);
@@ -66,7 +66,7 @@ public class ReceiveSCADA extends Thread {
 					break;
 				case PARADA:
 					dm.setIdentifier(MSGOntology.PARADA);
-					
+					//_postmaster.isSistemStarted(false);
 					_postmaster.sendMessageAU1(dm);
 					/*_postmaster.sendMessageAU2(dm);
 					_postmaster.sendMessageAU3(dm);
@@ -88,7 +88,7 @@ public class ReceiveSCADA extends Thread {
 				case CONVEYOR_BELT_1_SIZE:
 					Double size = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut1().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_1, size);
 						
 						// Notificamos al SCADA
@@ -101,7 +101,7 @@ public class ReceiveSCADA extends Thread {
 				case CONVEYOR_BELT_2_SIZE:
 					Double size2 = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut2().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_2, size2);
 						
 						// Notificamos al SCADA
@@ -114,7 +114,7 @@ public class ReceiveSCADA extends Thread {
 				case CONVEYOR_BELT_3_SIZE:
 					Double size3 = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut2().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_3, size3);
 						
 						// Notificamos al SCADA
@@ -127,7 +127,7 @@ public class ReceiveSCADA extends Thread {
 				case CONVEYOR_BELT_1_SPEED:
 					Double speed = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut1().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_1, speed);
 						
 						// Notificamos al SCADA
@@ -140,7 +140,7 @@ public class ReceiveSCADA extends Thread {
 				case CONVEYOR_BELT_2_SPEED:
 					Double speed2 = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut2().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_2, speed2);
 System.err.println("cacaaa");
 						// Notificamos al SCADA
@@ -153,7 +153,7 @@ System.err.println("cacaaa");
 				case CONVEYOR_BELT_3_SPEED:
 					Double speed3 = (Double)msg.getObject();
 					if(_masterContext.get_contextoAut3().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_3, speed3);
 						
 						// Notificamos al SCADA
@@ -166,7 +166,7 @@ System.err.println("cacaaa");
 				case RB1_BLISTER_DELAY:
 					Integer rspeed1 = (Integer)msg.getObject();
 					if(_masterContext.get_contextoRobot1().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarTiempoRobot(1, rspeed1);
 						System.err.println("caca "+rspeed1);
 						// Notificamos al SCADA
@@ -179,7 +179,7 @@ System.err.println("cacaaa");
 				case RB1_CAKE_DELAY:
 					Integer rspeed2 = (Integer)msg.getObject();
 					if(_masterContext.get_contextoRobot1().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarTiempoRobot(0, rspeed2);
 						
 						// Notificamos al SCADA
@@ -192,7 +192,7 @@ System.err.println("cacaaa");
 				case RB2_BLISTER_DELAY:
 					Integer rspeed3 = (Integer)msg.getObject();
 					if(_masterContext.get_contextoRobot2().isApagado()){
-						// Cambiamos su configuraci—n
+						// Cambiamos su configuraciï¿½n
 						Maestro.getInstance().cambiarTiempoRobot(3, rspeed3);
 						
 						// Notificamos al SCADA

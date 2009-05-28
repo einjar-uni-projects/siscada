@@ -32,6 +32,7 @@ public class ClientMailBox {
 	private final String _outputQueueS;
 	private KeepAliveThread _keepAliveThread  = null;
 	private final boolean _slave;
+	private boolean _isStarted = false;
 
 	/**
 	 * Constructor de MailBox
@@ -58,7 +59,16 @@ public class ClientMailBox {
 		_inputQueueS = inputQueue;
 		_outputQueueS = outputQueue;
 		_slave = slave;
-		connect();
+		
+		Thread t = new Thread(){
+			@Override
+			public void run() {
+				connect();
+			}
+		};
+		
+		t.start();
+		
 	}
 
 	private void connect() {
@@ -89,6 +99,7 @@ public class ClientMailBox {
 		        this._keepAliveThread.start();
 				
 				done = true;
+				_isStarted = true;
 				System.out.println("Conectado con el host: " + _queueServerIp
 						+ ":" + _queueServerPort);
 			} catch (Exception e) {
@@ -108,6 +119,7 @@ public class ClientMailBox {
 	}
 
 	public void reconnect() {
+		_isStarted = false;
 		connect();
 	}
 
@@ -122,13 +134,20 @@ public class ClientMailBox {
 	public synchronized boolean send(MessageInterface message) {
 		boolean done = false;
 		boolean ret = false;
-
-		while (!done) {
-			try {
-				ret = _outputQueue.queueMessage(message);
-				done = true;
-			} catch (Exception e) {
-				reconnect();
+	//	System.out.println("Paso por aqui");
+	//	System.out.flush();
+		if(_isStarted){
+			if(message != null)
+		//	System.out.println("Mando3: "+message.getIdentifier());
+		//	System.out.flush();
+			while (!done) {
+				try {
+					ret = _outputQueue.queueMessage(message);
+					done = true;
+				} catch (Exception e) {
+					e.printStackTrace();
+					reconnect();
+				}
 			}
 		}
 		return ret;
@@ -142,13 +161,15 @@ public class ClientMailBox {
 	 */
 	public synchronized MessageInterface receiveBlocking() {
 		MessageInterface returnMessage = null;
-		do {
-			try {
-				returnMessage = _inputQueue.unqueueMessage();
-			} catch (RemoteException e) {
-				reconnect();
-			}
-		} while (returnMessage == null);
+		if(_isStarted){
+			do {
+				try {
+					returnMessage = _inputQueue.unqueueMessage();
+				} catch (RemoteException e) {
+					reconnect();
+				}
+			} while (returnMessage == null);
+		}
 		return returnMessage;
 	}
 
@@ -161,10 +182,12 @@ public class ClientMailBox {
 	 */
 	public synchronized MessageInterface receive() throws RemoteException {
 		MessageInterface returnMessage = null;
-		try {
-			returnMessage = _inputQueue.unqueueMessage();
-		} catch (RemoteException e) {
-			reconnect();
+		if(_isStarted){
+			try {
+				returnMessage = _inputQueue.unqueueMessage();
+			} catch (RemoteException e) {
+				reconnect();
+			}
 		}
 		return returnMessage;
 	}
