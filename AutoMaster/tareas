@@ -2,11 +2,14 @@ Arreglar:
 	Todos los paquetes son incorrectos
 	La selladora solo debe sellar si el paquete es correcto
 	Cuenta dobles los paquetes que se entregan
-	Sincronizaci—n en m‡quinas de chocolate y caramelo
+	Sincronizaciï¿½n en mï¿½quinas de chocolate y caramelo
 	
-A–adir:
+Aï¿½adir:
 	Imagen de blister sellado
-	Comunicar par‡metros robot
+	Comunicar parï¿½metros robot
 	
 Comprobar:
-	Tama–o y velocidad de las cintas
+	Tamaï¿½o y velocidad de las cintas
+	Tolerancia a fallos
+		Los autÃ³matas son notificados de que otro se ha caido y se paran [hecho?]
+		Al arrancar el autÃ³mata caido se le debe notificar el estado que tenÃ­a
