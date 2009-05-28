@@ -130,6 +130,9 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case FAIL_STOP:
+			ret = new ActFailStop();
+			break;
 			
 		default:
 			ret = new ActNull();
