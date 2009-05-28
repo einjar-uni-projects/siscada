@@ -33,7 +33,7 @@ public class Automata3AttributePanel extends AttributePanel {
 	public Automata3AttributePanel() {
 		super(null);
 		_subPanels = new AttributePanel[1];
-		_subPanels[0] = new BlisterConveyorBeltAttributePanel(this);
+		_subPanels[0] = new PackageConveyorBeltAttributePanel(this);
 		
 		initialize();
 	}
