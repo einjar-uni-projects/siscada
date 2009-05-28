@@ -196,6 +196,9 @@ public class Postmaster extends Thread {
 							params.setParam(ape, ape.getEnclosedClass(), false);
 						af.executeAction(ActionKey.NUMBER_PACKAGES, params);
 						break;
+					case PARADAFALLO:
+						af.executeAction(ActionKey.FAIL_STOP, null);
+						break;
 					}
 				}
 
