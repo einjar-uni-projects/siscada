@@ -12,6 +12,11 @@ public class ChocolatDispenserAttributePanel extends DispenserAttributePanel {
 	 */
 	private static final long serialVersionUID = 40765768524958467L;
 
+	
+	public ChocolatDispenserAttributePanel(AttributePanel father) {
+		super(father);
+	}
+	
 	@Override
 	public void refreshData() {
 		countValueLabel.setText(""+_model.get_chocolatDepot());
@@ -31,6 +36,12 @@ public class ChocolatDispenserAttributePanel extends DispenserAttributePanel {
 			params.setParam(ActionParamsEnum.CHOCOLAT_QUANTITY, ActionParamsEnum.CHOCOLAT_QUANTITY.getEnclosedClass(), Integer.parseInt(countNewText.getText()));
 		return params;*/
 		return null;
+	}
+
+	@Override
+	public void notifyError(boolean error) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

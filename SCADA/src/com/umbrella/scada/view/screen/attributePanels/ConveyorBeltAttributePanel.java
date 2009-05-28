@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -26,11 +27,8 @@ public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 	protected JTextField newSizeText = null;
 	protected JLabel titleLabel = null;
 	
-	/**
-	 * This is the default constructor
-	 */
-	public ConveyorBeltAttributePanel() {
-		super();
+	public ConveyorBeltAttributePanel(AttributePanel father) {
+		super(father);
 		initialize();
 		updateLanguage();
 	}
@@ -112,6 +110,23 @@ public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 	private JTextField getNewSpeedText() {
 		if (newSpeedText == null) {
 			newSpeedText = new JTextField();
+			newSpeedText.addKeyListener(new java.awt.event.KeyAdapter() {
+				public void keyReleased(java.awt.event.KeyEvent e) {
+					if(newSpeedText.getText().length() == 0){
+						newSpeedText.setBackground(Color.WHITE);
+						_father.notifyError(false);
+					}else{
+						try{
+							Double.parseDouble(newSpeedText.getText());
+							newSpeedText.setBackground(Color.WHITE);
+							_father.notifyError(false);
+						}catch(NumberFormatException nfe){
+							newSpeedText.setBackground(Color.RED);
+							_father.notifyError(true);
+						}
+					}
+				}
+			});
 		}
 		return newSpeedText;
 	}
@@ -124,6 +139,23 @@ public abstract class ConveyorBeltAttributePanel extends AttributePanel {
 	private JTextField getNewSizeLabel() {
 		if (newSizeText == null) {
 			newSizeText = new JTextField();
+			newSizeText.addKeyListener(new java.awt.event.KeyAdapter() {
+				public void keyReleased(java.awt.event.KeyEvent e) {
+					if(newSizeText.getText().length() == 0){
+						newSizeText.setBackground(Color.WHITE);
+						_father.notifyError(false);
+					}else{
+						try{
+							Double.parseDouble(newSizeText.getText());
+							newSizeText.setBackground(Color.WHITE);
+							_father.notifyError(false);
+						}catch(NumberFormatException nfe){
+							newSizeText.setBackground(Color.RED);
+							_father.notifyError(true);
+						}
+					}
+				}
+			});
 		}
 		return newSizeText;
 	}

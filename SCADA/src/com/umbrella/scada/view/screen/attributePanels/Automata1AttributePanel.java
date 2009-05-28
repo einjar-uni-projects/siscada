@@ -30,15 +30,18 @@ public class Automata1AttributePanel extends AttributePanel {
 	
 	protected JCheckBox _rellenar = new JCheckBox("Rellenar");
 	
+	private boolean _storedError;
+	
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
 	 */
 	public Automata1AttributePanel() {
+		super(null);
 		_subPanels = new AttributePanel[4];
-		_subPanels[0] = new CakeConveyorBeltAttributePanel();
-		_subPanels[1] = new CakeDispenserAttributePanel();
-		_subPanels[2] = new ChocolatDispenserAttributePanel();
-		_subPanels[3] = new CaramelDispenserAttributePanel();
+		_subPanels[0] = new CakeConveyorBeltAttributePanel(this);
+		_subPanels[1] = new CakeDispenserAttributePanel(this);
+		_subPanels[2] = new ChocolatDispenserAttributePanel(this);
+		_subPanels[3] = new CaramelDispenserAttributePanel(this);
 		
 		initialize();
 		
@@ -119,6 +122,9 @@ public class Automata1AttributePanel extends AttributePanel {
 		if(_model.is_cintaPasteles()){
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
 			_acceptButton.setEnabled(false);
+		}else if(_storedError){
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(false);
 		}else{
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 			_acceptButton.setEnabled(true);
@@ -129,6 +135,11 @@ public class Automata1AttributePanel extends AttributePanel {
 	public ActionParams getNewAttributes() {
 		// No tiene sentido llamarlo para esta clase
 		return null;
+	}
+
+	@Override
+	public void notifyError(boolean error) {
+		_storedError = error;
 	}
 	
 }

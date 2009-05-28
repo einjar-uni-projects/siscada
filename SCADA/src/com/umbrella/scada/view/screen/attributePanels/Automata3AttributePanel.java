@@ -25,12 +25,15 @@ public class Automata3AttributePanel extends AttributePanel {
 	 */
 	private static final long serialVersionUID = -2348859836999031383L;
 	
+	private boolean _storedError;
+	
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
 	 */
 	public Automata3AttributePanel() {
+		super(null);
 		_subPanels = new AttributePanel[1];
-		_subPanels[0] = new BlisterConveyorBeltAttributePanel();
+		_subPanels[0] = new BlisterConveyorBeltAttributePanel(this);
 		
 		initialize();
 	}
@@ -90,6 +93,9 @@ public class Automata3AttributePanel extends AttributePanel {
 		if(_model.is_cintaMontaje()){
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
 			_acceptButton.setEnabled(false);
+		}else if(_storedError){
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(false);
 		}else{
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 			_acceptButton.setEnabled(true);
@@ -115,6 +121,11 @@ public class Automata3AttributePanel extends AttributePanel {
 					System.out.println("Error al ejecutar la acción");
 			}
 		});
+	}
+
+	@Override
+	public void notifyError(boolean error) {
+		_storedError = error;
 	}
 	
 }

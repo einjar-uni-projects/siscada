@@ -12,6 +12,10 @@ public class CaramelDispenserAttributePanel extends DispenserAttributePanel {
 	 */
 	private static final long serialVersionUID = -7169235886552716121L;
 
+	public CaramelDispenserAttributePanel(AttributePanel father) {
+		super(father);
+	}
+	
 	@Override
 	public void refreshData() {
 		countValueLabel.setText(""+_model.get_caramelDepot());
@@ -32,6 +36,12 @@ public class CaramelDispenserAttributePanel extends DispenserAttributePanel {
 		return params;
 		*/
 		return null;
+	}
+
+	@Override
+	public void notifyError(boolean error) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

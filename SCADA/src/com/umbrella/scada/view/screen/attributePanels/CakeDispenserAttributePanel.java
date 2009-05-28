@@ -12,6 +12,10 @@ public class CakeDispenserAttributePanel extends DispenserAttributePanel {
 	 */
 	private static final long serialVersionUID = -7258213644438206646L;
 
+	public CakeDispenserAttributePanel(AttributePanel father) {
+		super(father);
+	}
+	
 	@Override
 	public void refreshData() {
 		countValueLabel.setText(""+_model.get_cakeDepot());
@@ -32,5 +36,11 @@ public class CakeDispenserAttributePanel extends DispenserAttributePanel {
 		return params;
 		*/
 		return null;
+	}
+
+	@Override
+	public void notifyError(boolean error) {
+		// TODO Auto-generated method stub
+		
 	}
 }
