@@ -20,13 +20,13 @@ public class ActUpdateAutomata3 implements Action {
 			
 			if(_conveyorBeltSpeed > 0){
 				dm = new DefaultMessage();
-				dm.setIdentifier(MSGOntology.CONVEYOR_BELT_2_SPEED);
+				dm.setIdentifier(MSGOntology.CONVEYOR_BELT_3_SPEED);
 				dm.setObject(_conveyorBeltSpeed);
 				pm.sendMessage(dm);
 			}
 			if(_conveyorBeltSize > 0){
 				dm = new DefaultMessage();
-				dm.setIdentifier(MSGOntology.CONVEYOR_BELT_2_SIZE);
+				dm.setIdentifier(MSGOntology.CONVEYOR_BELT_3_SIZE);
 				dm.setObject(_conveyorBeltSize);
 				pm.sendMessage(dm);
 			}

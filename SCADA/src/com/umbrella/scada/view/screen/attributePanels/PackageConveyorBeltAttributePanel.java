@@ -21,7 +21,6 @@ public class PackageConveyorBeltAttributePanel extends
 	@Override
 	public void notifyError(boolean error) {
 		
-		
 	}
 
 }
