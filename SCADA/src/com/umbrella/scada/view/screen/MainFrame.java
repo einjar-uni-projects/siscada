@@ -210,7 +210,7 @@ public class MainFrame implements UpdatableInterface{
 	private JLabel get_footerInfo() {
 		if (_footerInfo == null) {
 			_footerInfo = new JLabel();
-			_footerInfo.setText("Estado: Ok");
+			//_footerInfo.setText("Estado: Ok");
 		}
 		return _footerInfo;
 	}
