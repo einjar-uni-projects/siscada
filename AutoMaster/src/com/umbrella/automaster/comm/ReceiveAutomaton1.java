@@ -50,7 +50,7 @@ public class ReceiveAutomaton1 extends Thread {
 			msg = _postmaster.reciveMessageAU1();
 			
 			if (msg != null) {
-				if(LaunchAutMaster.debugSlav1)
+				//if(LaunchAutMaster.debugSlav1)
 					System.out.println("AU1 Recive: " + msg.getIdentifier());
 				switch (msg.getIdentifier()) {
 				case AVISARUNFALLO:
@@ -159,7 +159,7 @@ public class ReceiveAutomaton1 extends Thread {
 				mensajeSend.setIdentifier(MSGOntology.AVISARUNFALLO);
 				_postmaster.sendMessageSCADA(mensajeSend);
 			}
-			/* Si est‡ apagado por una parada correcta se env’a el mensaje de parar a los dem‡s aut—matas*/
+			/* Si estï¿½ apagado por una parada correcta se envï¿½a el mensaje de parar a los demï¿½s autï¿½matas*/
 			if(context.isApagado() && context.isParadaCorrecta()){
 				dm.setIdentifier(MSGOntology.PARADA);
 				
