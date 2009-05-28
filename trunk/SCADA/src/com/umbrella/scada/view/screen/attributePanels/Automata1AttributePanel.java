@@ -91,6 +91,7 @@ public class Automata1AttributePanel extends AttributePanel {
 				}
 				if(_rellenar.isSelected())
 					params.setParam(ActionParamsEnum.RELLENAR, ActionParamsEnum.RELLENAR.getEnclosedClass(), true);
+				_rellenar.setSelected(false);
 				Action action = ActionFactoryProvider.getInstance().factoryMethod(ActionKey.UPDATE_CAKE_CONVEYOR_BELT, params);
 				ActionResult result = action.execute();
 				if (result != ActionResult.EXECUTE_CORRECT)

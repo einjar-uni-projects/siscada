@@ -46,6 +46,7 @@ public class Robot2AttributePanel extends RobotAttributePanel {
 		ActionParams params = new ActionParams();
 		if(desplTimeSet.getText().length() != 0)
 			params.setParam(ActionParamsEnum.RB2_BLISTER_DELAY, ActionParamsEnum.RB2_BLISTER_DELAY.getEnclosedClass(), Integer.parseInt(desplTimeSet.getText()));
+		desplTimeSet.setText("");
 		return params;
 	}
 	

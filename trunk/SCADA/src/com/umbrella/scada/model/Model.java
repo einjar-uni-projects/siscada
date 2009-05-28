@@ -54,8 +54,8 @@ public class Model {
 	private final ModelElementAtribute<Double> _au1ConveyorBeltSize = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SIZE,new Double(10));
 	private final ModelElementAtribute<Double> _au1ConveyorBeltSpeed = new ModelElementAtribute<Double>(TransferBufferKeys.AU1_CONVEYOR_BELT_SPEED,new Double(20));
 	private final ModelElementAtribute<Integer> _au1CakeDepot = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CAKE_DEPOT, new Integer(0));
-	private final ModelElementAtribute<Integer> _au1ChocolatDepot = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CHOCOLAT_DEPOT, new Integer(50));
-	private final ModelElementAtribute<Integer> _au1CaramelDepot = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CARAMEL_DEPOT, new Integer(50));
+	private final ModelElementAtribute<Integer> _au1ChocolatDepot = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CHOCOLAT_DEPOT, new Integer(0));
+	private final ModelElementAtribute<Integer> _au1CaramelDepot = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CARAMEL_DEPOT, new Integer(0));
 	private final ModelElementAtribute<Integer> _au1ChocolateValveDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CHOCOLATE_VALVE_DELAY, new Integer(3));
 	private final ModelElementAtribute<Integer> _au1CaramelValveDelay = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CARAMEL_VALVE_DELAY, new Integer(2));
 	private final ModelElementAtribute<Integer> _au1CakesPos1 = new ModelElementAtribute<Integer>(TransferBufferKeys.AU1_CAKES_POS1, new Integer(0));
