@@ -93,6 +93,20 @@ public class Postmaster extends Thread {
 								.getObject());
 						af.executeAction(ActionKey.UPDATE_CAKE_DEPOT, params);
 						break;
+					case CHOCOLAT_DEPOT:
+						params = new ActionParams();
+						ape = ActionParamsEnum.CHOCOLAT_QUANTITY;
+						params.setParam(ape, ape.getEnclosedClass(), msg
+								.getObject());
+						af.executeAction(ActionKey.UPDATE_CHOCOLAT_DEPOT, params);
+						break;
+					case CARAMEL_DEPOT:
+						params = new ActionParams();
+						ape = ActionParamsEnum.CARAMEL_QUANTITY;
+						params.setParam(ape, ape.getEnclosedClass(), msg
+								.getObject());
+						af.executeAction(ActionKey.UPDATE_CARAMEL_DEPOT, params);
+						break;
 					case AU1_CAKES_POS:
 						params = new ActionParams();
 						ape = ActionParamsEnum.AU1_CAKES_POS;

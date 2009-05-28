@@ -14,7 +14,7 @@ public class ChocolatDispenserAttributePanel extends DispenserAttributePanel {
 
 	@Override
 	public void refreshData() {
-		
+		countValueLabel.setText(""+_model.get_chocolatDepot());
 	}
 	
 	@Override

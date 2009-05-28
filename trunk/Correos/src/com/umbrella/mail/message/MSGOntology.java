@@ -33,6 +33,8 @@ public enum MSGOntology {
 	//MOVERDESDEMESA("MoverDesdeMesa",2), 
 	AUTOM_STATE("AutomState",0),//parametro 1 String["AU1", "AU2", "AU3", "RB1", "RB2"], Boolean(true, false)
 	CAKE_DEPOT("CakeDepot",0),
+	CHOCOLAT_DEPOT("ChocolatDepot",0),
+	CARAMEL_DEPOT("CaramelDepot",0),
 	AU1_CAKES_POS("Au1CakesPos",0),
 	AU2_BLISTER_POS("Au2BlisterPos",0),
 	AU3_PACKAGE_POS("Au3PackagePos",0),

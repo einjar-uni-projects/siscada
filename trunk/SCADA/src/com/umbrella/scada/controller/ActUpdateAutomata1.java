@@ -7,7 +7,7 @@ import com.umbrella.scada.model.Postmaster;
 
 public class ActUpdateAutomata1 implements Action {
 
-	private int _cakeNumber, _chocolateQuantity, _caramelQuantity;
+	private boolean _rellenar;
 	private double _conveyorBeltSpeed, _conveyorBeltSize;
 	
 	@Override
@@ -31,6 +31,12 @@ public class ActUpdateAutomata1 implements Action {
 				dm.setObject(_conveyorBeltSize);
 				pm.sendMessage(dm);
 			}
+			if(_rellenar){
+				dm = new DefaultMessage();
+				dm.setIdentifier(MSGOntology.RELLENARMAQUINA);
+				dm.setObject(_rellenar);
+				pm.sendMessage(dm);
+			}
 			
 			ret = ActionResult.EXECUTE_CORRECT;
 		} catch (PropertyException e) {
@@ -44,9 +50,7 @@ public class ActUpdateAutomata1 implements Action {
 	public boolean insertParam(ActionParams params) {
 		Object speedObj = params.getParam(ActionParamsEnum.SPEED);
 		Object sizeObj = params.getParam(ActionParamsEnum.SIZE);
-		Object cakeObj = params.getParam(ActionParamsEnum.CAKE_QUANTITY);
-		Object chocolatObj = params.getParam(ActionParamsEnum.CHOCOLAT_QUANTITY);
-		Object caramelObj = params.getParam(ActionParamsEnum.CARAMEL_QUANTITY);
+		Object rellenar = params.getParam(ActionParamsEnum.RELLENAR);
 		
 		boolean ret = false;
 		try{
@@ -60,21 +64,11 @@ public class ActUpdateAutomata1 implements Action {
 				ret = true;
 			}else
 				_conveyorBeltSize = -1;
-			if(cakeObj != null){
-				_cakeNumber = ((Integer)cakeObj).intValue();
+			if(rellenar != null){
+				_rellenar = ((Boolean)rellenar).booleanValue();
 				ret = true;
 			}else
-				_cakeNumber = -1;
-			if(chocolatObj != null){
-				_chocolateQuantity = ((Integer)chocolatObj).intValue();
-				ret = true;
-			}else
-				_chocolateQuantity = -1;
-			if(caramelObj != null){
-				_caramelQuantity = ((Integer)caramelObj).intValue();
-				ret = true;
-			}else
-				_caramelQuantity = -1;
+				_rellenar = false;
 		}catch(ClassCastException e){
 			return false;
 		}
