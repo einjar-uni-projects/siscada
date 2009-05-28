@@ -16,7 +16,7 @@ public class ActUpdateAu1CakesPos implements Action {
 
 	@Override
 	public ActionResult execute() {
-		System.out.println("Ejecutando ActUpdateAu1CakesPos");
+		//System.out.println("Ejecutando ActUpdateAu1CakesPos");
 		ActionResult ret = ActionResult.EXECUTE_CORRECT;
 		Model m = Model.getInstance();
 		if(_pos1 == null || _pos2 == null ||_pos3 == null ||_pos4 == null ||_pos5 == null ||_pos6 == null ||_pos7 == null )

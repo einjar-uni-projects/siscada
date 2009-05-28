@@ -8,7 +8,7 @@ public class ActUpdateTableContent implements Action {
 	
 	@Override
 	public ActionResult execute() {
-		System.out.println("Ejecutando ActUpdateTableContent");
+		//System.out.println("Ejecutando ActUpdateTableContent");
 		ActionResult ret = ActionResult.EXECUTE_CORRECT;
 		Model m = Model.getInstance();
 		if(_tableContent == null)
