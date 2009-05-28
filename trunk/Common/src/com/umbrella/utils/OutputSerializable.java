@@ -1,5 +1,6 @@
 package com.umbrella.utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,59 +14,45 @@ public class OutputSerializable {
 	private FileOutputStream _file;
 	private ObjectOutputStream _output;
 	
-	public OutputSerializable(Object tipo) {
-		if (tipo instanceof Configuration) {
-			try {
-				this.openConfiguracion();
-			}
-			catch(IOException ioe) {
-				System.out.println("ERROR AL ESCRIBIR EL FICHERO DE CONFIGURACION");
-			} 
-		}
-		else if (tipo instanceof MasterConfiguration) {
-			try {
-				this.openConfiguracionMaestro();
-			}
-			catch(Exception e) {
-				System.out.println("ERROR AL ESCRIBIR EL FICHERO DE CONFIGURACION MAESTRO");
-			} 
-		}
-/*		else if (tipo instanceof Contexto) {
-			this.writeContexto(tipo);
-		}
-		else if (tipo instanceof ContextoMaestro) {
-			this.writeContextoMaestro(tipo);
-		}
-		else if (tipo instanceof ContextoRobot) {
-			this.writeContextoRobot(tipo);
-		}*/
-	}
-	
 	public boolean openConfiguracion() throws IOException {
-		_file = new FileOutputStream(".\\configuracion.ser");
+		File f = new File("configuracion.ser");
+		_file = new FileOutputStream(f);
 		_output = new ObjectOutputStream(_file);
 		return true;
 	}
 	
-	public boolean openConfiguracionMaestro() {
+	public boolean openConfiguracionMaestro(String file) {
+		System.out.println("Abriendo fichero: "+file);
+		
+		File f = new File(file);
+		if(!f.exists()){
+			System.err.println("Se necesita crear configuracionMaestro.ser");
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		try {
-			_file = new FileOutputStream(".\\configuracionMaestro.ser");
+			_file = new FileOutputStream(f);	
 		}
 		catch (FileNotFoundException fnfe) {
-			// TODO: handle exception
-			System.out.println("Fichero no encontrado");
+			System.err.println("Fichero no encontrado");
 		}
+		
 		try {
 			_output = new ObjectOutputStream(_file);
 		}
 		catch (IOException ioe) {
-			// TODO: handle exception
 			System.out.println("Error de apertura de fichero");
 		}
 		return true;
 	}
 	
 	public boolean write(Object tipo) {
+		System.out.println("  Guardando la configuracion del maestro...");
 		if (_output != null) {
 			try {
 				_output.writeObject(tipo);
@@ -77,21 +64,9 @@ public class OutputSerializable {
 		return true;
 
 	}
-
-/*	public boolean writeContexto(Object tipo) {
-		return true;
-
-	}
-	public boolean writeContextoMaestro(Object tipo) {
-		return true;
-
-	}
-	public boolean writeContextoRobot(Object tipo) {
-		return true;
-
-	}
-*/
+	
 	public boolean close() {
+		System.out.println("  Cerrando el fichero...\n");
 		if (_output != null) {
 			try {
 				_output.close();
