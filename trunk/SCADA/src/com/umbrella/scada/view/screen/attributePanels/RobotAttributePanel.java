@@ -178,7 +178,7 @@ public abstract class RobotAttributePanel extends AttributePanel {
 						try{
 							Integer.parseInt(desplTimeSet.getText());
 							desplTimeSet.setBackground(Color.WHITE);
-							_father.notifyError(false);
+							notifyError(false);
 						}catch(NumberFormatException nfe){
 							desplTimeSet.setBackground(Color.RED);
 							notifyError(true);
