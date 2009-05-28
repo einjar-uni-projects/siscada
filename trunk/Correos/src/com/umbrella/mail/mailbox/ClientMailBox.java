@@ -134,12 +134,8 @@ public class ClientMailBox {
 	public synchronized boolean send(MessageInterface message) {
 		boolean done = false;
 		boolean ret = false;
-	//	System.out.println("Paso por aqui");
-	//	System.out.flush();
 		if(_isStarted){
 			if(message != null)
-		//	System.out.println("Mando3: "+message.getIdentifier());
-		//	System.out.flush();
 			while (!done) {
 				try {
 					ret = _outputQueue.queueMessage(message);
