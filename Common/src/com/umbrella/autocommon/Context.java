@@ -93,6 +93,25 @@ public class Context implements Serializable{
     	}
     }
  
+    public void absorverContexto(Context c){
+    	_listaPasteles = c._listaPasteles;
+    	_listaBlister = c._listaBlister;
+    	dispositivosInternos = c.dispositivosInternos.clone();
+    	FIN = c.FIN;
+    	estadoAnterior = c.estadoAnterior.clone();
+    	interferencia = c.interferencia;
+    	numPasteles = c.numPasteles;
+    	pastelesRestantes = c.pastelesRestantes;
+    	blisterListoInicioCinta3 = c.blisterListoInicioCinta3;
+    	capacidadCaramelo = c.capacidadCaramelo;
+    	capacidadChocolate = c.capacidadChocolate;
+    	fallo = c.fallo;
+    	_cuadrarPasteles = c._cuadrarPasteles;
+    	contadorAutomata1 = c.contadorAutomata1.clone();
+    	contadorAutomata2 = c.contadorAutomata2.clone();
+    	contadorAutomata3 = c.contadorAutomata3.clone();
+    }
+    
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
      *  otra prueba para evitar instanciaci�n m�ltiple
