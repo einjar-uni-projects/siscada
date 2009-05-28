@@ -36,5 +36,6 @@ public enum LocalizatorIDs {
 	DESPL_CAKE_TIME,
 	M_MIN,
 	AVAILABLE,
-	ACCEPT
+	ACCEPT,
+	RUNNING_MACHINE
 }

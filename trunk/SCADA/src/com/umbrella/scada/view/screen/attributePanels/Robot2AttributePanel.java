@@ -28,6 +28,14 @@ public class Robot2AttributePanel extends RobotAttributePanel {
 	@Override
 	public void refreshData() {
 		desplTimeDisp.setText(""+_model.get_rb2BlisterDelay());
+		if(_model.is_brazoDesechar()){
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(false);
+		}else{
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(true);
+		}
+			
 	}
 	
 	@Override
@@ -57,7 +65,10 @@ public class Robot2AttributePanel extends RobotAttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.ROBOT_2_TITLE, _model.get_selectedLanguage()));
-		_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+		if(_model.is_cintaPasteles())
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
+		else
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 		robotTitle.setText(_languageResources.getLocal(LocalizatorIDs.TIME_DESPL
 				, _model.get_selectedLanguage()));
 		timeDespl.setText(_languageResources.getLocal(LocalizatorIDs.DESPL_BLISTER_TIME, _model.get_selectedLanguage())+":");
