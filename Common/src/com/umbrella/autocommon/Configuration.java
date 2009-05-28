@@ -442,7 +442,7 @@ public class Configuration implements Serializable {
 	}
 
 	public boolean isCorrect() {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 	
