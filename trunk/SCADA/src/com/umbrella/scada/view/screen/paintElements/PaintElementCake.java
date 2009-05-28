@@ -43,7 +43,7 @@ public class PaintElementCake extends PaintElement {
 			g.drawChars(numPasteles, 0, numPasteles.length, _posX+67-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[2] > 0){
-			g.drawImage(_loader.get_masaChoc(), _posX+105, _posY, _maxX, _maxY, null);
+			g.drawImage(_loader.get_masa(), _posX+105, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[2]).toCharArray();
 			g.drawChars(numPasteles, 0, numPasteles.length, _posX+120-((numPasteles.length*5)/2), _posY);
 		}
@@ -53,7 +53,7 @@ public class PaintElementCake extends PaintElement {
 			g.drawChars(numPasteles, 0, numPasteles.length, _posX+172-((numPasteles.length*5)/2), _posY);
 		}
 		if(pasteles[4] > 0){
-			g.drawImage(_loader.get_masaCaram(), _posX+210, _posY, _maxX, _maxY, null);
+			g.drawImage(_loader.get_masaChoc(), _posX+210, _posY, _maxX, _maxY, null);
 			numPasteles = (""+pasteles[4]).toCharArray();
 			g.drawChars(numPasteles, 0, numPasteles.length, _posX+225-((numPasteles.length*5)/2), _posY);
 		}
