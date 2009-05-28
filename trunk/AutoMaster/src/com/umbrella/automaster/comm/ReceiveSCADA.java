@@ -135,7 +135,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut2().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_2, speed2);
-System.err.println("cacaaa");
+
 						// Notificamos al SCADA
 						dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
