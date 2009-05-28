@@ -169,6 +169,11 @@ public class Slave3 implements Notifiable{
 					case BLISTERCOMPLETO:
 						contexto.setBlisterListoInicioCinta3(true);
 						break;
+					case ACTUALIZARCONTEXTO:
+						contexto.absorverContexto((Context) mensaje.getObject());
+						contexto.setApagado(false);
+						contexto.setParadaCorrecta(false);
+						break;
 					}
 				}
 

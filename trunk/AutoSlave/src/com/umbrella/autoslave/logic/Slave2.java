@@ -146,6 +146,11 @@ public class Slave2 implements Notifiable {
 					case PARADAFALLO:
 						contexto.setFallo(true);
 						break;
+					case ACTUALIZARCONTEXTO:
+						contexto.absorverContexto((Context) mensaje.getObject());
+						contexto.setApagado(false);
+						contexto.setParadaCorrecta(false);
+						break;
 					}
 				}
 			}while(mensaje!=null);

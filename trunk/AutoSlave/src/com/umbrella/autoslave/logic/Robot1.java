@@ -77,6 +77,8 @@ public class Robot1 implements Notifiable{
 					switch (mensaje.getIdentifier()) {
 					case ACTUALIZARCONTEXTO:							
 						_contexto=(ContextoRobot)mensaje.getObject();
+						_contexto.setApagado(false);
+						_contexto.setParadaCorrecta(false);
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						_configuracion=(Configuration)mensaje.getObject();

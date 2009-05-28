@@ -3,6 +3,7 @@ package com.umbrella.autoslave.logic;
 
 import com.umbrella.autocommon.Clock;
 import com.umbrella.autocommon.Configuration;
+import com.umbrella.autocommon.Context;
 import com.umbrella.autocommon.ContextoRobot;
 import com.umbrella.autocommon.Notifiable;
 import com.umbrella.autoslave.executor.PropertiesFile;
@@ -70,6 +71,8 @@ public class Robot2  implements Notifiable{
 					switch (mensaje.getIdentifier()) {
 					case ACTUALIZARCONTEXTO:							
 						_contexto=(ContextoRobot)mensaje.getObject();
+						_contexto.setApagado(false);
+						_contexto.setParadaCorrecta(false);
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						_configuracion=(Configuration)mensaje.getObject();
@@ -116,7 +119,7 @@ public class Robot2  implements Notifiable{
 					//posicion 3 es la caja de no validos
 					_contexto.setDiffTiempo(System.currentTimeMillis()-_contexto.getTiempo());
 					if(_contexto.getEstadoInterno().equals(RobotStates.REPOSO)){
-						// TODO Solo debe ir a la posici—n 1 si es necesario, sino genera interferencia
+						// TODO Solo debe ir a la posiciï¿½n 1 si es necesario, sino genera interferencia
 						if(_contexto.isBlisterCompletoListo())
 							_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_1);
 						_contexto.setTiempo(System.currentTimeMillis());
