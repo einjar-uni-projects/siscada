@@ -18,9 +18,9 @@ import com.umbrella.utils.MachineNames;
 import com.umbrella.utils.RobotStates;
 
 /**
- * 
- * @author pablo Clase que leera los mensajes enviados por al automata 2 y
- *         actuara en consecuencia
+ * Clase que leera los mensajes enviados por al automata 2 y actuara en consecuencia
+ * @author Umbrella.Soft
+ * @version 1.0
  */
 public class ReceiveAutomaton3 extends Thread {
 
@@ -28,6 +28,9 @@ public class ReceiveAutomaton3 extends Thread {
 	MasterContext _masterContext;
 	Configuration _configuration;
 
+	/**
+	 * Inicializa el objeto
+	 */
 	public synchronized void inicializar() {
 		try {
 			_postmaster = Postmaster.getInstance();
