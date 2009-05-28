@@ -48,6 +48,8 @@ public class Robot1AttributePanel extends RobotAttributePanel {
 			params.setParam(ActionParamsEnum.RB1_BLISTER_DELAY, ActionParamsEnum.RB1_BLISTER_DELAY.getEnclosedClass(), Integer.parseInt(desplTimeSet.getText()));
 		if(interTimeSet.getText().length() != 0)
 			params.setParam(ActionParamsEnum.RB1_CAKE_DELAY, ActionParamsEnum.RB1_CAKE_DELAY.getEnclosedClass(), Integer.parseInt(interTimeSet.getText()));
+		desplTimeSet.setText("");
+		interTimeSet.setText("");
 		return params;
 	}
 	
