@@ -38,12 +38,12 @@ public class TurnOff{
 	}
 
 	public void enviaMensaje() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	public void cambiaMensaje(boolean[] msg) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	

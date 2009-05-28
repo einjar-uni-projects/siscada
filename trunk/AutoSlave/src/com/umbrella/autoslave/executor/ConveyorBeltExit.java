@@ -33,7 +33,6 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 	 * @param type
 	 */
 	public ConveyorBeltExit(double position, int associatedPosition, String type) {
-		// TODO Auto-generated constructor stub
 		setThreadState(ThreadState.CREADO);
 		this._position=position;
 		setAssociatedPosition(associatedPosition);
@@ -71,7 +70,7 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 	 * 
 	 */
 	public void sendMessage() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -79,7 +78,7 @@ public class ConveyorBeltExit extends Thread implements Notifiable{
 	 * @param msg
 	 */
 	public void changeMessage(boolean[] msg) {
-		// TODO Auto-generated method stub
+		
 
 	}	
 

@@ -42,7 +42,7 @@ public class Robot2  implements Notifiable{
 			pfmodel = PropertiesFile.getInstance();
 			PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 		} catch (PropertyException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		PropertiesFileHandler.getInstance().writeFile();
@@ -52,7 +52,7 @@ public class Robot2  implements Notifiable{
 		_contexto.setEstadoInterno(RobotStates.REPOSO);
 	}
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 
 		while(!_contexto.isFIN()){
 			pauseJoy();
@@ -63,7 +63,7 @@ public class Robot2  implements Notifiable{
 				try {
 					mensaje=_buzon.receive();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				if(mensaje!=null){

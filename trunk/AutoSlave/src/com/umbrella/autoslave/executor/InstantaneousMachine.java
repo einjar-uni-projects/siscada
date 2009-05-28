@@ -63,13 +63,13 @@ public class InstantaneousMachine extends Thread implements Notifiable{
 	 * 
 	 */
 	public void sendMessage() {
-		// TODO Auto-generated method stub
+		
 	}
 	/**
 	 * @param msg
 	 */
 	public void changeMessage(boolean[] msg) {
-		// TODO Auto-generated method stub	
+			
 	}
 	/**
 	 * @return

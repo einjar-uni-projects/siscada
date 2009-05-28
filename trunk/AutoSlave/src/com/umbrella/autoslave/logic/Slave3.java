@@ -84,7 +84,7 @@ public class Slave3 implements Notifiable{
  				pfmodel = PropertiesFile.getInstance();
  				PropertiesFileHandler.getInstance().LoadValuesOnModel(pfmodel);
 			} catch (PropertyException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 			PropertiesFileHandler.getInstance().writeFile();
@@ -116,7 +116,7 @@ public class Slave3 implements Notifiable{
 				try {
 					mensaje =_buzon.receive();
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				if(mensaje!=null){
