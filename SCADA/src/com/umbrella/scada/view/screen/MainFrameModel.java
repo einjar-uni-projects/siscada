@@ -36,6 +36,8 @@ public class MainFrameModel implements Updatable {
 	
 	private boolean _au1Move, _au2Move, _au3Move;
 	
+	private int _rb1BlisterDelay, _rb2BlisterDelay, _rb1CakeDelay;
+	
 	private int _numGoodPackages, _numBadPackages, _numGoodPackagesTotal, _numBadPackagesTotal;
 
 	// ACTIONS
@@ -300,12 +302,12 @@ public class MainFrameModel implements Updatable {
 		case RB1_BLISTER_DELAY:
 			synchronized (_cerrojos[TransferBufferKeys.RB1_BLISTER_DELAY
 					.ordinal()]) {
-
+				_rb1BlisterDelay = ((Integer)o).intValue();
 			}
 			break;
 		case RB1_CAKE_DELAY:
 			synchronized (_cerrojos[TransferBufferKeys.RB1_CAKE_DELAY.ordinal()]) {
-
+				_rb1CakeDelay = ((Integer)o).intValue();
 			}
 			break;
 		case RB1_STATE:
@@ -321,7 +323,7 @@ public class MainFrameModel implements Updatable {
 		case RB2_BLISTER_DELAY:
 			synchronized (_cerrojos[TransferBufferKeys.RB2_BLISTER_DELAY
 					.ordinal()]) {
-
+				_rb2BlisterDelay = ((Integer)o).intValue();
 			}
 			break;
 		case RB2_STATE:
@@ -616,6 +618,24 @@ public class MainFrameModel implements Updatable {
 	public int get_badPackagesTotal() {
 		synchronized (_cerrojos[TransferBufferKeys.BAD_PACKAGES_TOTAL.ordinal()]) {
 			return _numBadPackagesTotal;
+		}
+	}
+	
+	public int get_rb1BlisterDelay() {
+		synchronized (_cerrojos[TransferBufferKeys.RB1_BLISTER_DELAY.ordinal()]) {
+			return _rb1BlisterDelay;
+		}
+	}
+	
+	public int get_rb2BlisterDelay() {
+		synchronized (_cerrojos[TransferBufferKeys.RB2_BLISTER_DELAY.ordinal()]) {
+			return _rb2BlisterDelay;
+		}
+	}
+	
+	public int get_rb1CakeDelay() {
+		synchronized (_cerrojos[TransferBufferKeys.RB1_CAKE_DELAY.ordinal()]) {
+			return _rb1CakeDelay;
 		}
 	}
 

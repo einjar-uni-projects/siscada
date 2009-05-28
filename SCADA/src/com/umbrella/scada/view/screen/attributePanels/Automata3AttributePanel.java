@@ -73,6 +73,10 @@ public class Automata3AttributePanel extends AttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.PACKAGE_CONVEYOR_BELT, _model.get_selectedLanguage()));
+		_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+		for (AttributePanel panel : _subPanels) {
+			panel.updateLanguage();
+		}
 	}
 
 	@Override
