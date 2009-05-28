@@ -265,16 +265,19 @@ public class Slave3 implements Notifiable{
 	 */
 	private void qualityReview() {
 		int posicionBlister=contexto.activaSensor(configuracion, _calidad.getPosition());
+		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD), true);
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1), true);
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2), true);
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_3), true);
 		contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_4), true);
+		contexto.get_listaBlister().get(posicionBlister).setCalidad(0, true);
 		contexto.get_listaBlister().get(posicionBlister).setCalidad(1, true);
 		contexto.get_listaBlister().get(posicionBlister).setCalidad(2, true);
 		contexto.get_listaBlister().get(posicionBlister).setCalidad(3, true);
 		contexto.get_listaBlister().get(posicionBlister).setCalidad(4, true);
 		if(Math.random()<configuracion.getPorcentajeFallos()){
 			contexto.get_listaBlister().get(posicionBlister).setCalidad(0, false);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD), false);
 			Vector<Integer> vectorAux=new Vector<Integer>();
 			vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_1));
 			vectorAux.add(configuracion.getPosicionAsociada(MachineNames.SENSOR_CALIDAD_SENSOR_2));
@@ -306,10 +309,13 @@ public class Slave3 implements Notifiable{
 					}
 				}
 			}
+			/*
 			for(int i=0;i<vectorAux.size();i++)
 				contexto.setDispositivosInternos(vectorAux.get(i), true);
+			*/
 		}else{
 			contexto.get_listaBlister().get(posicionBlister).setCalidad(0, true);
+			contexto.setDispositivosInternos(configuracion.getPosicionAsociada(MachineNames.CONTROL_CALIDAD), true);
 		}
 	}
 	
