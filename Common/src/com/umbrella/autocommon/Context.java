@@ -241,6 +241,7 @@ public class Context implements Serializable{
 
 	public synchronized int getPastelesRestantes() {
 		return pastelesRestantes;
+		
 	}
 
 	public synchronized void setRemainderCakes(int pastelesRestantes) {
@@ -298,12 +299,20 @@ public class Context implements Serializable{
 		capacidadCaramelo+=cantidad;
 		if(capacidadCaramelo>max) capacidadCaramelo=max;
 	}
+	
+	public synchronized void rellenarCaramelo(int max){
+		capacidadCaramelo=max;
+	}
+	
 	public synchronized void decrementarCaramelo(){
 		capacidadCaramelo--;
 	}
 	public synchronized void rellenarChocolate(int cantidad, int max){
 		capacidadChocolate+=cantidad;
 		if(capacidadChocolate>max) capacidadChocolate=max;
+	}
+	public synchronized void rellenarChocolate(int max){
+		capacidadChocolate=max;
 	}
 	public synchronized void decrementarChocolate(){
 		capacidadChocolate--;
