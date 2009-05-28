@@ -135,9 +135,9 @@ public class ReportViewer extends JFrame {
 		MainFrameModel model = MainFrameModel.getInstance();
 		String text;
 		if(model.get_selectedLanguage() == LocalizationResources.LanguageIDs.SPANISHLOCALE)
-			text = "INFORME NÚMERO DE PRODUCTOS\n\tParciales:\n\t\tCorrectos: "+model.get_goodPackages()+"\n\t\tIncorrectos: "+model.get_badPackages()+"\n\tTotales:\n\t\tCorrectos: "+model.get_goodPackagesTotal()+"\n\t\tIncorrectos: "+model.get_badPackagesTotal();
+			text = "INFORME NÚMERO DE PRODUCTOS\n\tParciales:\n\t\tCorrectos: "+model.get_goodPackages()+"\n\t\tIncorrectos: "+model.get_badPackages()+"\n\tTotales:\n\t\tCorrectos: "+model.get_goodPackagesTotal()+"\n\t\tIncorrectos: "+model.get_badPackagesTotal()+"\n\nINFORMES DE OPERACIONES\n\tArranques: "+model.get_numStarts()+"\n\tParadas: "+model.get_numStops()+"\n\tParadas de emergencia: "+model.get_numEmergencyStops();
 		else
-			text = "NUMBER OF PRODUCTS REPORT\n\tParcial:\n\t\tCorrect: "+model.get_goodPackages()+"\n\t\tWrong: "+model.get_badPackages()+"\n\tTotal:\n\t\tCorrect: "+model.get_goodPackagesTotal()+"\n\t\tWrong: "+model.get_badPackagesTotal();
+			text = "NUMBER OF PRODUCTS REPORT\n\tParcial:\n\t\tCorrect: "+model.get_goodPackages()+"\n\t\tWrong: "+model.get_badPackages()+"\n\tTotal:\n\t\tCorrect: "+model.get_goodPackagesTotal()+"\n\t\tWrong: "+model.get_badPackagesTotal()+"\n\nOPERATION REPORTS\n\tStarts: "+model.get_numStarts()+"\n\tStops: "+model.get_numStops()+"\n\tEmergency Stops: "+model.get_numEmergencyStops();
 		reportArea.setText(text);
 	}
 

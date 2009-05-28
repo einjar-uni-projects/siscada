@@ -20,7 +20,7 @@ public class KeepAliveThread extends Thread {
 	private void set_State(boolean state) {
 		synchronized (_mutex) {
 			if(_state != state){
-				System.out.println("Escuchando "+_recName+" "+_state+" - "+state);
+				System.out.println("Conectado "+_recName+" - "+state);
 				//Calendar c = Calendar.getInstance();
 				//System.out.println(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE)+" "+c.get(Calendar.SECOND)+"."+c.get(Calendar.MILLISECOND)+" Conection: "+_recName+" valor:"+state);
 			}
