@@ -39,6 +39,7 @@ public class MainFrameModel implements Updatable {
 	private int _rb1BlisterDelay, _rb2BlisterDelay, _rb1CakeDelay;
 	
 	private int _numGoodPackages, _numBadPackages, _numGoodPackagesTotal, _numBadPackagesTotal;
+	private int _numStarts, _numStops, _numEmergencyStops;
 
 	// ACTIONS
 
@@ -637,6 +638,30 @@ public class MainFrameModel implements Updatable {
 		synchronized (_cerrojos[TransferBufferKeys.RB1_CAKE_DELAY.ordinal()]) {
 			return _rb1CakeDelay;
 		}
+	}
+
+	public int get_numStarts() {
+		return _numStarts;
+	}
+
+	public void increment_numStarts() {
+		_numStarts++;
+	}
+
+	public int get_numStops() {
+		return _numStops;
+	}
+
+	public void increment_numStops() {
+		_numStops++;
+	}
+
+	public int get_numEmergencyStops() {
+		return _numEmergencyStops;
+	}
+
+	public void increment_numEmergencyStops() {
+		_numEmergencyStops++;
 	}
 
 }

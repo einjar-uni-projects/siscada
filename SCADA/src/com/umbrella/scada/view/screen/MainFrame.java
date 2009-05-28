@@ -41,7 +41,7 @@ public class MainFrame implements UpdatableInterface{
 	private JPanel _footerPanel = null;
 	private JLabel _footerInfo = null;
 	private JButton _initButton = null;
-	private JButton _pauseButton = null;
+	private JButton _emergencyStopButton = null;
 	private JButton _stopButton = null;
 	private MainPanel _mainPanel = null;
 	private JMenu _language = null;
@@ -197,7 +197,7 @@ public class MainFrame implements UpdatableInterface{
 			_footerPanel.add(get_footerInfo(), null);
 			_footerPanel.add(get_initButton(), null);
 			_footerPanel.add(get_stopButton(), null);
-			_footerPanel.add(get_pauseButton(), null);
+			_footerPanel.add(get_eStopButton(), null);
 		}
 		return _footerPanel;
 	}
@@ -227,10 +227,11 @@ public class MainFrame implements UpdatableInterface{
 			_initButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					_mainPanel.startAutRob();
+					_model.increment_numStarts();
 					ActionResult result = _actionFactory.executeAction(ActionKey.START, null);
 					if(result == ActionResult.EXECUTE_CORRECT){
 						_initButton.setEnabled(false);
-						_pauseButton.setEnabled(true);
+						_emergencyStopButton.setEnabled(true);
 						_stopButton.setEnabled(true);
 					}
 					
@@ -245,25 +246,26 @@ public class MainFrame implements UpdatableInterface{
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton get_pauseButton() {
-		if (_pauseButton == null) {
-			_pauseButton = new JButton();
-			_pauseButton.setBackground(Color.RED);
-			_pauseButton.setText("Emergency Stop");
-			_pauseButton.setEnabled(false);
-			_pauseButton.addActionListener(new java.awt.event.ActionListener() {
+	private JButton get_eStopButton() {
+		if (_emergencyStopButton == null) {
+			_emergencyStopButton = new JButton();
+			_emergencyStopButton.setBackground(Color.RED);
+			_emergencyStopButton.setText("Emergency Stop");
+			_emergencyStopButton.setEnabled(false);
+			_emergencyStopButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					_mainPanel.stopAutRob();
+					_model.increment_numEmergencyStops();
 					ActionResult result = _actionFactory.executeAction(ActionKey.EMERGENCY_STOP, null);
 					if(result == ActionResult.EXECUTE_CORRECT){
 						_initButton.setEnabled(true);
-						_pauseButton.setEnabled(false);
+						_emergencyStopButton.setEnabled(false);
 						_stopButton.setEnabled(false);
 					}
 				}
 			});
 		}
-		return _pauseButton;
+		return _emergencyStopButton;
 	}
 
 	/**
@@ -279,10 +281,11 @@ public class MainFrame implements UpdatableInterface{
 			_stopButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					_mainPanel.stopAutRob();
+					_model.increment_numStops();
 					ActionResult result = _actionFactory.executeAction(ActionKey.STOP, null);
 					if(result == ActionResult.EXECUTE_CORRECT){
 						_initButton.setEnabled(true);
-						_pauseButton.setEnabled(false);
+						_emergencyStopButton.setEnabled(false);
 						_stopButton.setEnabled(false);
 					}
 				}
@@ -359,7 +362,7 @@ public class MainFrame implements UpdatableInterface{
 		_spanishLanguage.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_ES_LANGUAGE, _model.get_selectedLanguage()));
 		_language.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_LANGUAGE, _model.get_selectedLanguage()));
 		_stopButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_STOP, _model.get_selectedLanguage()));
-		_pauseButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_EMERGENCY_STOP, _model.get_selectedLanguage()));
+		_emergencyStopButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_EMERGENCY_STOP, _model.get_selectedLanguage()));
 		_initButton.setText(_languageResources.getLocal(LocalizatorIDs.BUTTON_INIT, _model.get_selectedLanguage()));
 		_menuOptions.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_OPTIONS, _model.get_selectedLanguage()));
 		_scadaMenu.setText(_languageResources.getLocal(LocalizatorIDs.MENUBAR_SCADA, _model.get_selectedLanguage()));
