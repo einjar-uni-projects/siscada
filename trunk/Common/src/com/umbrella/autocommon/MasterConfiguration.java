@@ -1,7 +1,7 @@
 package com.umbrella.autocommon;
 
 /*
- * Author: pablo JosŽ Izquierdo Escudero
+ * Author: pablo Josï¿½ Izquierdo Escudero
  * Fecha: 19/04/2009
  * 
  * Objetivo: contiene la informacion de configuracion del sistema, es toda informacion estatica y el nunico modo de cambiarla es parando
@@ -41,7 +41,7 @@ public class MasterConfiguration implements Serializable {
 	private double _sensorError=0.20;
 	
 	/*
-	 * Tama–o de la cinta
+	 * Tamaï¿½o de la cinta
 	 */
 	private double _conveyorBeltSize1=10;
 	private double _conveyorBeltSize2=10;
@@ -97,7 +97,7 @@ public class MasterConfiguration implements Serializable {
 	private int _interference=2;
 	
 	/*
-	 * indica el tama–o del bizcocho y blister, en metros, solo se refiere a la longitud
+	 * indica el tamaï¿½o del bizcocho y blister, en metros, solo se refiere a la longitud
 	 */
 	private double _spongeCakeSize=0.10;
 	private double _blisterSize=_spongeCakeSize*2+0.10;
@@ -194,7 +194,7 @@ public class MasterConfiguration implements Serializable {
 	
     /*
      *  creador sincronizado para protegerse de posibles problemas  multi-hilo
-     *  otra prueba para evitar instanciaci—n mœltiple
+     *  otra prueba para evitar instanciaciï¿½n mï¿½ltiple
      */ 
     private synchronized static void createInstance() {
         if (INSTANCE == null) { 
@@ -478,7 +478,7 @@ public class MasterConfiguration implements Serializable {
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(".\\configuracionMaestro.ser"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			

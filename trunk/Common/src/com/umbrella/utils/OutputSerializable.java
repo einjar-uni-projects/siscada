@@ -70,7 +70,7 @@ public class OutputSerializable {
 			try {
 				_output.writeObject(tipo);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				System.out.println("ERROR AL ESCRIBIR CONFIGURACION");
 			}
 		}

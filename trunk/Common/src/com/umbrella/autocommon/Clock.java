@@ -50,7 +50,7 @@ public class Clock extends Thread{
 				if(_lln != null)
 					notifySignal(NotificableSignal.CLOCK_SIGNAL);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
