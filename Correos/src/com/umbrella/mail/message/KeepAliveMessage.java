@@ -25,31 +25,31 @@ public class KeepAliveMessage implements MessageInterface{
 
 	@Override
 	public MSGOntology getIdentifier() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Object getObject() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Vector<String> getParameters() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public void setIdentifier(MSGOntology idetificador) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void setObject(Object objeto) {
-		// TODO Auto-generated method stub
+		
 		
 	}
     
