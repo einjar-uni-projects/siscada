@@ -163,6 +163,45 @@ System.err.println("cacaaa");
 						_postmaster.sendMessageSCADA(dm);
 					}
 					break;
+				case RB1_BLISTER_DELAY:
+					Integer rspeed1 = (Integer)msg.getObject();
+					if(_masterContext.get_contextoRobot1().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarTiempoRobot(1, rspeed1);
+						System.err.println("caca "+rspeed1);
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case RB1_CAKE_DELAY:
+					Integer rspeed2 = (Integer)msg.getObject();
+					if(_masterContext.get_contextoRobot1().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarTiempoRobot(0, rspeed2);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
+				case RB2_BLISTER_DELAY:
+					Integer rspeed3 = (Integer)msg.getObject();
+					if(_masterContext.get_contextoRobot2().isApagado()){
+						// Cambiamos su configuraci—n
+						Maestro.getInstance().cambiarTiempoRobot(3, rspeed3);
+						
+						// Notificamos al SCADA
+						dm = new DefaultMessage();
+						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
+						dm.setObject(Maestro.getInstance().getConfiguration());
+						_postmaster.sendMessageSCADA(dm);
+					}
+					break;
 				}
 
 				dm = new DefaultMessage();
