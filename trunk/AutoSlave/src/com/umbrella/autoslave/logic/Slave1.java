@@ -119,10 +119,10 @@ public class Slave1 implements Notifiable {
 						break;
 					case ACTUALIZARCONFIGURACION: 						
 						configuracion=(Configuration)mensaje.getObject();
-						contexto.setNumPasteles(configuracion.getCapacidadPasteles());
+						/*contexto.setNumPasteles(configuracion.getCapacidadPasteles());
 						contexto.setRemainderCakes(configuracion.getCapacidadPasteles());
 						contexto.rellenarCaramelo(configuracion.getCapacidadCaramelo(),configuracion.getCapacidadCaramelo());
-						contexto.rellenarChocolate(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());
+						contexto.rellenarChocolate(configuracion.getCapacidadChocolate(),configuracion.getCapacidadChocolate());*/
 						contexto.setApagado(false);
 						contexto.setParadaCorrecta(false);
 						break;
@@ -153,14 +153,14 @@ public class Slave1 implements Notifiable {
 						deleteLastCake();
 						break;
 					case RELLENARMAQUINA:
-						String maquina=mensaje.getParameters().get(0);
-						int cantidad=Integer.parseInt(mensaje.getParameters().get(1));
-						if(maquina.compareTo(MachineNames.DISPENSADORA.getName())==0)
-							_dispensadora.fillDeposit(cantidad);
-						if(maquina.compareTo(MachineNames.CARAMELO.getName())==0)
-							contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadCaramelo());
-						if(maquina.compareTo(MachineNames.CHOCOLATE.getName())==0)
-							contexto.rellenarCaramelo(cantidad,configuracion.getCapacidadChocolate());
+						//String maquina=mensaje.getParameters().get(0);
+						//int cantidad=Integer.parseInt(mensaje.getParameters().get(1));
+						//if(maquina.compareTo(MachineNames.DISPENSADORA.getName())==0)
+						_dispensadora.fillDeposit();
+						//if(maquina.compareTo(MachineNames.CARAMELO.getName())==0)
+						contexto.rellenarChocolate(configuracion.getCapacidadCaramelo());
+						//if(maquina.compareTo(MachineNames.CHOCOLATE.getName())==0)
+						contexto.rellenarCaramelo(configuracion.getCapacidadChocolate());
 						break;
 					case RESET:
 						if(contexto.isApagado() || contexto.isFallo()){

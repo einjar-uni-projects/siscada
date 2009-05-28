@@ -26,9 +26,11 @@ public class CakeDispenserAttributePanel extends DispenserAttributePanel {
 	
 	@Override
 	public ActionParams getNewAttributes() {
-		ActionParams params = new ActionParams();
+		/*ActionParams params = new ActionParams();
 		if(countNewText.getText().length() != 0)
 			params.setParam(ActionParamsEnum.CAKE_QUANTITY, ActionParamsEnum.CAKE_QUANTITY.getEnclosedClass(), Integer.parseInt(countNewText.getText()));
 		return params;
+		*/
+		return null;
 	}
 }

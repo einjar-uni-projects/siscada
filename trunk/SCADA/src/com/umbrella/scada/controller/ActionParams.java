@@ -31,8 +31,9 @@ public class ActionParams implements ParamGroup<ActionParamsEnum> {
 	}
 
 	public boolean join(ActionParams other) {
-		_params.putAll(other._params);
-		return false;
+		if(other != null)
+			_params.putAll(other._params);
+		return true;
 	}
 	
 	@Override
