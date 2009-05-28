@@ -57,7 +57,7 @@ if(debug) System.out.println("ejecuta la maquina temporal - TIMEMACHINE");
 			double tiempoActual=System.currentTimeMillis(); //medido en milisegundos
 			while((System.currentTimeMillis()-tiempoActual)<(this._executionTime*1000)){
 				/*
-				 *  espero a que el reloj envie la se–al de Click, cuando se envie el click se comprobar‡
+				 *  espero a que el reloj envie la seï¿½al de Click, cuando se envie el click se comprobarï¿½
 				 *  el tiempo de ejecucion y si sobrepaso el tiempo el hilo acaba
 				 *  
 				 *  da informacion false entre el verdadero tiempo de ejecucion de la maquina dispensadora 
@@ -78,7 +78,7 @@ if(debug) System.out.println("acaba la ejecucion de la maquina temporal - TIMEMA
 	 * 
 	 */
 	public void sendMessage() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -86,7 +86,7 @@ if(debug) System.out.println("acaba la ejecucion de la maquina temporal - TIMEMA
 	 * @param msg
 	 */
 	public void changeMessage(boolean[] msg) {
-		// TODO Auto-generated method stub
+		
 		
 	}	
 	

@@ -43,7 +43,6 @@ public class MoveConveyorBelt extends Thread implements Notifiable{
 	 * @param associatedPosition
 	 */
 	public MoveConveyorBelt(double speed, int associatedPosition) {
-		// TODO Auto-generated constructor stub
 		setConveyorBeltSpeed(speed);
 		setConveyorBeltSpeedByMilisecond(getConveyorBeltSpeed()/(60*1000));
 		setSpaceElapsedByClick(getConveyorBeltSpeedByMilisecond()*configuration.get_tiempoReloj());
@@ -101,7 +100,7 @@ if(debug) System.out.println("intenta mover la cinta DE PASTELES - MOVERCINTA");
 	 * 
 	 */
 	public void sendMessage() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -109,7 +108,7 @@ if(debug) System.out.println("intenta mover la cinta DE PASTELES - MOVERCINTA");
 	 * @param msg
 	 */
 	public void changeMessage(boolean[] msg) {
-		// TODO Auto-generated method stub
+		
 		
 	}	
 	

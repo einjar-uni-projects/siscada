@@ -125,7 +125,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 	 * 
 	 */
 	public void sendMessage() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -133,7 +133,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 	 * @param msg
 	 */
 	public void changeMessage(boolean[] msg) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
