@@ -58,7 +58,7 @@ public class Postmaster extends Thread {
 	}
 
 	public boolean sendMessage(MessageInterface message) {
-		System.out.println("Mando1: " + message.getIdentifier());
+		//System.out.println("Mando1: " + message.getIdentifier());
 		System.out.flush();
 		return _clientMailBox.send(message);
 	}
@@ -74,7 +74,7 @@ public class Postmaster extends Thread {
 				params = null;
 				MessageInterface msg = _clientMailBox.receiveBlocking();
 				if (msg != null) {
-					System.out.println(msg.getIdentifier());
+					//System.out.println(msg.getIdentifier());
 					switch (msg.getIdentifier()) {
 					case AUTOM_STATE: // TODO esto cambia todo
 						params = new ActionParams();
