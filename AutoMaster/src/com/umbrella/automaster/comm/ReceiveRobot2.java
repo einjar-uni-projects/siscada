@@ -70,9 +70,9 @@ public class ReceiveRobot2 extends Thread {
 					dm = new DefaultMessage();
 					dm.setIdentifier(MSGOntology.ROBOT_SET_CONTENT);
 					if(con_update_context.getEstadoInterno() == RobotStates.CAMINOPOSICION_2){
-							dm.setObject(3);
+							dm.setObject(4);
 					}else if(con_update_context.getEstadoInterno() == RobotStates.CAMINOPOSICION_3){
-						dm.setObject(4);
+						dm.setObject(3);
 					}else
 						dm.setObject(0);
 					
