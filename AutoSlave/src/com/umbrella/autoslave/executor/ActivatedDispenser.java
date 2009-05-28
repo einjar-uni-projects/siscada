@@ -46,7 +46,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 		setThreadState(ThreadState.CREADO);
 		this._position=position;
 		setAssociatedPosition(associatedPosition);
-		_context.setRemainderCakes(_remainderCakes);
+		//_context.setRemainderCakes(_remainderCakes);
 		_clock=Clock.getInstance();
 		_clock.addNotificable(this);
 		this.start(); // TODO Digo yo no??
@@ -67,7 +67,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 			if(!_context.isApagado()){
 				if((getSpaceCounter()-_configuration.getPosBizc())>=(_configuration.getEspEntreBizc()+_configuration.getSizeBizcocho())){
 
-					
+					//_remainderCakes = _context.getPastelesRestantes();
 					if(_remainderCakes>0){
 						setThreadState(ThreadState.EJECUTANDO);
 						if(debug) System.out.println("despierta del wait - DISPENSADORA");
@@ -78,6 +78,7 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 						 * se pone la posicion de la cinta inicial como ocupada
 						 */
 						_remainderCakes--;
+						_context.setRemainderCakes(_remainderCakes);
 						_context.incrementarNumPasteles();
 						_context.incrementarCuadrarPasteles();
 						_context.addListaPastel(new Cake());
@@ -89,7 +90,6 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 
 				} 
 			}
-			_context.setRemainderCakes(_remainderCakes);
 		}
 	}
 
@@ -180,9 +180,15 @@ public class ActivatedDispenser extends Thread implements Notifiable{
 	 * @param value
 	 */
 	public synchronized void fillDeposit(int value){
-		if(value+_remainderCakes>50) _remainderCakes=50;
-		else _remainderCakes+=value;	
+		if(value+_remainderCakes>50)
+			_remainderCakes=50;
+		else
+			_remainderCakes+=value;	
 		_context.setRemainderCakes(_remainderCakes);
+	}
+	
+	public synchronized void fillDeposit(){
+		_remainderCakes=50;
 	}
 	
 	/**

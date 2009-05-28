@@ -26,10 +26,11 @@ public class ChocolatDispenserAttributePanel extends DispenserAttributePanel {
 
 	@Override
 	public ActionParams getNewAttributes() {
-		ActionParams params = new ActionParams();
+		/*ActionParams params = new ActionParams();
 		if(countNewText.getText().length() != 0)
 			params.setParam(ActionParamsEnum.CHOCOLAT_QUANTITY, ActionParamsEnum.CHOCOLAT_QUANTITY.getEnclosedClass(), Integer.parseInt(countNewText.getText()));
-		return params;
+		return params;*/
+		return null;
 	}
 
 }

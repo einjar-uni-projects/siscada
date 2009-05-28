@@ -198,6 +198,7 @@ System.err.println("cacaaa");
 					break;
 				case RELLENARMAQUINA:
 					_postmaster.sendMessageAU1(msg);
+					System.err.println("Rellenar");
 					break;
 				}
 

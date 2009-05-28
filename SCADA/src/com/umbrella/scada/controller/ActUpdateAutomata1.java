@@ -34,7 +34,7 @@ public class ActUpdateAutomata1 implements Action {
 			if(_rellenar){
 				dm = new DefaultMessage();
 				dm.setIdentifier(MSGOntology.RELLENARMAQUINA);
-				dm.setObject(_rellenar);
+				dm.setObject(true);
 				pm.sendMessage(dm);
 			}
 			
