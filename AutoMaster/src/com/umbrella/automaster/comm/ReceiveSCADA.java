@@ -160,8 +160,9 @@ public class ReceiveSCADA extends Thread {
 					Integer rspeed1 = (Integer)msg.getObject();
 					if(_masterContext.get_contextoRobot1().isApagado()){
 						// Cambiamos su configuraci�n
+			System.err.println(1);
 						Maestro.getInstance().cambiarTiempoRobot(1, rspeed1);
-						System.err.println("caca "+rspeed1);
+			System.err.println("caca "+rspeed1);
 						// Notificamos al SCADA
 						dm = new DefaultMessage();
 						dm.setIdentifier(MSGOntology.ACTUALIZARCONFIGURACION);
