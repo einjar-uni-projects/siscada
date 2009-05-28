@@ -240,7 +240,6 @@ public class LaunchAutMaster {
 		try{
 			ret = Boolean.parseBoolean(br.readLine());
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		return ret;
 	}
@@ -263,7 +262,6 @@ public class LaunchAutMaster {
 		try {
 			line = br.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return line;
@@ -275,7 +273,6 @@ public class LaunchAutMaster {
 		try{
 			ret = Integer.parseInt(br.readLine());
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		return ret;
 	}
