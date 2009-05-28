@@ -15,6 +15,7 @@ import com.umbrella.mail.message.MessageInterface;
 import com.umbrella.mail.utils.properties.PropertyException;
 import com.umbrella.utils.Blister;
 import com.umbrella.utils.MachineNames;
+import com.umbrella.utils.RobotStates;
 
 /**
  * 
@@ -107,7 +108,9 @@ public class ReceiveAutomaton3 extends Thread {
 			 * sellado al final de la cinta
 			 */
 			if (context.getDispositivosInternos(
-					_configuration.getPosicionAsociada(MachineNames.FIN_3))) {
+					_configuration.getPosicionAsociada(MachineNames.FIN_3)) &&
+					_masterContext.get_contextoRobot2().getEstadoInterno()
+					.equals(RobotStates.REPOSO)) {
 				MessageInterface mensajeSend = new DefaultMessage();
 				if (valido()) {
 					mensajeSend.setIdentifier(MSGOntology.BLISTERVALIDO);
@@ -117,7 +120,7 @@ public class ReceiveAutomaton3 extends Thread {
 				_postmaster.sendMessageRB2(mensajeSend);
 			}
 			
-			/* Si est‡ apagado por una parada correcta se env’a el mensaje de parar a los dem‡s aut—matas*/
+			/* Si estï¿½ apagado por una parada correcta se envï¿½a el mensaje de parar a los demï¿½s autï¿½matas*/
 			if(context.isApagado() && context.isParadaCorrecta()){
 				dm.setIdentifier(MSGOntology.PARADA);
 
