@@ -16,7 +16,6 @@ public class ActStart implements Action {
 			Postmaster.getInstance().sendMessage(dm);
 			ret = ActionResult.EXECUTE_CORRECT;
 		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;
@@ -24,7 +23,7 @@ public class ActStart implements Action {
 
 	@Override
 	public boolean insertParam(ActionParams params) {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 

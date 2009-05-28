@@ -19,7 +19,7 @@ public class CakeConveyorBeltAttributePanel extends ConveyorBeltAttributePanel {
 
 	@Override
 	public void notifyError(boolean error) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

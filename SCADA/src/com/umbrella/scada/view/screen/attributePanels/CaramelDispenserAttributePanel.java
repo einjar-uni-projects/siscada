@@ -39,7 +39,7 @@ public class CaramelDispenserAttributePanel extends DispenserAttributePanel {
 
 	@Override
 	public void notifyError(boolean error) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -39,7 +39,7 @@ public class CakeDispenserAttributePanel extends DispenserAttributePanel {
 
 	@Override
 	public void notifyError(boolean error) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

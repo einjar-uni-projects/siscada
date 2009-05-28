@@ -33,7 +33,6 @@ public class ActUpdateRobot1 implements Action {
 			
 			ret = ActionResult.EXECUTE_CORRECT;
 		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;
