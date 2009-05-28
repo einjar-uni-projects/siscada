@@ -38,7 +38,6 @@ public class ActionParams implements ParamGroup<ActionParamsEnum> {
 	
 	@Override
 	public boolean join(ParamGroup<ActionParamsEnum> other) {
-		/*TODO QUITAR*/ System.out.println("No debería pasar por aquí");
 		return false;
 	}
 }

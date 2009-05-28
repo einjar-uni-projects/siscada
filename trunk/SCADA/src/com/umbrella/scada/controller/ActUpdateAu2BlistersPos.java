@@ -14,7 +14,7 @@ public class ActUpdateAu2BlistersPos implements Action {
 
 	@Override
 	public ActionResult execute() {
-		System.out.println("Ejecutando ActUpdateAu2BlistersPos");
+		//System.out.println("Ejecutando ActUpdateAu2BlistersPos");
 		ActionResult ret = ActionResult.EXECUTE_CORRECT;
 		Model m = Model.getInstance();
 		if(_pos1 == null || _pos2 == null ||_pos3 == null ||_pos4 == null ||_pos5 == null)

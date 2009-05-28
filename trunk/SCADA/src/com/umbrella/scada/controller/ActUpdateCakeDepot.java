@@ -7,7 +7,7 @@ public class ActUpdateCakeDepot implements Action {
 
 	@Override
 	public ActionResult execute() {
-		System.out.println("Ejecutando ActUpdateCakeDepot");
+		//System.out.println("Ejecutando ActUpdateCakeDepot");
 		ActionResult ret = ActionResult.EXECUTE_CORRECT;
 		Model m = Model.getInstance();
 		if(_cakeNum == null)

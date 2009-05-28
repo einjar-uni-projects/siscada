@@ -15,15 +15,12 @@ public class ActUpdateConveyorBeltMove implements Action {
 		switch (_machine) {
 		case CINTA_1:
 			m.set_au1Move(_state);
-			System.out.println("0: "+_state);
 			break;
 		case CINTA_2:
 			m.set_au2Move(_state);
-			System.out.println("1: "+_state);
 			break;
 		case CINTA_3:
 			m.set_au3Move(_state);
-			System.out.println("2: "+_state);
 			break;
 
 		default:
