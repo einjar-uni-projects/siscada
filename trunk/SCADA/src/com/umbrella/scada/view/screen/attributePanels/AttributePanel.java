@@ -47,6 +47,14 @@ public abstract class AttributePanel extends JPanel {
 	protected LocalizationResources _languageResources = LocalizationResources.getInstance();
 	
 	/**
+	 * Objeto padre
+	 */
+	protected AttributePanel _father;
+	
+	public AttributePanel(AttributePanel father){
+		_father = father;
+	}
+	/**
 	 * Método encargado de inicializar los valones necesarios de los campos
 	 */
 	protected abstract void initialize();
@@ -65,4 +73,9 @@ public abstract class AttributePanel extends JPanel {
 	 * Devuelve los datos nuevos introducidos en los campos.
 	 */
 	public abstract ActionParams getNewAttributes();
+	
+	/**
+	 * Notifica si hay un error en un hijo
+	 */
+	public abstract void notifyError(boolean error);
 }

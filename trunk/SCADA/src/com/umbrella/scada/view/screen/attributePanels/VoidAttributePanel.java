@@ -20,7 +20,7 @@ public class VoidAttributePanel extends AttributePanel {
 	 * Llama al constructor padre
 	 */
 	public VoidAttributePanel() {
-		super();
+		super(null);
 	}
 	
 	/* (non-Javadoc)
@@ -48,6 +48,12 @@ public class VoidAttributePanel extends AttributePanel {
 	public ActionParams getNewAttributes() {
 		// No tiene sentido llamarlo para esta clase
 		return null;
+	}
+
+	@Override
+	public void notifyError(boolean error) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

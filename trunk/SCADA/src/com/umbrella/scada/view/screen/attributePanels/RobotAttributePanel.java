@@ -1,5 +1,6 @@
 package com.umbrella.scada.view.screen.attributePanels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -25,11 +26,14 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	protected JTextField interTimeSet = null;
 	
 	private boolean _type;
+	
+	protected boolean _storedError;
 
 	/**
 	 * This is the default constructor
 	 */
 	public RobotAttributePanel(boolean type) {
+		super(null);
 		_type = type;
 		initialize();
 	}
@@ -165,8 +169,31 @@ public abstract class RobotAttributePanel extends AttributePanel {
 	private JTextField getDesplTimeSet() {
 		if (desplTimeSet == null) {
 			desplTimeSet = new JTextField();
+			desplTimeSet.addKeyListener(new java.awt.event.KeyAdapter() {
+				public void keyReleased(java.awt.event.KeyEvent e) {
+					if(desplTimeSet.getText().length() == 0){
+						desplTimeSet.setBackground(Color.WHITE);
+						notifyError(false);
+					}else{
+						try{
+							Integer.parseInt(desplTimeSet.getText());
+							desplTimeSet.setBackground(Color.WHITE);
+							_father.notifyError(false);
+						}catch(NumberFormatException nfe){
+							desplTimeSet.setBackground(Color.RED);
+							notifyError(true);
+						}
+					}
+				}
+			});
 		}
 		return desplTimeSet;
+	}
+	
+	@Override
+	public void notifyError(boolean error) {
+		_storedError = error;
+		_acceptButton.setEnabled(!error);
 	}
 	
 	protected abstract void setAcceptAction();

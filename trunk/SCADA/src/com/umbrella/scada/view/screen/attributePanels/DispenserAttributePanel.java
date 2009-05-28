@@ -21,8 +21,8 @@ public abstract class DispenserAttributePanel extends AttributePanel {
 	/**
 	 * This is the default constructor
 	 */
-	public DispenserAttributePanel() {
-		super();
+	protected DispenserAttributePanel(AttributePanel father) {
+		super(father);
 		initialize();
 		updateLanguage();
 	}

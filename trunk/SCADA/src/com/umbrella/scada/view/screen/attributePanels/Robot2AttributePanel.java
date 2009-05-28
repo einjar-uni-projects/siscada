@@ -31,6 +31,9 @@ public class Robot2AttributePanel extends RobotAttributePanel {
 		if(_model.is_brazoDesechar()){
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
 			_acceptButton.setEnabled(false);
+		}else if(_storedError){
+			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
+			_acceptButton.setEnabled(false);
 		}else{
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
 			_acceptButton.setEnabled(true);
@@ -65,7 +68,7 @@ public class Robot2AttributePanel extends RobotAttributePanel {
 	@Override
 	public void updateLanguage() {
 		_title.setText(_languageResources.getLocal(LocalizatorIDs.ROBOT_2_TITLE, _model.get_selectedLanguage()));
-		if(_model.is_cintaPasteles())
+		if(_model.is_brazoDesechar())
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.RUNNING_MACHINE, _model.get_selectedLanguage()));
 		else
 			_acceptButton.setText(_languageResources.getLocal(LocalizatorIDs.ACCEPT, _model.get_selectedLanguage()));
