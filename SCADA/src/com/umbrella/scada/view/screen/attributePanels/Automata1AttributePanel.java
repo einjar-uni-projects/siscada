@@ -5,10 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JCheckBox;
+
 import com.umbrella.scada.controller.Action;
 import com.umbrella.scada.controller.ActionFactoryProvider;
 import com.umbrella.scada.controller.ActionKey;
 import com.umbrella.scada.controller.ActionParams;
+import com.umbrella.scada.controller.ActionParamsEnum;
 import com.umbrella.scada.controller.ActionResult;
 import com.umbrella.scada.view.localization.LocalizatorIDs;
 
@@ -24,6 +27,8 @@ public class Automata1AttributePanel extends AttributePanel {
 	 * serial id
 	 */
 	private static final long serialVersionUID = -1607286910321091549L;
+	
+	protected JCheckBox _rellenar = new JCheckBox("Rellenar");
 	
 	/**
 	 * Crea el panel de atributos, añade los campos necesarios y establece el texto de estos.
@@ -68,6 +73,9 @@ public class Automata1AttributePanel extends AttributePanel {
 			c.gridy++;
 		}
 		
+		add(_rellenar,c);
+		c.gridy++;
+		
 		add(_acceptButton, c);
 	}
 
@@ -78,6 +86,8 @@ public class Automata1AttributePanel extends AttributePanel {
 				for (AttributePanel panel : _subPanels) {
 					params.join(panel.getNewAttributes());
 				}
+				if(_rellenar.isSelected())
+					params.setParam(ActionParamsEnum.RELLENAR, ActionParamsEnum.RELLENAR.getEnclosedClass(), true);
 				Action action = ActionFactoryProvider.getInstance().factoryMethod(ActionKey.UPDATE_CAKE_CONVEYOR_BELT, params);
 				ActionResult result = action.execute();
 				if (result != ActionResult.EXECUTE_CORRECT)

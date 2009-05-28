@@ -30,7 +30,7 @@ public class MainFrameModel implements Updatable {
 	
 	private double _cbCakeSize, _cbBlisterSize, _cbPackageSize, _cbCakeSpeed, _cbBlisterSpeed, _cbPackageSpeed;
 	
-	private int _cakeDepot;
+	private int _cakeDepot, _chocolatDepot, _caramelDepot;
 	
 	private int _rb1Content, _rb2Content;
 	
@@ -111,6 +111,16 @@ public class MainFrameModel implements Updatable {
 		case AU1_CAKE_DEPOT:
 			synchronized (_cerrojos[TransferBufferKeys.AU1_CAKE_DEPOT.ordinal()]) {
 				_cakeDepot = ((Integer)o).intValue();
+			}
+			break;
+		case AU1_CHOCOLAT_DEPOT:
+			synchronized (_cerrojos[TransferBufferKeys.AU1_CHOCOLAT_DEPOT.ordinal()]) {
+				_chocolatDepot = ((Integer)o).intValue();
+			}
+			break;
+		case AU1_CARAMEL_DEPOT:
+			synchronized (_cerrojos[TransferBufferKeys.AU1_CARAMEL_DEPOT.ordinal()]) {
+				_caramelDepot = ((Integer)o).intValue();
 			}
 			break;
 		case AU1_CARAMEL_VALVE_DELAY:
@@ -559,6 +569,18 @@ public class MainFrameModel implements Updatable {
 	public int get_cakeDepot() {
 		synchronized (_cerrojos[TransferBufferKeys.AU1_CAKE_DEPOT.ordinal()]) {
 			return _cakeDepot;
+		}
+	}
+	
+	public int get_chocolatDepot() {
+		synchronized (_cerrojos[TransferBufferKeys.AU1_CHOCOLAT_DEPOT.ordinal()]) {
+			return _chocolatDepot;
+		}
+	}
+	
+	public int get_caramelDepot() {
+		synchronized (_cerrojos[TransferBufferKeys.AU1_CARAMEL_DEPOT.ordinal()]) {
+			return _caramelDepot;
 		}
 	}
 

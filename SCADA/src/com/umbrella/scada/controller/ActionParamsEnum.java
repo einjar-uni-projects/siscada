@@ -25,7 +25,8 @@ public enum ActionParamsEnum {
 	TOTAL_PACKAGES(Boolean.class),
 	RB1_BLISTER_DELAY(Integer.class),
 	RB2_BLISTER_DELAY(Integer.class),
-	RB1_CAKE_DELAY(Integer.class);
+	RB1_CAKE_DELAY(Integer.class),
+	RELLENAR(Boolean.class);
 	
 	private Class _enclosedClass;
 

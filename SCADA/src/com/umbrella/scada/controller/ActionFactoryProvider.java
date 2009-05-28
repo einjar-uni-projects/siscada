@@ -75,6 +75,16 @@ public class ActionFactoryProvider implements ActionFactory {
 			if(!ret.insertParam(params))
 				ret = new ActIncorrectParams();
 			break;
+		case UPDATE_CHOCOLAT_DEPOT:
+			ret = new ActUpdateChocolatDepot();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
+		case UPDATE_CARAMEL_DEPOT:
+			ret = new ActUpdateCaramelDepot();
+			if(!ret.insertParam(params))
+				ret = new ActIncorrectParams();
+			break;
 		case AU1_CAKES_POS:
 			ret = new ActUpdateAu1CakesPos();
 			if(!ret.insertParam(params))

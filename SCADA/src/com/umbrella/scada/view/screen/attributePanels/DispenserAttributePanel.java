@@ -64,7 +64,7 @@ public abstract class DispenserAttributePanel extends AttributePanel {
 		this.add(titleLabel, gridBagConstraints);
 		this.add(countLabel, gridBagConstraints1);
 		this.add(countValueLabel, gridBagConstraints2);
-		this.add(getCountNewText(), gridBagConstraints3);
+		//this.add(getCountNewText(), gridBagConstraints3);
 		
 		Font f = titleLabel.getFont();
 		titleLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));

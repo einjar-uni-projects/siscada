@@ -14,8 +14,7 @@ public class CaramelDispenserAttributePanel extends DispenserAttributePanel {
 
 	@Override
 	public void refreshData() {
-		// TODO Auto-generated method stub
-
+		countValueLabel.setText(""+_model.get_caramelDepot());
 	}
 	
 	@Override
