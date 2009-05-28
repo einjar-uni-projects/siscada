@@ -43,7 +43,7 @@ public class Slave1 implements Notifiable {
 	private boolean _joy = true;
 
 //TODO propiom quitar antes de entregar
-	private boolean debug=true;
+	private boolean debug=false;
 	/**
 	 * @param args
 	 */
