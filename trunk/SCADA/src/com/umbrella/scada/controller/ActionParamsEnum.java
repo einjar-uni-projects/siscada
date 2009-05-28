@@ -22,7 +22,10 @@ public enum ActionParamsEnum {
 	CONVEYOR_BELT_MOVE(Boolean.class),
 	GOOD_PACKAGES(Boolean.class),
 	NUMBER_PACKAGES(Integer.class),
-	TOTAL_PACKAGES(Boolean.class);
+	TOTAL_PACKAGES(Boolean.class),
+	RB1_BLISTER_DELAY(Integer.class),
+	RB2_BLISTER_DELAY(Integer.class),
+	RB1_CAKE_DELAY(Integer.class);
 	
 	private Class _enclosedClass;
 
