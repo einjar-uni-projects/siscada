@@ -308,7 +308,7 @@ public class Slave3 implements Notifiable{
 					vectorAux.remove(posVector);
 					contexto.setDispositivosInternos(posAsociadaReal, false);
 					if(Math.random()<0.125){
-						posVector=(int)(Math.random()*3);
+						posVector=(int)(Math.random()*1);
 						posAsociadaReal=vectorAux.get(posVector);
 						contexto.get_listaBlister().get(posicionBlister).setCalidad(posVector+1, false);
 						vectorAux.remove(posVector);

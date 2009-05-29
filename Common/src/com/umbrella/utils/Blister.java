@@ -153,7 +153,7 @@ public class Blister implements Serializable{
 					setCalidad(posReal, false);
 					vectorAux.remove(posVector);
 					if(Math.random()<0.125){
-						posVector=(int)(Math.random()*3);
+						posVector=(int)(Math.random()*1);
 						posReal=vectorAux.get(posVector);
 						setCalidad(posReal, false);
 						vectorAux.remove(posVector);
