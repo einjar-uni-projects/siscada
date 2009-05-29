@@ -206,6 +206,7 @@ public class Configuration implements Serializable {
 		this.velCintaAut2=conf.getVelCintaAut2();
 		this.velCintaAut3=conf.getVelCintaAut3();
 		this.porcentajeFallos=conf.getPorcentajeFallos();
+		this.almacenarBlister=conf.getAlmacenarBlister();
 	}
 	
 	private Configuration(){
