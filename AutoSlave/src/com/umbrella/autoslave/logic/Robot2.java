@@ -130,7 +130,7 @@ public class Robot2  implements Notifiable{
 					//va hacia la cinta3
 					else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_1)){//OK
 						// controlar interferencias, mejor lo hace el maestro
-						if( _contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() -_configuracion.getInterferencia()/2)*1000)){
+						if( _contexto.getDiffTiempo() > ((_configuracion.getAlmacenarBlister() -_configuracion.getInterferencia()/2)*1000)){
 							_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_1);
 							/*
 							 * envia el mensaje de interferencia sobre la cinta 3
@@ -144,7 +144,7 @@ public class Robot2  implements Notifiable{
 					}
 					else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_1)){//OK
 						//cojo el Blister
-						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*1000)){
+						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getAlmacenarBlister()*1000)){
 							if(_contexto.isValido()){
 								_contexto.setEstadoInterno(RobotStates.CAMINOPOSICION_2);
 							}else{
@@ -161,7 +161,7 @@ public class Robot2  implements Notifiable{
 							_contexto.setBlisterCompletoListo(false);
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_2)){
-						if(/*!_contexto.isPastel() &&*/ (_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
+						if(/*!_contexto.isPastel() &&*/ (_contexto.getDiffTiempo() > ((_configuracion.getAlmacenarBlister() +_configuracion.getInterferencia()/2)*1000))){
 							/*
 							 * envia el mensaje de FIN interferencia sobre la cinta 3
 							 */
@@ -171,12 +171,12 @@ public class Robot2  implements Notifiable{
 							send.getParameters().add(MachineNames.CINTA_3.getDescripcion());
 							_buzon.send(send);
 							
-							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2*1000)){
+							if( _contexto.getDiffTiempo() > (_configuracion.getAlmacenarBlister()*2*1000)){
 								_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_2);
 							}
 						}
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_2)){
-						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*1000)){
+						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getAlmacenarBlister()*1000)){
 							/*
 							 * Enviar mensaje de pastel valido depositado
 							 */
@@ -188,7 +188,7 @@ public class Robot2  implements Notifiable{
 						}
 
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.CAMINOPOSICION_3)){
-						if(/*!_contexto.isPastel() && */(_contexto.getDiffTiempo() > ((_configuracion.getMoverBlister() +_configuracion.getInterferencia()/2)*1000))){
+						if(/*!_contexto.isPastel() && */(_contexto.getDiffTiempo() > ((_configuracion.getAlmacenarBlister() +_configuracion.getInterferencia()/2)*1000))){
 							/*
 							 * envia el mensaje de FIN interferencia sobre la cinta 3
 							 */
@@ -198,13 +198,13 @@ public class Robot2  implements Notifiable{
 							send.getParameters().add(MachineNames.CINTA_3.getDescripcion());
 							_buzon.send(send);
 							
-							if( _contexto.getDiffTiempo() > (_configuracion.getMoverBlister()*2*1000)){
+							if( _contexto.getDiffTiempo() > (_configuracion.getAlmacenarBlister()*2*1000)){
 								_contexto.setEstadoInterno(RobotStates.SOBREPOSICION_3);
 							}
 						}
 
 					}else if(_contexto.getEstadoInterno().equals(RobotStates.SOBREPOSICION_3)){
-						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getMoverBlister()*2*1000)){
+						if( (System.currentTimeMillis()-_contexto.getTiempo()) > (_configuracion.getAlmacenarBlister()*2*1000)){
 							/*
 							 * Enviar mensaje de pastel NO valido depositado
 							 */

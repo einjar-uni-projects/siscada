@@ -326,6 +326,10 @@ public class Configuration implements Serializable {
 	public synchronized int getMoverPastel() {
 		return moverPastel;
 	}
+	
+	public synchronized int getAlmacenarBlister() {
+		return almacenarBlister;
+	}
 
 	public double getPosInicioAut3() {
 		return posInicioAut3;

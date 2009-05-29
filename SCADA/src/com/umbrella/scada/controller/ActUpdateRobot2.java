@@ -34,7 +34,7 @@ public class ActUpdateRobot2 implements Action {
 
 	@Override
 	public boolean insertParam(ActionParams params) {
-		Object blisterDelay = params.getParam(ActionParamsEnum.RB1_BLISTER_DELAY);
+		Object blisterDelay = params.getParam(ActionParamsEnum.RB2_BLISTER_DELAY);
 		
 		boolean ret = false;
 		try{
