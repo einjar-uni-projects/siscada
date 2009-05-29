@@ -86,7 +86,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut1().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_1, size);
-						_masterConfiguration.setSizeCintaAut1(size);
+						//_masterConfiguration.setSizeCintaAut1(size);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -101,7 +101,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut2().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_2, size2);
-						_masterConfiguration.setSizeCintaAut2(size2);
+						//_masterConfiguration.setSizeCintaAut2(size2);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -116,7 +116,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut2().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarTamanyoCinta(MachineNames.CINTA_3, size3);
-						_masterConfiguration.setSizeCintaAut3(size3);
+						//_masterConfiguration.setSizeCintaAut3(size3);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -131,7 +131,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut1().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_1, speed);
-						_masterConfiguration.setVelCintaAut1(speed);
+						//_masterConfiguration.setVelCintaAut1(speed);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -146,7 +146,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut2().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_2, speed2);
-						_masterConfiguration.setVelCintaAut2(speed2);
+						//_masterConfiguration.setVelCintaAut2(speed2);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -161,7 +161,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoAut3().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarVelCinta(MachineNames.CINTA_3, speed3);
-						_masterConfiguration.setVelCintaAut3(speed3);
+						//_masterConfiguration.setVelCintaAut3(speed3);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -176,7 +176,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoRobot1().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarTiempoRobot(1, rspeed1);
-						_masterConfiguration.setMoverBlister(rspeed1);
+						//_masterConfiguration.setMoverBlister(rspeed1);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -191,7 +191,7 @@ public class ReceiveSCADA extends Thread {
 					if(_masterContext.get_contextoRobot1().isApagado()){
 						// Cambiamos su configuraci�n
 						Maestro.getInstance().cambiarTiempoRobot(0, rspeed2);
-						_masterConfiguration.setMoverPastel(rspeed2);
+						//_masterConfiguration.setMoverPastel(rspeed2);
 						_masterConfiguration.save();
 						
 						// Notificamos al SCADA
@@ -205,9 +205,11 @@ public class ReceiveSCADA extends Thread {
 					Integer rspeed3 = (Integer)msg.getObject();
 					if(_masterContext.get_contextoRobot2().isApagado()){
 						// Cambiamos su configuraci�n
-						Maestro.getInstance().cambiarTiempoRobot(3, rspeed3);
-						_masterConfiguration.setAlmacenarBlister(rspeed3);
+						Maestro.getInstance().cambiarTiempoRobot(2, rspeed3);
+						//_masterConfiguration.setAlmacenarBlister(rspeed3);
 						_masterConfiguration.save();
+						System.err.println(_masterConfiguration.getAlmacenarBlister());
+						System.err.println(Maestro.getInstance().getConfiguration().getAlmacenarBlister());
 						
 						// Notificamos al SCADA
 						dm = new DefaultMessage();

@@ -244,7 +244,6 @@ public class Maestro implements Notifiable  {
 		case 1:
 			// robot 1 y mover blister
 			if (!_contextoMaestro.getEjecutando()[3]) {
-	System.err.println("cambia");
 				_configuracion.setMoverBlister(valor);
 				sal = 1;
 			}
@@ -252,6 +251,7 @@ public class Maestro implements Notifiable  {
 		case 2:
 			// robot 2
 			if (!_contextoMaestro.getEjecutando()[4]) {
+				System.err.println("cambia");
 				_configuracion.setAlmacenarBlister(valor);
 				sal = 1;
 			}
