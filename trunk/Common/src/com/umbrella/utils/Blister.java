@@ -52,6 +52,10 @@ public class Blister implements Serializable{
 		aux.set_posicion(configuracion.getSizeBlister()/2);
 		aux.set_contPasteles(4);
 		aux.set_cinta(false);
+		for(int i=0;i<calidad.length;i++){
+			calidad[i]=true;
+		}
+		qualityReview();
 		return aux;
 	}
 	public Blister(double _posicion, int pasteles, boolean cinta) {
