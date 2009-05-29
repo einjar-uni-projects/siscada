@@ -27,7 +27,7 @@ public class ActUpdateConfiguration implements Action {
 		m.set_genRobotInterference(_conf.getInterferencia());
 		m.set_genSensorError(_conf.getErrorSensor());
 		m.set_rb1BlisterDelay(_conf.getMoverBlister());
-		m.set_rb2BlisterDelay(_conf.getMoverBlister());
+		m.set_rb2BlisterDelay(_conf.getAlmacenarBlister());
 		m.set_rb1CakeDelay(_conf.getMoverPastel());		
 		
 		if(ret == ActionResult.EXECUTE_CORRECT)
