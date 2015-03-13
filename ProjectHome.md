@@ -1,0 +1,1 @@
+Se trata de crear un simulador basado en scada
